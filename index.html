@@ -1,10 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>나의 첫 웹사이트</title>
+  <meta charset="UTF-8">
+  <title>그림 동화책 창작 지침서 - 감정과 관계</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background: linear-gradient(to bottom right, #ffe0b2, #ffccbc);
+      color: #4e342e;
+    }
+    h1, h2 {
+      color: #d84315;
+    }
+    textarea, select, input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .hint {
+      color: #555;
+      font-size: 0.9em;
+    }
+    .section {
+      margin-bottom: 30px;
+      background-color: #ffffffcc;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .guide-box {
+      background-color: #ffffffcc;
+      border-left: 6px solid #d84315;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+    .guide-box p,
+    .guide-box div {
+      margin-bottom: 10px;
+    }
+    .guide-box strong {
+      color: #bf360c;
+    }
+    #downloadBtn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(to right, #ff7043, #ff8a65);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      margin-top: 20px;
+    }
+    #downloadBtn:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
-  <h1>안녕하세요! JUNSOMOM의 웹사이트입니다.</h1>
-  <p>여기는 GitHub Pages로 만든 나만의 첫 홈페이지예요!</p>
+  <h1>🌳 감정과 관계를 위한 그림 동화책 창작 지침서</h1>
+
+  <div class="guide-box" id="guideText">
+    <p><strong>이 그림책의 목표는</strong> ‘<strong>관계의 소중한 감정</strong>’을 가지고 자연과 이웃들과 관계하며 살아가는 인생의 중요성을 <strong>쉽게 이해하고 공감할 수 있도록</strong> 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.</p>
+    <div><strong>①</strong> 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.</div>
+    <div><strong>②</strong> 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.</div>
+    <div><strong>③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong>프롬프트를 한글과 영어로</strong> 상세히 작성해 주세요.</div>
+    <div><strong>④</strong> 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:<br>
+      - 호기심을 자극하는 말<br>
+      - 감정을 불러일으키는 말<br>
+      - 사랑과 존중을 표현하는 말
+    </div>
+    <div><strong>⑤</strong> 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.</div>
+    <div><strong>*</strong> <strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</div>
+  </div>
+
+  <div class="section">
+    <h2>Step 1. 주제를 먼저 정해보자!</h2>
+    <p>예시: "아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 생각해 보세요.</p>
+    <textarea placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
+  </div>
+
+  <div class="section">
+    <h2>Step 2. 시놉시스를 만들어 보자!</h2>
+    <label>제목: <input type="text" placeholder="예: 언제나 기다려주는 나무" /></label>
+    <label>주인공: <input type="text" placeholder="예: 마음이 따뜻한 나무 토토" /></label>
+    <label>문제 상황: <textarea placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea></label>
+    <label>해결 방법: <textarea placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea></label>
+    <label>교훈: <textarea placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea></label>
+  </div>
+
+  <div class="section">
+    <h2>Step 3. 등장인물 구성하기</h2>
+    <label>주인공 이름과 특징: <textarea placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea></label>
+    <label>친구1 이름과 특징: <textarea placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea></label>
+    <label>친구2 이름과 특징: <textarea placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea></label>
+    <label>문제 유발자 (선택): <textarea placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea></label>
+  </div>
+
+  <div class="section">
+    <h2>Step 4. 장면 구성 (5컷)</h2>
+    <p class="hint">각 장면의 내용을 감정적으로 연결하여 써보세요.</p>
+    <textarea placeholder="장면 1: 아이 민호가 토토 나무와 처음 만나요."></textarea>
+    <textarea placeholder="장면 2: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
+    <textarea placeholder="장면 3: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
+    <textarea placeholder="장면 4: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토"></textarea>
+    <textarea placeholder="장면 5: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
+  </div>
+
+  <div class="section">
+    <h2>Step 5. 이미지 스타일 선택하기</h2>
+    <p>원하는 그림 스타일을 선택하세요.</p>
+    <select>
+      <option>연필 드로잉 스타일</option>
+      <option>수채화 스타일</option>
+      <option>디즈니 스타일</option>
+      <option>동양화 스타일</option>
+      <option>실사와 동화 혼합 스타일</option>
+      <option>지브리 스타일</option>
+      <option>픽사 스타일</option>
+    </select>
+  </div>
+
+  <button id="downloadBtn">저장하기</button>
+
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+      const guideText = document.getElementById('guideText').innerText;
+      let content = '[그림 동화책 창작 지침서]\n\n' + guideText + '\n\n';
+
+      document.querySelectorAll('.section').forEach(function (section) {
+        const heading = section.querySelector('h2').innerText;
+        content += '## ' + heading + '\n';
+        section.querySelectorAll('label, textarea, input, select').forEach(el => {
+          if (el.tagName === 'LABEL') {
+            content += '- ' + el.innerText.trim() + '\n';
+          } else {
+            const val = el.value.trim();
+            if (val) content += '  → ' + val + '\n';
+          }
+        });
+        content += '\n';
+      });
+
+      const titleInput = document.querySelector('input[placeholder*="예: 언제나 기다려주는 나무"]');
+      const filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '그림동화_지침서';
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename + '.txt';
+      a.click();
+    });
+  </script>
 </body>
 </html>
