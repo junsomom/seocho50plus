@@ -14,7 +14,7 @@
     h1, h2 {
       color: #00695c;
     }
-    textarea, input {
+    textarea, input, select {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -28,6 +28,7 @@
       margin-bottom: 30px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
     }
     .guide-box {
       background-color: #e0f2f1;
@@ -37,7 +38,9 @@
       margin: 20px 0;
     }
     .example-button {
-      float: right;
+      position: absolute;
+      top: 20px;
+      right: 20px;
       padding: 5px 10px;
       font-size: 12px;
       background-color: #80cbc4;
@@ -71,79 +74,96 @@
   </div>
 
   <div class="section">
-    <h2>1. 내 이름과 내가 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="fillExample1()">예시</button>
-    </h2>
+    <button class="example-button" onclick="fillExample1()">예시</button>
+    <h2>1. 내 이름과 내가 좋아하는 음식은 무엇인가요?</h2>
     <textarea id="q1" placeholder="예: 제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요."></textarea>
   </div>
 
   <div class="section">
-    <h2>2. 내가 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="fillExample2()">예시</button>
-    </h2>
+    <button class="example-button" onclick="fillExample2()">예시</button>
+    <h2>2. 내가 좋아하는 계절은 무엇인가요?</h2>
     <textarea id="q2" placeholder="예: 저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요."></textarea>
   </div>
 
   <div class="section">
-    <h2>3. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="fillExample3()">예시</button>
-    </h2>
+    <button class="example-button" onclick="fillExample3()">예시</button>
+    <h2>3. 어릴 적 나의 꿈은 무엇이었나요?</h2>
     <textarea id="q3" placeholder="예: 저는 어릴 때 선생님이 되고 싶었어요."></textarea>
   </div>
 
   <div class="section">
-    <h2>4. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="fillExample4()">예시</button>
-    </h2>
+    <button class="example-button" onclick="fillExample4()">예시</button>
+    <h2>4. 지금 내가 하고 싶은 일은 무엇인가요?</h2>
     <textarea id="q4" placeholder="예: 지금은 그림을 그리고 전시회를 열어보고 싶어요."></textarea>
   </div>
 
   <div class="section">
-    <h2>5. 표지 제목은 무엇으로 할까요?
-      <button class="example-button" onclick="fillExample5()">예시</button>
-    </h2>
+    <button class="example-button" onclick="fillExample5()">예시</button>
+    <h2>5. 표지 제목은 무엇으로 할까요?</h2>
     <textarea id="q5" placeholder="예: 김영숙의 따뜻한 하루"></textarea>
+  </div>
+
+  <div class="section">
+    <h2>6. 원하는 그림 스타일을 선택하세요</h2>
+    <select id="style">
+      <option value="디즈니 스타일">디즈니 스타일</option>
+      <option value="지브리 스타일">지브리 스타일</option>
+      <option value="수채화 스타일">수채화 스타일</option>
+      <option value="연필 드로잉 스타일">연필 드로잉 스타일</option>
+      <option value="픽사 스타일">픽사 스타일</option>
+      <option value="크레용 스타일">크레용 스타일</option>
+      <option value="실사 스타일">실사 스타일</option>
+    </select>
   </div>
 
   <button id="downloadBtn">저장하기</button>
 
   <script>
-    function fillExample1() {
-      document.getElementById('q1').value = '제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요.';
-    }
-    function fillExample2() {
-      document.getElementById('q2').value = '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.';
-    }
-    function fillExample3() {
-      document.getElementById('q3').value = '저는 어릴 때 선생님이 되고 싶었어요.';
-    }
-    function fillExample4() {
-      document.getElementById('q4').value = '지금은 그림을 그리고 전시회를 열어보고 싶어요.';
-    }
-    function fillExample5() {
-      document.getElementById('q5').value = '김영숙의 따뜻한 하루';
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+      function fillExample1() {
+        document.getElementById('q1').value = '제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요.';
+      }
+      function fillExample2() {
+        document.getElementById('q2').value = '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.';
+      }
+      function fillExample3() {
+        document.getElementById('q3').value = '저는 어릴 때 선생님이 되고 싶었어요.';
+      }
+      function fillExample4() {
+        document.getElementById('q4').value = '지금은 그림을 그리고 전시회를 열어보고 싶어요.';
+      }
+      function fillExample5() {
+        document.getElementById('q5').value = '김영숙의 따뜻한 하루';
+      }
 
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-      const title = "나를 소개하는 그림동화책";
-      let content = '';
-      content += '이 동화책의 목표는 나를 소개하는 간단한 그림동화책을 만드는 것입니다.\n\n';
-      document.querySelectorAll('.section').forEach(function (section) {
-        const heading = section.querySelector('h2');
-        if (heading) content += '== ' + heading.innerText.replace(/\s*예시$/, '') + ' ==\n';
-        section.querySelectorAll('textarea').forEach(function (el) {
-          const val = el.value.trim();
-          if (val) content += val + '\n';
+      document.getElementById('downloadBtn').addEventListener('click', function () {
+        const title = "나를 소개하는 그림동화책";
+        let content = '';
+        content += '이 동화책의 목표는 나를 소개하는 간단한 그림동화책을 만드는 것입니다.\n\n';
+        document.querySelectorAll('.section').forEach(function (section) {
+          const heading = section.querySelector('h2');
+          if (heading) content += '== ' + heading.innerText + ' ==\n';
+          section.querySelectorAll('textarea, select').forEach(function (el) {
+            const val = el.value.trim();
+            if (val) content += val + '\n';
+          });
+          content += '\n';
         });
-        content += '\n';
+        content += '이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트(각각 꼭 한글과 영어를 모두 포함해주세요)를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 한글/영문으로 함께 만들어줘.';
+
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = title + '.txt';
+        a.click();
       });
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = title + '.txt';
-      a.click();
+
+      document.querySelector('.example-button[onclick="fillExample1()"]')?.addEventListener('click', fillExample1);
+      document.querySelector('.example-button[onclick="fillExample2()"]')?.addEventListener('click', fillExample2);
+      document.querySelector('.example-button[onclick="fillExample3()"]')?.addEventListener('click', fillExample3);
+      document.querySelector('.example-button[onclick="fillExample4()"]')?.addEventListener('click', fillExample4);
+      document.querySelector('.example-button[onclick="fillExample5()"]')?.addEventListener('click', fillExample5);
     });
   </script>
 </body>
 </html>
-
