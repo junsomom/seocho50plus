@@ -15,11 +15,6 @@
       font-size: 32px;
       color: #01579b;
     }
-    label {
-      font-weight: bold;
-      margin-top: 20px;
-      display: block;
-    }
     input, select, textarea {
       width: 100%;
       padding: 12px;
@@ -49,127 +44,28 @@
     .output {
       display: none;
     }
-    .inline-button {
-      font-size: 14px;
-      padding: 6px 10px;
-      margin-left: 8px;
-      background-color: #4db6ac;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      input, select, textarea, button {
-        font-size: 16px;
-        padding: 10px;
-      }
-      .inline-button {
-        font-size: 12px;
-        padding: 5px 8px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-    }
   </style>
 </head>
 <body>
   <h1>🌼 나를 소개하는 AI 그림 동화책 만들기</h1>
 
   <div class="section">
-
-    <label>📛 존함을 알려주시겠어요?
-      <button class="inline-button" onclick="fillExample('name', '김영자')">예시 입력</button>
-      <button class="inline-button" onclick="speak('존함을 알려주시겠어요?')">🔊 듣기</button>
-    </label>
-    <input type="text" id="name" placeholder="예: 김영자 님">
-
-    <label>🎂 연세는 어느 연령대이신가요?
-      <button class="inline-button" onclick="speak('연세는 어느 연령대이신가요?')">🔊 듣기</button>
-    </label>
-    <select id="age">
-      <option>50대</option>
-      <option>60대</option>
-      <option>70대</option>
-      <option>80대 이상</option>
-    </select>
-
-    <label>🧍 성별을 선택해 주세요.
-      <button class="inline-button" onclick="speak('성별을 선택해 주세요.')">🔊 듣기</button>
-    </label>
-    <select id="gender">
-      <option>여자</option>
-      <option>남자</option>
-      <option>기타</option>
-    </select>
-
-    <label>🌈 성격을 간단히 표현해 주시겠어요?
-      <button class="inline-button" onclick="fillExample('personality', '차분하고 따뜻한 성격이에요.')">예시 입력</button>
-      <button class="inline-button" onclick="speak('성격을 간단히 표현해 주시겠어요?')">🔊 듣기</button>
-    </label>
-    <input type="text" id="personality" placeholder="예: 차분하고 따뜻한 편이에요.">
-
-    <label>🍲 평소에 즐겨 드시는 음식이 있으실까요?
-      <button class="inline-button" onclick="fillExample('food', '따뜻한 미역국을 좋아해요.')">예시 입력</button>
-      <button class="inline-button" onclick="speak('평소에 즐겨 드시는 음식이 있으실까요?')">🔊 듣기</button>
-    </label>
-    <input type="text" id="food" placeholder="예: 따뜻한 미역국, 고구마">
-
-    <label>🍁 마음이 편안해지는 계절이 있다면 알려주세요.
-      <button class="inline-button" onclick="fillExample('season', '가을이 되면 마음이 차분해져요.')">예시 입력</button>
-      <button class="inline-button" onclick="speak('마음이 편안해지는 계절이 있다면 알려주세요.')">🔊 듣기</button>
-    </label>
-    <input type="text" id="season" placeholder="예: 가을, 봄">
-
-    <label>🎒 어린 시절 품었던 꿈이 있으셨다면 적어주세요.
-      <button class="inline-button" onclick="fillExample('dream', '어릴 적엔 선생님이 되고 싶었어요.')">예시 입력</button>
-      <button class="inline-button" onclick="speak('어린 시절 품었던 꿈이 있으셨다면 적어주세요.')">🔊 듣기</button>
-    </label>
-    <input type="text" id="dream" placeholder="예: 선생님이 되고 싶었어요.">
-
-    <label>💭 지금 마음속에 품고 계신 바람이 있으시다면 알려주세요.
-      <button class="inline-button" onclick="fillExample('wish', '지금은 그림책 작가가 되는 꿈을 꾸고 있어요.')">예시 입력</button>
-      <button class="inline-button" onclick="speak('지금 마음속에 품고 계신 바람이 있으시다면 알려주세요.')">🔊 듣기</button>
-    </label>
-    <input type="text" id="wish" placeholder="예: 그림책 작가가 되고 싶어요.">
-
-    <label>🖼️ 선호하시는 그림 스타일을 골라주세요.
-      <button class="inline-button" onclick="speak('선호하시는 그림 스타일을 골라주세요.')">🔊 듣기</button>
-    </label>
-    <select id="style">
-      <option>디즈니 스타일</option>
-      <option>지브리 스타일</option>
-      <option>연필 소묘 스타일</option>
-      <option>수채화 스타일</option>
-    </select>
-
-    <label>🌟 그림 속 주인공의 모습은 어떤 이미지였으면 좋을까요?
-      <button class="inline-button" onclick="fillExample('fixedCharacter', '단발머리, 부드러운 미소, 50대 여성, 디즈니 스타일')">예시 입력</button>
-      <button class="inline-button" onclick="speak('그림 속 주인공의 모습은 어떤 이미지였으면 좋을까요?')">🔊 듣기</button>
-    </label>
-    <input type="text" id="fixedCharacter" placeholder="예: 단발머리, 따뜻한 미소, 50대 여성, 디즈니 스타일">
-
+    <label>이름</label><input type="text" id="name" value="김영자">
+    <label>나이대</label><select id="age"><option>50대</option><option>60대</option></select>
+    <label>성별</label><select id="gender"><option>여자</option><option>남자</option></select>
+    <label>성격</label><input type="text" id="personality" value="차분하고 따뜻한 성격이에요.">
+    <label>좋아하는 음식</label><input type="text" id="food" value="따뜻한 미역국을 좋아해요.">
+    <label>좋아하는 계절</label><input type="text" id="season" value="가을이 되면 마음이 차분해져요.">
+    <label>어릴 적 꿈</label><input type="text" id="dream" value="선생님이 되고 싶었어요.">
+    <label>지금의 소망</label><input type="text" id="wish" value="지금은 그림책 작가가 되고 싶어요.">
+    <label>그림 스타일</label><select id="style"><option>디즈니 스타일</option></select>
+    <label>고정 인물 설명</label><input type="text" id="fixedCharacter" value="단발머리, 부드러운 미소, 50대 여성, 디즈니 스타일">
     <button onclick="generateStory()">🌷 동화책 만들기 시작하기</button>
   </div>
 
   <div id="storyOutput" class="output"></div>
 
   <script>
-    function fillExample(id, text) {
-      document.getElementById(id).value = text;
-    }
-
-    function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ko-KR';
-      speechSynthesis.cancel();
-      speechSynthesis.speak(utterance);
-    }
-
     function generateStory() {
       const name = document.getElementById('name').value;
       const age = document.getElementById('age').value;
@@ -183,23 +79,23 @@
       const fixedCharacter = document.getElementById('fixedCharacter').value;
 
       const pages = [
-        `📘 1. 나의 시작\n저는 ${age}의 ${gender} ${name}입니다. ${food}을(를) 좋아하던 아이였지요.`,
-        `📘 2. 성격과 계절\n저는 ${personality} 성격을 지니고 있으며, 특히 ${season}을 좋아한답니다.`,
-        `📘 3. 어린 시절의 꿈\n어릴 적 저의 꿈은 ${dream}였어요. 그 시절의 저는 언제나 그 꿈을 품고 있었지요.`,
-        `📘 4. 지금의 나\n지금 저는 ${wish}라는 새로운 꿈을 마음에 품고 있습니다.`,
-        `📘 5. 다짐\n저의 이야기는 아직 끝나지 않았습니다. 저는 오늘도 따뜻한 마음으로 꿈을 향해 한 걸음씩 나아가고 있답니다.`
+        `📘 1. 나의 시작\n저는 ${age}의 ${gender} ${name}입니다. ${food}`,
+        `📘 2. 성격과 계절\n저는 ${personality} 그리고 ${season}`,
+        `📘 3. 어린 시절의 꿈\n어릴 적 제 꿈은 ${dream}`,
+        `📘 4. 지금의 나\n지금 저는 ${wish}`,
+        `📘 5. 다짐\n저는 오늘도 따뜻한 마음으로 꿈을 향해 나아갑니다.`
       ];
 
       const sceneDescriptions = [
-        "어린 시절 좋아하던 음식을 떠올리는 장면",
-        "가을 공원에서 조용히 풍경을 바라보는 장면",
-        "칠판 앞에서 교사 놀이하던 어린 시절 회상",
-        "지금 그림책을 그리고 있는 장면",
-        "꿈을 향해 나아가는 따뜻한 뒷모습"
+        ["어린 시절 좋아하던 음식을 떠올리는 장면", "remembering favorite childhood food"],
+        ["가을 공원에서 조용히 풍경을 바라보는 장면", "quietly looking at the autumn park scenery"],
+        ["칠판 앞에서 교사 놀이하던 어린 시절 회상", "pretending to be a teacher in childhood"],
+        ["지금 그림책을 그리고 있는 장면", "drawing a picture book at a desk"],
+        ["꿈을 향해 나아가는 따뜻한 뒷모습", "walking toward her dream with a warm heart"]
       ];
 
-      const prompts = sceneDescriptions.map((scene, i) =>
-        `[이미지 프롬프트] ${fixedCharacter}, ${scene}`
+      const prompts = sceneDescriptions.map(([kr, en]) =>
+        `[이미지 프롬프트] ${fixedCharacter}, ${kr}\n(${fixedCharacter}, ${en})`
       );
 
       let result = `<h2>📖 ${name}님의 그림 동화책</h2>`;
@@ -209,25 +105,19 @@
         result += `<textarea readonly>${prompts[i]}</textarea><br>`;
       });
 
-      result += `<button onclick="downloadTextFile()">💾 동화책 파일 내려받기</button>`;
-      result += `
-        <p><strong>📂 저장 후 이렇게 활용해 보세요:</strong></p>
-        <ul>
-          <li>1. ChatGPT에 붙여넣어 그림 동화로 만들 수 있어요.</li>
-          <li>2. Google FX, 위스키 등에서 그림 프롬프트로 사용해 보세요.</li>
-          <li>3. 저장된 내용을 가족이나 친구와 함께 읽어보셔도 참 좋습니다.</li>
-        </ul>`;
+      result += `<button onclick="downloadTextFile()">💾 동화책 저장하기 (.txt)</button>`;
+      result += `<p>이 파일은 ChatGPT에 붙여넣거나, Google FX 또는 WYSIWYG 도구에서 활용하실 수 있습니다.</p>`;
 
       document.getElementById('storyOutput').innerHTML = result;
       document.getElementById('storyOutput').style.display = 'block';
-      window.generatedText = pages.map((p, i) => p + `\n${prompts[i]}`).join('\n\n');
+      window.generatedText = pages.map((p, i) => p + "\n" + prompts[i]).join("\n\n");
     }
 
     function downloadTextFile() {
       const blob = new Blob([window.generatedText], { type: 'text/plain' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = '나를_소개하는_그림동화책.txt';
+      link.download = 'AI_그림동화책.txt';
       link.click();
     }
   </script>
