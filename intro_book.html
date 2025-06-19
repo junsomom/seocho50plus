@@ -41,13 +41,15 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      padding: 5px 10px;
-      font-size: 12px;
+      padding: 14px 24px;
+      font-size: 18px;
+      font-weight: bold;
       background-color: #80cbc4;
-      color: white;
+      color: #004d40;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     #downloadBtn {
       background: linear-gradient(to right, #00796b, #4db6ac);
@@ -74,37 +76,31 @@
   </div>
 
   <div class="section">
-    <button class="example-button" onclick="fillExample1()">예시</button>
+    <button class="example-button" onclick="fillExample1()">예시 보기</button>
     <h2>1. 내 이름과 내가 좋아하는 음식은 무엇인가요?</h2>
     <textarea id="q1" placeholder="예: 제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요."></textarea>
   </div>
 
   <div class="section">
-    <button class="example-button" onclick="fillExample2()">예시</button>
+    <button class="example-button" onclick="fillExample2()">예시 보기</button>
     <h2>2. 내가 좋아하는 계절은 무엇인가요?</h2>
     <textarea id="q2" placeholder="예: 저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요."></textarea>
   </div>
 
   <div class="section">
-    <button class="example-button" onclick="fillExample3()">예시</button>
+    <button class="example-button" onclick="fillExample3()">예시 보기</button>
     <h2>3. 어릴 적 나의 꿈은 무엇이었나요?</h2>
     <textarea id="q3" placeholder="예: 저는 어릴 때 선생님이 되고 싶었어요."></textarea>
   </div>
 
   <div class="section">
-    <button class="example-button" onclick="fillExample4()">예시</button>
+    <button class="example-button" onclick="fillExample4()">예시 보기</button>
     <h2>4. 지금 내가 하고 싶은 일은 무엇인가요?</h2>
     <textarea id="q4" placeholder="예: 지금은 그림을 그리고 전시회를 열어보고 싶어요."></textarea>
   </div>
 
   <div class="section">
-    <button class="example-button" onclick="fillExample5()">예시</button>
-    <h2>5. 표지 제목은 무엇으로 할까요?</h2>
-    <textarea id="q5" placeholder="예: 김영숙의 따뜻한 하루"></textarea>
-  </div>
-
-  <div class="section">
-    <h2>6. 원하는 그림 스타일을 선택하세요</h2>
+    <h2>5. 원하는 그림 스타일을 선택하세요</h2>
     <select id="style">
       <option value="디즈니 스타일">디즈니 스타일</option>
       <option value="지브리 스타일">지브리 스타일</option>
@@ -132,9 +128,6 @@
       function fillExample4() {
         document.getElementById('q4').value = '지금은 그림을 그리고 전시회를 열어보고 싶어요.';
       }
-      function fillExample5() {
-        document.getElementById('q5').value = '김영숙의 따뜻한 하루';
-      }
 
       document.getElementById('downloadBtn').addEventListener('click', function () {
         const title = "나를 소개하는 그림동화책";
@@ -157,12 +150,6 @@
         a.download = title + '.txt';
         a.click();
       });
-
-      document.querySelector('.example-button[onclick="fillExample1()"]')?.addEventListener('click', fillExample1);
-      document.querySelector('.example-button[onclick="fillExample2()"]')?.addEventListener('click', fillExample2);
-      document.querySelector('.example-button[onclick="fillExample3()"]')?.addEventListener('click', fillExample3);
-      document.querySelector('.example-button[onclick="fillExample4()"]')?.addEventListener('click', fillExample4);
-      document.querySelector('.example-button[onclick="fillExample5()"]')?.addEventListener('click', fillExample5);
     });
   </script>
 </body>
