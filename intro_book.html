@@ -1,116 +1,235 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>🌍 어르신 수업을 위한 자기 소개 그림 도화책 창작 지침서</title>
+  <meta charset="UTF-8" />
+  <title>🌼 나를 소개하는 AI 그림 동화책 만들기</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      padding: 20px;
+      font-family: 'Nanum Gothic', sans-serif;
       background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+      padding: 30px;
+      line-height: 1.8;
       color: #003366;
     }
-    h1, h2 {
+    h1 {
+      font-size: 32px;
       color: #01579b;
     }
-    textarea, select, input {
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+    input, select, textarea {
       width: 100%;
-      padding: 8px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .section {
-      margin-bottom: 30px;
-      background-color: #ffffffcc;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .guide-box {
-      background-color: #ffffffcc;
-      border-left: 6px solid #0288d1;
-      padding: 20px;
+      padding: 12px;
+      font-size: 18px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
+      border: 1px solid #aaa;
+      margin-top: 8px;
+      margin-bottom: 20px;
     }
-    .guide-box p,
-    .guide-box div {
-      margin-bottom: 10px;
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
     }
-    .guide-box strong {
-      color: #0277bd;
+    .section, .output {
+      background: #ffffffcc;
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .example-btn {
-      margin-left: 10px;
+    .output {
+      display: none;
+    }
+    .inline-button {
       font-size: 14px;
-      padding: 4px 8px;
-      background-color: #e1f5fe;
-      border: 1px solid #81d4fa;
+      padding: 6px 10px;
+      margin-left: 8px;
+      background-color: #4db6ac;
+      color: white;
+      border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-  </style>
-  <script>
-    function insertExample(id, text) {
-      const input = document.getElementById(id);
-      input.value = text;
-      input.style.fontWeight = 'bold';
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      input, select, textarea, button {
+        font-size: 16px;
+        padding: 10px;
+      }
+      .inline-button {
+        font-size: 12px;
+        padding: 5px 8px;
+      }
+      h1 {
+        font-size: 24px;
+      }
     }
-  </script>
+  </style>
 </head>
 <body>
-  <h1>🌍 어르신 수업을 위한 자기 소개 그림 도화책 창작 지침서</h1>
+  <h1>🌼 나를 소개하는 AI 그림 동화책 만들기</h1>
 
-  <div class="guide-box">
-    <p><strong>이 그림책의 목표는</strong> AI를 활용해 나를 표현하고 소개하는 그림도화책을 만들는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.</p>
-    <div><strong>①</strong> 표지를 포함한 5페이지의 그림책을  \uc써 주세요. 재미있고 차지보게 전결하고, 독자에게 감독적이며 교훈적으로 마무리해 주세요.</div>
-    <div><strong>②</strong> 각 장면의 내용을 흑미지지하게 도화책 스타일로 쓰여 주세요.</div>
-    <div><strong>③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong>프론프트를 한국어과 영어로</strong> 상세히 작성해 주세요. 모든 장면의 주인공 여름, 머리스타일, 복장이 동일해야 합니다.</div>
-    <div><strong>④</strong> 제목은 호기심을 자구하고 감정을 불러일이킵니다.</div>
-    <div><strong>⑤</strong> 인물이미지프론프트를 만들 후, 각 페이지의 주인공이 동일하게 보이도록, 인물이미지프론프트(머리형태, 여름, 의상)을 페이지 이미지 프론프트에 반드시 넣어주세요.</div>
+  <div class="section">
+
+    <label>📛 존함을 알려주시겠어요?
+      <button class="inline-button" onclick="fillExample('name', '김영자')">예시 입력</button>
+      <button class="inline-button" onclick="speak('존함을 알려주시겠어요?')">🔊 듣기</button>
+    </label>
+    <input type="text" id="name" placeholder="예: 김영자 님">
+
+    <label>🎂 연세는 어느 연령대이신가요?
+      <button class="inline-button" onclick="speak('연세는 어느 연령대이신가요?')">🔊 듣기</button>
+    </label>
+    <select id="age">
+      <option>50대</option>
+      <option>60대</option>
+      <option>70대</option>
+      <option>80대 이상</option>
+    </select>
+
+    <label>🧍 성별을 선택해 주세요.
+      <button class="inline-button" onclick="speak('성별을 선택해 주세요.')">🔊 듣기</button>
+    </label>
+    <select id="gender">
+      <option>여자</option>
+      <option>남자</option>
+      <option>기타</option>
+    </select>
+
+    <label>🌈 성격을 간단히 표현해 주시겠어요?
+      <button class="inline-button" onclick="fillExample('personality', '차분하고 따뜻한 성격이에요.')">예시 입력</button>
+      <button class="inline-button" onclick="speak('성격을 간단히 표현해 주시겠어요?')">🔊 듣기</button>
+    </label>
+    <input type="text" id="personality" placeholder="예: 차분하고 따뜻한 편이에요.">
+
+    <label>🍲 평소에 즐겨 드시는 음식이 있으실까요?
+      <button class="inline-button" onclick="fillExample('food', '따뜻한 미역국을 좋아해요.')">예시 입력</button>
+      <button class="inline-button" onclick="speak('평소에 즐겨 드시는 음식이 있으실까요?')">🔊 듣기</button>
+    </label>
+    <input type="text" id="food" placeholder="예: 따뜻한 미역국, 고구마">
+
+    <label>🍁 마음이 편안해지는 계절이 있다면 알려주세요.
+      <button class="inline-button" onclick="fillExample('season', '가을이 되면 마음이 차분해져요.')">예시 입력</button>
+      <button class="inline-button" onclick="speak('마음이 편안해지는 계절이 있다면 알려주세요.')">🔊 듣기</button>
+    </label>
+    <input type="text" id="season" placeholder="예: 가을, 봄">
+
+    <label>🎒 어린 시절 품었던 꿈이 있으셨다면 적어주세요.
+      <button class="inline-button" onclick="fillExample('dream', '어릴 적엔 선생님이 되고 싶었어요.')">예시 입력</button>
+      <button class="inline-button" onclick="speak('어린 시절 품었던 꿈이 있으셨다면 적어주세요.')">🔊 듣기</button>
+    </label>
+    <input type="text" id="dream" placeholder="예: 선생님이 되고 싶었어요.">
+
+    <label>💭 지금 마음속에 품고 계신 바람이 있으시다면 알려주세요.
+      <button class="inline-button" onclick="fillExample('wish', '지금은 그림책 작가가 되는 꿈을 꾸고 있어요.')">예시 입력</button>
+      <button class="inline-button" onclick="speak('지금 마음속에 품고 계신 바람이 있으시다면 알려주세요.')">🔊 듣기</button>
+    </label>
+    <input type="text" id="wish" placeholder="예: 그림책 작가가 되고 싶어요.">
+
+    <label>🖼️ 선호하시는 그림 스타일을 골라주세요.
+      <button class="inline-button" onclick="speak('선호하시는 그림 스타일을 골라주세요.')">🔊 듣기</button>
+    </label>
+    <select id="style">
+      <option>디즈니 스타일</option>
+      <option>지브리 스타일</option>
+      <option>연필 소묘 스타일</option>
+      <option>수채화 스타일</option>
+    </select>
+
+    <label>🌟 그림 속 주인공의 모습은 어떤 이미지였으면 좋을까요?
+      <button class="inline-button" onclick="fillExample('fixedCharacter', '단발머리, 부드러운 미소, 50대 여성, 디즈니 스타일')">예시 입력</button>
+      <button class="inline-button" onclick="speak('그림 속 주인공의 모습은 어떤 이미지였으면 좋을까요?')">🔊 듣기</button>
+    </label>
+    <input type="text" id="fixedCharacter" placeholder="예: 단발머리, 따뜻한 미소, 50대 여성, 디즈니 스타일">
+
+    <button onclick="generateStory()">🌷 동화책 만들기 시작하기</button>
   </div>
 
-<script>
-  function downloadText() {
-    const name = document.getElementById('name').value.trim() || 'intro_book';
-    const personality = document.getElementById('personality').value.trim();
-    const childhood = document.getElementById('childhood').value.trim();
-    const wish = document.getElementById('wish').value.trim();
-    const age = document.querySelector('input[name="age"]:checked')?.value || '';
-    const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
-    const style = document.querySelector('input[name="style"]:checked')?.value || '';
+  <div id="storyOutput" class="output"></div>
 
-    let content = '';
-    content += '📘 이 그림책의 목표는 AI를 활용해 나를 표현하고 소개하는 그림동화책을 만드는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.\n';
-    content += '① 표지를 포함한 5페이지의 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적으로 마무리해 주세요.\n';
-    content += '② 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.\n';
-    content += '③ 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요.\n';
-    content += '④ 제목은 호기심을 자극하고 감정을 불러일으키는 말로 만들어 주세요.\n';
-    content += '⑤ 인물이미지프롬프트를 만든 후, 각 페이지의 주인공이 동일하게 보이도록, 인물이미지프롬프트(머리형태, 얼굴, 의상)를 페이지 이미지 프롬프트에 반드시 넣어주세요.\n\n';
+  <script>
+    function fillExample(id, text) {
+      document.getElementById(id).value = text;
+    }
 
-    content += `이름: ${name}\n`;
-    content += `연령: ${age}\n`;
-    content += `성별: ${gender}\n`;
-    content += `성격: ${personality}\n`;
-    content += `어릴 적 꿈: ${childhood}\n`;
-    content += `요즘의 바람: ${wish}\n`;
-    content += `선호 그림 스타일: ${style}\n\n`;
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ko-KR';
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utterance);
+    }
 
-    // 이미지 프롬프트 생성
-    const korPrompt = `${age} ${gender}이며, ${personality} 외모를 가진 인물. ${style} 스타일로 그려주세요.`;
-    const engPrompt = `A ${personality} ${gender === '여자' ? 'Korean woman' : 'Korean man'} in their ${age}, illustrated in ${style} style.`;
-    content += `[🌟 이미지 프롬프트 예시]\n한글: ${korPrompt}\n영문: ${engPrompt}\n`;
+    function generateStory() {
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const personality = document.getElementById('personality').value;
+      const food = document.getElementById('food').value;
+      const season = document.getElementById('season').value;
+      const dream = document.getElementById('dream').value;
+      const wish = document.getElementById('wish').value;
+      const style = document.getElementById('style').value;
+      const fixedCharacter = document.getElementById('fixedCharacter').value;
 
-    const blob = new Blob([content], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `${name || 'intro_book'}.txt`;
-    a.click();
-  }
-</script>
+      const pages = [
+        `📘 1. 나의 시작\n저는 ${age}의 ${gender} ${name}입니다. ${food}을(를) 좋아하던 아이였지요.`,
+        `📘 2. 성격과 계절\n저는 ${personality} 성격을 지니고 있으며, 특히 ${season}을 좋아한답니다.`,
+        `📘 3. 어린 시절의 꿈\n어릴 적 저의 꿈은 ${dream}였어요. 그 시절의 저는 언제나 그 꿈을 품고 있었지요.`,
+        `📘 4. 지금의 나\n지금 저는 ${wish}라는 새로운 꿈을 마음에 품고 있습니다.`,
+        `📘 5. 다짐\n저의 이야기는 아직 끝나지 않았습니다. 저는 오늘도 따뜻한 마음으로 꿈을 향해 한 걸음씩 나아가고 있답니다.`
+      ];
+
+      const sceneDescriptions = [
+        "어린 시절 좋아하던 음식을 떠올리는 장면",
+        "가을 공원에서 조용히 풍경을 바라보는 장면",
+        "칠판 앞에서 교사 놀이하던 어린 시절 회상",
+        "지금 그림책을 그리고 있는 장면",
+        "꿈을 향해 나아가는 따뜻한 뒷모습"
+      ];
+
+      const prompts = sceneDescriptions.map((scene, i) =>
+        `[이미지 프롬프트] ${fixedCharacter}, ${scene}`
+      );
+
+      let result = `<h2>📖 ${name}님의 그림 동화책</h2>`;
+      pages.forEach((p, i) => {
+        const [title, content] = p.split("\n");
+        result += `<h3>${title}</h3><p>${content}</p>`;
+        result += `<textarea readonly>${prompts[i]}</textarea><br>`;
+      });
+
+      result += `<button onclick="downloadTextFile()">💾 동화책 파일 내려받기</button>`;
+      result += `
+        <p><strong>📂 저장 후 이렇게 활용해 보세요:</strong></p>
+        <ul>
+          <li>1. ChatGPT에 붙여넣어 그림 동화로 만들 수 있어요.</li>
+          <li>2. Google FX, 위스키 등에서 그림 프롬프트로 사용해 보세요.</li>
+          <li>3. 저장된 내용을 가족이나 친구와 함께 읽어보셔도 참 좋습니다.</li>
+        </ul>`;
+
+      document.getElementById('storyOutput').innerHTML = result;
+      document.getElementById('storyOutput').style.display = 'block';
+      window.generatedText = pages.map((p, i) => p + `\n${prompts[i]}`).join('\n\n');
+    }
+
+    function downloadTextFile() {
+      const blob = new Blob([window.generatedText], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = '나를_소개하는_그림동화책.txt';
+      link.click();
+    }
+  </script>
 </body>
 </html>
