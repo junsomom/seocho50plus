@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>🌼 나를 소개하는 그림 동화책 만들기</title>
-  <style>
+<meta charset="utf-8"/>
+<title>🌼 나를 소개하는 그림 동화책 만들기</title>
+<style>
     body {
       font-family: 'Nanum Gothic', sans-serif;
       background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
@@ -26,7 +27,7 @@
       margin-bottom: 10px;
     }
     button {
-      background-color: #00796b;
+      background-color: #4a90e2;
       color: white;
       padding: 8px 14px;
       font-size: 16px;
@@ -47,59 +48,84 @@
       display: block;
       margin-top: 10px;
     }
-  </style>
+  
+/* 예시 버튼 스타일 */
+.example-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* 음성 버튼 스타일 */
+.voice-button {
+  background-color: #2196f3;
+  color: white;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .example-button, .voice-button {
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 8px;
+    display: inline-block;
+    width: auto;
+  }
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+</style>
 </head>
 <body>
-  <h1>🌼 나만의 그림 동화책을 만들어 보아요</h1>
-  <p>아래 항목을 하나씩 눌러보며 천천히 입력해 주세요.</p>
-
-  <div class="section">
-    <label>이름 <button onclick="setValue('name', '김영자')">예시 보기</button></label>
-    <input type="text" id="name"><button onclick="setValue('name', '김영자')">예시 보기</button>
-
-    <label>연령대를 선택해 주세요</label>
-    <select id="age">
-      <option>50대</option><option>60대</option><option>70대</option>
-    </select>
-
-    <label>성별을 선택해 주세요</label>
-    <select id="gender">
-      <option>여자</option><option>남자</option>
-    </select>
-
-    <label>성격 <button onclick="setValue('personality', '차분하고 따뜻한 성격이에요.')">예시 보기</button></label>
-    <input type="text" id="personality"><button onclick="setValue('personality', '차분하고 따뜻한 성격이에요.')">예시 보기</button>
-
-    <label>좋아하는 음식 <button onclick="setValue('food', '따뜻한 미역국')">예시 보기</button></label>
-    <input type="text" id="food"><button onclick="setValue('food', '따뜻한 미역국')">예시 보기</button>
-
-    <label>좋아하는 계절 <button onclick="setValue('season', '가을')">예시 보기</button></label>
-    <input type="text" id="season"><button onclick="setValue('season', '가을')">예시 보기</button>
-
-    <label>어릴 적 꿈 <button onclick="setValue('dream', '선생님이 되고 싶었어요')">예시 보기</button></label>
-    <input type="text" id="dream"><button onclick="setValue('dream', '선생님이 되고 싶었어요')">예시 보기</button>
-
-    <label>지금의 소망 <button onclick="setValue('wish', '그림책 작가가 되고 싶어요')">예시 보기</button></label>
-    <input type="text" id="wish"><button onclick="setValue('wish', '그림책 작가가 되고 싶어요')">예시 보기</button>
-
-    <label>좋아하는 그림 스타일을 골라 주세요</label>
-    <select id="style">
-      <option>디즈니 스타일</option>
-      <option>지브리 스타일</option>
-      <option>연필 소묘 스타일</option>
-      <option>수채화 스타일</option>
-    </select>
-
-    <label>내 모습 설명 <button onclick="setValue('appearance', '60대 한국 여성, 짧은 단발머리, 부드러운 인상')">예시 보기</button></label>
-    <textarea id="appearance" placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
-  </div>
-
-  <div class="section">
-    <button onclick="generateStory()">📖 동화책 만들기</button>
-    <div id="storyOutput" class="output"></div>
-  </div>
-
-  <script>
+<h1>🌼 나만의 그림 동화책을 만들어 보아요</h1>
+<p>아래 항목을 하나씩 눌러보며 천천히 입력해 주세요.</p>
+<div class="section">
+<label><span>이름예시</span><button class="voice-button" onclick="speakText('이름을 입력해 주세요.')">🔊</button></label>
+<input id="name" type="text"/>
+<label>연령대를 선택해 주세요</label>
+<select id="age">
+<option>50대</option><option>60대</option><option>70대</option>
+</select>
+<label>성별을 선택해 주세요</label>
+<select id="gender">
+<option>여자</option><option>남자</option>
+</select>
+<label><span>성격예시</span><button class="voice-button" onclick="speakText('당신의 성격을 간단히 소개해 주세요.')">🔊</button></label>
+<input id="personality" type="text"/>
+<label><span>좋아하는 음식예시</span><button class="voice-button" onclick="speakText('좋아하는 음식을 입력해 주세요.')">🔊</button></label>
+<input id="food" type="text"/>
+<label><span>좋아하는 계절예시</span><button class="voice-button" onclick="speakText('좋아하는 계절을 알려 주세요.')">🔊</button></label>
+<input id="season" type="text"/>
+<label><span>어릴 적 꿈예시</span><button class="voice-button" onclick="speakText('어릴 적 꿈은 무엇이었나요?')">🔊</button></label>
+<input id="dream" type="text"/>
+<label><span>지금의 소망예시</span><button class="voice-button" onclick="speakText('지금의 소망은 무엇인가요?')">🔊</button></label>
+<input id="wish" type="text"/>
+<label>좋아하는 그림 스타일을 골라 주세요</label>
+<select id="style">
+<option>디즈니 스타일</option>
+<option>지브리 스타일</option>
+<option>연필 소묘 스타일</option>
+<option>수채화 스타일</option>
+</select>
+<label><span>내 모습 설명예시</span><button class="voice-button" onclick="speakText('당신의 외모나 인상을 간단히 묘사해 주세요.')">🔊</button></label>
+<textarea id="appearance" placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
+</div>
+<div class="section">
+<button onclick="generateStory()">📖 동화책 만들기</button>
+<div class="output" id="storyOutput"></div>
+</div>
+<script>
     function setValue(id, value) {
       document.getElementById(id).value = value;
     }
@@ -142,5 +168,13 @@
       document.getElementById('storyOutput').style.display = 'block';
     }
   </script>
+<script>
+function speakText(text) {
+  const synth = window.speechSynthesis;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ko-KR';
+  synth.speak(utter);
+}
+</script>
 </body>
 </html>
