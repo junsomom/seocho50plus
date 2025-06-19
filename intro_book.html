@@ -1,1 +1,96 @@
+<script>
+  function insertExample(id, value) {
+    const el = document.getElementById(id);
+    el.value = value;
+    el.style.fontWeight = 'bold';
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const age = document.querySelector('input[name="age"]:checked')?.value || '';
+    const gender = document.getElementById('gender').value;
+    const personality = document.getElementById('personality').value.trim();
+    const dream = document.getElementById('dream').value.trim();
+    const style = document.getElementById('style').value;
+
+    let content = "🌍 어르신 수업을 위한 자기 소개 그림 동화책 창작 지침서\n\n";
+    content += "이 그림책의 목표는 AI를 이용한 그림동화책 만들기 수업에 참여하는 어르신들이 나를 표현하고 소개하는 그림동화책을 만드는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.\n\n";
+    content += "1. 나의 이름은\n나의 이름은 " + name + "입니다.\n\n";
+    content += "2. 나의 연령대는\n나는 " + age + "입니다.\n\n";
+    content += "3. 나의 성별은\n나는 " + gender + "입니다.\n\n";
+    content += "4. 나의 성격은\n" + personality + "\n\n";
+    content += "5. 어릴 적 꿈이나 요즘 바라는 것은\n" + dream + "\n\n";
+    content += "6. 내가 원하는 그림 스타일은\n" + style + " 스타일입니다.\n\n";
+
+    const prompts = [
+      ["표지", "밝은 분위기의 표지. 주인공이 환하게 웃으며 정면을 바라보는 장면. 배경은 따뜻한 빛과 자연.", "Cover scene with the main character smiling warmly toward the front. Background is natural and sunny."],
+      ["1페이지", "어릴 적 모습을 회상하는 장면. 주인공이 책상 앞에 앉아 꿈을 꾸는 모습.", "The main character as a child dreaming at a desk, recalling their childhood dream."],
+      ["2페이지", "지금의 내 모습. 밝은 공간에서 웃고 있는 장면.", "Current self of the character smiling in a bright room."],
+      ["3페이지", "내가 좋아하는 일을 하고 있는 장면.", "The character doing something they love."],
+      ["4페이지", "마무리 장면. 평화롭게 앉아 있는 모습, 따뜻한 배경.", "Closing scene with the character sitting peacefully in a warm setting."]
+    ];
+
+    prompts.forEach(([label, korDesc, engDesc]) => {
+      content += `🖼️ ${label} 이미지 프롬프트 (한글)\n${age} ${gender} 주인공, ${personality} 성격, 짧은 머리, 단정한 복장. ${korDesc} ${style} 스타일로.\n\n`;
+      content += `🖼️ ${label} Image Prompt (English)\nA ${personality} Korean ${gender === '여자' ? 'woman' : 'man'} in their ${age}, with short hair, neat outfit. ${engDesc} Illustrated in ${style} style.\n\n`;
+    });
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'intro_book.txt';
+    a.click();
+  });
+</script>
+
+<style>
+  .example-button {
+    margin-left: 10px;
+    font-size: 14px;
+    padding: 4px 10px;
+    background-color: #fff3cd;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
+
+<!-- 아래는 각 질문 입력 폼에 예시 버튼을 연결하는 부분 (HTML 본문 내에 삽입) -->
+<!-- 예시 -->
+<label for="name">1. 나의 이름은 무엇인가요?
+  <button class="example-button" onclick="insertExample('name', '김영자')">예시 보기</button>
+</label>
+<input type="text" id="name" placeholder="예: 김영자">
+
+<label>2. 나는 몇 살인가요?</label>
+<!-- 기존 연령대 라디오 버튼 유지 -->
+
+<label for="gender">3. 나의 성별은 무엇인가요?
+  <button class="example-button" onclick="insertExample('gender', '여자')">예시 보기</button>
+</label>
+<select id="gender">
+  <option value="">선택하세요</option>
+  <option value="여자">여자</option>
+  <option value="남자">남자</option>
+</select>
+
+<label for="personality">4. 나의 성격은 어떤가요?
+  <button class="example-button" onclick="insertExample('personality', '차분하고 따뜻하며, 사람들과 잘 어울립니다.')">예시 보기</button>
+</label>
+<input type="text" id="personality" placeholder="예: 차분하고 따뜻해요.">
+
+<label for="dream">5. 어릴 적 꿈이나 요즘 바라는 것은 무엇인가요?
+  <button class="example-button" onclick="insertExample('dream', '어릴 적에는 선생님이 되고 싶었고, 요즘은 그림책 작가가 되고 싶어요.')">예시 보기</button>
+</label>
+<textarea id="dream" rows="3" placeholder="예: 선생님이 되고 싶었어요. 요즘은 그림책 작가가 되고 싶어요."></textarea>
+
+<label for="style">6. 그림 스타일을 골라주세요</label>
+<select id="style">
+  <option value="">선택하세요</option>
+  <option value="지브리">지브리</option>
+  <option value="디즈니">디즈니</option>
+  <option value="케이트 그린어웨이">케이트 그린어웨이</option>
+  <option value="크리스 라스카">크리스 라스카</option>
+  <option value="소피 블랙올">소피 블랙올</option>
+</select>
 
