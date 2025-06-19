@@ -188,10 +188,10 @@
       const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'childhoodDream', 'currentWish', 'style'];
       let content = "";
       fields.forEach((id, index) => {
-        const val = document.getElementById(id).value.trim(); 
+        const val = document.getElementById(id).value.trim();
         if (val) content += `Q${index + 1}. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
       });
-      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘. 성별과 연령 성격 답변에 어울리는 주인공 외모프로필을 만들어 주고, 모든 페이지의 이미지 프롬프트에 동일한 주인공 외모프로필을 넣어서 일관성이 무너지지 않도록 해줘.";
+      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 주인공 인물 프로필(머리스타일, 얼굴, 표정)각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 인물프로필은 모든 페이지에 동일하게 들어가야 해. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘.";
 
       const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
