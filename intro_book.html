@@ -21,7 +21,6 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: bold;
     }
     .section {
       background-color: #ffffffdd;
@@ -40,16 +39,14 @@
     .example-button {
       display: inline-block;
       margin-left: 10px;
-      padding: 16px 28px;
-      font-size: 20px;
+      padding: 10px 16px;
+      font-size: 16px;
       font-weight: bold;
-      background-color: #c5e1a5;
-      color: #1b5e20;
+      background-color: #dcedc8;
+      color: #33691e;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      vertical-align: middle;
     }
     .choice-buttons button {
       font-size: 18px;
@@ -77,6 +74,9 @@
     #downloadBtn:hover {
       opacity: 0.9;
     }
+    .bold {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -90,9 +90,9 @@
 
   <div class="section">
     <h2>1. 내 이름은 무엇인가요?
-      <button class="example-button" onclick="document.getElementById('q1').value='제 이름은 김영숙입니다.'">예시</button>
+      <button class="example-button" onclick="fillExample('q1', '제 이름은 김영자입니다.')">예시</button>
     </h2>
-    <textarea id="q1" placeholder="예: 제 이름은 김영숙입니다."></textarea>
+    <textarea id="q1"></textarea>
   </div>
 
   <div class="section">
@@ -129,37 +129,37 @@
 
   <div class="section">
     <h2>5. 내가 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="document.getElementById('q5').value='저는 따뜻한 미역국을 좋아해요.'">예시</button>
+      <button class="example-button" onclick="fillExample('q5', '저는 따뜻한 미역국을 좋아해요.')">예시</button>
     </h2>
-    <textarea id="q5" placeholder="예: 저는 따뜻한 미역국을 좋아해요."></textarea>
+    <textarea id="q5"></textarea>
   </div>
 
   <div class="section">
     <h2>6. 내가 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="document.getElementById('q6').value='저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.'">예시</button>
+      <button class="example-button" onclick="fillExample('q6', '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.')">예시</button>
     </h2>
-    <textarea id="q6" placeholder="예: 저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요."></textarea>
+    <textarea id="q6"></textarea>
   </div>
 
   <div class="section">
     <h2>7. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="document.getElementById('q7').value='저는 어릴 때 선생님이 되고 싶었어요.'">예시</button>
+      <button class="example-button" onclick="fillExample('q7', '저는 어릴 때 선생님이 되고 싶었어요.')">예시</button>
     </h2>
-    <textarea id="q7" placeholder="예: 저는 어릴 때 선생님이 되고 싶었어요."></textarea>
+    <textarea id="q7"></textarea>
   </div>
 
   <div class="section">
     <h2>8. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="document.getElementById('q8').value='지금은 그림을 그리고 전시회를 열어보고 싶어요.'">예시</button>
+      <button class="example-button" onclick="fillExample('q8', '지금은 그림을 그리고 전시회를 열어보고 싶어요.')">예시</button>
     </h2>
-    <textarea id="q8" placeholder="예: 지금은 그림을 그리고 전시회를 열어보고 싶어요."></textarea>
+    <textarea id="q8"></textarea>
   </div>
 
   <div class="section">
     <h2>9. 나의 삶의 태도나 마음가짐은?
-      <button class="example-button" onclick="document.getElementById('q9').value='저는 언제나 배우고 싶은 마음이 있는 사람입니다.'">예시</button>
+      <button class="example-button" onclick="fillExample('q9', '저는 언제나 배우고 싶은 마음이 있는 사람입니다.')">예시</button>
     </h2>
-    <textarea id="q9" placeholder="예: 저는 언제나 배우고 싶은 마음이 있는 사람입니다."></textarea>
+    <textarea id="q9"></textarea>
   </div>
 
   <div class="section">
@@ -184,6 +184,22 @@
       button.classList.add('selected');
       document.getElementById(inputId).value = button.textContent;
     }
+
+    function fillExample(id, text) {
+      const el = document.getElementById(id);
+      el.value = text;
+      el.classList.add('bold');
+    }
+
+    document.querySelectorAll('textarea').forEach(el => {
+      el.addEventListener('input', function () {
+        if (el.value.trim() !== '') {
+          el.classList.add('bold');
+        } else {
+          el.classList.remove('bold');
+        }
+      });
+    });
 
     document.getElementById('downloadBtn').addEventListener('click', function () {
       const title = "나를 소개하는 그림동화책";
