@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>나를 소개하는 그림동화책 만들기</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+      color: #004d40;
+    }
+    h1, h2 {
+      color: #00695c;
+    }
+    textarea, input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .section {
+      background-color: #ffffffdd;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .guide-box {
+      background-color: #e0f2f1;
+      border-left: 6px solid #00796b;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    #downloadBtn {
+      background: linear-gradient(to right, #00796b, #4db6ac);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #downloadBtn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h1>✨ 나를 소개하는 그림동화책 만들기 ✨</h1>
+
+  <div class="guide-box">
+    <p><strong>&lt;&gt;이 동화책의 목표는</strong> 나를 소개하는 간단한 그림동화책을 만드는 것입니다.</p>
+    <p>아래 항목을 하나씩 작성하면, 각 질문에 대한 답과 그림 프롬프트(한글+영어)를 포함한 한 페이지씩 그림동화책이 구성됩니다.</p>
+  </div>
+
+  <div class="section">
+    <h2>1. 내 이름과 내가 좋아하는 음식은 무엇인가요?</h2>
+    <button onclick="fillExample1()">예시 자동완성</button>
+    <textarea id="q1a" placeholder="예: 제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요."></textarea>
+    <textarea id="q1b" placeholder="[한글] 따뜻한 미역국을 먹으며 행복해하는 어르신의 모습
+[영어] An elderly woman happily eating warm seaweed soup at a cozy table."></textarea>
+  </div>
+
+  <div class="section">
+    <h2>2. 내가 좋아하는 계절은 무엇인가요?</h2>
+    <button onclick="fillExample2()">예시 자동완성</button>
+    <textarea id="q2a" placeholder="예: 저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요."></textarea>
+    <textarea id="q2b" placeholder="[한글] 단풍잎이 흩날리는 가을 길을 산책하는 어르신
+[영어] An elderly person walking along a path with autumn leaves gently falling."></textarea>
+  </div>
+
+  <div class="section">
+    <h2>3. 어릴 적 나의 꿈은 무엇이었나요?</h2>
+    <button onclick="fillExample3()">예시 자동완성</button>
+    <textarea id="q3a" placeholder="예: 저는 어릴 때 선생님이 되고 싶었어요."></textarea>
+    <textarea id="q3b" placeholder="[한글] 칠판 앞에서 꿈을 이야기하는 어린 시절의 아이
+[영어] A young child in front of a blackboard, talking about their dream of becoming a teacher."></textarea>
+  </div>
+
+  <div class="section">
+    <h2>4. 지금 내가 하고 싶은 일은 무엇인가요?</h2>
+    <button onclick="fillExample4()">예시 자동완성</button>
+    <textarea id="q4a" placeholder="예: 지금은 그림을 그리고 전시회를 열어보고 싶어요."></textarea>
+    <textarea id="q4b" placeholder="[한글] 화사한 색으로 그림을 그리는 어르신의 모습
+[영어] An elderly person joyfully painting with colorful brushes in a bright room."></textarea>
+  </div>
+
+  <div class="section">
+    <h2>5. 표지 이미지 프롬프트</h2>
+    <button onclick="fillExample5()">예시 자동완성</button>
+    <textarea id="q5" placeholder="[한글] 어르신이 환하게 웃으며 손을 흔드는 표지
+[영어] A smiling elderly person waving cheerfully on the cover."></textarea>
+  </div>
+
+  <button id="downloadBtn">저장하기</button>
+
+  <script>
+    function fillExample1() {
+      document.getElementById('q1a').value = '제 이름은 김영숙이에요. 저는 따뜻한 미역국을 좋아해요.';
+      document.getElementById('q1b').value = '[한글] 따뜻한 미역국을 먹으며 행복해하는 어르신의 모습\n[영어] An elderly woman happily eating warm seaweed soup at a cozy table.';
+    }
+    function fillExample2() {
+      document.getElementById('q2a').value = '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.';
+      document.getElementById('q2b').value = '[한글] 단풍잎이 흩날리는 가을 길을 산책하는 어르신\n[영어] An elderly person walking along a path with autumn leaves gently falling.';
+    }
+    function fillExample3() {
+      document.getElementById('q3a').value = '저는 어릴 때 선생님이 되고 싶었어요.';
+      document.getElementById('q3b').value = '[한글] 칠판 앞에서 꿈을 이야기하는 어린 시절의 아이\n[영어] A young child in front of a blackboard, talking about their dream of becoming a teacher.';
+    }
+    function fillExample4() {
+      document.getElementById('q4a').value = '지금은 그림을 그리고 전시회를 열어보고 싶어요.';
+      document.getElementById('q4b').value = '[한글] 화사한 색으로 그림을 그리는 어르신의 모습\n[영어] An elderly person joyfully painting with colorful brushes in a bright room.';
+    }
+    function fillExample5() {
+      document.getElementById('q5').value = '[한글] 어르신이 환하게 웃으며 손을 흔드는 표지\n[영어] A smiling elderly person waving cheerfully on the cover.';
+    }
+
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+      const title = "나를 소개하는 그림동화책";
+      let content = '';
+      content += '<>이 동화책의 목표는 나를 소개하는 간단한 그림동화책을 만드는 것입니다.\n\n';
+      document.querySelectorAll('.section').forEach(function (section) {
+        const heading = section.querySelector('h2');
+        if (heading) content += '== ' + heading.innerText + ' ==\n';
+        section.querySelectorAll('textarea').forEach(function (el) {
+          const val = el.value.trim();
+          if (val) content += val + '\n';
+        });
+        content += '\n';
+      });
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = title + '.txt';
+      a.click();
+    });
+  </script>
+</body>
+</html>
