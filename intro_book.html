@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>🌼 나를 소개하는 AI 그림 동화책 만들기</title>
+  <title>🌼 나를 소개하는 그림 동화책 만들기</title>
   <style>
     body {
       font-family: 'Nanum Gothic', sans-serif;
@@ -13,7 +13,7 @@
       color: #003366;
     }
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       color: #01579b;
     }
     input, select, textarea {
@@ -23,66 +23,87 @@
       border-radius: 10px;
       border: 1px solid #aaa;
       margin-top: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     button {
       background-color: #00796b;
       color: white;
-      padding: 12px 24px;
-      font-size: 18px;
+      padding: 8px 14px;
+      font-size: 16px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
+      margin: 5px 5px 10px 0;
     }
     .section, .output {
       background: #ffffffcc;
-      padding: 25px;
-      margin-top: 30px;
+      padding: 20px;
+      margin-top: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
-    .output {
-      display: none;
-    }
-    ol {
-      padding-left: 20px;
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>🌼 나를 소개하는 AI 그림 동화책 만들기</h1>
-
-  <p><strong>🌟 시작 안내:</strong><br>
-  아래 질문을 하나씩 읽고, 오른쪽에 있는 예시 버튼을 눌러보세요.<br>
-  모두 입력하시면, 세상에 하나뿐인 나만의 그림동화책이 만들어집니다!</p>
+  <h1>🌼 나만의 그림 동화책을 만들어 보아요</h1>
+  <p>아래 항목을 하나씩 눌러보며 천천히 입력해 주세요.</p>
 
   <div class="section">
-    <label>이름</label><input type="text" id="name" value="김영자">
-    <label>나이대</label><select id="age"><option>50대</option><option>60대</option><option>70대</option></select>
-    <label>성별</label><select id="gender"><option>여자</option><option>남자</option></select>
-    <label>성격</label><input type="text" id="personality" value="차분하고 따뜻한 성격이에요.">
-    <label>좋아하는 음식</label><input type="text" id="food" value="따뜻한 미역국을 좋아해요.">
-    <label>좋아하는 계절</label><input type="text" id="season" value="가을이 되면 마음이 차분해져요.">
-    <label>어릴 적 꿈</label><input type="text" id="dream" value="선생님이 되고 싶었어요.">
-    <label>지금의 소망</label><input type="text" id="wish" value="지금은 그림책 작가가 되고 싶어요.">
-    <label>외모 설명</label><input type="text" id="appearance" value="단발머리, 부드러운 미소">
-    <label>그림 스타일</label><select id="style"><option>디즈니 스타일</option><option>지브리 스타일</option><option>연필 소묘 스타일</option><option>수채화 스타일</option></select>
+    <label>이름</label>
+    <input type="text" id="name"><button onclick="setValue('name', '김영자')">예시 보기</button>
 
-    <button onclick="generateStory()">🌷 동화책 만들기 시작하기</button>
+    <label>나이대</label>
+    <select id="age">
+      <option>50대</option><option>60대</option><option>70대</option>
+    </select>
+
+    <label>성별</label>
+    <select id="gender">
+      <option>여자</option><option>남자</option>
+    </select>
+
+    <label>성격</label>
+    <input type="text" id="personality"><button onclick="setValue('personality', '차분하고 따뜻한 성격이에요.')">예시 보기</button>
+
+    <label>좋아하는 음식</label>
+    <input type="text" id="food"><button onclick="setValue('food', '따뜻한 미역국')">예시 보기</button>
+
+    <label>좋아하는 계절</label>
+    <input type="text" id="season"><button onclick="setValue('season', '가을')">예시 보기</button>
+
+    <label>어릴 적 꿈</label>
+    <input type="text" id="dream"><button onclick="setValue('dream', '선생님이 되고 싶었어요')">예시 보기</button>
+
+    <label>지금의 소망</label>
+    <input type="text" id="wish"><button onclick="setValue('wish', '그림책 작가가 되고 싶어요')">예시 보기</button>
+
+    <label>그림 스타일</label>
+    <select id="style">
+      <option>디즈니 스타일</option>
+      <option>지브리 스타일</option>
+      <option>연필 소묘 스타일</option>
+      <option>수채화 스타일</option>
+    </select>
+
+    <label>내 모습 설명</label>
+    <textarea id="appearance" placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
   </div>
 
-  <div id="storyOutput" class="output"></div>
-
-  <p><strong>📌 다음 단계 안내:</strong></p>
-  <ol>
-    <li><strong>ChatGPT</strong>에 동화책 내용을 붙여 넣어 확인해보세요.</li>
-    <li><strong>Google FX</strong>에 이미지 프롬프트를 복사해 넣어 그림을 만들어 보세요.</li>
-    <li><strong>Book Creator</strong>에 글과 그림을 넣어 나만의 동화책을 완성해 보세요.</li>
-  </ol>
-  <p>※ AI가 그려주는 그림은 실제 모습과 다를 수 있습니다. 가장 마음에 드는 그림을 선택하시면 됩니다.</p>
+  <div class="section">
+    <button onclick="generateStory()">📖 동화책 만들기</button>
+    <div id="storyOutput" class="output"></div>
+  </div>
 
   <script>
+    function setValue(id, value) {
+      document.getElementById(id).value = value;
+    }
+
     function generateStory() {
       const name = document.getElementById('name').value;
       const age = document.getElementById('age').value;
@@ -92,66 +113,33 @@
       const season = document.getElementById('season').value;
       const dream = document.getElementById('dream').value;
       const wish = document.getElementById('wish').value;
-      const appearance = document.getElementById('appearance').value;
       const style = document.getElementById('style').value;
-
-      const genderEng = gender === "남자" ? "man" : "woman";
-      const ageEng = age === "50대" ? "50-year-old" : age === "60대" ? "60-year-old" : "70-year-old";
-      const fixedCharacterKR = `${appearance}, ${age} 한국 ${gender}, ${style}`;
-      const fixedCharacterEN = `${ageEng} Korean ${genderEng} with ${appearance}, ${style}`;
-
-      const sceneKR = [
-        "어릴 적 좋아하던 음식을 떠올리는 장면",
-        "좋아하는 계절 풍경을 바라보는 장면",
-        "어린 시절의 꿈을 떠올리는 장면",
-        "지금 하고 싶은 일을 떠올리는 장면",
-        "따뜻한 미소로 앞으로 나아가는 장면"
-      ];
-
-      const sceneEN = [
-        "remembering a favorite childhood food",
-        "looking at a favorite seasonal scenery",
-        "thinking about childhood dreams",
-        "dreaming of what they want to do now",
-        "walking forward with a warm smile"
-      ];
+      const appearance = document.getElementById('appearance').value;
 
       const pages = [
-        `📘 표지\n제목: 나를 소개합니다\n지은이: ${name}\n연령대: ${age} / 성별: ${gender}`,
-        `📘 1. 나의 시작\n저는 ${age}의 ${gender} ${name}입니다. ${food}`,
-        `📘 2. 성격과 계절\n저는 ${personality} 그리고 ${season}`,
-        `📘 3. 어린 시절의 꿈\n어릴 적 제 꿈은 ${dream}`,
-        `📘 4. 지금의 나\n지금 저는 ${wish}`,
-        `📘 5. 다짐\n저는 오늘도 한 걸음씩 따뜻한 마음으로 꿈을 향해 나아갑니다.`
+        `📘 나의 시작
+저는 ${age}의 ${gender} ${name}입니다. ${food}을(를) 좋아하던 아이였지요.`,
+        `📘 성격과 계절
+저는 ${personality} 성격을 가졌고 ${season}을 좋아해요.`,
+        `📘 어린 시절의 꿈
+어릴 적 꿈은 ${dream}였어요.`,
+        `📘 지금의 나
+지금은 ${wish}라는 새로운 꿈을 꾸고 있어요.`,
+        `📘 앞으로의 다짐
+저의 이야기는 끝나지 않았어요. 꿈을 향해 따뜻하게 걸어갑니다.`
       ];
 
+      const prompts = pages.map((_, i) => `${appearance}, ${style}, page ${i + 1}`);
+
       let result = `<h2>📖 ${name}님의 그림 동화책</h2>`;
-      for (let i = 0; i < pages.length; i++) {
-        const [title, ...content] = pages[i].split("\n");
-        result += `<h3>${title}</h3><p>${content.join("<br>")}</p>`;
-        if (i === 0) {
-          result += `<p><strong>[이미지 프롬프트 - 한글]</strong><br>${fixedCharacterKR}, 표지 장면</p>`;
-          result += `<p><strong>[Image Prompt - English]</strong><br>${fixedCharacterEN}, on the cover of a personal picture book</p><br>`;
-        } else {
-          result += `<p><strong>[이미지 프롬프트 - 한글]</strong><br>${fixedCharacterKR}, ${sceneKR[i-1]}</p>`;
-          result += `<p><strong>[Image Prompt - English]</strong><br>${fixedCharacterEN}, ${sceneEN[i-1]}</p><br>`;
-        }
-      }
+      pages.forEach((p, i) => {
+        result += `<h3>${p.split("\n")[0]}</h3><p>${p.split("\n")[1]}</p>`;
+        result += `<textarea readonly>${prompts[i]}</textarea><br>`;
+      });
 
-      result += `<button onclick="downloadTextFile()">💾 동화책 저장하기 (.txt)</button>`;
-      result += `<p>※ 이 파일을 ChatGPT 또는 이미지 생성 도구에 복사하여 활용하실 수 있습니다.</p>`;
-
+      result += `<p>위의 문장과 그림 설명은 ChatGPT나 이미지 생성 도구(Google FX 등)에 붙여 넣어 사용하실 수 있습니다.</p>`;
       document.getElementById('storyOutput').innerHTML = result;
       document.getElementById('storyOutput').style.display = 'block';
-      window.generatedText = pages.map((p, i) => p + "\n[이미지 프롬프트 - 한글] " + (i === 0 ? `${fixedCharacterKR}, 표지 장면` : `${fixedCharacterKR}, ${sceneKR[i-1]}`) + "\n[Image Prompt - English] " + (i === 0 ? `${fixedCharacterEN}, on the cover of a personal picture book` : `${fixedCharacterEN}, ${sceneEN[i-1]}`)).join("\n\n");
-    }
-
-    function downloadTextFile() {
-      const blob = new Blob([window.generatedText], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'AI_그림동화책.txt';
-      link.click();
     }
   </script>
 </body>
