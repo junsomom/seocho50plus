@@ -1,225 +1,172 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>나를 소개하는 그림동화책 만들기</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
       padding: 20px;
-      background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
-      color: #004d40;
+      line-height: 1.6;
     }
-    h1, h2 {
-      color: #00695c;
-    }
-    textarea, input, select {
-      width: calc(100% - 140px);
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
+    h1 {
+      color: #2c3e50;
     }
     .section {
-      background-color: #ffffffdd;
-      padding: 20px;
-      margin-bottom: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
-    .guide-box {
-      background-color: #e0f2f1;
-      border-left: 6px solid #00796b;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px 0;
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    .button-box {
+      margin-top: 5px;
+    }
+    .button-box button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #6fa8dc;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
     }
     .example-button {
-      display: inline-block;
+      font-size: 14px;
       margin-left: 10px;
-      padding: 10px 16px;
-      font-size: 16px;
-      font-weight: bold;
-      background-color: #dcedc8;
-      color: #33691e;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .choice-buttons button {
-      font-size: 18px;
-      margin: 5px;
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      background-color: #b2dfdb;
-    }
-    .choice-buttons button.selected {
-      background-color: #4db6ac;
-      color: white;
+      background-color: #c4dff6;
+      color: #333;
     }
     #downloadBtn {
-      background: linear-gradient(to right, #00796b, #4db6ac);
-      color: white;
+      margin-top: 20px;
+      padding: 12px 24px;
       font-size: 18px;
-      cursor: pointer;
-      padding: 12px;
+      background-color: #27ae60;
+      color: white;
       border: none;
       border-radius: 8px;
-      margin-top: 20px;
-    }
-    #downloadBtn:hover {
-      opacity: 0.9;
-    }
-    .bold {
-      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>✨ 나를 소개하는 그림동화책 만들기 ✨</h1>
+  <h1>🌟 나를 소개하는 그림동화책 만들기</h1>
 
-  <div class="guide-box">
-    <p><strong>이 동화책의 목표는</strong> 나를 소개하는 간단한 그림동화책을 만드는 것입니다.</p>
-    <p>아래 항목을 하나씩 작성하면, 각 질문에 대한 답이 그림동화책의 한 페이지가 됩니다.</p>
-    <p><strong>* 표지 제목과 표지 그림 프롬프트는</strong> 아래 내용을 저장한 뒤 챗GPT에 업로드하면 자동 생성됩니다.</p>
+  <p><strong>이 동화책의 목표는</strong> 서초IT시니어센터에서 수업을 듣는 <strong>나를 소개하는 간단한 그림동화책을 만드는 것</strong>입니다.</p>
+
+  <p><strong>※ 주인공의 외모, 복장, 체형은 모든 장면에서 반드시 일관되게 유지되어야 합니다.</strong><br>
+  한 장면이라도 다르면 몰입감이 깨질 수 있습니다.<br>
+  <em>(The character’s face, outfit, and body profile must be 100% consistent in every illustration.)</em></p>
+
+  <p><strong>⚠️ 이미지 프롬프트에는 한글 텍스트를 절대 포함하지 마세요.</strong><br>
+  AI는 한글 문자를 이미지에 자연스럽게 표현하지 못합니다.<br>
+  <em>(Do NOT include Korean text in image prompts. It may break the image rendering.)</em></p>
+
+  <div class="section">
+    <label>1. 이름이 무엇인가요?
+      <button class="example-button" onclick="insertExample('name', '홍길동')">예시</button>
+      <input type="text" id="name" placeholder="이름을 입력하세요" />
+    </label>
   </div>
 
   <div class="section">
-    <h2>1. 내 이름은 무엇인가요?
-      <button class="example-button" onclick="fillExample('q1', '제 이름은 김영자입니다.')">예시</button>
-    </h2>
-    <textarea id="q1"></textarea>
-  </div>
-
-  <div class="section">
-    <h2>2. 나는 몇 대인가요?</h2>
-    <div class="choice-buttons">
-      <button onclick="selectChoice(this, 'q2')">50대</button>
-      <button onclick="selectChoice(this, 'q2')">60대</button>
-      <button onclick="selectChoice(this, 'q2')">70대</button>
+    <label>2. 연령대를 선택하세요</label>
+    <div class="button-box">
+      <button onclick="setValue('age', '50대')">50대</button>
+      <button onclick="setValue('age', '60대')">60대</button>
+      <button onclick="setValue('age', '70대')">70대</button>
     </div>
-    <input type="hidden" id="q2">
+    <input type="text" id="age" readonly />
   </div>
 
   <div class="section">
-    <h2>3. 나는 남자인가요, 여자인가요?</h2>
-    <div class="choice-buttons">
-      <button onclick="selectChoice(this, 'q3')">남자</button>
-      <button onclick="selectChoice(this, 'q3')">여자</button>
+    <label>3. 성별을 선택하세요</label>
+    <div class="button-box">
+      <button onclick="setValue('gender', '남자')">남자</button>
+      <button onclick="setValue('gender', '여자')">여자</button>
     </div>
-    <input type="hidden" id="q3">
+    <input type="text" id="gender" readonly />
   </div>
 
   <div class="section">
-    <h2>4. 나의 성격은 어떤가요?</h2>
-    <div class="choice-buttons">
-      <button onclick="selectChoice(this, 'q4_hidden')">차분하다</button>
-      <button onclick="selectChoice(this, 'q4_hidden')">명랑하다</button>
-      <button onclick="selectChoice(this, 'q4_hidden')">진중하다</button>
-      <button onclick="selectChoice(this, 'q4_hidden')">섬세하다</button>
-      <button onclick="selectChoice(this, 'q4_hidden')">쿨하다</button>
+    <label>4. 당신의 성격은 어떤가요?
+      <button class="example-button" onclick="insertExample('personality', '차분하다')">예시</button>
+    </label>
+    <div class="button-box">
+      <button onclick="addPersonality('차분하다')">차분하다</button>
+      <button onclick="addPersonality('명랑하다')">명랑하다</button>
+      <button onclick="addPersonality('진중하다')">진중하다</button>
+      <button onclick="addPersonality('섬세하다')">섬세하다</button>
+      <button onclick="addPersonality('쿨하다')">쿨하다</button>
     </div>
-    <textarea id="q4" placeholder="기타 성격을 적어주세요 (선택사항)"></textarea>
-    <input type="hidden" id="q4_hidden">
+    <input type="text" id="personality" placeholder="성격을 입력하거나 선택하세요" />
   </div>
 
   <div class="section">
-    <h2>5. 내가 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="fillExample('q5', '저는 따뜻한 미역국을 좋아해요.')">예시</button>
-    </h2>
-    <textarea id="q5"></textarea>
+    <label>5. 좋아하는 음식은 무엇인가요?
+      <button class="example-button" onclick="insertExample('food', '따뜻한 미역국')">예시</button>
+      <input type="text" id="food" placeholder="예: 따뜻한 미역국" />
+    </label>
   </div>
 
   <div class="section">
-    <h2>6. 내가 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="fillExample('q6', '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.')">예시</button>
-    </h2>
-    <textarea id="q6"></textarea>
+    <label>6. 좋아하는 계절은 무엇인가요?
+      <button class="example-button" onclick="insertExample('season', '봄')">예시</button>
+      <input type="text" id="season" placeholder="예: 봄" />
+    </label>
   </div>
 
   <div class="section">
-    <h2>7. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="fillExample('q7', '저는 어릴 때 선생님이 되고 싶었어요.')">예시</button>
-    </h2>
-    <textarea id="q7"></textarea>
+    <label>7. 어린 시절의 추억은 무엇인가요?
+      <button class="example-button" onclick="insertExample('memory', '뒷동산에서 소꿉놀이 하던 기억')">예시</button>
+      <input type="text" id="memory" placeholder="예: 뒷동산에서 소꿉놀이 하던 기억" />
+    </label>
   </div>
 
   <div class="section">
-    <h2>8. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="fillExample('q8', '지금은 그림을 그리고 전시회를 열어보고 싶어요.')">예시</button>
-    </h2>
-    <textarea id="q8"></textarea>
+    <label>8. 지금 나의 꿈 또는 하고 싶은 일은 무엇인가요?
+      <button class="example-button" onclick="insertExample('dream', '그림책 작가 되기')">예시</button>
+      <input type="text" id="dream" placeholder="예: 그림책 작가 되기" />
+    </label>
   </div>
 
-  <div class="section">
-    <h2>9. 나의 삶의 태도나 마음가짐은?
-      <button class="example-button" onclick="fillExample('q9', '저는 언제나 배우고 싶은 마음이 있는 사람입니다.')">예시</button>
-    </h2>
-    <textarea id="q9"></textarea>
-  </div>
-
-  <div class="section">
-    <h2>10. 원하는 그림 스타일을 선택하세요</h2>
-    <select id="style">
-      <option value="디즈니 스타일">디즈니 스타일</option>
-      <option value="지브리 스타일">지브리 스타일</option>
-      <option value="수채화 스타일">수채화 스타일</option>
-      <option value="연필 드로잉 스타일">연필 드로잉 스타일</option>
-      <option value="픽사 스타일">픽사 스타일</option>
-      <option value="크레용 스타일">크레용 스타일</option>
-      <option value="실사 스타일">실사 스타일</option>
-    </select>
-  </div>
-
-  <button id="downloadBtn">저장하기</button>
+  <button id="downloadBtn">완료하고 텍스트로 저장하기</button>
 
   <script>
-    function selectChoice(button, inputId) {
-      const buttons = button.parentNode.querySelectorAll('button');
-      buttons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      document.getElementById(inputId).value = button.textContent;
+    function setValue(id, value) {
+      document.getElementById(id).value = value;
     }
-
-    function fillExample(id, text) {
-      const el = document.getElementById(id);
-      el.value = text;
-      el.classList.add('bold');
+    function addPersonality(value) {
+      let el = document.getElementById('personality');
+      el.value = el.value ? el.value + ', ' + value : value;
     }
-
-    document.querySelectorAll('textarea').forEach(el => {
-      el.addEventListener('input', function () {
-        if (el.value.trim() !== '') {
-          el.classList.add('bold');
-        } else {
-          el.classList.remove('bold');
-        }
-      });
-    });
-
+    function insertExample(id, value) {
+      document.getElementById(id).value = value;
+      document.getElementById(id).style.fontWeight = 'bold';
+    }
     document.getElementById('downloadBtn').addEventListener('click', function () {
-      const title = "나를 소개하는 그림동화책";
-      let content = '';
-      content += '이 동화책의 목표는 나를 소개하는 간단한 그림동화책을 만드는 것입니다.\n\n';
-      document.querySelectorAll('.section').forEach(function (section) {
-        const heading = section.querySelector('h2');
-        if (heading) content += '== ' + heading.innerText + ' ==\n';
-        section.querySelectorAll('textarea, select, input[type=hidden]').forEach(function (el) {
-          const val = el.value.trim();
-          if (val) content += val + '\n';
-        });
-        content += '\n';
+      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'memory', 'dream'];
+      let content = "";
+      fields.forEach(id => {
+        const val = document.getElementById(id).value.trim();
+        if (val) content += `Q${fields.indexOf(id) + 1}. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
       });
-      content += '이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트(각각 꼭 한글과 영어를 모두 포함해주세요)를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 한글/영문으로 함께 만들어줘.';
+      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘.";
 
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = title + '.txt';
+      a.download = '나를_소개하는_동화책.txt';
       a.click();
     });
   </script>
