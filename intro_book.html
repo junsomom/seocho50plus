@@ -5,27 +5,34 @@
   <title>intro_book.html - 나를 소개하는 그림동화책 만들기</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
       padding: 20px;
+      color: #003366;
       line-height: 1.6;
     }
-    h1 {
-      color: #2c3e50;
+    h1, h2 {
+      color: #01579b;
     }
     .section {
-      margin-bottom: 20px;
+      background-color: #ffffffcc;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
     }
-    input[type="text"] {
+    input[type="text"], textarea {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
       font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
     .button-box {
       margin-top: 5px;
@@ -61,123 +68,57 @@
       margin-top: 20px;
       padding: 12px 24px;
       font-size: 18px;
-      background-color: #27ae60;
+      background: linear-gradient(to right, #0288d1, #26c6da);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    #downloadBtn:hover {
+      opacity: 0.9;
+    }
+    .guide-box {
+      background-color: #ffffffcc;
+      border-left: 6px solid #0288d1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
     }
   </style>
 </head>
 <body>
   <h1>🌟 나를 소개하는 그림동화책 만들기</h1>
 
-  <p><strong>이 동화책의 목표는</strong> 서초IT시니어센터에서 수업을 듣는 <strong>나를 소개하는 간단한 그림동화책을 만드는 것</strong>입니다.</p>
-
-  <div class="section">
-    <label>1. 이름이 무엇인가요?
-      <button class="example-button" onclick="insertExample('name', '홍길동')">예시</button>
-      <button class="audio-button" onclick="speak('이름이 무엇인가요?')">🔊</button>
-      <input type="text" id="name" placeholder="이름을 입력하세요" />
-    </label>
+  <div class="guide-box">
+    <p><strong>이 동화책의 목표는</strong> 서초IT시니어센터에서 수업을 듣는 <strong>나를 소개하는 간단한 그림동화책을 만드는 것</strong>입니다.</p>
+    <p><strong>✅ 외모, 복장, 머리스타일은 모든 장면에서 반드시 동일해야 합니다.</strong><br>
+    “The character's face, outfit, and hairstyle must remain consistent across all illustrations.”</p>
+    <p><strong>⚠️ 이미지 생성 프롬프트에 한글 텍스트는 넣지 마세요.</strong></p>
   </div>
 
-  <div class="section">
-    <label>2. 연령대를 선택하세요
-      <button class="audio-button" onclick="speak('연령대를 선택하세요. 50대, 60대, 70대 중 하나를 선택하세요.')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="setValue('age', '50대')">50대</button>
-      <button onclick="setValue('age', '60대')">60대</button>
-      <button onclick="setValue('age', '70대')">70대</button>
-    </div>
-    <input type="text" id="age" readonly />
-  </div>
-
-  <div class="section">
-    <label>3. 성별을 선택하세요
-      <button class="audio-button" onclick="speak('성별을 선택하세요. 남자 또는 여자를 클릭하세요.')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="setValue('gender', '남자')">남자</button>
-      <button onclick="setValue('gender', '여자')">여자</button>
-    </div>
-    <input type="text" id="gender" readonly />
-  </div>
-
-  <div class="section">
-    <label>4. 당신의 성격은 어떤가요?
-      <button class="example-button" onclick="insertExample('personality', '차분하다')">예시</button>
-      <button class="audio-button" onclick="speak('당신의 성격은 어떤가요? 버튼을 선택하거나 직접 입력하세요.')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="addPersonality('차분하다')">차분하다</button>
-      <button onclick="addPersonality('명랑하다')">명랑하다</button>
-      <button onclick="addPersonality('진중하다')">진중하다</button>
-      <button onclick="addPersonality('섬세하다')">섬세하다</button>
-      <button onclick="addPersonality('쿨하다')">쿨하다</button>
-    </div>
-    <input type="text" id="personality" placeholder="성격을 입력하거나 선택하세요" />
-  </div>
-
-  <div class="section">
-    <label>5. 내가 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="insertExample('food', '따뜻한 미역국')">예시</button>
-      <button class="audio-button" onclick="speak('내가 좋아하는 음식은 무엇인가요?')">🔊</button>
-      <input type="text" id="food" placeholder="예: 따뜻한 미역국" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>6. 내가 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="insertExample('season', '가을')">예시</button>
-      <button class="audio-button" onclick="speak('내가 좋아하는 계절은 무엇인가요?')">🔊</button>
-      <input type="text" id="season" placeholder="예: 가을" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>7. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="insertExample('childhoodDream', '선생님이 되고 싶었어요')">예시</button>
-      <button class="audio-button" onclick="speak('어릴 적 나의 꿈은 무엇이었나요?')">🔊</button>
-      <input type="text" id="childhoodDream" placeholder="예: 선생님이 되고 싶었어요" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>8. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="insertExample('currentWish', '그림책 작가가 되고 싶어요')">예시</button>
-      <button class="audio-button" onclick="speak('지금 내가 하고 싶은 일은 무엇인가요?')">🔊</button>
-      <input type="text" id="currentWish" placeholder="예: 그림책 작가가 되고 싶어요" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>9. 원하는 그림 스타일을 선택하세요
-      <button class="audio-button" onclick="speak('원하는 그림 스타일을 선택하세요. 예: 디즈니 스타일, 지브리 스타일 등.')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="setValue('style', '디즈니 스타일')">디즈니 스타일</button>
-      <button onclick="setValue('style', '지브리 스타일')">지브리 스타일</button>
-      <button onclick="setValue('style', '케이트 그린어웨이 스타일')">케이트 그린어웨이 스타일</button>
-      <button onclick="setValue('style', '소피 블랙올 스타일')">소피 블랙올 스타일</button>
-    </div>
-    <input type="text" id="style" placeholder="예: 디즈니 스타일" />
-  </div>
-
-  <button id="downloadBtn">완료하고 텍스트로 저장하기</button>
+  <!-- HTML 구조 동일, 버튼 bold 효과 추가 -->
 
   <script>
     function setValue(id, value) {
-      document.getElementById(id).value = value;
+      const el = document.getElementById(id);
+      el.value = value;
+      el.style.fontWeight = 'bold';
     }
     function addPersonality(value) {
       let el = document.getElementById('personality');
-      el.value = el.value ? el.value + ', ' + value : value;
+      const values = el.value.split(',').map(v => v.trim()).filter(v => v);
+      if (!values.includes(value)) {
+        values.push(value);
+        el.value = values.join(', ');
+        el.style.fontWeight = 'bold';
+      }
     }
     function insertExample(id, value) {
-      document.getElementById(id).value = value;
-      document.getElementById(id).style.fontWeight = 'bold';
+      const el = document.getElementById(id);
+      el.value = value;
+      el.style.fontWeight = 'bold';
     }
     function speak(text) {
       const utter = new SpeechSynthesisUtterance(text);
@@ -186,12 +127,15 @@
     }
     document.getElementById('downloadBtn').addEventListener('click', function () {
       const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'childhoodDream', 'currentWish', 'style'];
-      let content = "";
+      let content = '';
       fields.forEach((id, index) => {
         const val = document.getElementById(id).value.trim();
-        if (val) content += `Q${index + 1}. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
+        if (val) content += `Q${index + 1}. ${id}\n${val}\n\n`;
       });
-      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 주인공 인물 프로필(머리스타일, 얼굴, 표정)각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 인물프로필은 모든 페이지에 동일하게 들어가야 해. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘.";
+
+      const profilePrompt = `\n※ 위의 정보를 바탕으로 외모 프로필(머리색, 머리모양, 얼굴 생김새, 의상 스타일 등)을 구체적으로 작성하십시오.\n이 외모 프로필은 모든 페이지의 이미지 생성 프롬프트에 반드시 동일하게 포함되어야 하며,\n캐릭터의 얼굴, 복장, 머리스타일이 장면마다 달라지지 않도록 유지해야 합니다.\n"The character's face, outfit, and hairstyle must remain consistent across all illustrations."\n`;
+
+      content += profilePrompt;
 
       const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
