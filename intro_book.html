@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>나를 소개하는 그림동화책 만들기</title>
+  <title>intro_book.html - 나를 소개하는 그림동화책 만들기</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,14 +21,14 @@
       margin-top: 10px;
       font-weight: bold;
     }
-    input[type="text"], select {
+    input[type="text"] {
       width: 100%;
       padding: 10px;
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 16px;
     }
     .button-box {
-      margin-top: 10px;
+      margin-top: 5px;
     }
     .button-box button {
       margin-right: 10px;
@@ -46,12 +46,20 @@
       margin-left: 10px;
       background-color: #c4dff6;
       color: #333;
+    }
+    .audio-button {
+      margin-left: 8px;
+      background-color: #ffe082;
+      color: #000;
+      border: none;
       border-radius: 6px;
-      padding: 6px 12px;
+      font-size: 14px;
+      padding: 5px 10px;
+      cursor: pointer;
     }
     #downloadBtn {
-      margin-top: 30px;
-      padding: 14px 28px;
+      margin-top: 20px;
+      padding: 12px 24px;
       font-size: 18px;
       background-color: #27ae60;
       color: white;
@@ -64,63 +72,131 @@
 <body>
   <h1>🌟 나를 소개하는 그림동화책 만들기</h1>
 
+  <p><strong>이 동화책의 목표는</strong> 서초IT시니어센터에서 수업을 듣는 <strong>나를 소개하는 간단한 그림동화책을 만드는 것</strong>입니다.</p>
+
   <div class="section">
-    <label for="food">1. 내가 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="insertExample('food', '저는 따뜻한 미역국을 좋아해요.')">예시</button>
+    <label>1. 이름이 무엇인가요?
+      <button class="example-button" onclick="insertExample('name', '홍길동')">예시</button>
+      <button class="audio-button" onclick="speak('이름이 무엇인가요?')">🔊</button>
+      <input type="text" id="name" placeholder="이름을 입력하세요" />
     </label>
-    <input type="text" id="food" placeholder="예: 저는 따뜻한 미역국을 좋아해요." />
   </div>
 
   <div class="section">
-    <label for="season">2. 내가 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="insertExample('season', '저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요.')">예시</button>
+    <label>2. 연령대를 선택하세요
+      <button class="audio-button" onclick="speak('연령대를 선택하세요. 50대, 60대, 70대 중 하나를 선택하세요.')">🔊</button>
     </label>
-    <input type="text" id="season" placeholder="예: 저는 가을을 좋아해요. 단풍이 예쁘고 바람이 시원해요." />
+    <div class="button-box">
+      <button onclick="setValue('age', '50대')">50대</button>
+      <button onclick="setValue('age', '60대')">60대</button>
+      <button onclick="setValue('age', '70대')">70대</button>
+    </div>
+    <input type="text" id="age" readonly />
   </div>
 
   <div class="section">
-    <label for="childhood">3. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="insertExample('childhood', '저는 어릴 때 선생님이 되고 싶었어요.')">예시</button>
+    <label>3. 성별을 선택하세요
+      <button class="audio-button" onclick="speak('성별을 선택하세요. 남자 또는 여자를 클릭하세요.')">🔊</button>
     </label>
-    <input type="text" id="childhood" placeholder="예: 저는 어릴 때 선생님이 되고 싶었어요." />
+    <div class="button-box">
+      <button onclick="setValue('gender', '남자')">남자</button>
+      <button onclick="setValue('gender', '여자')">여자</button>
+    </div>
+    <input type="text" id="gender" readonly />
   </div>
 
   <div class="section">
-    <label for="nowdream">4. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="insertExample('nowdream', '지금은 그림을 그리고 전시회를 열어보고 싶어요.')">예시</button>
+    <label>4. 당신의 성격은 어떤가요?
+      <button class="example-button" onclick="insertExample('personality', '차분하다')">예시</button>
+      <button class="audio-button" onclick="speak('당신의 성격은 어떤가요? 버튼을 선택하거나 직접 입력하세요.')">🔊</button>
     </label>
-    <input type="text" id="nowdream" placeholder="예: 지금은 그림을 그리고 전시회를 열어보고 싶어요." />
+    <div class="button-box">
+      <button onclick="addPersonality('차분하다')">차분하다</button>
+      <button onclick="addPersonality('명랑하다')">명랑하다</button>
+      <button onclick="addPersonality('진중하다')">진중하다</button>
+      <button onclick="addPersonality('섬세하다')">섬세하다</button>
+      <button onclick="addPersonality('쿨하다')">쿨하다</button>
+    </div>
+    <input type="text" id="personality" placeholder="성격을 입력하거나 선택하세요" />
   </div>
 
   <div class="section">
-    <label for="style">5. 원하는 그림 스타일을 선택하세요</label>
-    <select id="style">
-      <option value="지브리 스타일">지브리 스타일</option>
-      <option value="디즈니 스타일">디즈니 스타일</option>
-      <option value="픽사 스타일">픽사 스타일</option>
-      <option value="수채화 스타일">수채화 스타일</option>
-    </select>
+    <label>5. 내가 좋아하는 음식은 무엇인가요?
+      <button class="example-button" onclick="insertExample('food', '따뜻한 미역국')">예시</button>
+      <button class="audio-button" onclick="speak('내가 좋아하는 음식은 무엇인가요?')">🔊</button>
+      <input type="text" id="food" placeholder="예: 따뜻한 미역국" />
+    </label>
   </div>
 
-  <button id="downloadBtn">저장하기</button>
+  <div class="section">
+    <label>6. 내가 좋아하는 계절은 무엇인가요?
+      <button class="example-button" onclick="insertExample('season', '가을')">예시</button>
+      <button class="audio-button" onclick="speak('내가 좋아하는 계절은 무엇인가요?')">🔊</button>
+      <input type="text" id="season" placeholder="예: 가을" />
+    </label>
+  </div>
+
+  <div class="section">
+    <label>7. 어릴 적 나의 꿈은 무엇이었나요?
+      <button class="example-button" onclick="insertExample('childhoodDream', '선생님이 되고 싶었어요')">예시</button>
+      <button class="audio-button" onclick="speak('어릴 적 나의 꿈은 무엇이었나요?')">🔊</button>
+      <input type="text" id="childhoodDream" placeholder="예: 선생님이 되고 싶었어요" />
+    </label>
+  </div>
+
+  <div class="section">
+    <label>8. 지금 내가 하고 싶은 일은 무엇인가요?
+      <button class="example-button" onclick="insertExample('currentWish', '그림책 작가가 되고 싶어요')">예시</button>
+      <button class="audio-button" onclick="speak('지금 내가 하고 싶은 일은 무엇인가요?')">🔊</button>
+      <input type="text" id="currentWish" placeholder="예: 그림책 작가가 되고 싶어요" />
+    </label>
+  </div>
+
+  <div class="section">
+    <label>9. 원하는 그림 스타일을 선택하세요
+      <button class="audio-button" onclick="speak('원하는 그림 스타일을 선택하세요. 예: 디즈니 스타일, 지브리 스타일 등.')">🔊</button>
+    </label>
+    <div class="button-box">
+      <button onclick="setValue('style', '디즈니 스타일')">디즈니 스타일</button>
+      <button onclick="setValue('style', '지브리 스타일')">지브리 스타일</button>
+      <button onclick="setValue('style', '케이트 그린어웨이 스타일')">케이트 그린어웨이 스타일</button>
+      <button onclick="setValue('style', '소피 블랙올 스타일')">소피 블랙올 스타일</button>
+    </div>
+    <input type="text" id="style" placeholder="예: 디즈니 스타일" />
+  </div>
+
+  <button id="downloadBtn">완료하고 텍스트로 저장하기</button>
 
   <script>
+    function setValue(id, value) {
+      document.getElementById(id).value = value;
+    }
+    function addPersonality(value) {
+      let el = document.getElementById('personality');
+      el.value = el.value ? el.value + ', ' + value : value;
+    }
     function insertExample(id, value) {
       document.getElementById(id).value = value;
       document.getElementById(id).style.fontWeight = 'bold';
     }
-
+    function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ko-KR';
+      speechSynthesis.speak(utter);
+    }
     document.getElementById('downloadBtn').addEventListener('click', function () {
-      const fields = ['food', 'season', 'childhood', 'nowdream', 'style'];
+      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'childhoodDream', 'currentWish', 'style'];
       let content = "";
-      fields.forEach(id => {
-        const val = document.getElementById(id).value.trim();
-        if (val) content += `Q. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
+      fields.forEach((id, index) => {
+        const val = document.getElementById(id).value.trim(); 
+        if (val) content += `Q${index + 1}. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
       });
+      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘. 성별과 연령 성격 답변에 어울리는 주인공 외모프로필을 만들어 주고, 모든 페이지의 이미지 프롬프트에 동일한 주인공 외모프로필을 넣어서 일관성이 무너지지 않도록 해줘.";
+
       const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = '나를_소개하는_동화책.txt';
+      a.download = 'intro_book.txt';
       a.click();
     });
   </script>
