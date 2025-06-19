@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>나를 소개하는 그림동화책 만들기</title>
   <style>
     body {
@@ -56,6 +56,23 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .icon {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+    .speaker-button {
+      background-color: #ffd700;
+      border: none;
+      font-size: 16px;
+      padding: 5px 10px;
+      margin-left: 10px;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -64,23 +81,17 @@
 
   <p><strong>이 동화책의 목표는</strong> 서초IT시니어센터에서 수업을 듣는 <strong>나를 소개하는 간단한 그림동화책을 만드는 것</strong>입니다.</p>
 
-  <p><strong>※ 주인공의 외모, 복장, 체형은 모든 장면에서 반드시 일관되게 유지되어야 합니다.</strong><br>
-  한 장면이라도 다르면 몰입감이 깨질 수 있습니다.<br>
-  <em>(The character’s face, outfit, and body profile must be 100% consistent in every illustration.)</em></p>
-
-  <p><strong>⚠️ 이미지 프롬프트에는 한글 텍스트를 절대 포함하지 마세요.</strong><br>
-  AI는 한글 문자를 이미지에 자연스럽게 표현하지 못합니다.<br>
-  <em>(Do NOT include Korean text in image prompts. It may break the image rendering.)</em></p>
-
   <div class="section">
-    <label>1. 이름이 무엇인가요?
-      <button class="example-button" onclick="insertExample('name', '홍길동')">예시</button>
-      <input type="text" id="name" placeholder="이름을 입력하세요" />
+    <label><span class="icon">📛</span> 1. 이름이 무엇인가요?
+      <button class="speaker-button" onclick="speak('이름이 무엇인가요?')">🔊</button>
     </label>
+    <input type="text" id="name" placeholder="이름을 입력하세요" />
   </div>
 
   <div class="section">
-    <label>2. 연령대를 선택하세요</label>
+    <label><span class="icon">🎂</span> 2. 연령대를 선택하세요
+      <button class="speaker-button" onclick="speak('연령대를 선택하세요')">🔊</button>
+    </label>
     <div class="button-box">
       <button onclick="setValue('age', '50대')">50대</button>
       <button onclick="setValue('age', '60대')">60대</button>
@@ -90,7 +101,9 @@
   </div>
 
   <div class="section">
-    <label>3. 성별을 선택하세요</label>
+    <label><span class="icon">🚻</span> 3. 성별을 선택하세요
+      <button class="speaker-button" onclick="speak('성별을 선택하세요')">🔊</button>
+    </label>
     <div class="button-box">
       <button onclick="setValue('gender', '남자')">남자</button>
       <button onclick="setValue('gender', '여자')">여자</button>
@@ -99,8 +112,8 @@
   </div>
 
   <div class="section">
-    <label>4. 당신의 성격은 어떤가요?
-      <button class="example-button" onclick="insertExample('personality', '차분하다')">예시</button>
+    <label><span class="icon">🧠</span> 4. 당신의 성격은 어떤가요?
+      <button class="speaker-button" onclick="speak('당신의 성격은 어떤가요?')">🔊</button>
     </label>
     <div class="button-box">
       <button onclick="addPersonality('차분하다')">차분하다</button>
@@ -110,34 +123,6 @@
       <button onclick="addPersonality('쿨하다')">쿨하다</button>
     </div>
     <input type="text" id="personality" placeholder="성격을 입력하거나 선택하세요" />
-  </div>
-
-  <div class="section">
-    <label>5. 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="insertExample('food', '따뜻한 미역국')">예시</button>
-      <input type="text" id="food" placeholder="예: 따뜻한 미역국" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>6. 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="insertExample('season', '봄')">예시</button>
-      <input type="text" id="season" placeholder="예: 봄" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>7. 어린 시절의 추억은 무엇인가요?
-      <button class="example-button" onclick="insertExample('memory', '뒷동산에서 소꿉놀이 하던 기억')">예시</button>
-      <input type="text" id="memory" placeholder="예: 뒷동산에서 소꿉놀이 하던 기억" />
-    </label>
-  </div>
-
-  <div class="section">
-    <label>8. 지금 나의 꿈 또는 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="insertExample('dream', '그림책 작가 되기')">예시</button>
-      <input type="text" id="dream" placeholder="예: 그림책 작가 되기" />
-    </label>
   </div>
 
   <button id="downloadBtn">완료하고 텍스트로 저장하기</button>
@@ -150,25 +135,11 @@
       let el = document.getElementById('personality');
       el.value = el.value ? el.value + ', ' + value : value;
     }
-    function insertExample(id, value) {
-      document.getElementById(id).value = value;
-      document.getElementById(id).style.fontWeight = 'bold';
+    function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ko-KR';
+      speechSynthesis.speak(utter);
     }
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'memory', 'dream'];
-      let content = "";
-      fields.forEach(id => {
-        const val = document.getElementById(id).value.trim();
-        if (val) content += `Q${fields.indexOf(id) + 1}. ${document.querySelector('label[for=' + id + ']')?.innerText || id}\n${val}\n\n`;
-      });
-      content += "\n※ 이 파일 내용을 기반으로 5페이지 그림동화책 구성과 각 페이지의 동화 문장, 한글/영문 이미지 프롬프트를 만들어줘. 그리고 이 내용에 어울리는 표지 제목과 표지 이미지 프롬프트도 함께 만들어줘.";
-
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = '나를_소개하는_동화책.txt';
-      a.click();
-    });
   </script>
 </body>
 </html>
