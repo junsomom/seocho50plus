@@ -93,112 +93,16 @@
   </div>
 
   <div class="section">
-    <label>1. 이름이 무엇인가요?
-      <button class="example-button" onclick="insertExample('name', '홍길동')">예시</button>
-      <button class="audio-button" onclick="speak('당신의 이름을 입력해주세요')">🔊</button>
-    </label>
-    <input type="text" id="name" placeholder="이름을 입력하세요">
-  </div>
-
-  <div class="section">
-    <label>2. 연령대를 선택하세요
-      <button class="audio-button" onclick="speak('당신의 연령대를 선택해주세요. 50대, 60대, 70대 중에서 하나를 선택하세요')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="setValue('age', '50대')">50대</button>
-      <button onclick="setValue('age', '60대')">60대</button>
-      <button onclick="setValue('age', '70대')">70대</button>
-    </div>
-    <input type="text" id="age" readonly>
-  </div>
-
-  <div class="section">
-    <label>3. 성별을 선택하세요
-      <button class="audio-button" onclick="speak('당신의 성별을 선택해주세요. 남자 또는 여자')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="setValue('gender', '남자')">남자</button>
-      <button onclick="setValue('gender', '여자')">여자</button>
-    </div>
-    <input type="text" id="gender" readonly>
-  </div>
-
-  <div class="section">
-    <label>4. 당신의 성격은 어떤가요?
-      <button class="example-button" onclick="insertExample('personality', '차분하다')">예시</button>
-      <button class="audio-button" onclick="speak('당신의 성격을 선택하거나 입력해주세요')">🔊</button>
-    </label>
-    <div class="button-box">
-      <button onclick="addPersonality('차분하다')">차분하다</button>
-      <button onclick="addPersonality('명랑하다')">명랑하다</button>
-      <button onclick="addPersonality('솔직하다')">솔직하다</button>
-      <button onclick="addPersonality('진중하다')">진중하다</button>
-      <button onclick="addPersonality('기타')">기타</button>
-    </div>
-    <input type="text" id="personality" placeholder="성격을 입력하거나 선택하세요">
-  </div>
-
-  <div class="section">
-    <label>5. 좋아하는 음식은 무엇인가요?
-      <button class="example-button" onclick="insertExample('food', '따뜻한 미역국')">예시</button>
-      <button class="audio-button" onclick="speak('당신이 좋아하는 음식을 입력해주세요')">🔊</button>
-    </label>
-    <input type="text" id="food" placeholder="예: 따뜻한 미역국">
-  </div>
-
-  <div class="section">
     <label>6. 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="insertExample('season', '가을')">예시</button>
+      <button class="example-button" onclick="insertExample('season', '저는 가을을 좋아해요. 선선한 바람과 붉게 물든 나뭇잎이 마음을 편안하게 해줘요.')">예시</button>
       <button class="audio-button" onclick="speak('당신이 좋아하는 계절을 입력해주세요')">🔊</button>
     </label>
-    <input type="text" id="season" placeholder="예: 가을">
-  </div>
-
-  <div class="section">
-    <label>7. 어릴 적 나의 꿈은 무엇이었나요?
-      <button class="example-button" onclick="insertExample('childhoodDream', '선생님이 되고 싶었어요')">예시</button>
-      <button class="audio-button" onclick="speak('어릴 적 당신의 꿈은 무엇이었나요?')">🔊</button>
-    </label>
-    <input type="text" id="childhoodDream" placeholder="예: 선생님이 되고 싶었어요">
-  </div>
-
-  <div class="section">
-    <label>8. 지금 내가 하고 싶은 일은 무엇인가요?
-      <button class="example-button" onclick="insertExample('currentWish', '그림책을 만들어 보고 싶어요')">예시</button>
-      <button class="audio-button" onclick="speak('지금 당신이 하고 싶은 일을 입력해주세요')">🔊</button>
-    </label>
-    <input type="text" id="currentWish" placeholder="예: 그림책을 만들어 보고 싶어요">
-  </div>
-
-  <div class="section">
-    <label>9. 원하는 그림 스타일을 선택하세요
-      <button class="audio-button" onclick="speak('원하는 그림 스타일을 선택해주세요')">🔊</button>
-    </label>
-    <select id="style">
-      <option>디즈니 스타일</option>
-      <option>지브리 스타일</option>
-      <option>픽사 스타일</option>
-      <option>수채화 스타일</option>
-    </select>
+    <input type="text" id="season" placeholder="예: 선선한 바람이 부는 가을">
   </div>
 
   <button id="downloadBtn">완료하고 저장하기</button>
 
   <script>
-    function setValue(id, value) {
-      const el = document.getElementById(id);
-      el.value = value;
-      el.style.fontWeight = 'bold';
-    }
-    function addPersonality(value) {
-      let el = document.getElementById('personality');
-      const values = el.value.split(',').map(v => v.trim()).filter(v => v);
-      if (!values.includes(value)) {
-        values.push(value);
-        el.value = values.join(', ');
-        el.style.fontWeight = 'bold';
-      }
-    }
     function insertExample(id, value) {
       const el = document.getElementById(id);
       el.value = value;
@@ -210,16 +114,35 @@
       speechSynthesis.speak(utter);
     }
     document.getElementById('downloadBtn').addEventListener('click', function () {
-      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'childhoodDream', 'currentWish', 'style'];
+      const fields = [
+        { id: 'name', label: '이름이 무엇인가요?' },
+        { id: 'age', label: '연령대는?' },
+        { id: 'gender', label: '성별은?' },
+        { id: 'personality', label: '당신의 성격은?' },
+        { id: 'food', label: '좋아하는 음식은?' },
+        { id: 'season', label: '좋아하는 계절은?' },
+        { id: 'childhoodDream', label: '어릴 적 꿈은?' },
+        { id: 'currentWish', label: '지금 하고 싶은 일은?' },
+        { id: 'style', label: '선호 그림 스타일은?' }
+      ];
       let content = '';
-      fields.forEach((id, index) => {
-        const val = document.getElementById(id).value.trim();
-        if (val) content += `Q${index + 1}. ${id}\n${val}\n\n`;
+      let age = '', gender = '', personality = '';
+      fields.forEach((field, index) => {
+        const el = document.getElementById(field.id);
+        const val = el.value.trim();
+        if (val) {
+          content += `Q${index + 1}. ${field.label}\n${val}\n\n`;
+          if (field.id === 'age') age = val;
+          if (field.id === 'gender') gender = val;
+          if (field.id === 'personality') personality = val;
+        }
       });
 
-      const profilePrompt = `\n※ 위의 정보를 바탕으로 외모 프로필(머리색, 머리모양, 얼굴 생김새, 의상 스타일 등)을 구체적으로 작성하십시오.\n이 외모 프로필은 모든 페이지의 이미지 생성 프롬프트에 반드시 동일하게 포함되어야 하며,\n캐릭터의 얼굴, 복장, 머리스타일이 장면마다 달라지지 않도록 유지해야 합니다.\n"The character's face, outfit, and hairstyle must remain consistent across all illustrations."\n`;
+      const profilePrompt = `※ 위의 정보를 바탕으로 외모 프로필을 생성하십시오. 이 외모 프로필은 모든 페이지의 이미지 생성 프롬프트에 반드시 포함되어야 하며, 머리색, 얼굴, 복장, 머리스타일 등이 일관되어야 합니다.\n"The character's face, outfit, and hairstyle must remain consistent across all illustrations."\n`;
 
-      content += profilePrompt;
+      const exampleProfile = `예시 외모 프로필:\nA ${personality || 'calm'} East Asian ${gender === '남자' ? 'man' : 'woman'} in their ${age || '60s'} with short black bobbed hair, wearing a beige cardigan.\n\n`;
+
+      content += '\n' + profilePrompt + exampleProfile;
 
       const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
