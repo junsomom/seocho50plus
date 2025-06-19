@@ -92,13 +92,50 @@
     <p><strong>⚠️ 이미지 생성 프롬프트에 한글 텍스트는 넣지 마세요.</strong></p>
   </div>
 
-  <div class="section">
-    <label>6. 좋아하는 계절은 무엇인가요?
-      <button class="example-button" onclick="insertExample('season', '저는 가을을 좋아해요. 선선한 바람과 붉게 물든 나뭇잎이 마음을 편안하게 해줘요.')">예시</button>
-      <button class="audio-button" onclick="speak('당신이 좋아하는 계절을 입력해주세요')">🔊</button>
-    </label>
-    <input type="text" id="season" placeholder="예: 선선한 바람이 부는 가을">
-  </div>
+  <div class="section"><label>1. 이름이 무엇인가요?
+    <button class="example-button" onclick="insertExample('name', '김영자')">예시</button>
+    <button class="audio-button" onclick="speak('당신의 이름을 입력해주세요')">🔊</button>
+  </label><input type="text" id="name" placeholder="예: 김영자"></div>
+
+  <div class="section"><label>2. 연령대는?
+    <button class="example-button" onclick="insertExample('age', '60대')">예시</button>
+    <button class="audio-button" onclick="speak('당신의 연령대를 입력해주세요')">🔊</button>
+  </label><input type="text" id="age" placeholder="예: 60대"></div>
+
+  <div class="section"><label>3. 성별은?
+    <button class="example-button" onclick="insertExample('gender', '여자')">예시</button>
+    <button class="audio-button" onclick="speak('당신의 성별을 입력해주세요')">🔊</button>
+  </label><input type="text" id="gender" placeholder="예: 여자"></div>
+
+  <div class="section"><label>4. 당신의 성격은?
+    <button class="example-button" onclick="insertExample('personality', '차분하고 따뜻한 성격이에요.')">예시</button>
+    <button class="audio-button" onclick="speak('당신의 성격을 입력해주세요')">🔊</button>
+  </label><input type="text" id="personality" placeholder="예: 차분하고 따뜻한 성격"></div>
+
+  <div class="section"><label>5. 좋아하는 음식은?
+    <button class="example-button" onclick="insertExample('food', '따뜻한 미역국이 좋아요.')">예시</button>
+    <button class="audio-button" onclick="speak('당신이 좋아하는 음식을 입력해주세요')">🔊</button>
+  </label><input type="text" id="food" placeholder="예: 미역국"></div>
+
+  <div class="section"><label>6. 좋아하는 계절은?
+    <button class="example-button" onclick="insertExample('season', '저는 가을을 좋아해요. 선선한 바람과 붉게 물든 나뭇잎이 마음을 편안하게 해줘요.')">예시</button>
+    <button class="audio-button" onclick="speak('당신이 좋아하는 계절을 입력해주세요')">🔊</button>
+  </label><input type="text" id="season" placeholder="예: 선선한 바람이 부는 가을"></div>
+
+  <div class="section"><label>7. 어릴 적 꿈은?
+    <button class="example-button" onclick="insertExample('childhoodDream', '선생님이 되고 싶었어요.')">예시</button>
+    <button class="audio-button" onclick="speak('어릴 적 꿈을 입력해주세요')">🔊</button>
+  </label><input type="text" id="childhoodDream" placeholder="예: 선생님"></div>
+
+  <div class="section"><label>8. 지금 하고 싶은 일은?
+    <button class="example-button" onclick="insertExample('currentWish', '그림책 작가가 되고 싶어요.')">예시</button>
+    <button class="audio-button" onclick="speak('지금 하고 싶은 일을 입력해주세요')">🔊</button>
+  </label><input type="text" id="currentWish" placeholder="예: 그림책 작가"></div>
+
+  <div class="section"><label>9. 선호하는 그림 스타일은?
+    <button class="example-button" onclick="insertExample('style', '케이트 그린어웨이 스타일')">예시</button>
+    <button class="audio-button" onclick="speak('좋아하는 그림 스타일을 입력해주세요')">🔊</button>
+  </label><input type="text" id="style" placeholder="예: 디즈니 스타일, 케이트 그린어웨이 스타일 등"></div>
 
   <button id="downloadBtn">완료하고 저장하기</button>
 
@@ -129,7 +166,7 @@
       let age = '', gender = '', personality = '';
       fields.forEach((field, index) => {
         const el = document.getElementById(field.id);
-        const val = el.value.trim();
+        const val = el && el.value.trim();
         if (val) {
           content += `Q${index + 1}. ${field.label}\n${val}\n\n`;
           if (field.id === 'age') age = val;
@@ -140,15 +177,19 @@
 
       const profilePrompt = `※ 위의 정보를 바탕으로 외모 프로필을 생성하십시오. 이 외모 프로필은 모든 페이지의 이미지 생성 프롬프트에 반드시 포함되어야 하며, 머리색, 얼굴, 복장, 머리스타일 등이 일관되어야 합니다.\n"The character's face, outfit, and hairstyle must remain consistent across all illustrations."\n`;
 
-      const exampleProfile = `예시 외모 프로필:\nA ${personality || 'calm'} East Asian ${gender === '남자' ? 'man' : 'woman'} in their ${age || '60s'} with short black bobbed hair, wearing a beige cardigan.\n\n`;
+      const exampleProfile = `예시 외모 프로필:\nA ${personality || 'gentle'} East Asian ${gender === '남자' ? 'man' : 'woman'} in their ${age || '60s'} with short black bobbed hair, wearing a beige cardigan.\n\n`;
 
-      content += '\n' + profilePrompt + exampleProfile;
+      const coverPrompt = `표지 이미지 프롬프트 예시:\n"A ${personality || 'calm'} East Asian ${gender === '남자' ? 'man' : 'woman'} in their ${age || '60s'} wearing a beige cardigan, smiling in front of an illustrated picture book cover that says '나를 소개하는 그림동화책'. Disney style, soft colors, warm background."\n`;
+
+      content += '\n' + profilePrompt + exampleProfile + coverPrompt;
 
       const blob = new Blob([content], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'intro_book.txt';
       a.click();
+
+      alert('intro_book.txt 파일이 저장되었습니다!');
     });
   </script>
 </body>
