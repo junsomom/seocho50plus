@@ -54,35 +54,35 @@
   <p>아래 항목을 하나씩 눌러보며 천천히 입력해 주세요.</p>
 
   <div class="section">
-    <label>이름</label>
+    <label>이름 <button onclick="setValue('name', '김영자')">예시 보기</button></label>
     <input type="text" id="name"><button onclick="setValue('name', '김영자')">예시 보기</button>
 
-    <label>나이대</label>
+    <label>연령대를 선택해 주세요</label>
     <select id="age">
       <option>50대</option><option>60대</option><option>70대</option>
     </select>
 
-    <label>성별</label>
+    <label>성별을 선택해 주세요</label>
     <select id="gender">
       <option>여자</option><option>남자</option>
     </select>
 
-    <label>성격</label>
+    <label>성격 <button onclick="setValue('personality', '차분하고 따뜻한 성격이에요.')">예시 보기</button></label>
     <input type="text" id="personality"><button onclick="setValue('personality', '차분하고 따뜻한 성격이에요.')">예시 보기</button>
 
-    <label>좋아하는 음식</label>
+    <label>좋아하는 음식 <button onclick="setValue('food', '따뜻한 미역국')">예시 보기</button></label>
     <input type="text" id="food"><button onclick="setValue('food', '따뜻한 미역국')">예시 보기</button>
 
-    <label>좋아하는 계절</label>
+    <label>좋아하는 계절 <button onclick="setValue('season', '가을')">예시 보기</button></label>
     <input type="text" id="season"><button onclick="setValue('season', '가을')">예시 보기</button>
 
-    <label>어릴 적 꿈</label>
+    <label>어릴 적 꿈 <button onclick="setValue('dream', '선생님이 되고 싶었어요')">예시 보기</button></label>
     <input type="text" id="dream"><button onclick="setValue('dream', '선생님이 되고 싶었어요')">예시 보기</button>
 
-    <label>지금의 소망</label>
+    <label>지금의 소망 <button onclick="setValue('wish', '그림책 작가가 되고 싶어요')">예시 보기</button></label>
     <input type="text" id="wish"><button onclick="setValue('wish', '그림책 작가가 되고 싶어요')">예시 보기</button>
 
-    <label>그림 스타일</label>
+    <label>좋아하는 그림 스타일을 골라 주세요</label>
     <select id="style">
       <option>디즈니 스타일</option>
       <option>지브리 스타일</option>
@@ -90,7 +90,7 @@
       <option>수채화 스타일</option>
     </select>
 
-    <label>내 모습 설명</label>
+    <label>내 모습 설명 <button onclick="setValue('appearance', '60대 한국 여성, 짧은 단발머리, 부드러운 인상')">예시 보기</button></label>
     <textarea id="appearance" placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
   </div>
 
