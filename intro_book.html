@@ -1,112 +1,189 @@
 
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>AI 그림 동화책 만들기</title>
-  <style>
+<meta charset="utf-8"/>
+<title>🌼 나를 소개하는 그림 동화책 만들기</title>
+<style>
     body {
       font-family: 'Nanum Gothic', sans-serif;
       background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
       padding: 30px;
       line-height: 1.8;
       color: #003366;
-      font-size: 21px;
     }
     h1 {
-      font-size: 34px;
+      font-size: 28px;
       color: #01579b;
     }
-    label {
-      font-weight: bold;
-      margin-top: 20px;
-      display: block;
-    }
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 12px;
-      font-size: 21px;
+      font-size: 18px;
       border-radius: 10px;
       border: 1px solid #aaa;
       margin-top: 8px;
       margin-bottom: 10px;
     }
-    input.filled {
-      font-weight: bold;
-      color: #004d40;
-    }
     button {
-      background-color: #4caf50;
+      background-color: #4a90e2;
       color: white;
       padding: 8px 14px;
-      font-size: 18px;
+      font-size: 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 5px;
+      margin: 5px 5px 10px 0;
     }
-    .example-box {
-      text-align: right;
-      margin-bottom: 20px;
-    }
-    .section {
+    .section, .output {
       background: #ffffffcc;
-      padding: 25px;
-      margin-top: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    .greeting {
-      background-color: #fff3e0;
-      border-left: 6px solid #ffa000;
       padding: 20px;
-      margin-bottom: 30px;
+      margin-top: 25px;
       border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
-  </style>
-  <script>
-    function fillExample(id, value) {
-      const input = document.getElementById(id);
-      input.value = value;
-      input.classList.add("filled");
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
     }
-  </script>
+  
+/* 예시 버튼 스타일 */
+.example-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* 음성 버튼 스타일 */
+.voice-button {
+  background-color: #2196f3;
+  color: white;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .example-button, .voice-button {
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 8px;
+    display: inline-block;
+    width: auto;
+  }
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="greeting">
-    <h2>🧑‍🎨 어르신을 위한 AI 그림 동화책 만들기</h2>
-    <p>안녕하세요, 선생님. 이 페이지는 어르신께서 직접 나를 소개하는 그림 동화책을 만들 수 있도록 도와주는 공간입니다.</p>
-    <p>천천히, 편안하게 질문을 읽고 답을 적어보세요. 각 질문 옆의 <strong>예시 보기</strong> 버튼을 누르면 샘플 답변이 자동으로 채워집니다.</p>
-  </div>
+<h1>🌼 나만의 그림 동화책을 만들어 보아요</h1>
+<p>아래 항목을 하나씩 눌러보며 천천히 입력해 주세요.</p>
+<div class="section" style="background-color: #fff3e0; border-left: 6px solid #ffa000; padding: 20px; margin-bottom: 30px; border-radius: 12px;">
+<h2>🧑‍🎨 어르신을 위한 AI 그림 동화책 만들기</h2>
+<p>안녕하세요, 선생님. 이 페이지는 어르신께서 직접 나를 소개하는 그림 동화책을 만들 수 있도록 도와주는 공간입니다.</p>
+<p>천천히, 편안하게 질문을 읽고 답을 적어보세요. 각 질문 옆의 <strong>스피커 버튼</strong>을 누르시면 음성 안내도 들을 수 있습니다.</p>
+<p>입력하신 내용을 바탕으로 AI가 선생님만의 따뜻한 이야기를 담은 그림 동화책을 만들어 드릴 거예요.</p>
+</div><div class="section">
+<label><span>이름을 알려주시겠어요?</span><button class="voice-button" onclick="speakText('이름을 입력해 주세요.')">🔊</button></label>
+<input id="name" type="text"/>
+<label><span>연령대를 선택해 주시겠어요?</span></label>
+<select id="age">
+<option>50대</option><option>60대</option><option>70대</option>
+</select>
+<label><span>성별을 선택해 주시겠어요?</span></label>
+<select id="gender">
+<option>여자</option><option>남자</option>
+</select>
+<label><span>선생님의 성격은 어떤 편이신가요?</span><button class="voice-button" onclick="speakText('당신의 성격을 간단히 소개해 주세요.')">🔊</button></label>
+<input id="personality" type="text"/>
+<label><span>특별히 좋아하시는 음식이 있으신가요?</span><button class="voice-button" onclick="speakText('좋아하는 음식을 입력해 주세요.')">🔊</button></label>
+<input id="food" type="text"/>
+<label><span>가장 좋아하시는 계절은 언제인가요?</span><button class="voice-button" onclick="speakText('좋아하는 계절을 알려 주세요.')">🔊</button></label>
+<input id="season" type="text"/>
+<label><span>어린 시절, 어떤 꿈을 꾸셨나요?</span><button class="voice-button" onclick="speakText('어릴 적 꿈은 무엇이었나요?')">🔊</button></label>
+<input id="dream" type="text"/>
+<label><span>지금 가장 이루고 싶으신 소망이 있다면 무엇인가요?</span><button class="voice-button" onclick="speakText('지금의 소망은 무엇인가요?')">🔊</button></label>
+<input id="wish" type="text"/>
+<label><span>좋아하시는 그림 스타일을 선택해 주세요</span></label>
+<select id="style">
+<option>디즈니 스타일</option>
+<option>지브리 스타일</option>
+<option>연필 소묘 스타일</option>
+<option>수채화 스타일</option>
+</select>
+<label><span>선생님 본인의 모습을 소개해 주시겠어요?</span><button class="voice-button" onclick="speakText('당신의 외모나 인상을 간단히 묘사해 주세요.')">🔊</button></label>
+<textarea id="appearance" placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
+</div>
+<div class="section">
+<button onclick="generateStory()">📖 동화책 만들기</button>
+<div class="output" id="storyOutput"></div>
+</div>
+<script>
+    function setValue(id, value) {
+      document.getElementById(id).value = value;
+    }
 
-  <div class="section">
-    <label for="name">이름을 알려주시겠어요?</label>
-    <input id="name" type="text" placeholder="예시: 김영자" />
-    <div class="example-box"><button onclick="fillExample('name', '김영자')">예시 보기</button></div>
+    function generateStory() {
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const personality = document.getElementById('personality').value;
+      const food = document.getElementById('food').value;
+      const season = document.getElementById('season').value;
+      const dream = document.getElementById('dream').value;
+      const wish = document.getElementById('wish').value;
+      const style = document.getElementById('style').value;
+      const appearance = document.getElementById('appearance').value;
 
-    <label for="personality">선생님의 성격은 어떤 편이신가요?</label>
-    <input id="personality" type="text" placeholder="예시: 차분하고 따뜻합니다" />
-    <div class="example-box"><button onclick="fillExample('personality', '차분하고 따뜻합니다')">예시 보기</button></div>
+      const pages = [
+        `📘 나의 시작
+저는 ${age}의 ${gender} ${name}입니다. ${food}을(를) 좋아하던 아이였지요.`,
+        `📘 성격과 계절
+저는 ${personality} 성격을 가졌고 ${season}을 좋아해요.`,
+        `📘 어린 시절의 꿈
+어릴 적 꿈은 ${dream}였어요.`,
+        `📘 지금의 나
+지금은 ${wish}라는 새로운 꿈을 꾸고 있어요.`,
+        `📘 앞으로의 다짐
+저의 이야기는 끝나지 않았어요. 꿈을 향해 따뜻하게 걸어갑니다.`
+      ];
 
-    <label for="food">특별히 좋아하시는 음식이 있으신가요?</label>
-    <input id="food" type="text" placeholder="예시: 따뜻한 미역국" />
-    <div class="example-box"><button onclick="fillExample('food', '따뜻한 미역국')">예시 보기</button></div>
+      const prompts = pages.map((_, i) => `${appearance}, ${style}, page ${i + 1}`);
 
-    <label for="season">가장 좋아하시는 계절은 언제인가요?</label>
-    <input id="season" type="text" placeholder="예시: 가을" />
-    <div class="example-box"><button onclick="fillExample('season', '가을')">예시 보기</button></div>
+      let result = `<h2>📖 ${name}님의 그림 동화책</h2>`;
+      pages.forEach((p, i) => {
+        result += `<h3>${p.split("\n")[0]}</h3><p>${p.split("\n")[1]}</p>`;
+        result += `<textarea readonly>${prompts[i]}</textarea><br>`;
+      });
 
-    <label for="dream">어린 시절, 어떤 꿈을 꾸셨나요?</label>
-    <input id="dream" type="text" placeholder="예시: 선생님이 되고 싶었어요" />
-    <div class="example-box"><button onclick="fillExample('dream', '선생님이 되고 싶었어요')">예시 보기</button></div>
-
-    <label for="wish">지금 가장 이루고 싶으신 소망이 있다면 무엇인가요?</label>
-    <input id="wish" type="text" placeholder="예시: 그림책 작가가 되고 싶어요" />
-    <div class="example-box"><button onclick="fillExample('wish', '그림책 작가가 되고 싶어요')">예시 보기</button></div>
-
-    <label for="appearance">선생님 본인의 모습을 소개해 주시겠어요?</label>
-    <input id="appearance" type="text" placeholder="예시: 단정한 단발머리에 따뜻한 미소를 지닌 여성" />
-    <div class="example-box"><button onclick="fillExample('appearance', '단정한 단발머리에 따뜻한 미소를 지닌 여성')">예시 보기</button></div>
-  </div>
+      result += `<p>위의 문장과 그림 설명은 ChatGPT나 이미지 생성 도구(Google FX 등)에 붙여 넣어 사용하실 수 있습니다.</p>`;
+      document.getElementById('storyOutput').innerHTML = result;
+      document.getElementById('storyOutput').style.display = 'block';
+    }
+  </script>
+<script>
+<script>
+function speakText(text) {
+  const synth = window.speechSynthesis;
+  if (synth.speaking) {
+    return; // Prevent overlapping speech
+  }
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ko-KR';
+  synth.speak(utter);
+}
+</script>
 </body>
 </html>
