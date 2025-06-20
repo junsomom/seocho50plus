@@ -29,29 +29,25 @@
       border-radius: 10px;
       border: 1px solid #aaa;
       margin-top: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
-    textarea {
-      width: 100%;
-      height: 120px;
-      font-size: 20px;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #aaa;
+    input.filled {
+      font-weight: bold;
+      color: #004d40;
     }
     button {
       background-color: #4caf50;
       color: white;
-      padding: 10px 16px;
-      font-size: 20px;
+      padding: 8px 14px;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 5px;
     }
-    .example-button {
-      margin-left: 10px;
-      font-size: 18px;
-      background-color: #81c784;
+    .example-box {
+      text-align: right;
+      margin-bottom: 20px;
     }
     .section {
       background: #ffffffcc;
@@ -68,50 +64,49 @@
       border-radius: 12px;
     }
   </style>
+  <script>
+    function fillExample(id, value) {
+      const input = document.getElementById(id);
+      input.value = value;
+      input.classList.add("filled");
+    }
+  </script>
 </head>
 <body>
   <div class="greeting">
     <h2>🧑‍🎨 어르신을 위한 AI 그림 동화책 만들기</h2>
     <p>안녕하세요, 선생님. 이 페이지는 어르신께서 직접 나를 소개하는 그림 동화책을 만들 수 있도록 도와주는 공간입니다.</p>
-    <p>천천히, 편안하게 질문을 읽고 답을 적어보세요. 각 질문 옆의 <strong>스피커 버튼</strong>을 누르시면 음성 안내도 들을 수 있습니다.</p>
-    <p>입력하신 내용을 바탕으로 AI가 선생님만의 따뜻한 이야기를 담은 그림 동화책을 만들어 드릴 거예요.</p>
+    <p>천천히, 편안하게 질문을 읽고 답을 적어보세요. 각 질문 옆의 <strong>예시 보기</strong> 버튼을 누르면 샘플 답변이 자동으로 채워집니다.</p>
   </div>
 
   <div class="section">
-    <label>이름을 알려주시겠어요?
-      <button class="example-button" onclick="alert('예시: 김영자')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="name">이름을 알려주시겠어요?</label>
+    <input id="name" type="text" placeholder="예시: 김영자" />
+    <div class="example-box"><button onclick="fillExample('name', '김영자')">예시 보기</button></div>
 
-    <label>선생님의 성격은 어떤 편이신가요?
-      <button class="example-button" onclick="alert('예시: 차분하고 따뜻합니다')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="personality">선생님의 성격은 어떤 편이신가요?</label>
+    <input id="personality" type="text" placeholder="예시: 차분하고 따뜻합니다" />
+    <div class="example-box"><button onclick="fillExample('personality', '차분하고 따뜻합니다')">예시 보기</button></div>
 
-    <label>특별히 좋아하시는 음식이 있으신가요?
-      <button class="example-button" onclick="alert('예시: 따뜻한 미역국')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="food">특별히 좋아하시는 음식이 있으신가요?</label>
+    <input id="food" type="text" placeholder="예시: 따뜻한 미역국" />
+    <div class="example-box"><button onclick="fillExample('food', '따뜻한 미역국')">예시 보기</button></div>
 
-    <label>가장 좋아하시는 계절은 언제인가요?
-      <button class="example-button" onclick="alert('예시: 가을')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="season">가장 좋아하시는 계절은 언제인가요?</label>
+    <input id="season" type="text" placeholder="예시: 가을" />
+    <div class="example-box"><button onclick="fillExample('season', '가을')">예시 보기</button></div>
 
-    <label>어린 시절, 어떤 꿈을 꾸셨나요?
-      <button class="example-button" onclick="alert('예시: 선생님이 되고 싶었어요')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="dream">어린 시절, 어떤 꿈을 꾸셨나요?</label>
+    <input id="dream" type="text" placeholder="예시: 선생님이 되고 싶었어요" />
+    <div class="example-box"><button onclick="fillExample('dream', '선생님이 되고 싶었어요')">예시 보기</button></div>
 
-    <label>지금 가장 이루고 싶으신 소망이 있다면 무엇인가요?
-      <button class="example-button" onclick="alert('예시: 그림책 작가가 되고 싶어요')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="wish">지금 가장 이루고 싶으신 소망이 있다면 무엇인가요?</label>
+    <input id="wish" type="text" placeholder="예시: 그림책 작가가 되고 싶어요" />
+    <div class="example-box"><button onclick="fillExample('wish', '그림책 작가가 되고 싶어요')">예시 보기</button></div>
 
-    <label>선생님 본인의 모습을 소개해 주시겠어요?
-      <button class="example-button" onclick="alert('예시: 단정한 단발머리에 따뜻한 미소를 지닌 여성')">예시 보기</button>
-    </label>
-    <input type="text" />
+    <label for="appearance">선생님 본인의 모습을 소개해 주시겠어요?</label>
+    <input id="appearance" type="text" placeholder="예시: 단정한 단발머리에 따뜻한 미소를 지닌 여성" />
+    <div class="example-box"><button onclick="fillExample('appearance', '단정한 단발머리에 따뜻한 미소를 지닌 여성')">예시 보기</button></div>
   </div>
 </body>
 </html>
