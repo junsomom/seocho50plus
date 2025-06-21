@@ -1,60 +1,135 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>AI 그림동화책 만들기</title>
+  <meta charset="UTF-8">
+  <title>앤 AI 기다리 그림동화책 작성기</title>
   <style>
     body {
-      font-family: 'Nanum Gothic', '돋움', sans-serif;
-      line-height: 1.8;
-      padding: 20px;
-      background: #f5fafd;
-      color: #003366;
-      font-size: 18px;
+      font-family: 'Arial', sans-serif;
+      background-color: #e0f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1, h2 {
-      color: #01579b;
-      background-color: #e0f7fa;
-      padding: 10px 15px;
-      border-radius: 8px;
+      color: #0277bd;
     }
-    .guide-box {
-      background-color: #ffffff;
-      border-left: 6px solid #0288d1;
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 2px solid #4dd0e1;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0277bd;
+    }
+    .description {
+      background-color: #b2ebf2;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
+      margin-bottom: 30px;
     }
-    .guide-box p, .guide-box li {
-      margin-bottom: 12px;
-    }
-    ul {
-      padding-left: 20px;
+    .example-button {
+      margin-left: 10px;
+      font-size: 14px;
+      background-color: #fff59d;
+      border: 1px solid #fbc02d;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>📘 이 그림책의 목표</h1>
-  <div class="guide-box">
-    <p>이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해주세요.</p>
-    <ul>
-      <li>아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요.</li>
-      <li>각 장면의 내용을 그림 동화책 스타일로 써주세요.</li>
-      <li>각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요.</li>
-      <li>총 5페이지인데, 첫 페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래 지침을 참고해 만들어주세요:
-        <ul>
-          <li>호기심을 불러일으키는 말</li>
-          <li>감정을 불러일으키는 말</li>
-          <li>따뜻하고 정겨운 말</li>
-        </ul>
-      </li>
-      <li>내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워주세요.</li>
-      <li>어르신들이 자신을 소개하는 그림동화책이기 때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.</li>
-      <li>어르신들의 성별, 연령, 성격 등의 답변을 보고 <strong>인물프로필 이미지 프롬프트</strong>를 고정적으로 설정해 주세요. 그리고 설정된 프롬프트를 모든 페이지의 주인공 이미지에 동일하게 적용해 주세요.</li>
-      <li><strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</li>
-    </ul>
+  <div class="container">
+    <h1>🌸 나의 그림 동화책 만들기</h1>
+    <div class="description">
+      <p><strong>이 그림책의 목표</strong>는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청한 수강사 어른신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나누면으로써 서로를 소개하고 같이 이해하고 친해진 수 있도록 하는 것입니다.</p>
+    </div>
+
+    <form id="bookForm">
+      <label>1. 사이드로 길드로 담겼을 것같은 이름을 가르치셔요.
+        <button type="button" class="example-button" onclick="insertExample('name', 'Kim Yeongja')">예시</button>
+      </label>
+      <input type="text" id="name" name="name" placeholder="예: Kim Yeongja">
+
+      <label>2. 어느 여름에 계신가요? 나의 나이 및 여름을 설명해주세요.
+        <button type="button" class="example-button" onclick="insertExample('age', '50°°°')">예시</button>
+      </label>
+      <input type="text" id="age" name="age" placeholder="예: 50°°°">
+
+      <label>3. 성별을 적어주세요. <button type="button" class="example-button" onclick="insertExample('gender', '여자')">예시</button></label>
+      <input type="text" id="gender" name="gender" placeholder="예: 여자">
+
+      <label>4. 성격은 어떻게 설명할 수 있을까요? <button type="button" class="example-button" onclick="insertExample('personality', '차분하고 신속합니다.')">예시</button></label>
+      <input type="text" id="personality" name="personality" placeholder="예: 차분하고 신속합니다.">
+
+      <label>5. 좋아하는 음식은 무엇인가요? <button type="button" class="example-button" onclick="insertExample('food', '밥과 미여김데구나미.')">예시</button></label>
+      <input type="text" id="food" name="food" placeholder="예: 밥과 미여김데구나미">
+
+      <label>6. 최근에 가졌던 계절을 설명해주세요. <button type="button" class="example-button" onclick="insertExample('season', '가을에는 새홀한 보라사가 좋아요.')">예시</button></label>
+      <input type="text" id="season" name="season" placeholder="예: 가을에는 새홀한 보라사가 좋아요.">
+
+      <label>7. 어느 영웅이 되고 싶어요? <button type="button" class="example-button" onclick="insertExample('dream', '저는 귀여운 그림책 작가가 되고 싶어요.')">예시</button></label>
+      <input type="text" id="dream" name="dream" placeholder="예: 귀여운 그림책 작가가 되고 싶어요.">
+
+      <label>8. 최근에 꼼뱀했던 것이나 가고 싶은 곳은 어느 것입니까? <button type="button" class="example-button" onclick="insertExample('wish', '선생님과 공동체에서 최근 경험을 나눌고 싶어요.')">예시</button></label>
+      <input type="text" id="wish" name="wish" placeholder="예: 선생님과 공동체에서 최근 경험을 나눌고 싶어요.">
+
+      <label>9. 원하신 그림 스타일은 무엇인가요? <button type="button" class="example-button" onclick="insertExample('style', '디즈니 스타일')">예시</button></label>
+      <input type="text" id="style" name="style" placeholder="예: 디즈니 스타일">
+
+      <label>10. 저는 이렇게 그림체를 설명해야 할 것 같아요. 결과문은 어떻게 나오는가요?</label>
+      <textarea id="profile" name="profile" placeholder="예: 50대 여자, 다양한 보라사, 달카락, 다양한 의상"></textarea>
+
+      <button type="button" onclick="generateTextFile()">도화책 만들기</button>
+      <button type="button" onclick="goToChatGPT()">채트GPT로 가기</button>
+    </form>
   </div>
+
+  <script>
+    function insertExample(id, text) {
+      document.getElementById(id).value = text;
+    }
+    function generateTextFile() {
+      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'dream', 'wish', 'style', 'profile'];
+      let content = '=== 그림동화책 제작을 위한 입력 내용 ===\n\n';
+      fields.forEach(id => {
+        const val = document.getElementById(id).value.trim();
+        if (val) content += `● ${document.querySelector('label[for="' + id + '"]')?.innerText || id}: ${val}\n`;
+      });
+      const blob = new Blob([content], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'my_intro_book.txt';
+      link.click();
+    }
+    function goToChatGPT() {
+      window.open('https://chat.openai.com/', '_blank');
+    }
+  </script>
 </body>
 </html>
