@@ -25,14 +25,14 @@
 
 <h1>🌼 AI 그림동화책 만들기</h1>
 <p><strong>이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다.  이 목표를 마음에 두고 이야기를 창작해주세요.<br><br>1. 아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요 <br>2. 각 장면의 내용을 그림 동화책 스타일로 써주세요<br>3. 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요<br>4. 총 5페이지인데, 첫페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래지침을 참고해 만들어주세요 <br>- 호기심을 불러일으키는 말<br>- 감정을 불러일으키는 말<br>- 따뜻하고 정겨운 말<br>5. 내용이 비어있는 곳은 네가 스토리전개에 어울리도록 내용을 채워주세요<br>6. 어르신들이 자신을 소개하는 그림동화책이기때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.  <br>어르신들의 성별, 연령, 성격 등의 답변을 보고 <인물프로필>이미지 프롬프트를 고정적으로 설정해 주세요. 그리고 설정된 <인물프로필 이미지 프롬프트>를 모든 페이지의 주인공 이미지에는 동일하게 적용되어, 그림책의 모든 페이지 삽화의 주인공이 동일하게 보일 수 있도록 해주세요.  <br>* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</strong></p>
-<label>이름: <input id="name"></label><br>
+<label>존함을 알려주시겠어요? <button class="example-button" onclick="setValue\('name', '김영자'\)">예시</button><button class="voice-button" onclick="speakText\('성함을 입력해 주세요.'\)">🔊</button></label><br>
 <label>성별: <select id="gender"><option>여자</option><option>남자</option></select></label><br>
 <label>연령대: <select id="age"><option>50대</option><option>60대</option><option>70대</option></select></label><br>
-<label>성격: <input id="personality"></label><br>
-<label>좋아하는 음식: <input id="food"></label><br>
-<label>좋아하는 계절: <input id="season"></label><br>
-<label>어릴 적 꿈: <input id="dream"></label><br>
-<label>지금의 소망: <input id="wish"></label><br>
+<label>선생님의 성격은 어떤 편이신가요? <button class="example-button" onclick="setValue\('personality', '차분하고 따뜻한 성격이에요.'\)">예시</button><button class="voice-button" onclick="speakText\('성격을 소개해 주세요.'\)">🔊</button></label><br>
+<label>평소에 어떤 음식을 좋아하시나요? <button class="example-button" onclick="setValue\('food', '따뜻한 미역국'\)">예시</button><button class="voice-button" onclick="speakText\('좋아하는 음식을 입력해 주세요.'\)">🔊</button></label><br>
+<label>좋아하시는 계절은 언제인가요? <button class="example-button" onclick="setValue\('season', '가을'\)">예시</button><button class="voice-button" onclick="speakText\('좋아하는 계절을 알려 주세요.'\)">🔊</button></label><br>
+<label>어릴 적 꿈은 무엇이었는지 기억나시나요? <button class="example-button" onclick="setValue\('dream', '선생님이 되고 싶었어요'\)">예시</button><button class="voice-button" onclick="speakText\('어릴 적 꿈을 입력해 주세요.'\)">🔊</button></label><br>
+<label>요즘 바라고 계신 소망이 있으신가요? <button class="example-button" onclick="setValue\('wish', '그림책 작가가 되고 싶어요'\)">예시</button><button class="voice-button" onclick="speakText\('요즘의 소망을 알려 주세요.'\)">🔊</button></label><br>
 <label>그림 스타일: <select id="style"><option>디즈니 스타일</option><option>지브리 스타일</option></select></label><br>
 <label>외모 묘사: <textarea id="appearance"></textarea></label><br>
 <button onclick="generateStory()">📖 동화책 만들기</button><br><br>
