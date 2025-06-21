@@ -1,99 +1,155 @@
+
 <!DOCTYPE html>
 <html lang="ko">
-<head><meta charset="utf-8"><title>AI 그림동화책 만들기</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>🌸 나의 소개 그림 동화책 만들기</title>
+  <style>
+    body {
+      font-family: 'Nanum Gothic', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+      padding: 30px;
+      line-height: 1.8;
+      color: #003366;
+    }
+    h1 {
+      font-size: 28px;
+      color: #01579b;
+    }
+    .section, .output, .guide-box {
+      background: #ffffffcc;
+      padding: 20px;
+      margin-top: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    button {
+      background-color: #4a90e2;
+      color: white;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px 5px 10px 0;
+    }
+    .example-button {
+      background-color: #4caf50;
+      font-size: 14px;
+      border-radius: 6px;
+    }
+    .voice-button {
+      background-color: #2196f3;
+      border-radius: 50%;
+      padding: 6px 10px;
+    }
+    textarea[readonly] {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    #copyBtn, #chatgptBtn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
 <body>
+  <h1>🌸 나만의 그림 동화책 만들기</h1>
 
-<div class="intro-box">
-  <h2>📘 이 그림책의 목표</h2>
-  <p>이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해주세요.</p>
-  <ol>
-    <li>아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요</li>
-    <li>각 장면의 내용을 그림 동화책 스타일로 써주세요</li>
-    <li>각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요</li>
-    <li>총 5페이지인데, 첫페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래지침을 참고해 만들어주세요
-      <ul>
-        <li>호기심을 불러일으키는 말</li>
-        <li>감정을 불러일으키는 말</li>
-        <li>따뜻하고 정겨운 말</li>
-      </ul>
-    </li>
-    <li>내용이 비어있는 곳은 네가 스토리전개에 어울리도록 내용을 채워주세요</li>
-    <li>어르신들이 자신을 소개하는 그림동화책이기 때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요. <br>어르신들의 성별, 연령, 성격 등의 답변을 보고 <인물프로필> 이미지 프롬프트를 고정적으로 설정해 주세요. 그리고 설정된 <인물프로필 이미지 프롬프트>를 모든 페이지의 주인공 이미지에는 동일하게 적용되어, 그림책의 모든 페이지 삽화의 주인공이 동일하게 보일 수 있도록 해주세요.</li>
-    <li>표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</li>
-  </ol>
-</div>
+  <div class="guide-box">
+    <p><strong>이 그림책의 목표는</strong> 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해주세요.</p>
+    <ul>
+      <li>① 아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요</li>
+      <li>② 각 장면의 내용을 그림 동화책 스타일로 써주세요</li>
+      <li>③ 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요</li>
+      <li>④ 총 5페이지인데, 첫페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래지침을 참고해 만들어주세요:
+        <ul>
+          <li>- 호기심을 불러일으키는 말</li>
+          <li>- 감정을 불러일으키는 말</li>
+          <li>- 따뜻하고 정겨운 말</li>
+        </ul>
+      </li>
+      <li>⑤ 내용이 비어있는 곳은 네가 스토리전개에 어울리도록 내용을 채워주세요</li>
+      <li>⑥ 어르신들이 자신을 소개하는 그림동화책이기때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.  
+        어르신들의 성별, 연령, 성격 등의 답변을 보고 <인물프로필>이미지 프롬프트를 고정적으로 설정해 주세요. 그리고 설정된 <인물프로필 이미지 프롬프트>를 모든 페이지의 주인공 이미지에는 동일하게 적용되어, 그림책의 모든 페이지 삽화의 주인공이 동일하게 보일 수 있도록 해주세요.</li>
+      <li>* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</li>
+    </ul>
+  </div>
 
-<h1>🌼 AI 그림동화책 만들기</h1>
-<p><strong>이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다.  이 목표를 마음에 두고 이야기를 창작해주세요.<br><br>1. 아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요 <br>2. 각 장면의 내용을 그림 동화책 스타일로 써주세요<br>3. 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요<br>4. 총 5페이지인데, 첫페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래지침을 참고해 만들어주세요 <br>- 호기심을 불러일으키는 말<br>- 감정을 불러일으키는 말<br>- 따뜻하고 정겨운 말<br>5. 내용이 비어있는 곳은 네가 스토리전개에 어울리도록 내용을 채워주세요<br>6. 어르신들이 자신을 소개하는 그림동화책이기때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.  <br>어르신들의 성별, 연령, 성격 등의 답변을 보고 <인물프로필>이미지 프롬프트를 고정적으로 설정해 주세요. 그리고 설정된 <인물프로필 이미지 프롬프트>를 모든 페이지의 주인공 이미지에는 동일하게 적용되어, 그림책의 모든 페이지 삽화의 주인공이 동일하게 보일 수 있도록 해주세요.  <br>* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</strong></p>
-<label>존함을 알려주시겠어요? <button class="example-button" onclick="setValue\('name', '김영자'\)">예시</button><button class="voice-button" onclick="speakText\('성함을 입력해 주세요.'\)">🔊</button></label><br>
-<label>성별: <select id="gender"><option>여자</option><option>남자</option></select></label><br>
-<label>연령대: <select id="age"><option>50대</option><option>60대</option><option>70대</option></select></label><br>
-<label>선생님의 성격은 어떤 편이신가요? <button class="example-button" onclick="setValue\('personality', '차분하고 따뜻한 성격이에요.'\)">예시</button><button class="voice-button" onclick="speakText\('성격을 소개해 주세요.'\)">🔊</button></label><br>
-<label>평소에 어떤 음식을 좋아하시나요? <button class="example-button" onclick="setValue\('food', '따뜻한 미역국'\)">예시</button><button class="voice-button" onclick="speakText\('좋아하는 음식을 입력해 주세요.'\)">🔊</button></label><br>
-<label>좋아하시는 계절은 언제인가요? <button class="example-button" onclick="setValue\('season', '가을'\)">예시</button><button class="voice-button" onclick="speakText\('좋아하는 계절을 알려 주세요.'\)">🔊</button></label><br>
-<label>어릴 적 꿈은 무엇이었는지 기억나시나요? <button class="example-button" onclick="setValue\('dream', '선생님이 되고 싶었어요'\)">예시</button><button class="voice-button" onclick="speakText\('어릴 적 꿈을 입력해 주세요.'\)">🔊</button></label><br>
-<label>요즘 바라고 계신 소망이 있으신가요? <button class="example-button" onclick="setValue\('wish', '그림책 작가가 되고 싶어요'\)">예시</button><button class="voice-button" onclick="speakText\('요즘의 소망을 알려 주세요.'\)">🔊</button></label><br>
-<label>그림 스타일: <select id="style"><option>디즈니 스타일</option><option>지브리 스타일</option></select></label><br>
-<label>외모 묘사: <textarea id="appearance"></textarea></label><br>
-<button onclick="generateStory()">📖 동화책 만들기</button><br><br>
-<textarea id="finalText" rows="20" style="width:100%"></textarea><br>
-<button onclick="copyToClipboard()">📋 복사하기</button>
-<a href="https://chat.openai.com/" target="_blank"><button>🤖 ChatGPT로 이동</button></a>
-<button onclick="downloadText()">💾 텍스트 파일 저장</button>
+  <div class="section">
+    <label>이름</label>
+    <input type="text" placeholder="예: 김영자" />
+    <label>연령대</label>
+    <select>
+      <option>50대</option>
+      <option>60대</option>
+      <option>70대</option>
+    </select>
+    <label>성별</label>
+    <select>
+      <option>여자</option>
+      <option>남자</option>
+    </select>
+    <label>성격</label>
+    <input type="text" placeholder="예: 차분하고 따뜻한 성격이에요." />
+    <label>좋아하는 음식</label>
+    <input type="text" placeholder="예: 따뜻한 미역국" />
+    <label>좋아하는 계절</label>
+    <input type="text" placeholder="예: 가을" />
+    <label>어릴 적 꿈</label>
+    <input type="text" placeholder="예: 선생님이 되고 싶었어요." />
+    <label>지금의 소망</label>
+    <input type="text" placeholder="예: 그림책 작가가 되고 싶어요." />
+    <label>좋아하는 그림 스타일</label>
+    <select>
+      <option>디즈니 스타일</option>
+      <option>지브리 스타일</option>
+      <option>연필 소묘 스타일</option>
+      <option>수채화 스타일</option>
+    </select>
+    <label>내 모습 설명</label>
+    <textarea placeholder="예: 60대 한국 여성, 짧은 단발머리, 부드러운 인상"></textarea>
+  </div>
 
-<script>
-const guideText = "이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다.  이 목표를 마음에 두고 이야기를 창작해주세요.\n\n1. 아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요 \n2. 각 장면의 내용을 그림 동화책 스타일로 써주세요\n3. 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요\n4. 총 5페이지인데, 첫페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래지침을 참고해 만들어주세요 \n- 호기심을 불러일으키는 말\n- 감정을 불러일으키는 말\n- 따뜻하고 정겨운 말\n5. 내용이 비어있는 곳은 네가 스토리전개에 어울리도록 내용을 채워주세요\n6. 어르신들이 자신을 소개하는 그림동화책이기때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.  \n어르신들의 성별, 연령, 성격 등의 답변을 보고 <인물프로필>이미지 프롬프트를 고정적으로 설정해 주세요. 그리고 설정된 <인물프로필 이미지 프롬프트>를 모든 페이지의 주인공 이미지에는 동일하게 적용되어, 그림책의 모든 페이지 삽화의 주인공이 동일하게 보일 수 있도록 해주세요.  \n* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.";
-function generateStory() {
-  const name = document.getElementById('name').value;
-  const gender = document.getElementById('gender').value;
-  const age = document.getElementById('age').value;
-  const personality = document.getElementById('personality').value;
-  const food = document.getElementById('food').value;
-  const season = document.getElementById('season').value;
-  const dream = document.getElementById('dream').value;
-  const wish = document.getElementById('wish').value;
-  const style = document.getElementById('style').value;
-  const appearance = document.getElementById('appearance').value;
+  <div class="section">
+    <button onclick="generateStory()">📖 동화책 만들기</button>
+    <div class="output" id="storyOutput" style="display:none;"></div>
+    <button id="copyBtn" style="display:none;" onclick="copyText()">📋 복사하기</button>
+    <button id="chatgptBtn" style="display:none;" onclick="window.open('https://chat.openai.com/')">🤖 ChatGPT로 이동</button>
+  </div>
 
-  const story = guideText + "\n\n" +
-"📘 나의 시작\n" +
-"저는 " + age + "의 " + gender + " " + name + "입니다. " + food + "을(를) 좋아하던 아이였지요.\n" +
-"[이미지 프롬프트] " + appearance + ", " + style + ", page 1\n\n" +
+  <script>
+    function generateStory() {
+      const fields = document.querySelectorAll('input, select, textarea');
+      let result = "이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다.
 
-"📘 성격과 계절\n" +
-"저는 " + personality + " 성격을 가졌고 " + season + "을 좋아해요.\n" +
-"[이미지 프롬프트] " + appearance + ", " + style + ", page 2\n\n" +
-
-"📘 어린 시절의 꿈\n" +
-"어릴 적 꿈은 " + dream + "였어요.\n" +
-"[이미지 프롬프트] " + appearance + ", " + style + ", page 3\n\n" +
-
-"📘 지금의 나\n" +
-"지금은 " + wish + "라는 새로운 꿈을 꾸고 있어요.\n" +
-"[이미지 프롬프트] " + appearance + ", " + style + ", page 4\n\n" +
-
-"📘 앞으로의 다짐\n" +
-"저의 이야기는 끝나지 않았어요. 꿈을 향해 따뜻하게 걸어갑니다.\n" +
-"[이미지 프롬프트] " + appearance + ", " + style + ", page 5";
-
-  document.getElementById('finalText').value = story;
-}
-
-function copyToClipboard() {
-  const textArea = document.getElementById('finalText');
-  textArea.select();
-  document.execCommand("copy");
-  alert("복사되었습니다. ChatGPT에 붙여넣기 하세요.");
-}
-
-function downloadText() {
-  const text = document.getElementById('finalText').value;
-  const blob = new Blob([text], { type: 'text/plain' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = "나의_그림동화책.txt";
-  link.click();
-}
-</script>
+";
+      fields.forEach(f => {
+        if (f.value) result += f.previousElementSibling?.textContent + ": " + f.value + "\n";
+      });
+      document.getElementById('storyOutput').textContent = result;
+      document.getElementById('storyOutput').style.display = 'block';
+      document.getElementById('copyBtn').style.display = 'inline-block';
+      document.getElementById('chatgptBtn').style.display = 'inline-block';
+    }
+    function copyText() {
+      const text = document.getElementById('storyOutput').textContent;
+      navigator.clipboard.writeText(text);
+      alert("동화책 내용이 복사되었습니다. ChatGPT에 붙여넣어 보세요!");
+    }
+  </script>
 </body>
 </html>
