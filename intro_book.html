@@ -1,135 +1,161 @@
+
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>앤 AI 기다리 그림동화책 작성기</title>
-  <style>
+<meta charset="utf-8"/>
+<title>AI 그림동화책 - 나를 소개합니다</title>
+<style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Nanum Gothic', '돋움', sans-serif;
+      line-height: 1.9;
+      padding: 20px;
+      background: #f5fafd;
+      color: #003366;
+      font-size: 18px;
+    }
+    h1 {
+      color: #01579b;
       background-color: #e0f7fa;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 30px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
-      color: #0277bd;
+      padding: 10px 15px;
+      border-radius: 10px;
     }
     label {
-      font-weight: bold;
       display: block;
       margin-top: 20px;
+      font-weight: bold;
+      font-size: 17px;
     }
-    input, select, textarea {
+    input[type="text"], textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 2px solid #4dd0e1;
-      border-radius: 6px;
+      padding: 12px;
+      margin-top: 8px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
     }
-    button {
-      margin-top: 30px;
-      padding: 12px 24px;
+    button.example {
+      margin-top: 6px;
       background-color: #0288d1;
       color: white;
+      padding: 6px 12px;
+      font-size: 14px;
       border: none;
-      border-radius: 8px;
-      font-size: 18px;
+      border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #0277bd;
+    .form-group {
+      margin-bottom: 25px;
     }
-    .description {
-      background-color: #b2ebf2;
+  
+    .guide-box {
+      background-color: #ffffff;
+      border-left: 6px solid #0288d1;
       padding: 20px;
       border-radius: 10px;
-      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 25px 0;
+      font-size: 16px;
+      line-height: 1.7;
     }
-    .example-button {
-      margin-left: 10px;
-      font-size: 14px;
-      background-color: #fff59d;
-      border: 1px solid #fbc02d;
-      border-radius: 4px;
-      padding: 4px 8px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🌸 나의 그림 동화책 만들기</h1>
-    <div class="description">
-      <p><strong>이 그림책의 목표</strong>는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청한 수강사 어른신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나누면으로써 서로를 소개하고 같이 이해하고 친해진 수 있도록 하는 것입니다.</p>
-    </div>
-
-    <form id="bookForm">
-      <label>1. 사이드로 길드로 담겼을 것같은 이름을 가르치셔요.
-        <button type="button" class="example-button" onclick="insertExample('name', 'Kim Yeongja')">예시</button>
-      </label>
-      <input type="text" id="name" name="name" placeholder="예: Kim Yeongja">
-
-      <label>2. 어느 여름에 계신가요? 나의 나이 및 여름을 설명해주세요.
-        <button type="button" class="example-button" onclick="insertExample('age', '50°°°')">예시</button>
-      </label>
-      <input type="text" id="age" name="age" placeholder="예: 50°°°">
-
-      <label>3. 성별을 적어주세요. <button type="button" class="example-button" onclick="insertExample('gender', '여자')">예시</button></label>
-      <input type="text" id="gender" name="gender" placeholder="예: 여자">
-
-      <label>4. 성격은 어떻게 설명할 수 있을까요? <button type="button" class="example-button" onclick="insertExample('personality', '차분하고 신속합니다.')">예시</button></label>
-      <input type="text" id="personality" name="personality" placeholder="예: 차분하고 신속합니다.">
-
-      <label>5. 좋아하는 음식은 무엇인가요? <button type="button" class="example-button" onclick="insertExample('food', '밥과 미여김데구나미.')">예시</button></label>
-      <input type="text" id="food" name="food" placeholder="예: 밥과 미여김데구나미">
-
-      <label>6. 최근에 가졌던 계절을 설명해주세요. <button type="button" class="example-button" onclick="insertExample('season', '가을에는 새홀한 보라사가 좋아요.')">예시</button></label>
-      <input type="text" id="season" name="season" placeholder="예: 가을에는 새홀한 보라사가 좋아요.">
-
-      <label>7. 어느 영웅이 되고 싶어요? <button type="button" class="example-button" onclick="insertExample('dream', '저는 귀여운 그림책 작가가 되고 싶어요.')">예시</button></label>
-      <input type="text" id="dream" name="dream" placeholder="예: 귀여운 그림책 작가가 되고 싶어요.">
-
-      <label>8. 최근에 꼼뱀했던 것이나 가고 싶은 곳은 어느 것입니까? <button type="button" class="example-button" onclick="insertExample('wish', '선생님과 공동체에서 최근 경험을 나눌고 싶어요.')">예시</button></label>
-      <input type="text" id="wish" name="wish" placeholder="예: 선생님과 공동체에서 최근 경험을 나눌고 싶어요.">
-
-      <label>9. 원하신 그림 스타일은 무엇인가요? <button type="button" class="example-button" onclick="insertExample('style', '디즈니 스타일')">예시</button></label>
-      <input type="text" id="style" name="style" placeholder="예: 디즈니 스타일">
-
-      <label>10. 저는 이렇게 그림체를 설명해야 할 것 같아요. 결과문은 어떻게 나오는가요?</label>
-      <textarea id="profile" name="profile" placeholder="예: 50대 여자, 다양한 보라사, 달카락, 다양한 의상"></textarea>
-
-      <button type="button" onclick="generateTextFile()">도화책 만들기</button>
-      <button type="button" onclick="goToChatGPT()">채트GPT로 가기</button>
-    </form>
-  </div>
-
-  <script>
-    function insertExample(id, text) {
+</style>
+<script>
+    function setExample(id, text) {
       document.getElementById(id).value = text;
     }
-    function generateTextFile() {
-      const fields = ['name', 'age', 'gender', 'personality', 'food', 'season', 'dream', 'wish', 'style', 'profile'];
-      let content = '=== 그림동화책 제작을 위한 입력 내용 ===\n\n';
-      fields.forEach(id => {
-        const val = document.getElementById(id).value.trim();
-        if (val) content += `● ${document.querySelector('label[for="' + id + '"]')?.innerText || id}: ${val}\n`;
-      });
-      const blob = new Blob([content], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'my_intro_book.txt';
-      link.click();
-    }
-    function goToChatGPT() {
-      window.open('https://chat.openai.com/', '_blank');
-    }
   </script>
-</body>
+</head>
+<body>
+
+<div class="guide-box"><h1 style="font-size: 22px;">🖍 나를 소개하는 그림동화책 만들기</h1>
+<p>이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어서, 서로의 이야기를 나눔으로써 서로를 소개하고 같이 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해주세요.</p>
+<ul>
+<li>아래의 내용으로 그림동화책을 써주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해주세요.</li>
+<li>각 장면의 내용을 그림 동화책 스타일로 써주세요.</li>
+<li>각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요.</li>
+<li>총 5페이지인데, 첫 페이지의 제목과 이미지 프롬프트는 그림책의 목표에 기초해서 아래 지침을 참고해 만들어주세요:
+        <ul>
+<li>호기심을 불러일으키는 말</li>
+<li>감정을 불러일으키는 말</li>
+<li>따뜻하고 정겨운 말</li>
+</ul>
+</li>
+<li>내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워주세요.</li>
+<li>어르신들이 자신을 소개하는 그림동화책이기 때문에 주인공이 모든 페이지에 동일한 모습(머리스타일, 얼굴, 동양인, 의상 등)으로 보이는 것이 중요해요.</li>
+<li>어르신들의 성별, 연령, 성격 등의 답변을 보고 <strong>인물프로필 이미지 프롬프트</strong>를 고정적으로 설정해 주세요. 그리고 설정된 프롬프트를 모든 페이지의 주인공 이미지에 동일하게 적용해 주세요.</li>
+<li><strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</li>
+</ul>
+</div>
+<form>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="name">1. 어르신, 성함을 알려주시겠어요? 그림책에 소개될 주인공의 이름이 됩니다.</label><button class="example" onclick="setExample('name', '김영자')" type="button">예시보기</button></div>
+<input id="name" name="name" placeholder="예: 김영자" type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="age">2. 어르신의 연세는 어느 정도 되시나요? (예: 50대, 60대 등)</label><button class="example" onclick="setExample('age', '60대')" type="button">예시보기</button></div>
+<select id="age" name="age" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 8px; margin-top: 8px;"><option value="50대">50대</option><option value="60대">60대</option><option value="70대">70대</option></select>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="gender">3. 어르신은 남성이신가요, 여성이신가요?</label><button class="example" onclick="setExample('gender', '여성')" type="button">예시보기</button></div>
+<select id="gender" name="gender" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 8px; margin-top: 8px;"><option value="남성">남성</option><option value="여성">여성</option></select>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="personality">4. 어르신 성격을 소개해 주시겠어요? (차분하다, 활발하다 등)</label><button class="example" onclick="setExample('personality', '따뜻하고 다정한 성격입니다.')" type="button">예시보기</button></div>
+<input id="personality" name="personality" placeholder="예: 따뜻하고 다정한 성격입니다." type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="food">5. 어르신이 좋아하시는 음식은 무엇인가요?</label><button class="example" onclick="setExample('food', '따뜻한 미역국')" type="button">예시보기</button></div>
+<input id="food" name="food" placeholder="예: 따뜻한 미역국" type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="season">6. 어르신이 좋아하시는 계절은 언제인가요?</label><button class="example" onclick="setExample('season', '가을이 되면 마음이 편안해져요.')" type="button">예시보기</button></div>
+<input id="season" name="season" placeholder="예: 가을이 되면 마음이 편안해져요." type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="childhoodDream">7. 어릴 적 꿈이 무엇이었는지 기억나시나요?</label><button class="example" onclick="setExample('childhoodDream', '선생님이 되고 싶었어요.')" type="button">예시보기</button></div>
+<input id="childhoodDream" name="childhoodDream" placeholder="예: 선생님이 되고 싶었어요." type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="currentWish">8. 지금 현재 어르신의 바람이나 꿈이 있으신가요?</label><button class="example" onclick="setExample('currentWish', '그림책 작가가 되고 싶어요.')" type="button">예시보기</button></div>
+<input id="currentWish" name="currentWish" placeholder="예: 그림책 작가가 되고 싶어요." type="text"/>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="style">9. 어르신이 좋아하시는 그림 스타일이 있으신가요? (예: 수채화, 연필화, 디즈니 스타일 등)</label><button class="example" onclick="setExample('style', '디즈니 스타일')" type="button">예시보기</button></div>
+<select id="style" name="style" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 8px; margin-top: 8px;"><option value="디즈니 스타일">디즈니 스타일</option><option value="지브리 스타일">지브리 스타일</option><option value="연필소묘 스타일">연필소묘 스타일</option><option value="수채화 스타일">수채화 스타일</option></select>
+</div>
+<div class="form-group"><div style="display: flex; align-items: center; gap: 10px;"><label for="extra">10. 그 외에 그림책에 넣고 싶은 말씀이 더 있으실까요? (선택 사항)</label><button class="example" onclick="setExample('extra', '나를 응원해준 가족에게 감사하고 싶어요.')" type="button">예시보기</button></div>
+<textarea id="extra" name="extra" placeholder="예: 나를 응원해준 가족에게 감사하고 싶어요." rows="3"></textarea>
+</div>
+<button style="margin-top: 30px; background-color: #0288d1; color: white; padding: 14px 24px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;" type="submit"><span>📖</span><span>동화책 만들기</span></button></form>
+<script>
+document.querySelector("form").addEventListener("submit", function(event) {
+  event.preventDefault(); // 기본 제출 막기
+
+  const outputWindow = window.open("", "_blank");
+  outputWindow.document.write("<html><head><title>나의 그림동화책 소개</title><style>");
+  outputWindow.document.write("body { font-family: 'Nanum Gothic', sans-serif; line-height: 1.8; padding: 30px; font-size: 18px; background-color: #fefefe; }");
+  outputWindow.document.write("h1 { color: #01579b; font-size: 24px; }");
+  outputWindow.document.write("p, li { margin-bottom: 10px; }");
+  outputWindow.document.write("</style></head><body>");
+
+  const introBox = document.querySelector(".guide-box").innerHTML;
+  outputWindow.document.write("<h1>📘 이 그림책의 목표</h1><div>" + introBox + "</div>");
+
+  const fields = [
+    { id: "name", label: "1. 성함" },
+    { id: "age", label: "2. 연령대" },
+    { id: "gender", label: "3. 성별" },
+    { id: "personality", label: "4. 성격" },
+    { id: "food", label: "5. 좋아하는 음식" },
+    { id: "season", label: "6. 좋아하는 계절" },
+    { id: "childhoodDream", label: "7. 어린 시절의 꿈" },
+    { id: "currentWish", label: "8. 요즘의 바람" },
+    { id: "style", label: "9. 그림 스타일" },
+    { id: "extra", label: "10. 전하고 싶은 말" }
+  ];
+
+  outputWindow.document.write("<h1>✏️ 어르신의 답변</h1><ul>");
+  fields.forEach(function(field) {
+    const el = document.getElementById(field.id);
+    const value = el && el.value ? el.value : el.options ? el.options[el.selectedIndex].text : "";
+    outputWindow.document.write("<li><strong>" + field.label + ":</strong> " + value + "</li>");
+  });
+  outputWindow.document.write("</ul>");
+
+  outputWindow.document.write("</body></html>");
+  outputWindow.document.close();
+});
+</script></body>
 </html>
