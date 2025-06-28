@@ -69,29 +69,58 @@
 
   <div class="section">
     <h2>Step 1. 주제를 먼저 골라보자!</h2>
-    <p>아래의 주제 중 하나를 선택하고, 직접 적어보세요. 장면은 <strong>총 5컷</strong>으로 구성해 주세요.</p>
-    <p>🌡️ 기후변화: 북극의 얼음이 녹는 이유는 무엇일까요?<br>
-       🌊 해양 생태계 보호: 바다거북이 플라스틱에 갇히면 어떤 일이 벌어질까요?<br>
-       🐾 동물 서식지 보호: 숲이 사라지면 동물 친구들은 어디로 갈까요?<br>
-       🗑️ 쓰레기 줄이기: 플라스틱 빨대를 대신할 수 있는 방법은?</p>
-    <textarea placeholder="여기에 선택한 주제를 적어주세요."></textarea>
+    <p>아래에서 하나를 선택하세요.</p>
+    <select id="step1Select">
+      <option value="">-- 주제를 선택하세요 --</option>
+      <option>기후변화: 북극의 얼음이 녹는 이유는 무엇일까요?</option>
+      <option>해양 생태계 보호: 바다거북이 플라스틱에 갇히면 어떤 일이 벌어질까요?</option>
+      <option>동물 서식지 보호: 숲이 사라지면 동물 친구들은 어디로 갈까요?</option>
+      <option>쓰레기 줄이기: 플라스틱 빨대를 대신할 수 있는 방법은?</option>
+    </select>
   </div>
 
   <div class="section">
     <h2>Step 2. 시놉시스를 만들어 보자!</h2>
-    <label>제목: <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" /></label>
-    <label>주인공: <input type="text" placeholder="예: 아기 북극곰 폴라" /></label>
-    <label>문제 상황: <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요."></textarea></label>
-    <label>해결 방법: <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요."></textarea></label>
-    <label>교훈: <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요."></textarea></label>
+    <label>제목:
+      <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" />
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>주인공:
+      <input type="text" placeholder="예: 아기 북극곰 폴라" />
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>문제 상황:
+      <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요."></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>해결 방법:
+      <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요."></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>교훈:
+      <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요."></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
   </div>
 
   <div class="section">
     <h2>Step 3. 등장인물 구성하기</h2>
-    <label>주인공 이름과 특징: <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라"></textarea></label>
-    <label>친구1 이름과 특징: <textarea placeholder="예: 똑똑한 북극여우 루루"></textarea></label>
-    <label>친구2 이름과 특징: <textarea placeholder="예: 다정한 순록 노노"></textarea></label>
-    <label>악당 또는 문제 유발자 (선택): <textarea placeholder="예: 쓰레기를 무심코 버리는 사람"></textarea></label>
+    <label>주인공 이름과 특징:
+      <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라"></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>친구1 이름과 특징:
+      <textarea placeholder="예: 똑똑한 북극여우 루루"></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>친구2 이름과 특징:
+      <textarea placeholder="예: 다정한 순록 노노"></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
+    <label>악당 또는 문제 유발자:
+      <textarea placeholder="예: 쓰레기를 무심코 버리는 사람"></textarea>
+      <button type="button" onclick="setExample(this)">예시보기</button>
+    </label>
   </div>
 
   <div class="section">
@@ -117,65 +146,60 @@
   </div>
 
   <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px;">
-    <button onclick="openStorybook()"
-      style="flex:1; min-width:200px; background-color:#0288d1; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
-      1️⃣ 동화책 만들기
-    </button>
-    <button onclick="window.open('https://chat.openai.com/', '_blank')"
-      style="flex:1; min-width:200px; background-color:#7e57c2; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
-      2️⃣ 챗GPT
-    </button>
-    <button onclick="window.open('https://labs.google/fx/ko/tools/whisk', '_blank')"
-      style="flex:1; min-width:200px; background-color:#ffa726; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
-      3️⃣ 구글 위스크
-    </button>
-    <button onclick="window.open('https://bookcreator.com/', '_blank')"
-      style="flex:1; min-width:200px; background-color:#8d6e63; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
-      4️⃣ 북크리에이터
-    </button>
+    <button onclick="openStorybook()" style="flex:1; min-width:200px; background-color:#0288d1; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">1️⃣ 동화책 만들기</button>
+    <button onclick="window.open('https://chat.openai.com/', '_blank')" style="flex:1; min-width:200px; background-color:#7e57c2; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">2️⃣ 챗GPT</button>
+    <button onclick="window.open('https://labs.google/fx/ko/tools/whisk', '_blank')" style="flex:1; min-width:200px; background-color:#ffa726; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">3️⃣ 구글 위스크</button>
+    <button onclick="window.open('https://bookcreator.com/', '_blank')" style="flex:1; min-width:200px; background-color:#8d6e63; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">4️⃣ 북크리에이터</button>
   </div>
 
-  <script>
-    function openStorybook() {
-      const outputWindow = window.open("", "_blank");
-      outputWindow.document.write("<html><head><title>나의 그림동화책 소개</title><style>");
-      outputWindow.document.write("body { font-family: 'Arial', sans-serif; line-height:1.8; padding:30px; font-size:18px; background:#fefefe; }");
-      outputWindow.document.write("h1 { color:#01579b; font-size:24px; }");
-      outputWindow.document.write("p, li { margin-bottom:10px; }");
-      outputWindow.document.write("</style></head><body>");
+<script>
+function setExample(btn){
+  const input = btn.previousElementSibling;
+  const val = input.placeholder.replace("예: ","");
+  input.value = val;
+  input.style.fontWeight = 'bold';
+  input.style.color = '#000';
+}
+function openStorybook() {
+  const outputWindow = window.open("", "_blank");
+  outputWindow.document.write("<html><head><title>나의 그림동화책 소개</title><style>");
+  outputWindow.document.write("body { font-family: 'Arial', sans-serif; line-height:1.8; padding:30px; font-size:18px; background:#fefefe; }");
+  outputWindow.document.write("h1 { color:#01579b; font-size:24px; }");
+  outputWindow.document.write("p, li { margin-bottom:10px; }");
+  outputWindow.document.write("</style></head><body>");
 
-      const introBox = document.querySelector(".guide-box").innerHTML;
-      outputWindow.document.write("<div>" + introBox + "</div>");
+  const introBox = document.querySelector(".guide-box").innerHTML;
+  outputWindow.document.write("<div>" + introBox + "</div>");
 
-      const fields = [];
-      document.querySelectorAll('.section').forEach(function(section) {
-        const heading = section.querySelector('h2') ? section.querySelector('h2').innerText : "";
-        if (heading) {
-          fields.push({ heading: heading, values: [] });
-          section.querySelectorAll('input, textarea, select').forEach(function(el) {
-            let val = "";
-            if (el.tagName === "SELECT") {
-              val = el.options[el.selectedIndex].text;
-            } else {
-              val = el.value.trim();
-            }
-            if (val) fields[fields.length - 1].values.push(val);
-          });
+  const fields = [];
+  document.querySelectorAll('.section').forEach(function(section) {
+    const heading = section.querySelector('h2') ? section.querySelector('h2').innerText : "";
+    if (heading) {
+      fields.push({ heading: heading, values: [] });
+      section.querySelectorAll('input, textarea, select').forEach(function(el) {
+        let val = "";
+        if (el.tagName === "SELECT") {
+          val = el.options[el.selectedIndex].text;
+        } else {
+          val = el.value.trim();
         }
+        if (val) fields[fields.length - 1].values.push(val);
       });
-
-      outputWindow.document.write("<h1>✏️ 입력하신 내용</h1>");
-      fields.forEach(function(field) {
-        outputWindow.document.write("<h2>" + field.heading + "</h2><ul>");
-        field.values.forEach(function(value) {
-          outputWindow.document.write("<li>" + value + "</li>");
-        });
-        outputWindow.document.write("</ul>");
-      });
-
-      outputWindow.document.write("</body></html>");
-      outputWindow.document.close();
     }
-  </script>
+  });
+
+  outputWindow.document.write("<h1>✏️ 입력하신 내용</h1>");
+  fields.forEach(function(field) {
+    outputWindow.document.write("<h2>" + field.heading + "</h2><ul>");
+    field.values.forEach(function(value) {
+      outputWindow.document.write("<li>" + value + "</li>");
+    });
+    outputWindow.document.write("</ul>");
+  });
+
+  outputWindow.document.write("</body></html>");
+  outputWindow.document.close();
+}
+</script>
 </body>
 </html>
