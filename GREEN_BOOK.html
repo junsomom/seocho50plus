@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>손주에게 선물하는 환경 그림 동화책 만들기</title>
+  <meta charset="UTF-8">
+  <title>신산업 달꿈- SDG 동화책 창작 지침서</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -10,34 +10,35 @@
       padding: 20px;
       background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
       color: #003366;
-      font-size: 18px;
     }
     h1, h2 {
       color: #01579b;
     }
-    textarea, input {
-      width: calc(100% - 120px);
-      padding: 10px;
+    textarea, select, input {
+      width: 100%;
+      padding: 8px;
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 18px;
-      color: #777;
-      font-weight: normal;
+      font-size: 16px;
+    }
+    .hint {
+      color: #555;
+      font-size: 0.9em;
     }
     .section {
       margin-bottom: 30px;
       background-color: #ffffffcc;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .guide-box {
       background-color: #ffffffcc;
       border-left: 6px solid #0288d1;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       margin: 20px 0;
     }
     .guide-box p,
@@ -46,16 +47,6 @@
     }
     .guide-box strong {
       color: #0277bd;
-    }
-    button.example-btn {
-      padding: 10px;
-      margin-left: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
-      background-color: #0288d1;
-      color: white;
     }
     #downloadBtn {
       display: inline-block;
@@ -66,136 +57,163 @@
       border-radius: 8px;
       font-size: 18px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       margin-top: 20px;
+    }
+    #downloadBtn:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
-  <h1>🌍 손주에게 선물하는 환경 그림 동화책 만들기</h1>
+  <h1>🌍 학생 수업을 위한 SDG 그림 동화책 창작 지침서</h1>
 
   <div class="guide-box">
-    <p><strong>이 동화책의 목표는</strong> 손주들이 자연과 환경을 사랑하는 마음을 배우고, 할머니 할아버지와 함께 소중한 추억을 만드는 것입니다. 마음에 떠오르는 이야기를 따뜻하게 적어주세요.</p>
-    <div><strong>①</strong> 아래 내용을 참고해 동화책을 적어보세요. 재미있고 창의적인 이야기가 좋아요.</div>
-    <div><strong>②</strong> 장면마다 어떤 일이 일어나는지 짧게 적어주세요.</div>
-    <div><strong>③</strong> 각 장면에 어울리는 그림 설명(프롬프트)을 한글과 영어로 써주세요.</div>
-    <div><strong>④</strong> 제목은 주제에 맞게 따뜻하고 감동적인 느낌으로 지어주세요.<br>
+    <p><strong>이 그림책의 목표는</strong> ‘환경 보호’와 관련된 SDG(지속가능한 개발 목표)의 중요성을 <strong>후배 초등학생 어린이들이 쉽게 이해하고 공감할 수 있도록</strong> 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.</p>
+    <div><strong>①</strong> 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.</div>
+    <div><strong>②</strong> 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.</div>
+    <div><strong>③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong>프롬프트를 한글과 영어로</strong> 상세히 작성해 주세요.</div>
+    <div><strong>④</strong> 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:<br>
       - 호기심을 자극하는 말<br>
-      - 마음을 움직이는 말<br>
-      - 자연과 환경을 담은 말
+      - 감정을 불러일으키는 말<br>
+      - 자연이나 환경과 관련된 말 포함
     </div>
-    <div><strong>⑤</strong> 빈 부분이 있으면 어울리는 내용으로 채워주세요.</div>
-    <div><strong>*</strong> 표지 그림 설명도 한글과 영어로 함께 적어주세요.</div>
+    <div><strong>⑤</strong> 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.</div>
+    <div><strong>*</strong> <strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</div>
   </div>
 
   <div class="section">
-    <h2>Step 1. 주제를 골라볼까요?</h2>
-    <label>
-      <textarea placeholder="예: 바닷가에 쓰레기가 떠내려와서 놀라고 있어요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '바닷가에 쓰레기가 떠내려와서 놀라고 있어요.')">예시보기</button>
-    </label>
+    <h2>Step 1. 주제를 먼저 골라보자!</h2>
+    <p>아래의 주제 중 하나를 선택하고, 직접 적어보세요. 장면은 <strong>총 5컷</strong>으로 구성해 주세요.</p>
+    <p>🌡️ 기후변화: 북극의 얼음이 녹는 이유는 무엇일까요?<br>
+       🌊 해양 생태계 보호: 바다거북이 플라스틱에 갇히면 어떤 일이 벌어질까요?<br>
+       🐾 동물 서식지 보호: 숲이 사라지면 동물 친구들은 어디로 갈까요?<br>
+       🗑️ 쓰레기 줄이기: 플라스틱 빨대를 대신할 수 있는 방법은?</p>
+    <textarea placeholder="여기에 선택한 주제를 적어주세요."></textarea>
   </div>
 
   <div class="section">
-    <h2>Step 2. 이야기의 큰 줄거리를 적어보세요</h2>
-    <label>제목:
-      <input type="text" placeholder="예: 우리 손주의 푸른 바다 이야기" />
-      <button type="button" class="example-btn" onclick="insertExample(this, '우리 손주의 푸른 바다 이야기')">예시보기</button>
-    </label>
-    <label>주인공:
-      <input type="text" placeholder="예: 호기심 많은 손주 민호" />
-      <button type="button" class="example-btn" onclick="insertExample(this, '호기심 많은 손주 민호')">예시보기</button>
-    </label>
-    <label>어떤 일이 일어나나요?:
-      <textarea placeholder="예: 바닷가에 쓰레기가 떠내려와서 놀라고 있어요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '바닷가에 쓰레기가 떠내려와서 놀라고 있어요.')">예시보기</button>
-    </label>
-    <label>어떻게 해결하나요?:
-      <textarea placeholder="예: 할머니와 함께 쓰레기를 주워 깨끗하게 만들어요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '할머니와 함께 쓰레기를 주워 깨끗하게 만들어요.')">예시보기</button>
-    </label>
-    <label>이 이야기에서 배우는 점:
-      <textarea placeholder="예: 작은 행동도 지구를 지키는 힘이 돼요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '작은 행동도 지구를 지키는 힘이 돼요.')">예시보기</button>
-    </label>
+    <h2>Step 2. 시놉시스를 만들어 보자!</h2>
+    <label>제목: <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" /></label>
+    <label>주인공: <input type="text" placeholder="예: 아기 북극곰 폴라" /></label>
+    <label>문제 상황: <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요."></textarea></label>
+    <label>해결 방법: <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요."></textarea></label>
+    <label>교훈: <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요."></textarea></label>
   </div>
 
   <div class="section">
-    <h2>Step 3. 등장인물 적어보기</h2>
-    <label>주인공 이름과 특징:
-      <textarea placeholder="예: 호기심 많고 친절한 민호"></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '호기심 많고 친절한 민호')">예시보기</button>
-    </label>
-    <label>친구1 이름과 특징:
-      <textarea placeholder="예: 똑똑한 토끼 토토"></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '똑똑한 토끼 토토')">예시보기</button>
-    </label>
-    <label>친구2 이름과 특징:
-      <textarea placeholder="예: 용감한 다람쥐 루루"></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '용감한 다람쥐 루루')">예시보기</button>
-    </label>
-    <label>문제를 일으키는 것(선택):
-      <textarea placeholder="예: 바다에 떠다니는 쓰레기"></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '바다에 떠다니는 쓰레기')">예시보기</button>
-    </label>
+    <h2>Step 3. 등장인물 구성하기</h2>
+    <label>주인공 이름과 특징: <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라"></textarea></label>
+    <label>친구1 이름과 특징: <textarea placeholder="예: 똑똑한 북극여우 루루"></textarea></label>
+    <label>친구2 이름과 특징: <textarea placeholder="예: 다정한 순록 노노"></textarea></label>
+    <label>악당 또는 문제 유발자 (선택): <textarea placeholder="예: 쓰레기를 무심코 버리는 사람"></textarea></label>
   </div>
 
   <div class="section">
-    <h2>Step 4. 장면 5컷으로 나누어 적어보세요</h2>
-    <label>
-      <textarea placeholder="장면 1: 민호가 할머니와 바닷가에 가요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '장면 1: 민호가 할머니와 바닷가에 가요.')">예시보기</button>
-    </label>
-    <label>
-      <textarea placeholder="장면 2: 해변에 쓰레기가 쌓여 있는 걸 보고 놀라요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '장면 2: 해변에 쓰레기가 쌓여 있는 걸 보고 놀라요.')">예시보기</button>
-    </label>
-    <label>
-      <textarea placeholder="장면 3: 쓰레기를 줍기로 해요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '장면 3: 쓰레기를 줍기로 해요.')">예시보기</button>
-    </label>
-    <label>
-      <textarea placeholder="장면 4: 친구들에게도 이야기해요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '장면 4: 친구들에게도 이야기해요.')">예시보기</button>
-    </label>
-    <label>
-      <textarea placeholder="장면 5: 깨끗해진 바다를 보고 기뻐해요."></textarea>
-      <button type="button" class="example-btn" onclick="insertExample(this, '장면 5: 깨끗해진 바다를 보고 기뻐해요.')">예시보기</button>
-    </label>
+    <h2>Step 4. 장면 구성 (5컷)</h2>
+    <p class="hint">힌트: 각 장면에 어떤 일이 벌어지는지 짧게 적어보세요.</p>
+    <textarea placeholder="장면 1: 폴라가 얼음 위에서 친구들과 놀고 있어요."></textarea>
+    <textarea placeholder="장면 2: 얼음이 녹기 시작하고 위기에 처한 폴라"></textarea>
+    <textarea placeholder="장면 3: 문제의 원인을 알아보기 위해 친구들과 모임"></textarea>
+    <textarea placeholder="장면 4: 캠페인을 벌이고, 사람들의 변화 시작"></textarea>
+    <textarea placeholder="장면 5: 다시 돌아온 얼음과 행복한 폴라"></textarea>
   </div>
 
-  <button id="downloadBtn">동화책 저장하기</button>
+  <div class="section">
+    <h2>Step 5. 이미지 스타일 선택하기</h2>
+    <p>원하는 그림 스타일을 선택하세요.</p>
+    <select>
+      <option>디즈니 스타일 일러스트</option>
+      <option>연필 드로잉 스타일</option>
+      <option>수채화 스타일</option>
+      <option>픽사 스타일</option>
+      <option>실사 사진 스타일</option>
+    </select>
+  </div>
+
+  <button id="downloadBtn">다운로드</button>
+
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px;">
+    <button onclick="openStorybook()"
+      style="flex:1; min-width:200px; background-color:#0288d1; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
+      1️⃣ 동화책 만들기
+    </button>
+    <button onclick="window.open('https://chat.openai.com/', '_blank')"
+      style="flex:1; min-width:200px; background-color:#7e57c2; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
+      2️⃣ 챗GPT
+    </button>
+    <button onclick="window.open('https://labs.google/fx/ko/tools/whisk', '_blank')"
+      style="flex:1; min-width:200px; background-color:#ffa726; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
+      3️⃣ 구글 위스크
+    </button>
+    <button onclick="window.open('https://bookcreator.com/', '_blank')"
+      style="flex:1; min-width:200px; background-color:#8d6e63; color:white; padding:14px 24px; font-size:18px; border:none; border-radius:10px; cursor:pointer;">
+      4️⃣ 북크리에이터
+    </button>
+  </div>
 
   <script>
-    function insertExample(button, text) {
-      const parent = button.parentNode;
-      const input = parent.querySelector('input, textarea');
-      input.value = text;
-      input.style.color = '#000';
-      input.style.fontWeight = 'bold';
-    }
-
     document.getElementById('downloadBtn').addEventListener('click', function() {
-      const titleInput = document.querySelector('input[placeholder*="우리 손주의 푸른 바다 이야기"]');
-      const filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '손주환경동화책';
-      let content = '';
-      content += document.querySelector('h1').innerText + '\n\n';
+      var titleInput = document.querySelector('input[placeholder*="예: 폴라의 얼음 집이 사라졌어요!"]');
+      var filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '제목';
+      var content = '';
       content += document.querySelector('.guide-box').innerText + '\n\n';
-      document.querySelectorAll('.section').forEach(section => {
-        const heading = section.querySelector('h2').innerText;
+      document.querySelectorAll('.section').forEach(function(section) {
+        var heading = section.querySelector('h2').innerText;
         content += heading + '\n';
-        section.querySelectorAll('input, textarea').forEach(el => {
-          const val = el.value.trim();
+        section.querySelectorAll('input, textarea, select').forEach(function(el) {
+          var val = el.value.trim();
           if (val) content += val + '\n';
         });
         content += '\n';
       });
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
+      var blob = new Blob([content], { type: 'text/plain' });
+      var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = filename + '.txt';
       a.click();
     });
+
+    function openStorybook() {
+      const outputWindow = window.open("", "_blank");
+      outputWindow.document.write("<html><head><title>나의 그림동화책 소개</title><style>");
+      outputWindow.document.write("body { font-family: 'Arial', sans-serif; line-height:1.8; padding:30px; font-size:18px; background:#fefefe; }");
+      outputWindow.document.write("h1 { color:#01579b; font-size:24px; }");
+      outputWindow.document.write("p, li { margin-bottom:10px; }");
+      outputWindow.document.write("</style></head><body>");
+
+      const introBox = document.querySelector(".guide-box").innerHTML;
+      outputWindow.document.write("<div>" + introBox + "</div>");
+
+      const fields = [];
+      document.querySelectorAll('.section').forEach(function(section) {
+        const heading = section.querySelector('h2') ? section.querySelector('h2').innerText : "";
+        if (heading) {
+          fields.push({ heading: heading, values: [] });
+          section.querySelectorAll('input, textarea, select').forEach(function(el) {
+            let val = "";
+            if (el.tagName === "SELECT") {
+              val = el.options[el.selectedIndex].text;
+            } else {
+              val = el.value.trim();
+            }
+            if (val) fields[fields.length - 1].values.push(val);
+          });
+        }
+      });
+
+      outputWindow.document.write("<h1>✏️ 입력하신 내용</h1>");
+      fields.forEach(function(field) {
+        outputWindow.document.write("<h2>" + field.heading + "</h2><ul>");
+        field.values.forEach(function(value) {
+          outputWindow.document.write("<li>" + value + "</li>");
+        });
+        outputWindow.document.write("</ul>");
+      });
+
+      outputWindow.document.write("</body></html>");
+      outputWindow.document.close();
+    }
   </script>
 </body>
 </html>
