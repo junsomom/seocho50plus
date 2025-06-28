@@ -17,7 +17,8 @@
     textarea, select, input {
       width: 100%;
       padding: 8px;
-      margin: 10px 0;
+      margin-top: 6px;
+      margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
@@ -31,14 +32,14 @@
       background-color: #ffffffcc;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .guide-box {
       background-color: #ffffffcc;
       border-left: 6px solid #0288d1;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       margin: 20px 0;
     }
     .guide-box p,
@@ -47,6 +48,12 @@
     }
     .guide-box strong {
       color: #0277bd;
+    }
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -81,46 +88,55 @@
 
   <div class="section">
     <h2>Step 2. 시놉시스를 만들어 보자!</h2>
-    <label>제목:
-      <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" />
+    <div class="label-row">
+      <label>제목:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>주인공:
-      <input type="text" placeholder="예: 아기 북극곰 폴라" />
+    </div>
+    <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" />
+    <div class="label-row">
+      <label>주인공:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>문제 상황:
-      <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요."></textarea>
+    </div>
+    <input type="text" placeholder="예: 아기 북극곰 폴라" />
+    <div class="label-row">
+      <label>문제 상황:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>해결 방법:
-      <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요."></textarea>
+    </div>
+    <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요."></textarea>
+    <div class="label-row">
+      <label>해결 방법:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>교훈:
-      <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요."></textarea>
+    </div>
+    <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요."></textarea>
+    <div class="label-row">
+      <label>교훈:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
+    </div>
+    <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요."></textarea>
   </div>
 
   <div class="section">
     <h2>Step 3. 등장인물 구성하기</h2>
-    <label>주인공 이름과 특징:
-      <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라"></textarea>
+    <div class="label-row">
+      <label>주인공 이름과 특징:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>친구1 이름과 특징:
-      <textarea placeholder="예: 똑똑한 북극여우 루루"></textarea>
+    </div>
+    <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라"></textarea>
+    <div class="label-row">
+      <label>친구1 이름과 특징:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>친구2 이름과 특징:
-      <textarea placeholder="예: 다정한 순록 노노"></textarea>
+    </div>
+    <textarea placeholder="예: 똑똑한 북극여우 루루"></textarea>
+    <div class="label-row">
+      <label>친구2 이름과 특징:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
-    <label>악당 또는 문제 유발자:
-      <textarea placeholder="예: 쓰레기를 무심코 버리는 사람"></textarea>
+    </div>
+    <textarea placeholder="예: 다정한 순록 노노"></textarea>
+    <div class="label-row">
+      <label>악당 또는 문제 유발자:</label>
       <button type="button" onclick="setExample(this)">예시보기</button>
-    </label>
+    </div>
+    <textarea placeholder="예: 쓰레기를 무심코 버리는 사람"></textarea>
   </div>
 
   <div class="section">
@@ -154,7 +170,7 @@
 
 <script>
 function setExample(btn){
-  const input = btn.previousElementSibling;
+  const input = btn.parentElement.nextElementSibling;
   const val = input.placeholder.replace("예: ","");
   input.value = val;
   input.style.fontWeight = 'bold';
