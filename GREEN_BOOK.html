@@ -167,10 +167,8 @@ function openStorybook() {
   outputWindow.document.write("h1 { color:#01579b; font-size:24px; }");
   outputWindow.document.write("p, li { margin-bottom:10px; }");
   outputWindow.document.write("</style></head><body>");
-
   const introBox = document.querySelector(".guide-box").innerHTML;
   outputWindow.document.write("<div>" + introBox + "</div>");
-
   const fields = [];
   document.querySelectorAll('.section').forEach(function(section) {
     const heading = section.querySelector('h2') ? section.querySelector('h2').innerText : "";
@@ -187,7 +185,6 @@ function openStorybook() {
       });
     }
   });
-
   outputWindow.document.write("<h1>✏️ 입력하신 내용</h1>");
   fields.forEach(function(field) {
     outputWindow.document.write("<h2>" + field.heading + "</h2><ul>");
@@ -196,7 +193,6 @@ function openStorybook() {
     });
     outputWindow.document.write("</ul>");
   });
-
   outputWindow.document.write("</body></html>");
   outputWindow.document.close();
 }
