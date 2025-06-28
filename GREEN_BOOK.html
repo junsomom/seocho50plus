@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>손주에게 선물하는 환경 그림 동화책 만들기</title>
   <style>
     body {
@@ -32,6 +32,21 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    .guide-box {
+      background-color: #ffffffcc;
+      border-left: 6px solid #0288d1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+    .guide-box p,
+    .guide-box div {
+      margin-bottom: 10px;
+    }
+    .guide-box strong {
+      color: #0277bd;
+    }
     button.example-btn {
       padding: 10px;
       margin-left: 10px;
@@ -58,6 +73,20 @@
 </head>
 <body>
   <h1>🌍 손주에게 선물하는 환경 그림 동화책 만들기</h1>
+
+  <div class="guide-box">
+    <p><strong>이 동화책의 목표는</strong> 손주들이 자연과 환경을 사랑하는 마음을 배우고, 할머니 할아버지와 함께 소중한 추억을 만드는 것입니다. 마음에 떠오르는 이야기를 따뜻하게 적어주세요.</p>
+    <div><strong>①</strong> 아래 내용을 참고해 동화책을 적어보세요. 재미있고 창의적인 이야기가 좋아요.</div>
+    <div><strong>②</strong> 장면마다 어떤 일이 일어나는지 짧게 적어주세요.</div>
+    <div><strong>③</strong> 각 장면에 어울리는 그림 설명(프롬프트)을 한글과 영어로 써주세요.</div>
+    <div><strong>④</strong> 제목은 주제에 맞게 따뜻하고 감동적인 느낌으로 지어주세요.<br>
+      - 호기심을 자극하는 말<br>
+      - 마음을 움직이는 말<br>
+      - 자연과 환경을 담은 말
+    </div>
+    <div><strong>⑤</strong> 빈 부분이 있으면 어울리는 내용으로 채워주세요.</div>
+    <div><strong>*</strong> 표지 그림 설명도 한글과 영어로 함께 적어주세요.</div>
+  </div>
 
   <div class="section">
     <h2>Step 1. 주제를 골라볼까요?</h2>
@@ -150,6 +179,8 @@
       const titleInput = document.querySelector('input[placeholder*="우리 손주의 푸른 바다 이야기"]');
       const filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '손주환경동화책';
       let content = '';
+      content += document.querySelector('h1').innerText + '\n\n';
+      content += document.querySelector('.guide-box').innerText + '\n\n';
       document.querySelectorAll('.section').forEach(section => {
         const heading = section.querySelector('h2').innerText;
         content += heading + '\n';
