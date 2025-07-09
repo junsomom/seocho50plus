@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8" />
 <title>나의 이야기 기록하기</title>
@@ -76,46 +78,43 @@
     margin-top: 15px;
     display: none;
   }
+  .filled-text {
+    color: #000 !important;
+    font-weight: bold !important;
+  }
 </style>
 <script>
-  function fillExample(id, text) {
-    const area = document.getElementById(id);
-    area.value = text;
-    area.style.color = "#000";
-    area.style.fontWeight = "bold";
-  }
-
+function fillExample(id, text) {
+  const area = document.getElementById(id);
+  area.value = text;
+  area.classList.add('filled-text');
+}
 
 function generatePrompt() {
-  let text = '🖍 나를 소개하는 그림동화책 만들기 (서문)
-
-
-이 그림책의 목표는 한국에 살고 있는 50대 이상 어르신들이 나를 표현하는 그림동화를 만들어 ‘과거와 현재와 미래’에 일어났던 일들을 가족이나 친구 주변인들에게 보여주고 공감하기 위한 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.
-
-① 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.
-② 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.
-③ 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요.
-④ 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:
-- 호기심을 자극하는 말
-- 감정을 불러일으키는 말
-- 과거와 연결되는 미래와 희망과 관련된 말 포함
-⑤ 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.
-각 장면에는 그 내용을 그림으로 표현하기 위한 이미지 프롬프트를 한글과 영어로 상세하게 작성해 주세요. 특히 시절별로 주인공의 연령과 외모가 자연스럽게 변화하도록 묘사해 주세요:
-- 어린 시절: 6~10세의 모습
-- 청·장년기: 20대의 모습
-- 노년기: 현재의 모습
-💡 단, 성별, 성격, 주요 특징, 의상 스타일 등은 어르신의 답변을 바탕으로 일관되게 유지해 주세요.
-* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.
-⚠️ 참고로, 이미지 생성 시에는 한글 문장이나 글자(예: 간판, 책 제목 등)가 포함되면 이미지가 깨져 보일 수 있습니다. 따라서 이미지 프롬프트에는 글자가 아닌 장면의 모양, 표정, 동작, 풍경 등을 중심으로 표현해 주세요.
-
-`;
+  let text = '🖍 나를 소개하는 그림동화책 만들기 (서문)\n\n' +
+  '이 그림책의 목표는 한국에 살고 있는 50대 이상의 어르신들이 나를 돌아보는 쉽게 이해하고 공감하는 그림동화를 만들어 ‘나의 삶의 과거와 현재와 미래’를 보여주기 위한 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.\n\n' +
+  '① 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.\n' +
+  '② 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.\n' +
+  '③ 각 장면에 적절한 이미지를 그리기 위한 프롬프트를 한글과 영어로 상세히 작성해 주세요.\n' +
+  '④ 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:\n' +
+  '- 호기심을 자극하는 말\n' +
+  '- 감정을 불러일으키는 말\n' +
+  '- 자연이나 환경과 관련된 말 포함\n' +
+  '⑤ 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.\n' +
+  '각 장면에는 그 내용을 그림으로 표현하기 위한 이미지 프롬프트를 한글과 영어로 상세하게 작성해 주세요. 특히 시절별로 주인공의 연령과 외모가 자연스럽게 변화하도록 묘사해 주세요:\n' +
+  '- 어린 시절: 6~10세의 모습\n' +
+  '- 청·장년기: 20대의 모습\n' +
+  '- 노년기: 현재의 모습\n' +
+  '💡 단, 성별, 성격, 주요 특징, 의상 스타일 등은 어르신의 답변을 바탕으로 일관되게 유지해 주세요.\n' +
+  '* 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.\n' +
+  '⚠️ 참고로, 이미지 생성 시에는 한글 문장이나 글자가 포함되면 이미지가 깨져 보일 수 있습니다.\n\n';
 
   // 어린 시절
   text += "\n🌱 어린 시절\n\n";
   for (let i = 1; i <= 5; i++) {
     const area = document.getElementById("q" + i);
     let label = area.parentElement.querySelector("label").textContent.trim();
-    label = label.replace(/^\d+\.\s*/, ""); // 앞 번호 제거
+    label = label.replace(/^\d+\.\s*/, "");
     text += i + ". " + label + "\n" + area.value.trim() + "\n\n";
   }
 
@@ -148,20 +147,16 @@ function generatePrompt() {
   newWindow.document.write('<pre>' + text + '</pre>');
 }
 
-
-
-
-
-
-
-  function saveAnswers() {
-    for (let i = 1; i <= 17; i++) {
-      const area = document.getElementById("q" + i);
-      localStorage.setItem("answer" + i, area.value);
-    }
-    document.getElementById("saveNotice").style.display = "block";
+function saveAnswers() {
+  for (let i = 1; i <= 17; i++) {
+    const area = document.getElementById("q" + i);
+    localStorage.setItem("answer" + i, area.value);
   }
-
+  document.getElementById("saveNotice").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("saveNotice").style.display = "none";
+  }, 3000);
+}
 
 window.onload = function() {
   for (let i = 1; i <= 17; i++) {
@@ -169,17 +164,14 @@ window.onload = function() {
     if (saved) {
       const area = document.getElementById("q" + i);
       area.value = saved;
-      // 여기서 색상을 바꾸지 않음
-      // area.style.color = "#000";
-      // area.style.fontWeight = "bold";
+      area.classList.add('filled-text');
     }
   }
 }
 
-
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </head>
 <body>
