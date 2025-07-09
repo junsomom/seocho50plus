@@ -85,8 +85,9 @@
     area.style.fontWeight = "bold";
   }
 
-  function generatePrompt() {
-    let text = `🖍 나를 소개하는 그림동화책 만들기 (  서문)
+
+function generatePrompt() {
+  let text = `🖍 나를 소개하는 그림동화책 만들기 (  서문)
 
 이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어, 서로의 삶을 나누고 공감하며 함께 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요. 표지를 포함해 총 10~15페이지의 그림동화책을 만들 거예요.
 
@@ -111,14 +112,40 @@
 
 `;
 
-    for (let i = 1; i <= 17; i++) {
-      const area = document.getElementById("q" + i);
-      const label = area.previousElementSibling.textContent.trim();
-      text += label + "\n" + area.value.trim() + "\n\n";
-    }
-    const newWindow = window.open();
-    newWindow.document.write('<pre>' + text + '</pre>');
+  // 어린 시절
+  text += "\n🌱 어린 시절\n\n";
+  for (let i = 1; i <= 5; i++) {
+    const area = document.getElementById("q" + i);
+    const label = area.parentElement.querySelector("label").textContent.trim();
+    text += i + ". " + label + "\n" + area.value.trim() + "\n\n";
   }
+
+  // 청·장년기
+  text += "🌿 청·장년기\n\n";
+  for (let i = 6; i <= 10; i++) {
+    const area = document.getElementById("q" + i);
+    const label = area.parentElement.querySelector("label").textContent.trim();
+    text += i + ". " + label + "\n" + area.value.trim() + "\n\n";
+  }
+
+  // 노년기 / 지금
+  text += "🍂 노년기 / 지금\n\n";
+  for (let i = 11; i <= 16; i++) {
+    const area = document.getElementById("q" + i);
+    const label = area.parentElement.querySelector("label").textContent.trim();
+    text += i + ". " + label + "\n" + area.value.trim() + "\n\n";
+  }
+
+  // 그림 스타일
+  text += "🎨 그림 스타일\n\n";
+  const area17 = document.getElementById("q17");
+  const label17 = area17.parentElement.querySelector("label").textContent.trim();
+  text += "17. " + label17 + "\n" + area17.value.trim() + "\n\n";
+
+  const newWindow = window.open();
+  newWindow.document.write('<pre>' + text + '</pre>');
+}
+
 
   function saveAnswers() {
     for (let i = 1; i <= 17; i++) {
@@ -146,7 +173,6 @@
 </script>
 </head>
 <body>
-
 
 <h1>나의 이야기 기록하기</h1>
 
@@ -311,3 +337,5 @@
 
 </body>
 </html>
+
+
