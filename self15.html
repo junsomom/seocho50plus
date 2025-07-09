@@ -164,17 +164,20 @@ function generatePrompt() {
     document.getElementById("saveNotice").style.display = "block";
   }
 
-  window.onload = function() {
-    for (let i = 1; i <= 17; i++) {
-      const saved = localStorage.getItem("answer" + i);
-      if (saved) {
-        const area = document.getElementById("q" + i);
-        area.value = saved;
-        area.style.color = "#000";
-        area.style.fontWeight = "bold";
-      }
+
+window.onload = function() {
+  for (let i = 1; i <= 17; i++) {
+    const saved = localStorage.getItem("answer" + i);
+    if (saved) {
+      const area = document.getElementById("q" + i);
+      area.value = saved;
+      // 여기서 색상을 바꾸지 않음
+      // area.style.color = "#000";
+      // area.style.fontWeight = "bold";
     }
   }
+}
+
 
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
