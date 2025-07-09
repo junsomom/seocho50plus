@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>나의 이야기 기록하기</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    padding: 20px;
+    line-height: 1.6;
+  }
+  h1, h2 {
+    color: #333;
+  }
+  .section {
+    background: #ffffff;
+    border: 2px solid #ddd;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  .question-block {
+    margin-bottom: 15px;
+  }
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #888;
+  }
+  .example-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  button.submit {
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button.submit:hover {
+    background: #45a049;
+  }
+  .intro {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  #saveNotice {
+    font-size: 18px;
+    color: green;
+    margin-top: 15px;
+    display: none;
+  }
+</style>
+<script>
+  function fillExample(id, text) {
+    const area = document.getElementById(id);
+    area.value = text;
+    area.style.color = "#000";
+    area.style.fontWeight = "bold";
+  }
+
+  function generatePrompt() {
+    let text = "아래의 질문과 답변을 기반으로 스토리를 만들어 주세요.\n\n";
+    for (let i = 1; i <= 17; i++) {
+      const area = document.getElementById("q" + i);
+      const label = area.previousElementSibling.textContent.trim();
+      text += label + "\n" + area.value.trim() + "\n\n";
+    }
+    const newWindow = window.open();
+    newWindow.document.write('<pre>' + text + '</pre>');
+  }
+
+  function saveAnswers() {
+    for (let i = 1; i <= 17; i++) {
+      const area = document.getElementById("q" + i);
+      localStorage.setItem("answer" + i, area.value);
+    }
+    document.getElementById("saveNotice").style.display = "block";
+  }
+
+  window.onload = function() {
+    for (let i = 1; i <= 17; i++) {
+      const saved = localStorage.getItem("answer" + i);
+      if (saved) {
+        const area = document.getElementById("q" + i);
+        area.value = saved;
+        area.style.color = "#000";
+        area.style.fontWeight = "bold";
+      }
+    }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</head>
+<body>
+
+<h1>나의 이야기 기록하기</h1>
+
+<div class="intro">
+  <h2>🖍 나를 소개하는 그림동화책 만들기 (다서던 서문)</h2>
+  <p>
+    이 그림책의 목표는 한국에 살고 있는 50대 이상의 AI 그림동화책 만들기 수업을 처음 신청하신 수강생 어르신들이 나의 소개 그림동화를 만들어, 서로의 삶을 나누고 공감하며 함께 이해하고 친해질 수 있도록 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요. 표지를 포함해 총 10~15페이지의 그림동화책을 만들 거예요.
+  </p>
+  <p>
+    아래의 질문과 답변을 참고하여 각 장면의 이야기를 그림동화책 스타일로 작성해 주세요. 재미있고 친근하며 창의적으로 전개하고, 독자에게 감동적이고 교훈적인 마무리를 해 주세요.
+  </p>
+  <p>
+    각 장면에는 그 내용을 그림으로 표현하기 위한 이미지 프롬프트를 한글과 영어로 상세하게 작성해 주세요. 특히 시절별로 주인공의 연령과 외모가 자연스럽게 변화하도록 묘사해 주세요:
+  </p>
+  <ul>
+    <li>어린 시절: 6~10세의 모습</li>
+    <li>청·장년기: 20대의 모습</li>
+    <li>노년기: 현재의 모습</li>
+  </ul>
+  <p>
+    💡 단, 성별, 성격, 주요 특징, 의상 스타일 등은 어르신의 답변을 바탕으로 일관되게 유지해 주세요.
+  </p>
+  <p>
+    첫 페이지의 제목과 이미지 프롬프트는 아래 지침에 따라 만들어 주세요:
+  </p>
+  <ul>
+    <li>호기심을 불러일으키는 말</li>
+    <li>감정을 불러일으키는 말</li>
+    <li>따뜻하고 정겨운 말</li>
+  </ul>
+  <p>
+    내용이 부족하거나 비어있는 부분은 자연스럽게 상상하여 보완해 주세요.
+  </p>
+  <p>
+    ⚠️ 참고로, 이미지 생성 시에는 한글 문장이나 글자(예: 간판, 책 제목 등)가 포함되면 이미지가 깨져 보일 수 있습니다. 따라서 이미지 프롬프트에는 글자가 아닌 장면의 모양, 표정, 동작, 풍경 등을 중심으로 표현해 주세요.
+  </p>
+</div>
+
+<form>
+<!-- 🌱 어린 시절 -->
+<div class="section">
+  <h2>🌱 어린 시절</h2>
+  <div class="question-block">
+    <label>1. 이 글의 주인공 이름은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q1','김영자')">예시 보기</button>
+    <textarea id="q1" placeholder="예: 김영자"></textarea>
+  </div>
+  <div class="question-block">
+    <label>2. 태어난 해와 고향은 어디인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q2','1945년 경북 영주에서 태어났어요.')">예시 보기</button>
+    <textarea id="q2" placeholder="예: 1945년 경북 영주에서 태어났어요."></textarea>
+  </div>
+  <div class="question-block">
+    <label>3. 어린 시절 가족과 가장 생각나는 추억은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q3','아버지가 업어주시던 일, 저녁에 다 같이 밥 먹던 시간.')">예시 보기</button>
+    <textarea id="q3" placeholder="예: 아버지가 업어주시던 일, 저녁에 다 같이 밥 먹던 시간."></textarea>
+  </div>
+  <div class="question-block">
+    <label>4. 어린 시절에 제일 좋아했던 옷이나 놀이는 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q4','털 조끼, 고무줄놀이.')">예시 보기</button>
+    <textarea id="q4" placeholder="예: 털 조끼, 고무줄놀이."></textarea>
+  </div>
+  <div class="question-block">
+    <label>5. 어릴 적 꿈과 이루고 싶은 소원은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q5','선생님 되기, 가족의 건강.')">예시 보기</button>
+    <textarea id="q5" placeholder="예: 선생님 되기, 가족의 건강."></textarea>
+  </div>
+</div>
+
+<!-- 🌿 청·장년기 -->
+<div class="section">
+  <h2>🌿 청·장년기</h2>
+  <div class="question-block">
+    <label>6. 젊을 때 가장 기뻤던 순간은 언제인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q6','첫 월급을 받았을 때.')">예시 보기</button>
+    <textarea id="q6" placeholder="예: 첫 월급을 받았을 때."></textarea>
+  </div>
+  <div class="question-block">
+    <label>7. 젊은 시절 가장 기억에 남는 장소는 어디인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q7','시내에 있던 작은 다방.')">예시 보기</button>
+    <textarea id="q7" placeholder="예: 시내에 있던 작은 다방."></textarea>
+  </div>
+  <div class="question-block">
+    <label>8. 예전에 어떤 일을 하셨나요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q8','학교에서 아이들을 가르쳤어요.')">예시 보기</button>
+    <textarea id="q8" placeholder="예: 학교에서 아이들을 가르쳤어요."></textarea>
+  </div>
+  <div class="question-block">
+    <label>9. 배우자와는 어디서, 몇 살에 처음 만났나요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q9','동네 모임에서 스물다섯 살에 만났어요.')">예시 보기</button>
+    <textarea id="q9" placeholder="예: 동네 모임에서 스물다섯 살에 만났어요."></textarea>
+  </div>
+  <div class="question-block">
+    <label>10. 가족과 함께한 소중한 추억은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q10','명절에 송편 빚던 날.')">예시 보기</button>
+    <textarea id="q10" placeholder="예: 명절에 송편 빚던 날."></textarea>
+  </div>
+</div>
+
+<!-- 🍂 노년기 / 지금 -->
+<div class="section">
+  <h2>🍂 노년기 / 지금</h2>
+  <div class="question-block">
+    <label>11. 살면서 가장 힘들었던 일은 무엇이며 어떻게 이겨내셨나요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q11','가난 때문에 힘들었지만 포기하지 않았어요.')">예시 보기</button>
+    <textarea id="q11" placeholder="예: 가난 때문에 힘들었지만 포기하지 않았어요."></textarea>
+  </div>
+  <div class="question-block">
+    <label>12. 살면서 가장 소중하게 생각하는 말은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q12','정직하게 살자.')">예시 보기</button>
+    <textarea id="q12" placeholder="예: 정직하게 살자."></textarea>
+  </div>
+  <div class="question-block">
+    <label>13. 좋아하는 취미·음악·책·구절은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q13','화초 가꾸기, 아리랑, 흥부와 놀부, 하루하루 감사하며 살자.')">예시 보기</button>
+    <textarea id="q13" placeholder="예: 화초 가꾸기, 아리랑, 흥부와 놀부, 하루하루 감사하며 살자."></textarea>
+  </div>
+  <div class="question-block">
+    <label>14. 살면서 가장 고마운 분과 남기고 싶은 말은 무엇인가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q14','어머니, 늘 건강하길.')">예시 보기</button>
+    <textarea id="q14" placeholder="예: 어머니, 늘 건강하길."></textarea>
+  </div>
+  <div class="question-block">
+    <label>15. 지금의 나를 한마디로 표현하면?</label>
+    <button type="button" class="example-button" onclick="fillExample('q15','성실한 사람.')">예시 보기</button>
+    <textarea id="q15" placeholder="예: 성실한 사람."></textarea>
+  </div>
+  <div class="question-block">
+    <label>16. 앞으로 어떤 하루하루를 보내고 싶으신가요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q16','평온하게 웃으며.')">예시 보기</button>
+    <textarea id="q16" placeholder="예: 평온하게 웃으며."></textarea>
+  </div>
+</div>
+
+<!-- 🎨 그림 스타일 -->
+<div class="section">
+  <h2>🎨 그림 스타일</h2>
+  <div class="question-block">
+    <label>17. 어떤 스타일의 그림을 원하시나요?</label>
+    <button type="button" class="example-button" onclick="fillExample('q17','지브리 스타일')">지브리 스타일</button>
+    <button type="button" class="example-button" onclick="fillExample('q17','디즈니 스타일')">디즈니 스타일</button>
+    <button type="button" class="example-button" onclick="fillExample('q17','수채화 스타일')">수채화 스타일</button>
+    <button type="button" class="example-button" onclick="fillExample('q17','연필 드로잉')">연필 드로잉</button>
+    <button type="button" class="example-button" onclick="fillExample('q17','픽사 스타일')">픽사 스타일</button>
+    <textarea id="q17" placeholder="예: 지브리 스타일"></textarea>
+  </div>
+</div>
+
+<div id="saveNotice">✅ 답변이 저장되었습니다!</div>
+
+<div style="margin-top:20px;">
+  <button type="button" class="submit" onclick="generatePrompt()">ChatGPT에 복사할 내용 보기</button>
+  <button type="button" class="submit" onclick="window.open('https://labs.google/fx/ko/tools/whisk','_blank')">구글 위스크</button>
+  <button type="button" class="submit" onclick="window.open('https://app.bookcreator.com','_blank')">북 크리에이터</button>
+  <button type="button" class="submit" onclick="window.open('https://padlet.com','_blank')">패들렛</button>
+  <button type="button" class="submit" onclick="saveAnswers()">자동저장</button>
+  <button type="button" class="submit" onclick="scrollToTop()">맨 위로 가기</button>
+</div>
+
+</form>
+
+</body>
+</html>
+
