@@ -38,8 +38,11 @@
     <div class="section bg-white p-8 rounded-xl shadow-lg mb-8">
       <h2 class="text-2xl font-bold text-orange-700 mb-2">Step 1. 주제를 먼저 정해보자!</h2>
       <p class="text-stone-600 mb-6 text-lg">"아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 자유롭게 생각해 보세요.</p>
-      <label for="topic" class="block text-lg font-semibold text-stone-700 mb-2">이야기의 주제</label>
-      <textarea id="topic" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="2" placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
+      <div class="flex justify-between items-center mb-2">
+        <label for="topic" class="block text-lg font-semibold text-stone-700">이야기의 주제</label>
+        <button data-target="topic" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+      </div>
+      <textarea id="topic" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="2" placeholder="나무와 아이의 따뜻한 우정 이야기"></textarea>
     </div>
 
     <!-- Step 2 -->
@@ -48,24 +51,39 @@
       <p class="text-stone-600 mb-6 text-lg">이야기의 전체적인 뼈대를 구상해 보세요.</p>
       <div class="space-y-6">
         <div>
-          <label for="title" class="block text-lg font-semibold text-stone-700 mb-2">제목</label>
-          <input id="title" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="예: 언제나 기다려주는 나무" />
+          <div class="flex justify-between items-center mb-2">
+            <label for="title" class="block text-lg font-semibold text-stone-700">제목</label>
+            <button data-target="title" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <input id="title" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="언제나 기다려주는 나무" />
         </div>
         <div>
-          <label for="protagonist-synopsis" class="block text-lg font-semibold text-stone-700 mb-2">주인공</label>
-          <input id="protagonist-synopsis" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="예: 마음이 따뜻한 나무 토토" />
+          <div class="flex justify-between items-center mb-2">
+            <label for="protagonist-synopsis" class="block text-lg font-semibold text-stone-700">주인공</label>
+            <button data-target="protagonist-synopsis" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <input id="protagonist-synopsis" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="마음이 따뜻한 나무 토토" />
         </div>
         <div>
-          <label for="problem" class="block text-lg font-semibold text-stone-700 mb-2">문제 상황</label>
-          <textarea id="problem" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="problem" class="block text-lg font-semibold text-stone-700">문제 상황</label>
+            <button data-target="problem" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="problem" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea>
         </div>
         <div>
-          <label for="solution" class="block text-lg font-semibold text-stone-700 mb-2">해결 방법</label>
-          <textarea id="solution" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="solution" class="block text-lg font-semibold text-stone-700">해결 방법</label>
+            <button data-target="solution" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="solution" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea>
         </div>
         <div>
-          <label for="lesson" class="block text-lg font-semibold text-stone-700 mb-2">교훈</label>
-          <textarea id="lesson" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="2" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="lesson" class="block text-lg font-semibold text-stone-700">교훈</label>
+            <button data-target="lesson" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="lesson" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="2" placeholder="함께한 시간과 마음은 결코 사라지지 않아요."></textarea>
         </div>
       </div>
     </div>
@@ -76,20 +94,32 @@
       <p class="text-stone-600 mb-6 text-lg">이야기에 나올 인물들의 이름과 특징을 정해주세요.</p>
       <div class="space-y-6">
         <div>
-          <label for="character-main" class="block text-lg font-semibold text-stone-700 mb-2">주인공 이름과 특징</label>
-          <textarea id="character-main" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="character-main" class="block text-lg font-semibold text-stone-700">주인공 이름과 특징</label>
+            <button data-target="character-main" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="character-main" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="조용하고 인내심 많은 나무 토토"></textarea>
         </div>
         <div>
-          <label for="character-friend1" class="block text-lg font-semibold text-stone-700 mb-2">친구1 이름과 특징</label>
-          <textarea id="character-friend1" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="character-friend1" class="block text-lg font-semibold text-stone-700">친구1 이름과 특징</label>
+            <button data-target="character-friend1" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="character-friend1" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="외로움을 자주 느끼는 소년 민호"></textarea>
         </div>
         <div>
-          <label for="character-friend2" class="block text-lg font-semibold text-stone-700 mb-2">친구2 이름과 특징</label>
-          <textarea id="character-friend2" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="character-friend2" class="block text-lg font-semibold text-stone-700">친구2 이름과 특징</label>
+            <button data-target="character-friend2" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="character-friend2" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="민호를 지켜보는 다람쥐 또또"></textarea>
         </div>
         <div>
-          <label for="character-antagonist" class="block text-lg font-semibold text-stone-700 mb-2">문제 유발자 (선택 사항)</label>
-          <textarea id="character-antagonist" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="character-antagonist" class="block text-lg font-semibold text-stone-700">문제 유발자 (선택 사항)</label>
+            <button data-target="character-antagonist" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="character-antagonist" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="3" placeholder="욕심 많은 어른들 또는 시간의 흐름"></textarea>
         </div>
       </div>
     </div>
@@ -100,24 +130,39 @@
       <p class="text-stone-600 mb-6 text-lg">각 장면의 내용을 감정적으로 연결하여 이야기의 흐름을 만들어보세요.</p>
       <div class="space-y-6">
         <div>
-          <label for="scene1" class="block text-lg font-semibold text-stone-700 mb-2">장면 1</label>
-          <textarea id="scene1" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="예: 아이 민호가 토토 나무와 처음 만나는 장면"></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="scene1" class="block text-lg font-semibold text-stone-700">장면 1</label>
+            <button data-target="scene1" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="scene1" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="아이 민호가 토토 나무와 처음 만나는 장면"></textarea>
         </div>
         <div>
-          <label for="scene2" class="block text-lg font-semibold text-stone-700 mb-2">장면 2</label>
-          <textarea id="scene2" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="예: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="scene2" class="block text-lg font-semibold text-stone-700">장면 2</label>
+            <button data-target="scene2" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="scene2" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
         </div>
         <div>
-          <label for="scene3" class="block text-lg font-semibold text-stone-700 mb-2">장면 3</label>
-          <textarea id="scene3" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="예: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="scene3" class="block text-lg font-semibold text-stone-700">장면 3</label>
+            <button data-target="scene3" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="scene3" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="민호는 자라나며 점점 토토와 멀어져요."></textarea>
         </div>
         <div>
-          <label for="scene4" class="block text-lg font-semibold text-stone-700 mb-2">장면 4</label>
-          <textarea id="scene4" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="예: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토를 발견해요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="scene4" class="block text-lg font-semibold text-stone-700">장면 4</label>
+            <button data-target="scene4" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="scene4" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토를 발견해요."></textarea>
         </div>
         <div>
-          <label for="scene5" class="block text-lg font-semibold text-stone-700 mb-2">장면 5</label>
-          <textarea id="scene5" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="예: 민호가 토토에게 안기며 눈물을 흘리고, 변치 않는 우정을 확인해요."></textarea>
+          <div class="flex justify-between items-center mb-2">
+            <label for="scene5" class="block text-lg font-semibold text-stone-700">장면 5</label>
+            <button data-target="scene5" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+          </div>
+          <textarea id="scene5" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" rows="4" placeholder="민호가 토토에게 안기며 눈물을 흘리고, 변치 않는 우정을 확인해요."></textarea>
         </div>
       </div>
     </div>
@@ -126,7 +171,10 @@
     <div class="section bg-white p-8 rounded-xl shadow-lg mb-8">
       <h2 class="text-2xl font-bold text-orange-700 mb-2">Step 5. 이미지 스타일 선택하기</h2>
       <p class="text-stone-600 mb-6 text-lg">원하는 그림 스타일을 선택하여 동화책의 분위기를 정해주세요.</p>
-      <label for="image-style" class="block text-lg font-semibold text-stone-700 mb-2">그림 스타일</label>
+        <div class="flex justify-between items-center mb-2">
+            <label for="image-style" class="block text-lg font-semibold text-stone-700">그림 스타일</label>
+            <button data-target="image-style" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+        </div>
       <select id="image-style" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
         <option>연필 드로잉 스타일</option>
         <option selected>수채화 스타일</option>
@@ -146,11 +194,54 @@
   </div>
 
   <script>
+    // 'Use Example' button functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const exampleButtons = document.querySelectorAll('.use-example-btn');
+      const inputFields = document.querySelectorAll('textarea[placeholder], input[placeholder], select');
+
+      exampleButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = button.dataset.target;
+          const targetInput = document.getElementById(targetId);
+          
+          if (targetInput) {
+            // For select, we just use the currently selected value.
+            // For others, we use the placeholder.
+            if (targetInput.tagName.toLowerCase() !== 'select') {
+                targetInput.value = targetInput.placeholder;
+            }
+            targetInput.classList.add('font-bold');
+            
+            // Trigger an input event to ensure any other listeners are aware of the change.
+            targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+      });
+
+      inputFields.forEach(input => {
+        input.addEventListener('input', () => {
+          if (input.value.trim() === '') {
+            input.classList.remove('font-bold');
+          } else {
+             // If a user starts typing, we might want to keep it bold if an example was used,
+             // or add bold if they are filling it in. For simplicity, we'll just ensure it's bold if not empty.
+             input.classList.add('font-bold');
+          }
+        });
+         // Also handle clearing the bold style if the user empties the input field
+         input.addEventListener('keyup', () => {
+            if(input.value.trim() === '') {
+                input.classList.remove('font-bold');
+            }
+         });
+      });
+    });
+
+    // AI prompt generation functionality
     document.getElementById('generateBtn').addEventListener('click', function () {
-      // Helper function to get value from an element by ID
       const getValue = (id) => document.getElementById(id).value.trim() || '(내용 없음)';
 
-      // Gather all values from the form
       const values = {
         topic: getValue('topic'),
         title: getValue('title'),
@@ -170,7 +261,6 @@
         imageStyle: getValue('image-style'),
       };
 
-      // Construct the structured AI prompt
       const promptText = `
 너는 어린이를 위한 그림 동화책을 쓰는 전문 작가이자 일러스트레이터 프롬프트 전문가야.
 지금부터 내가 제공하는 정보에 맞춰서, 50대 이상 어르신들의 따뜻한 감성이 담긴 감동적이고 교훈적인 5장면짜리 그림 동화책을 만들어 줘.
@@ -216,7 +306,6 @@
 위 내용을 바탕으로 멋진 동화책을 만들어 줘.
       `.trim();
 
-      // HTML content for the new window
       const popupHtml = `
         <!DOCTYPE html>
         <html lang="ko">
@@ -255,3 +344,15 @@
           <\/script>
         </body>
         </html>
+      `;
+      const newWindow = window.open('', '_blank');
+      if (newWindow) {
+        newWindow.document.write(popupHtml);
+        newWindow.document.close();
+      } else {
+        alert('팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도해주세요.');
+      }
+    });
+  </script>
+</body>
+</html>
