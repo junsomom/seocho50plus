@@ -2,162 +2,275 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>그림 동화책 창작 지침서 - 감정과 관계</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      padding: 20px;
-      background: linear-gradient(to bottom right, #ffe0b2, #ffccbc);
-      color: #4e342e;
-    }
-    h1, h2 {
-      color: #d84315;
-    }
-    textarea, select, input {
-      width: 100%;
-      padding: 8px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .hint {
-      color: #555;
-      font-size: 0.9em;
-    }
-    .section {
-      margin-bottom: 30px;
-      background-color: #ffffffcc;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .guide-box {
-      background-color: #ffffffcc;
-      border-left: 6px solid #d84315;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
-    }
-    .guide-box p,
-    .guide-box div {
-      margin-bottom: 10px;
-    }
-    .guide-box strong {
-      color: #bf360c;
-    }
-    #downloadBtn {
-      display: inline-block;
-      padding: 12px 24px;
-      background: linear-gradient(to right, #ff7043, #ff8a65);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      margin-top: 20px;
-    }
-    #downloadBtn:hover {
-      opacity: 0.9;
+      font-family: 'Gowun Dodum', sans-serif;
     }
   </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react-image-crop": "https://aistudiocdn.com/react-image-crop@^11.0.10",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0"
+  }
+}
+</script>
 </head>
-<body>
-  <h1>🌳 감정과 관계를 위한 그림 동화책 창작 지침서</h1>
+<body class="bg-amber-50 text-stone-800">
 
-  <div class="guide-box" id="guideText">
-    <p><strong>이 그림책의 목표는</strong> ‘<strong>관계의 소중한 감정</strong>’을 가지고 자연과 이웃들과 관계하며 살아가는 인생의 중요성을 <strong>쉽게 이해하고 공감할 수 있도록</strong> 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.</p>
-    <div><strong>①</strong> 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.</div>
-    <div><strong>②</strong> 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.</div>
-    <div><strong>③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong>프롬프트를 한글과 영어로</strong> 상세히 작성해 주세요.</div>
-    <div><strong>④</strong> 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:<br>
-      - 호기심을 자극하는 말<br>
-      - 감정을 불러일으키는 말<br>
-      - 사랑과 존중을 표현하는 말
+  <div class="container mx-auto p-4 sm:p-8 max-w-4xl">
+    <header class="text-center my-8">
+      <h1 class="text-4xl sm:text-5xl font-bold text-orange-700">🌳 감정과 관계를 위한<br>그림 동화책 창작 지침서</h1>
+      <p class="mt-4 text-lg text-stone-600">어르신의 따뜻한 마음과 지혜를 동화책에 담아보세요.</p>
+    </header>
+
+    <div class="bg-white/80 border-l-8 border-orange-600 p-6 sm:p-8 rounded-2xl shadow-lg mb-12 space-y-4 text-stone-700 text-base" id="guideText">
+      <p class="font-bold text-lg">이 그림책의 목표는 ‘관계의 소중함’과 ‘따뜻한 감정’을 아이들이 쉽게 이해하고 공감하도록 돕는 것입니다.</p>
+      <div><strong>①</strong> 아래 질문에 답하며 세상에 하나뿐인 이야기를 만들어 보세요.</div>
+      <div><strong>②</strong> 각 장면의 내용은 아이들이 좋아할 만한 동화책 스타일로 재미있게 써주세요.</div>
+      <div><strong>③</strong> 각 장면마다 어떤 그림이 들어가면 좋을지 상상해서 자세히 설명해주세요. (AI가 그림을 그릴 때 참고합니다)</div>
+      <div><strong>④</strong> 제목은 아이들의 호기심을 자극하고, 사랑과 존중이 느껴지도록 지어주세요.</div>
+      <div><strong>⑤</strong> 비어있는 곳은 AI가 이야기 전개에 맞게 창의적으로 채워줄 거예요.</div>
+      <div><strong>*</strong> 동화책의 얼굴이 될 <strong>표지 디자인</strong>에 대한 아이디어도 들려주세요.</div>
     </div>
-    <div><strong>⑤</strong> 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.</div>
-    <div><strong>*</strong> <strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</div>
-  </div>
 
-  <div class="section">
-    <h2>Step 1. 주제를 먼저 정해보자!</h2>
-    <p>예시: "아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 생각해 보세요.</p>
-    <textarea placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
-  </div>
+    <main class="space-y-10">
+      <!-- Step 1 -->
+      <div class="section bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-orange-600 mb-4">Step 1. 어떤 이야기를 하고 싶으신가요?</h2>
+        <label for="theme" class="block text-lg text-stone-700 mb-2">동화책의 주제를 한 문장으로 적어보세요.</label>
+        <p class="text-stone-500 mb-4">예시: "아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 생각해 보세요.</p>
+        <textarea id="theme" class="w-full p-4 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
+      </div>
 
-  <div class="section">
-    <h2>Step 2. 시놉시스를 만들어 보자!</h2>
-    <label>제목: <input type="text" placeholder="예: 언제나 기다려주는 나무" /></label>
-    <label>주인공: <input type="text" placeholder="예: 마음이 따뜻한 나무 토토" /></label>
-    <label>문제 상황: <textarea placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea></label>
-    <label>해결 방법: <textarea placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea></label>
-    <label>교훈: <textarea placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea></label>
-  </div>
+      <!-- Step 2 -->
+      <div class="section bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-orange-600 mb-4">Step 2. 이야기의 뼈대를 세워볼까요?</h2>
+        <div class="space-y-6">
+          <div>
+            <label for="title" class="block text-lg text-stone-700 mb-2">제목:</label>
+            <input id="title" type="text" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="예: 언제나 기다려주는 나무" />
+          </div>
+          <div>
+            <label for="protagonist_synopsis" class="block text-lg text-stone-700 mb-2">주인공:</label>
+            <input id="protagonist_synopsis" type="text" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="예: 마음이 따뜻한 나무 토토" />
+          </div>
+          <div>
+            <label for="problem" class="block text-lg text-stone-700 mb-2">어떤 어려움이 생기나요? (문제 상황):</label>
+            <textarea id="problem" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea>
+          </div>
+          <div>
+            <label for="solution" class="block text-lg text-stone-700 mb-2">어떻게 해결되나요? (해결 방법):</label>
+            <textarea id="solution" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea>
+          </div>
+          <div>
+            <label for="moral" class="block text-lg text-stone-700 mb-2">이 이야기를 통해 무엇을 알려주고 싶나요? (교훈):</label>
+            <textarea id="moral" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea>
+          </div>
+        </div>
+      </div>
 
-  <div class="section">
-    <h2>Step 3. 등장인물 구성하기</h2>
-    <label>주인공 이름과 특징: <textarea placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea></label>
-    <label>친구1 이름과 특징: <textarea placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea></label>
-    <label>친구2 이름과 특징: <textarea placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea></label>
-    <label>문제 유발자 (선택): <textarea placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea></label>
-  </div>
+      <!-- Step 3 -->
+      <div class="section bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-orange-600 mb-4">Step 3. 이야기 속 인물들을 소개해주세요.</h2>
+        <div class="space-y-6">
+          <div>
+            <label for="character_main" class="block text-lg text-stone-700 mb-2">주인공 이름과 특징:</label>
+            <textarea id="character_main" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea>
+          </div>
+          <div>
+            <label for="character_friend1" class="block text-lg text-stone-700 mb-2">친구 1 이름과 특징:</label>
+            <textarea id="character_friend1" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea>
+          </div>
+          <div>
+            <label for="character_friend2" class="block text-lg text-stone-700 mb-2">친구 2 이름과 특징:</label>
+            <textarea id="character_friend2" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea>
+          </div>
+          <div>
+            <label for="character_antagonist" class="block text-lg text-stone-700 mb-2">갈등을 일으키는 존재 (선택 사항):</label>
+            <textarea id="character_antagonist" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="3" placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea>
+          </div>
+        </div>
+      </div>
 
-  <div class="section">
-    <h2>Step 4. 장면 구성 (5컷)</h2>
-    <p class="hint">각 장면의 내용을 감정적으로 연결하여 써보세요.</p>
-    <textarea placeholder="장면 1: 아이 민호가 토토 나무와 처음 만나요."></textarea>
-    <textarea placeholder="장면 2: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
-    <textarea placeholder="장면 3: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
-    <textarea placeholder="장면 4: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토"></textarea>
-    <textarea placeholder="장면 5: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
-  </div>
+      <!-- Step 4 -->
+      <div class="section bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-orange-600 mb-4">Step 4. 다섯 장면으로 이야기를 구성해봐요.</h2>
+        <p class="text-stone-500 mb-4">각 장면의 내용을 감정적으로 연결하여 써보세요.</p>
+        <div class="space-y-6">
+          <div>
+            <label for="scene1" class="block text-lg text-stone-700 mb-2">장면 1:</label>
+            <textarea id="scene1" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="4" placeholder="첫 만남: 아이 민호가 토토 나무와 처음 만나요."></textarea>
+          </div>
+          <div>
+            <label for="scene2" class="block text-lg text-stone-700 mb-2">장면 2:</label>
+            <textarea id="scene2" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="4" placeholder="교감: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
+          </div>
+          <div>
+            <label for="scene3" class="block text-lg text-stone-700 mb-2">장면 3:</label>
+            <textarea id="scene3" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="4" placeholder="시련: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
+          </div>
+          <div>
+            <label for="scene4" class="block text-lg text-stone-700 mb-2">장면 4:</label>
+            <textarea id="scene4" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="4" placeholder="재회: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토를 마주해요."></textarea>
+          </div>
+          <div>
+            <label for="scene5" class="block text-lg text-stone-700 mb-2">장면 5:</label>
+            <textarea id="scene5" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" rows="4" placeholder="깨달음: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
+          </div>
+        </div>
+      </div>
 
-  <div class="section">
-    <h2>Step 5. 이미지 스타일 선택하기</h2>
-    <p>원하는 그림 스타일을 선택하세요.</p>
-    <select>
-      <option>연필 드로잉 스타일</option>
-      <option>수채화 스타일</option>
-      <option>디즈니 스타일</option>
-      <option>동양화 스타일</option>
-      <option>실사와 동화 혼합 스타일</option>
-      <option>지브리 스타일</option>
-      <option>픽사 스타일</option>
-    </select>
-  </div>
+      <!-- Step 5 -->
+      <div class="section bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-orange-600 mb-4">Step 5. 어떤 그림 스타일을 원하시나요?</h2>
+        <label for="image_style" class="block text-lg text-stone-700 mb-2">원하는 그림 스타일을 선택하세요.</label>
+        <select id="image_style" class="w-full p-3 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-400 focus:outline-none bg-white">
+          <option>수채화 스타일</option>
+          <option>연필 드로잉 스타일</option>
+          <option>디즈니 애니메이션 스타일</option>
+          <option>한국 동양화 스타일</option>
+          <option>지브리 스튜디오 스타일</option>
+          <option>픽사 애니메이션 스타일</option>
+          <option>따뜻하고 부드러운 파스텔톤 스타일</option>
+        </select>
+      </div>
+    </main>
 
-  <button id="downloadBtn">저장하기</button>
+    <footer class="text-center mt-12">
+      <button id="generateBtn" class="bg-gradient-to-br from-orange-500 to-amber-500 text-white font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-in-out">
+        AI 명령어 만들기 ✨
+      </button>
+    </footer>
+  </div>
 
   <script>
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-      const guideText = document.getElementById('guideText').innerText;
-      let content = '[그림 동화책 창작 지침서]\n\n' + guideText + '\n\n';
+    document.getElementById('generateBtn').addEventListener('click', function () {
+      // Helper function to get value or provide a default
+      const getValue = (id) => document.getElementById(id).value.trim() || '입력되지 않았습니다. AI가 창의적으로 채워주세요.';
 
-      document.querySelectorAll('.section').forEach(function (section) {
-        const heading = section.querySelector('h2').innerText;
-        content += '## ' + heading + '\n';
-        section.querySelectorAll('label, textarea, input, select').forEach(el => {
-          if (el.tagName === 'LABEL') {
-            content += '- ' + el.innerText.trim() + '\n';
-          } else {
-            const val = el.value.trim();
-            if (val) content += '  → ' + val + '\n';
-          }
-        });
-        content += '\n';
-      });
+      // Gather all inputs
+      const inputs = {
+        theme: getValue('theme'),
+        title: getValue('title'),
+        protagonist_synopsis: getValue('protagonist_synopsis'),
+        problem: getValue('problem'),
+        solution: getValue('solution'),
+        moral: getValue('moral'),
+        character_main: getValue('character_main'),
+        character_friend1: getValue('character_friend1'),
+        character_friend2: getValue('character_friend2'),
+        character_antagonist: getValue('character_antagonist'),
+        scene1: getValue('scene1'),
+        scene2: getValue('scene2'),
+        scene3: getValue('scene3'),
+        scene4: getValue('scene4'),
+        scene5: getValue('scene5'),
+        image_style: document.getElementById('image_style').value,
+      };
 
-      const titleInput = document.querySelector('input[placeholder*="예: 언제나 기다려주는 나무"]');
-      const filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '그림동화_지침서';
+      // Construct the structured prompt
+      const prompt = `
+너는 5~7세 어린이를 위한 그림 동화책을 쓰는, 따뜻한 마음을 가진 전문 동화 작가 AI야. 지금부터 내가 제공하는 정보에 맞춰서, 아이들에게 감동과 교훈을 주는 5장면짜리 그림 동화책을 만들어 줘.
 
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename + '.txt';
-      a.click();
+**[중요 지침]**
+1.  **동화책 본문:** 각 장면의 내용은 아이들의 눈높이에 맞춰 쉽고 재미있는 단어를 사용해서, 상상력을 자극하는 흥미진진한 이야기로 만들어 줘.
+2.  **이미지 프롬프트:** 각 장면에 어울리는 그림을 그릴 수 있도록, 상황, 등장인물의 표정과 행동, 배경, 색감 등을 상세하고 아름답게 묘사하는 이미지 프롬프트를 한글과 영어로 각각 작성해 줘.
+3.  **표지:** 동화책의 주제와 제목에 어울리는 멋진 표지 이미지 프롬프트도 한글과 영어로 만들어 줘.
+4.  **스타일:** 전체적인 그림 스타일은 '${inputs.image_style}'으로 통일해 줘.
+
+---
+
+### **[내가 구상한 동화책 정보]**
+
+**1. 동화책 기본 정보**
+*   **주제:** ${inputs.theme}
+*   **제목:** ${inputs.title}
+*   **주고 싶은 교훈:** ${inputs.moral}
+*   **원하는 그림 스타일:** ${inputs.image_style}
+
+**2. 등장인물 소개**
+*   **주인공:** ${inputs.character_main}
+*   **친구 1:** ${inputs.character_friend1}
+*   **친구 2:** ${inputs.character_friend2}
+*   **갈등 유발자(선택):** ${inputs.character_antagonist}
+
+**3. 이야기 줄거리 (시놉시스)**
+*   **주인공:** ${inputs.protagonist_synopsis}
+*   **문제 상황:** ${inputs.problem}
+*   **해결 방법:** ${inputs.solution}
+
+**4. 장면별 상세 내용**
+*   **장면 1:** ${inputs.scene1}
+*   **장면 2:** ${inputs.scene2}
+*   **장면 3:** ${inputs.scene3}
+*   **장면 4:** ${inputs.scene4}
+*   **장면 5:** ${inputs.scene5}
+
+---
+
+위 내용을 바탕으로, 아이들의 마음을 사로잡을 정말 멋진 동화책을 만들어 줘!
+`;
+      // Create HTML for the new window
+      const resultHtml = \`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+          <meta charset="UTF-8">
+          <title>AI 동화책 명령어</title>
+          <script src="https://cdn.tailwindcss.com"><\/script>
+          <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+          <style>body { font-family: 'Gowun Dodum', sans-serif; }</style>
+        </head>
+        <body class="bg-gray-100 p-4 sm:p-8">
+          <div class="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">AI에게 전달할 명령어가 완성되었어요!</h1>
+            <p class="text-gray-600 mb-6 text-base sm:text-lg">아래 '전체 내용 복사하기' 버튼을 누른 뒤, Gemini와 같은 AI 서비스에 붙여넣어 멋진 동화책을 만들어보세요!</p>
+            <button id="copyBtn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg mb-6 transition-colors duration-300 text-lg">
+              📋 전체 내용 복사하기
+            </button>
+            <pre id="prompt-text" class="whitespace-pre-wrap bg-gray-50 p-6 rounded-lg border text-gray-800 text-base leading-relaxed" style="font-family: 'Gowun Dodum', sans-serif;">\${prompt.trim()}</pre>
+          </div>
+          <script>
+            const copyBtn = document.getElementById('copyBtn');
+            const promptText = document.getElementById('prompt-text').innerText;
+            copyBtn.addEventListener('click', () => {
+              navigator.clipboard.writeText(promptText).then(() => {
+                copyBtn.innerText = '✅ 복사 완료!';
+                copyBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                copyBtn.classList.add('bg-green-600');
+                setTimeout(() => {
+                  copyBtn.innerText = '📋 전체 내용 복사하기';
+                  copyBtn.classList.remove('bg-green-600');
+                  copyBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                }, 2500);
+              }).catch(err => {
+                console.error('복사에 실패했습니다:', err);
+                copyBtn.innerText = '복사 실패 😢';
+              });
+            });
+          <\/script>
+        </body>
+        </html>
+      \`;
+
+      // Open new window and write the content
+      const newWindow = window.open();
+      if (newWindow) {
+        newWindow.document.write(resultHtml);
+        newWindow.document.close();
+      } else {
+        alert('팝업 창이 차단되었습니다. 팝업을 허용하고 다시 시도해주세요.');
+      }
     });
   </script>
 </body>
