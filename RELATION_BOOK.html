@@ -1,323 +1,228 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>그림 동화책 창작 지침서 - 감정과 관계</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            padding: 20px;
-            background: linear-gradient(to bottom right, #ffe0b2, #ffccbc);
-            color: #4e342e;
-        }
-        h1, h2 {
-            color: #d84315;
-        }
-        textarea, select, input {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        .hint {
-            color: #555;
-            font-size: 0.9em;
-        }
-        .section {
-            margin-bottom: 30px;
-            background-color: #ffffffcc;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .guide-box {
-            background-color: #ffffffcc;
-            border-left: 6px solid #d84315;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-        }
-        .guide-box p,
-        .guide-box div {
-            margin-bottom: 10px;
-        }
-        .guide-box strong {
-            color: #bf360c;
-        }
-        #downloadBtn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: linear-gradient(to right, #ff7043, #ff8a65);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-            margin-top: 20px;
-        }
-        #downloadBtn:hover {
-            opacity: 0.9;
-        }
-        .input-group {
-            display: flex;
-            align-items: center;
+    <meta charset="UTF-8">
+    <title>환경보호 동화책 창작 지침서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 커스텀 스타일 및 폰트 설정 (Tailwind에 없는 부분) */
+        body {
+            font-family: 'Arial', sans-serif;
         }
-        .input-group textarea, .input-group input {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-        .example-btn {
-            padding: 8px 12px;
-            background-color: #d84315;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            flex-shrink: 0;
-            transition: background-color 0.3s;
-        }
-        .example-btn:hover {
-            background-color: #bf360c;
-        }
-        .bold-placeholder::placeholder {
+        .placeholder-bold::placeholder {
             font-weight: bold;
-            color: #4e342e;
+            color: #000;
         }
-        .label-with-button {
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
+    </style>
 </head>
-<body>
-    <h1>🌳 감정과 관계를 위한 그림 동화책 창작 지침서</h1>
+<body class="p-5 bg-gradient-to-br from-blue-50 to-cyan-100 text-[#003366] leading-relaxed">
 
-    <div class="guide-box" id="guideText">
-        <p><strong>이 그림책의 목표는</strong> ‘<strong>관계의 소중한 감정</strong>’을 가지고 자연과 이웃들과 관계하며 살아가는 인생의 중요성을 <strong>쉽게 이해하고 공감할 수 있도록</strong> 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.</p>
-        <div><strong>①</strong> 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.</div>
-        <div><strong>②</strong> 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.</div>
-        <div><strong>③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong>프롬프트를 한글과 영어로</strong> 상세히 작성해 주세요.</div>
-        <div><strong>④</strong> 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:<br>
-            - 호기심을 자극하는 말<br>
-            - 감정을 불러일으키는 말<br>
-            - 사랑과 존중을 표현하는 말
-        </div>
-        <div><strong>⑤</strong> 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.</div>
-        <div><strong>*</strong> <strong>표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.</div>
-    </div>
+    <h1 class="text-4xl font-bold text-sky-700 text-center mb-6">🌍 환경보호 그림 동화책 창작 지침서</h1>
 
-    <div class="section">
-        <h2>Step 1. 주제를 먼저 정해보자!</h2>
-        <p>예시: "아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 생각해 보세요.</p>
-        <div class="input-group">
-            <textarea id="theme-input" placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
-            <button class="example-btn" onclick="showExample('theme-input', '나무와 아이의 따뜻한 우정 이야기')">예시</button>
-        </div>
-    </div>
+    <div class="p-6 rounded-xl shadow-lg bg-white/80 border-l-8 border-l-sky-600 mb-8">
+        <p class="mb-4">
+            <strong class="text-sky-800">이 그림책의 목표는</strong> ‘환경 보호’와 관련된 SDG(지속가능한 개발 목표)의 중요성을 <strong class="text-sky-800">어린이들이 쉽게 이해하고 공감할 수 있도록</strong> 하는 것입니다. 이 목표를 마음에 두고 이야기를 창작해 주세요.
+        </p>
+        <div class="mb-2">
+            <strong class="text-sky-800">①</strong> 아래의 내용으로 그림책을 써 주세요. 재미있고 창의적으로 전개하고, 독자에게 감동적이며 교훈적인 마무리를 해 주세요.
+        </div>
+        <div class="mb-2">
+            <strong class="text-sky-800">②</strong> 각 장면의 내용을 흥미진진하게 동화책 스타일로 써 주세요.
+        </div>
+        <div class="mb-2">
+            <strong class="text-sky-800">③</strong> 각 장면에 적절한 이미지를 그리기 위한 <strong class="text-sky-800">프롬프트를 한글과 영어로</strong> 상세히 작성해 주세요.
+        </div>
+        <div class="mb-2">
+            <strong class="text-sky-800">④</strong> 제목은 주제에 기초해서 아래 지침을 참고해 만들어 주세요:<br>
+            - 호기심을 자극하는 말<br>
+            - 감정을 불러일으키는 말<br>
+            - 자연이나 환경과 관련된 말 포함
+        </div>
+        <div class="mb-2">
+            <strong class="text-sky-800">⑤</strong> 내용이 비어있는 곳은 네가 스토리 전개에 어울리도록 내용을 채워 주세요.
+        </div>
+        <div>
+            <strong class="text-sky-800">*</strong> <strong class="text-sky-800">표지 디자인</strong>에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 주세요.
+        </div>
+    </div>
 
-    <div class="section">
-        <h2>Step 2. 시놉시스를 만들어 보자!</h2>
-        <label class="label-with-button">
-            제목:
-            <div class="input-group">
-                <input type="text" id="title-input" placeholder="예: 언제나 기다려주는 나무" />
-                <button class="example-btn" onclick="showExample('title-input', '언제나 기다려주는 나무')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            주인공:
-            <div class="input-group">
-                <input type="text" id="protagonist-input" placeholder="예: 마음이 따뜻한 나무 토토" />
-                <button class="example-btn" onclick="showExample('protagonist-input', '마음이 따뜻한 나무 토토')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            문제 상황:
-            <div class="input-group">
-                <textarea id="problem-input" placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea>
-                <button class="example-btn" onclick="showExample('problem-input', '토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요.')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            해결 방법:
-            <div class="input-group">
-                <textarea id="solution-input" placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea>
-                <button class="example-btn" onclick="showExample('solution-input', '시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요.')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            교훈:
-            <div class="input-group">
-                <textarea id="lesson-input" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea>
-                <button class="example-btn" onclick="showExample('lesson-input', '함께한 시간과 마음은 결코 사라지지 않아요.')">예시</button>
-            </div>
-        </label>
-    </div>
+    <div class="p-6 rounded-xl shadow-xl bg-white/80 mb-8">
+        <h2 class="text-2xl font-semibold text-sky-800 border-b-2 border-b-cyan-200 pb-1 mb-4">Step 1. 주제를 먼저 골라보자!</h2>
+        <p class="mb-2">아래에서 하나를 선택하세요.</p>
+        <select id="step1Select" class="w-full p-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="">-- 주제를 선택하세요 --</option>
+            <option>기후변화: 북극의 얼음이 녹는 이유는 무엇일까요?</option>
+            <option>해양 생태계 보호: 바다거북이 플라스틱에 갇히면 어떤 일이 벌어질까요?</option>
+            <option>동물 서식지 보호: 숲이 사라지면 동물 친구들은 어디로 갈까요?</option>
+            <option>쓰레기 줄이기: 플라스틱 빨대를 대신할 수 있는 방법은?</option>
+        </select>
+    </div>
 
-    <div class="section">
-        <h2>Step 3. 등장인물 구성하기</h2>
-        <label class="label-with-button">
-            주인공 이름과 특징:
-            <div class="input-group">
-                <textarea id="character1-input" placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea>
-                <button class="example-btn" onclick="showExample('character1-input', '조용하고 인내심 많은 나무 토토')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            친구1 이름과 특징:
-            <div class="input-group">
-                <textarea id="character2-input" placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea>
-                <button class="example-btn" onclick="showExample('character2-input', '외로움을 자주 느끼는 소년 민호')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            친구2 이름과 특징:
-            <div class="input-group">
-                <textarea id="character3-input" placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea>
-                <button class="example-btn" onclick="showExample('character3-input', '민호를 지켜보는 다람쥐 또또')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            문제 유발자 (선택):
-            <div class="input-group">
-                <textarea id="troublemaker-input" placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea>
-                <button class="example-btn" onclick="showExample('troublemaker-input', '욕심 많은 어른들 또는 시간의 흐름')">예시</button>
-            </div>
-        </label>
-    </div>
+    <div class="p-6 rounded-xl shadow-xl bg-white/80 mb-8">
+        <h2 class="text-2xl font-semibold text-sky-800 border-b-2 border-b-cyan-200 pb-1 mb-4">Step 2. 시놉시스를 만들어 보자!</h2>
+        <div class="flex flex-col space-y-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>제목:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <input type="text" placeholder="예: 폴라의 얼음 집이 사라졌어요!" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>주인공:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <input type="text" placeholder="예: 아기 북극곰 폴라" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>문제 상황:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 기후변화로 폴라의 집이 녹고 있어요." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>해결 방법:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 친구들과 힘을 모아 캠페인을 벌여요." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>교훈:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 작은 실천이 지구를 살릴 수 있어요." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+        </div>
+    </div>
 
-    <div class="section">
-        <h2>Step 4. 장면 구성 (5컷)</h2>
-        <p class="hint">각 장면의 내용을 감정적으로 연결하여 써보세요.</p>
-        <div class="input-group">
-            <textarea id="scene1-input" placeholder="장면 1: 아이 민호가 토토 나무와 처음 만나요."></textarea>
-            <button class="example-btn" onclick="showExample('scene1-input', '아이 민호가 토토 나무와 처음 만나요.')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene2-input" placeholder="장면 2: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
-            <button class="example-btn" onclick="showExample('scene2-input', '민호는 토토에게 고민을 이야기하며 위로받아요.')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene3-input" placeholder="장면 3: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
-            <button class="example-btn" onclick="showExample('scene3-input', '민호는 자라나며 점점 토토와 멀어져요.')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene4-input" placeholder="장면 4: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토"></textarea>
-            <button class="example-btn" onclick="showExample('scene4-input', '시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene5-input" placeholder="장면 5: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
-            <button class="example-btn" onclick="showExample('scene5-input', '민호가 토토에게 안기며 눈물을 흘려요.')">예시</button>
-        </div>
-    </div>
+    <div class="p-6 rounded-xl shadow-xl bg-white/80 mb-8">
+        <h2 class="text-2xl font-semibold text-sky-800 border-b-2 border-b-cyan-200 pb-1 mb-4">Step 3. 등장인물 구성하기</h2>
+        <div class="flex flex-col space-y-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>주인공 이름과 특징:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 착하고 호기심 많은 북극곰 폴라" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>친구1 이름과 특징:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 똑똑한 북극여우 루루" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>친구2 이름과 특징:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 다정한 순록 노노" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>악당 또는 문제 유발자:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="예: 쓰레기를 무심코 버리는 사람" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+        </div>
+    </div>
 
-    <div class="section">
-        <h2>Step 5. 이미지 스타일 선택하기</h2>
-        <p>원하는 그림 스타일을 선택하세요.</p>
-        <select id="style-select">
-            <option>연필 드로잉 스타일</option>
-            <option>수채화 스타일</option>
-            <option>디즈니 스타일</option>
-            <option>동양화 스타일</option>
-            <option>실사와 동화 혼합 스타일</option>
-            <option>지브리 스타일</option>
-            <option>픽사 스타일</option>
-        </select>
-    </div>
+    <div class="p-6 rounded-xl shadow-xl bg-white/80 mb-8">
+        <h2 class="text-2xl font-semibold text-sky-800 border-b-2 border-b-cyan-200 pb-1 mb-4">Step 4. 장면 구성 (5컷)</h2>
+        <p class="text-gray-600 text-sm mb-4">힌트: 각 장면에 어떤 일이 벌어지는지 짧게 적어보세요.</p>
+        <div class="flex flex-col space-y-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>장면 1:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="장면 1: 폴라가 얼음 위에서 친구들과 놀고 있어요." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>장면 2:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="장면 2: 얼음이 녹기 시작하고 위기에 처한 폴라" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>장면 3:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="장면 3: 문제의 원인을 알아보기 위해 친구들과 모임" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>장면 4:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="장면 4: 캠페인을 벌이고, 사람들의 변화 시작" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label>장면 5:</label>
+                    <button type="button" onclick="setExample(this)" class="px-3 py-1 bg-sky-600 text-white rounded-md text-sm hover:bg-sky-700 transition-colors">예시보기</button>
+                </div>
+                <textarea placeholder="장면 5: 다시 돌아온 얼음과 행복한 폴라" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </div>
+        </div>
+    </div>
 
-    <button id="downloadBtn">내용 확인하기</button>
+    <div class="p-6 rounded-xl shadow-xl bg-white/80 mb-8">
+        <h2 class="text-2xl font-semibold text-sky-800 border-b-2 border-b-cyan-200 pb-1 mb-4">Step 5. 이미지 스타일 선택하기</h2>
+        <p class="mb-2">원하는 그림 스타일을 선택하세요.</p>
+        <select class="w-full p-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option>디즈니 스타일 일러스트</option>
+            <option>연필 드로잉 스타일</option>
+            <option>수채화 스타일</option>
+            <option>픽사 스타일</option>
+            <option>실사 사진 스타일</option>
+        </select>
+    </div>
 
-    <script>
-        function showExample(inputId, exampleText) {
-            const input = document.getElementById(inputId);
+    <div class="flex flex-wrap gap-4 justify-center mt-8">
+        <button onclick="openStorybook()" class="flex-1 min-w-[200px] bg-sky-600 text-white py-4 px-6 text-lg rounded-lg shadow-md hover:bg-sky-700 transition-colors">
+            1️⃣ 동화책 만들기
+        </button>
+        <button onclick="window.open('https://chat.openai.com/', '_blank')" class="flex-1 min-w-[200px] bg-purple-700 text-white py-4 px-6 text-lg rounded-lg shadow-md hover:bg-purple-800 transition-colors">
+            2️⃣ 챗GPT
+        </button>
+        <button onclick="window.open('https://labs.google/fx/ko/tools/whisk', '_blank')" class="flex-1 min-w-[200px] bg-orange-500 text-white py-4 px-6 text-lg rounded-lg shadow-md hover:bg-orange-600 transition-colors">
+            3️⃣ 구글 위스크
+        </button>
+        <button onclick="window.open('https://bookcreator.com/', '_blank')" class="flex-1 min-w-[200px] bg-stone-700 text-white py-4 px-6 text-lg rounded-lg shadow-md hover:bg-stone-800 transition-colors">
+            4️⃣ 북크리에이터
+        </button>
+    </div>
+
+    <script>
+        function setExample(btn) {
+            const input = btn.parentElement.nextElementSibling;
+            const placeholderText = input.getAttribute('placeholder');
+            const exampleText = placeholderText.replace("예: ", "");
             input.value = exampleText;
+            input.classList.add('placeholder-bold');
         }
 
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            let htmlContent = '<html><head><title>동화책 내용</title>';
-            htmlContent += '<style>';
-            htmlContent += 'body { font-family: \'Arial\', sans-serif; line-height: 1.8; padding: 40px; background-color: #fff8e1; color: #4e342e; max-width: 800px; margin: auto; }';
-            htmlContent += 'h1 { color: #d84315; text-align: center; margin-bottom: 20px; }';
-            htmlContent += 'h2 { color: #bf360c; margin-top: 40px; border-bottom: 2px solid #ffccbc; padding-bottom: 5px; }';
-            htmlContent += 'p { margin-bottom: 15px; }';
-            htmlContent += '.section-content { background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }';
-            htmlContent += 'ul { list-style-type: none; padding-left: 0; }';
-            htmlContent += 'li { margin-bottom: 10px; }';
-            htmlContent += '</style>';
-            htmlContent += '</head><body>';
-
-            htmlContent += '<h1>' + (document.getElementById('title-input').value || '제목 없음') + '</h1>';
-            htmlContent += '<h2>동화책 내용 정리</h2>';
-            
-            htmlContent += '<ul>';
-
-            // Step 1: 주제
-            const theme = document.getElementById('theme-input').value;
-            if (theme) {
-                htmlContent += '<li><strong>주제:</strong> ' + theme + '</li>';
-            }
-
-            // Step 2: 시놉시스
-            const protagonist = document.getElementById('protagonist-input').value;
-            const problem = document.getElementById('problem-input').value;
-            const solution = document.getElementById('solution-input').value;
-            const lesson = document.getElementById('lesson-input').value;
-            if (protagonist || problem || solution || lesson) {
-                htmlContent += '<h2>이야기 시놉시스</h2>';
-                htmlContent += '<li><strong>주인공:</strong> ' + protagonist + '</li>';
-                htmlContent += '<li><strong>문제 상황:</strong> ' + problem + '</li>';
-                htmlContent += '<li><strong>해결 방법:</strong> ' + solution + '</li>';
-                htmlContent += '<li><strong>교훈:</strong> ' + lesson + '</li>';
-            }
-            
-            // Step 3: 등장인물
-            const char1 = document.getElementById('character1-input').value;
-            const char2 = document.getElementById('character2-input').value;
-            const char3 = document.getElementById('character3-input').value;
-            const troublemaker = document.getElementById('troublemaker-input').value;
-            if (char1 || char2 || char3 || troublemaker) {
-                htmlContent += '<h2>등장인물</h2>';
-                htmlContent += '<li><strong>주인공:</strong> ' + char1 + '</li>';
-                htmlContent += '<li><strong>친구1:</strong> ' + char2 + '</li>';
-                htmlContent += '<li><strong>친구2:</strong> ' + char3 + '</li>';
-                htmlContent += '<li><strong>문제 유발자:</strong> ' + troublemaker + '</li>';
-            }
-
-            // Step 4: 장면 구성
-            const scene1 = document.getElementById('scene1-input').value;
-            const scene2 = document.getElementById('scene2-input').value;
-            const scene3 = document.getElementById('scene3-input').value;
-            const scene4 = document.getElementById('scene4-input').value;
-            const scene5 = document.getElementById('scene5-input').value;
-            if (scene1 || scene2 || scene3 || scene4 || scene5) {
-                htmlContent += '<h2>이야기 장면</h2>';
-                if (scene1) htmlContent += '<li><strong>장면 1:</strong> ' + scene1 + '</li>';
-                if (scene2) htmlContent += '<li><strong>장면 2:</strong> ' + scene2 + '</li>';
-                if (scene3) htmlContent += '<li><strong>장면 3:</strong> ' + scene3 + '</li>';
-                if (scene4) htmlContent += '<li><strong>장면 4:</strong> ' + scene4 + '</li>';
-                if (scene5) htmlContent += '<li><strong>장면 5:</strong> ' + scene5 + '</li>';
-            }
-
-            // Step 5: 이미지 스타일
-            const style = document.getElementById('style-select').value;
-            if (style) {
-                 htmlContent += '<h2>이미지 스타일</h2>';
-                 htmlContent += '<li><strong>선택된 스타일:</strong> ' + style + '</li>';
-            }
-            
-            htmlContent += '</ul>';
-            htmlContent += '</body></html>';
-
-            const newWindow = window.open('', '_blank');
-            newWindow.document.write(htmlContent);
-            newWindow.document.close();
-        });
-    </script>
-</body>
-</html>
+        function openStorybook() {
+            const outputWindow = window.open("", "_blank");
+            outputWindow.document.write("<html><head><title>나의 그림동화책 소개</title><style>");
+            outputWindow.document.write("body { font-family: 'Arial', sans-serif; line-height:1.8; padding:30px; font-size:18px; background:#fefefe; }");
+            outputWindow.document.write("h1 { color:#01579b; font-size:24px; }");
+            outputWindow.document.write("p, li { margin-bottom:10px; }");
+            outputWindow.document.write("</style></head><body>");
+            const introBox = document.querySelector(".guide-box").innerHTML;
+            outputWindow.document.write("<div>" + introBox + "</div>");
+            const fields = [];
+            document.querySelectorAll('.section').forEach(function(section) {
+                const heading = section.querySelector('h2') ? section.querySelector('h2').innerText : "";
+                if (heading) {
+                    fields.push({ heading: heading, values: [] });
+                    section.
