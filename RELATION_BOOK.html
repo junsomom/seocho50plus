@@ -11,6 +11,10 @@
     body {
       font-family: 'Nanum Gothic', 'Arial', sans-serif;
     }
+    /* Ensure form elements inherit the body's font for consistent styling */
+    input, textarea, select, button {
+      font-family: inherit;
+    }
   </style>
 <script type="importmap">
 {
@@ -194,47 +198,35 @@
   </div>
 
   <script>
-    // 'Use Example' button functionality
     document.addEventListener('DOMContentLoaded', () => {
+      // 'Use Example' button functionality
       const exampleButtons = document.querySelectorAll('.use-example-btn');
-      const inputFields = document.querySelectorAll('textarea[placeholder], input[placeholder], select');
-
       exampleButtons.forEach(button => {
         button.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = button.dataset.target;
           const targetInput = document.getElementById(targetId);
-          
-          if (targetInput) {
-            // For select, we just use the currently selected value.
-            // For others, we use the placeholder.
-            if (targetInput.tagName.toLowerCase() !== 'select') {
-                targetInput.value = targetInput.placeholder;
-            }
-            targetInput.classList.add('font-bold');
-            
-            // Trigger an input event to ensure any other listeners are aware of the change.
-            targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          if (!targetInput) return;
+
+          if (targetInput.tagName.toLowerCase() !== 'select') {
+            targetInput.value = targetInput.placeholder;
           }
+          
+          targetInput.classList.add('font-bold');
+          targetInput.dispatchEvent(new Event('input', { bubbles: true }));
         });
       });
 
-      inputFields.forEach(input => {
+      // Handle bold styling on user input
+      const allInputs = document.querySelectorAll('textarea, input, select');
+      allInputs.forEach(input => {
         input.addEventListener('input', () => {
           if (input.value.trim() === '') {
             input.classList.remove('font-bold');
           } else {
-             // If a user starts typing, we might want to keep it bold if an example was used,
-             // or add bold if they are filling it in. For simplicity, we'll just ensure it's bold if not empty.
-             input.classList.add('font-bold');
+            input.classList.add('font-bold');
           }
         });
-         // Also handle clearing the bold style if the user empties the input field
-         input.addEventListener('keyup', () => {
-            if(input.value.trim() === '') {
-                input.classList.remove('font-bold');
-            }
-         });
       });
     });
 
