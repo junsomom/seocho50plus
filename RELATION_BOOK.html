@@ -63,32 +63,6 @@
         #downloadBtn:hover {
             opacity: 0.9;
         }
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-        .input-group input, .input-group textarea {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-        .example-btn {
-            padding: 8px 12px;
-            background-color: #d84315;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            flex-shrink: 0;
-            transition: background-color 0.3s;
-        }
-        .example-btn:hover {
-            background-color: #bf360c;
-        }
-        .label-with-button {
-            display: block;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
@@ -111,148 +85,40 @@
     <div class="section">
         <h2>Step 1. 주제를 먼저 정해보자!</h2>
         <p>예시: "아낌없이 주는 나무"처럼 감정과 관계의 의미를 전하는 이야기를 생각해 보세요.</p>
-        <div class="input-group">
-            <textarea id="theme-input" placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
-            <button class="example-btn" onclick="fillExample('theme')">예시</button>
-        </div>
+        <textarea id="theme-input" placeholder="예: 나무와 아이의 따뜻한 우정 이야기"></textarea>
     </div>
 
     <div class="section">
         <h2>Step 2. 시놉시스를 만들어 보자!</h2>
-        <label class="label-with-button">
-            제목:
-            <div class="input-group">
-                <input type="text" id="title-input" placeholder="예: 언제나 기다려주는 나무" />
-                <button class="example-btn" onclick="fillExample('title')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            주인공:
-            <div class="input-group">
-                <input type="text" id="protagonist-input" placeholder="예: 마음이 따뜻한 나무 토토" />
-                <button class="example-btn" onclick="fillExample('protagonist')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            문제 상황:
-            <div class="input-group">
-                <textarea id="problem-input" placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea>
-                <button class="example-btn" onclick="fillExample('problem')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            해결 방법:
-            <div class="input-group">
-                <textarea id="solution-input" placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea>
-                <button class="example-btn" onclick="fillExample('solution')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            교훈:
-            <div class="input-group">
-                <textarea id="lesson-input" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea>
-                <button class="example-btn" onclick="fillExample('lesson')">예시</button>
-            </div>
-        </label>
+        <label>제목: <input type="text" id="title-input" placeholder="예: 언제나 기다려주는 나무" /></label>
+        <label>주인공: <input type="text" id="protagonist-input" placeholder="예: 마음이 따뜻한 나무 토토" /></label>
+        <label>문제 상황: <textarea id="problem-input" placeholder="예: 토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요."></textarea></label>
+        <label>해결 방법: <textarea id="solution-input" placeholder="예: 시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요."></textarea></label>
+        <label>교훈: <textarea id="lesson-input" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않아요."></textarea></label>
     </div>
 
     <div class="section">
         <h2>Step 3. 등장인물 구성하기</h2>
-        <label class="label-with-button">
-            주인공 이름과 특징:
-            <div class="input-group">
-                <textarea id="character1-input" placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea>
-                <button class="example-btn" onclick="fillExample('character1')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            친구1 이름과 특징:
-            <div class="input-group">
-                <textarea id="character2-input" placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea>
-                <button class="example-btn" onclick="fillExample('character2')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            친구2 이름과 특징:
-            <div class="input-group">
-                <textarea id="character3-input" placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea>
-                <button class="example-btn" onclick="fillExample('character3')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            문제 유발자 (선택):
-            <div class="input-group">
-                <textarea id="troublemaker-input" placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea>
-                <button class="example-btn" onclick="fillExample('troublemaker')">예시</button>
-            </div>
-        </label>
+        <label>주인공 이름과 특징: <textarea id="character1-input" placeholder="예: 조용하고 인내심 많은 나무 토토"></textarea></label>
+        <label>친구1 이름과 특징: <textarea id="character2-input" placeholder="예: 외로움을 자주 느끼는 소년 민호"></textarea></label>
+        <label>친구2 이름과 특징: <textarea id="character3-input" placeholder="예: 민호를 지켜보는 다람쥐 또또"></textarea></label>
+        <label>문제 유발자 (선택): <textarea id="troublemaker-input" placeholder="예: 욕심 많은 어른들 또는 시간의 흐름"></textarea></label>
     </div>
 
     <div class="section">
         <h2>Step 4. 장면 구성 (5컷)</h2>
         <p class="hint">각 장면의 내용을 감정적으로 연결하여 써보세요.</p>
-        <div class="input-group">
-            <textarea id="scene1-input" placeholder="장면 1: 아이 민호가 토토 나무와 처음 만나요."></textarea>
-            <button class="example-btn" onclick="fillExample('scene1')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene2-input" placeholder="장면 2: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
-            <button class="example-btn" onclick="fillExample('scene2')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene3-input" placeholder="장면 3: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
-            <button class="example-btn" onclick="fillExample('scene3')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene4-input" placeholder="장면 4: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토"></textarea>
-            <button class="example-btn" onclick="fillExample('scene4')">예시</button>
-        </div>
-        <div class="input-group">
-            <textarea id="scene5-input" placeholder="장면 5: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
-            <button class="example-btn" onclick="fillExample('scene5')">예시</button>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>Step 5. 감정을 표현하는 특별한 방법</h2>
-        <label class="label-with-button">
-            주인공의 감정을 어떤 색깔이나 소리로 표현하고 싶으세요?
-            <div class="input-group">
-                <textarea id="emotion-color-input" placeholder="예: 행복한 감정은 '따스한 햇살'처럼, 그리움은 '멀리서 들리는 종소리'처럼요."></textarea>
-                <button class="example-btn" onclick="fillExample('emotionColor')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            주인공이 가장 힘든 순간에 위로를 준 것은 무엇이었나요?
-            <div class="input-group">
-                <textarea id="comfort-input" placeholder="예: 무성한 잎사귀를 가진 나무의 그늘, 다람쥐 친구가 가져다 준 도토리 하나."></textarea>
-                <button class="example-btn" onclick="fillExample('comfort')">예시</button>
-            </div>
-        </label>
+        <textarea id="scene1-input" placeholder="장면 1: 아이 민호가 토토 나무와 처음 만나요."></textarea>
+        <textarea id="scene2-input" placeholder="장면 2: 민호는 토토에게 고민을 이야기하며 위로받아요."></textarea>
+        <textarea id="scene3-input" placeholder="장면 3: 민호는 자라나며 점점 토토와 멀어져요."></textarea>
+        <textarea id="scene4-input" placeholder="장면 4: 시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토"></textarea>
+        <textarea id="scene5-input" placeholder="장면 5: 민호가 토토에게 안기며 눈물을 흘려요."></textarea>
     </div>
 
     <div class="section">
-        <h2>Step 6. 이야기의 교훈과 여운</h2>
-        <label class="label-with-button">
-            이 동화를 통해 아이들에게 전하고 싶은 '관계의 지혜'는 무엇인가요?
-            <div class="input-group">
-                <textarea id="wisdom-input" placeholder="예: 함께한 시간과 마음은 결코 사라지지 않는다는 것을 알려주고 싶습니다."></textarea>
-                <button class="example-btn" onclick="fillExample('wisdom')">예시</button>
-            </div>
-        </label>
-        <label class="label-with-button">
-            동화가 끝난 후, 주인공은 어떤 모습으로 성장했나요?
-            <div class="input-group">
-                <textarea id="growth-input" placeholder="예: 민호는 이제 다른 나무들을 아끼고, 그 나무들 밑에서 외로운 친구들에게 먼저 손을 내미는 어른이 되었어요."></textarea>
-                <button class="example-btn" onclick="fillExample('growth')">예시</button>
-            </div>
-        </label>
-    </div>
-
-    <div class="section">
-        <h2>Step 7. 이미지 스타일 선택하기</h2>
+        <h2>Step 5. 이미지 스타일 선택하기</h2>
         <p>원하는 그림 스타일을 선택하세요.</p>
-        <select>
+        <select id="style-select">
             <option>연필 드로잉 스타일</option>
             <option>수채화 스타일</option>
             <option>디즈니 스타일</option>
@@ -263,68 +129,87 @@
         </select>
     </div>
 
-    <button id="downloadBtn">저장하기</button>
+    <button id="downloadBtn">내용 확인하기</button>
 
     <script>
-        function fillExample(type) {
-            const examples = {
-                'theme': '나무와 아이의 따뜻한 우정 이야기',
-                'title': '언제나 기다려주는 나무',
-                'protagonist': '마음이 따뜻한 나무 토토',
-                'problem': '토토는 외로운 아이가 자라며 점점 멀어지는 것을 슬퍼해요.',
-                'solution': '시간이 흘러 다시 돌아온 아이가 토토의 사랑을 깨달아요.',
-                'lesson': '함께한 시간과 마음은 결코 사라지지 않아요.',
-                'character1': '조용하고 인내심 많은 나무 토토',
-                'character2': '외로움을 자주 느끼는 소년 민호',
-                'character3': '민호를 지켜보는 다람쥐 또또',
-                'troublemaker': '욕심 많은 어른들 또는 시간의 흐름',
-                'scene1': '아이 민호가 토토 나무와 처음 만나요.',
-                'scene2': '민호는 토토에게 고민을 이야기하며 위로받아요.',
-                'scene3': '민호는 자라나며 점점 토토와 멀어져요.',
-                'scene4': '시간이 흐른 뒤 다시 돌아온 민호, 많이 늙은 토토',
-                'scene5': '민호가 토토에게 안기며 눈물을 흘려요.',
-                'emotionColor': '행복한 감정은 '따스한 햇살'처럼, 그리움은 '멀리서 들리는 종소리'처럼요.',
-                'comfort': '무성한 잎사귀를 가진 나무의 그늘, 다람쥐 친구가 가져다 준 도토리 하나.',
-                'wisdom': '함께한 시간과 마음은 결코 사라지지 않는다는 것을 알려주고 싶습니다.',
-                'growth': '민호는 이제 다른 나무들을 아끼고, 그 나무들 밑에서 외로운 친구들에게 먼저 손을 내미는 어른이 되었어요.'
-            };
-            const targetElement = document.getElementById(type + '-input');
-            if (targetElement) {
-                targetElement.value = examples[type];
-            }
-        }
-
         document.getElementById('downloadBtn').addEventListener('click', function () {
-            const guideText = document.getElementById('guideText').innerText;
-            let content = '[그림 동화책 창작 지침서]\n\n' + guideText + '\n\n';
+            let htmlContent = '<html><head><title>동화책 내용</title>';
+            htmlContent += '<style>';
+            htmlContent += 'body { font-family: \'Arial\', sans-serif; line-height: 1.8; padding: 40px; background-color: #fff8e1; color: #4e342e; max-width: 800px; margin: auto; }';
+            htmlContent += 'h1 { color: #d84315; text-align: center; margin-bottom: 20px; }';
+            htmlContent += 'h2 { color: #bf360c; margin-top: 40px; border-bottom: 2px solid #ffccbc; padding-bottom: 5px; }';
+            htmlContent += 'p { margin-bottom: 15px; }';
+            htmlContent += '.section-content { background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }';
+            htmlContent += 'ul { list-style-type: none; padding-left: 0; }';
+            htmlContent += 'li { margin-bottom: 10px; }';
+            htmlContent += '</style>';
+            htmlContent += '</head><body>';
 
-            document.querySelectorAll('.section').forEach(function (section) {
-                const heading = section.querySelector('h2').innerText;
-                content += '## ' + heading + '\n';
-                section.querySelectorAll('label, textarea, input, select').forEach(el => {
-                    if (el.tagName === 'LABEL') {
-                        content += '- ' + el.childNodes[0].nodeValue.trim() + '\n';
-                        const inputOrTextarea = el.querySelector('input, textarea');
-                        if (inputOrTextarea) {
-                            const val = inputOrTextarea.value.trim();
-                            if (val) content += '  → ' + val + '\n';
-                        }
-                    } else if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
-                        const val = el.value.trim();
-                        if (val) content += '  → ' + val + '\n';
-                    }
-                });
-                content += '\n';
-            });
+            htmlContent += '<h1>' + (document.getElementById('title-input').value || '제목 없음') + '</h1>';
+            htmlContent += '<h2>동화책 내용 정리</h2>';
+            
+            htmlContent += '<ul>';
 
-            const titleInput = document.getElementById('title-input');
-            const filename = titleInput && titleInput.value.trim() ? titleInput.value.trim() : '그림동화_지침서';
+            // Step 1: 주제
+            const theme = document.getElementById('theme-input').value;
+            if (theme) {
+                htmlContent += '<li><strong>주제:</strong> ' + theme + '</li>';
+            }
 
-            const blob = new Blob([content], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = filename + '.txt';
-            a.click();
+            // Step 2: 시놉시스
+            const protagonist = document.getElementById('protagonist-input').value;
+            const problem = document.getElementById('problem-input').value;
+            const solution = document.getElementById('solution-input').value;
+            const lesson = document.getElementById('lesson-input').value;
+            if (protagonist || problem || solution || lesson) {
+                htmlContent += '<h2>이야기 시놉시스</h2>';
+                htmlContent += '<li><strong>주인공:</strong> ' + protagonist + '</li>';
+                htmlContent += '<li><strong>문제 상황:</strong> ' + problem + '</li>';
+                htmlContent += '<li><strong>해결 방법:</strong> ' + solution + '</li>';
+                htmlContent += '<li><strong>교훈:</strong> ' + lesson + '</li>';
+            }
+            
+            // Step 3: 등장인물
+            const char1 = document.getElementById('character1-input').value;
+            const char2 = document.getElementById('character2-input').value;
+            const char3 = document.getElementById('character3-input').value;
+            const troublemaker = document.getElementById('troublemaker-input').value;
+            if (char1 || char2 || char3 || troublemaker) {
+                htmlContent += '<h2>등장인물</h2>';
+                htmlContent += '<li><strong>주인공:</strong> ' + char1 + '</li>';
+                htmlContent += '<li><strong>친구1:</strong> ' + char2 + '</li>';
+                htmlContent += '<li><strong>친구2:</strong> ' + char3 + '</li>';
+                htmlContent += '<li><strong>문제 유발자:</strong> ' + troublemaker + '</li>';
+            }
+
+            // Step 4: 장면 구성
+            const scene1 = document.getElementById('scene1-input').value;
+            const scene2 = document.getElementById('scene2-input').value;
+            const scene3 = document.getElementById('scene3-input').value;
+            const scene4 = document.getElementById('scene4-input').value;
+            const scene5 = document.getElementById('scene5-input').value;
+            if (scene1 || scene2 || scene3 || scene4 || scene5) {
+                htmlContent += '<h2>이야기 장면</h2>';
+                if (scene1) htmlContent += '<li><strong>장면 1:</strong> ' + scene1 + '</li>';
+                if (scene2) htmlContent += '<li><strong>장면 2:</strong> ' + scene2 + '</li>';
+                if (scene3) htmlContent += '<li><strong>장면 3:</strong> ' + scene3 + '</li>';
+                if (scene4) htmlContent += '<li><strong>장면 4:</strong> ' + scene4 + '</li>';
+                if (scene5) htmlContent += '<li><strong>장면 5:</strong> ' + scene5 + '</li>';
+            }
+
+            // Step 5: 이미지 스타일
+            const style = document.getElementById('style-select').value;
+            if (style) {
+                 htmlContent += '<h2>이미지 스타일</h2>';
+                 htmlContent += '<li><strong>선택된 스타일:</strong> ' + style + '</li>';
+            }
+            
+            htmlContent += '</ul>';
+            htmlContent += '</body></html>';
+
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(htmlContent);
+            newWindow.document.close();
         });
     </script>
 </body>
