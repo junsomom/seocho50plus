@@ -15,6 +15,10 @@
     input, textarea, select, button {
       font-family: inherit;
     }
+    /* Bold style for selected option in select box (optional, as browser styling can override) */
+    .font-bold option:checked {
+        font-weight: 700;
+    }
   </style>
 <script type="importmap">
 {
@@ -208,11 +212,19 @@
           const targetInput = document.getElementById(targetId);
           if (!targetInput) return;
 
-          if (targetInput.tagName.toLowerCase() !== 'select') {
+          if (targetInput.tagName.toLowerCase() === 'select') {
+            // Select 태그의 경우, 기본적으로 선택된 option의 텍스트가 이미 설정되어 있으므로
+            // font-bold 클래스만 추가하여 스타일을 적용
+            // (주의: selectbox의 스타일은 브라우저마다 다를 수 있어 font-bold가 시각적으로 크게 나타나지 않을 수 있습니다.)
+            targetInput.classList.add('font-bold');
+            // 예시로 '수채화 스타일'이 선택되어 있으므로, 이 상태를 유지
+          } else {
+            // input, textarea 태그의 경우 placeholder 값을 value로 설정
             targetInput.value = targetInput.placeholder;
+            targetInput.classList.add('font-bold');
           }
           
-          targetInput.classList.add('font-bold');
+          // input 이벤트를 발생시켜, 아래 'Handle bold styling on user input' 로직이 실행되도록 함
           targetInput.dispatchEvent(new Event('input', { bubbles: true }));
         });
       });
@@ -221,12 +233,28 @@
       const allInputs = document.querySelectorAll('textarea, input, select');
       allInputs.forEach(input => {
         input.addEventListener('input', () => {
-          if (input.value.trim() === '') {
-            input.classList.remove('font-bold');
+          if (input.tagName.toLowerCase() === 'select') {
+            // Select 태그는 value가 항상 있으므로, 단순히 클래스를 토글하는 방식으로 처리
+            // 여기서는 '예시 사용하기' 버튼을 눌렀을 때만 bold가 되도록 유지하거나
+            // 아니면 사용자가 선택을 변경하면 bold가 사라지도록 할 수 있습니다.
+            // 현재는 사용자가 직접 입력/변경했을 때 bold가 되거나 사라지도록 하는 일반 로직을 따릅니다.
+            if (input.value.trim() === '') { // select는 이 조건이 잘 맞지 않음
+                 input.classList.remove('font-bold');
+            } else {
+                 input.classList.add('font-bold');
+            }
           } else {
-            input.classList.add('font-bold');
+            if (input.value.trim() === '') {
+              input.classList.remove('font-bold');
+            } else {
+              input.classList.add('font-bold');
+            }
           }
         });
+        // 페이지 로드 시 이미 값이 있는 경우 bold 적용 (예: select의 default selected)
+        if (input.value.trim() !== '') {
+            input.classList.add('font-bold');
+        }
       });
     });
 
