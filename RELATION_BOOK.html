@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>그림 동화책 창작 지침서 - 감정과 관계</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>그림 동화책 창작 지침서 - 감정과 관계 (FIXED)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Add a custom font for better readability if needed */
     @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
-    body {
-      font-family: 'Nanum Gothic', 'Arial', sans-serif;
-    }
-    /* Ensure form elements inherit the body's font for consistent styling */
-    input, textarea, select, button {
-      font-family: inherit;
-    }
-    /* Bold style for selected option in select box (optional, as browser styling can override) */
-    .font-bold option:checked {
-        font-weight: 700;
-    }
+    body { font-family: 'Nanum Gothic', 'Arial', sans-serif; }
+    input, textarea, select, button { font-family: inherit; }
+    .font-bold option:checked { font-weight: 700; }
   </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.1.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "react-image-crop": "https://aistudiocdn.com/react-image-crop@^11.0.10",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0"
+  <!-- (Optional) importmap stayed but not required for this page -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://aistudiocdn.com/react@^19.1.1",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+      "react/": "https://aistudiocdn.com/react@^19.1.1/",
+      "react-image-crop": "https://aistudiocdn.com/react-image-crop@^11.0.10",
+      "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0"
+    }
   }
-}
-</script>
+  </script>
 </head>
 <body class="bg-orange-50 text-stone-800">
   <div class="container mx-auto max-w-4xl p-4 sm:p-8">
@@ -60,10 +52,11 @@
       <div class="space-y-6">
         <div>
           <div class="flex justify-between items-center mb-2">
-            <label for="title" class="block text-lg font-semibold text-stone-700">제목</label>
-            <button data-target="title" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+            <label for="title-input" class="block text-lg font-semibold text-stone-700">제목</label>
+            <button data-target="title-input" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
           </div>
-          <input id="title" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="언제나 기다려주는 나무" />
+          <!-- NOTE: changed id from 'title' to 'title-input' to avoid any conflicts with document.title -->
+          <input id="title-input" type="text" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="언제나 기다려주는 나무" />
         </div>
         <div>
           <div class="flex justify-between items-center mb-2">
@@ -179,10 +172,10 @@
     <div class="section bg-white p-8 rounded-xl shadow-lg mb-8">
       <h2 class="text-2xl font-bold text-orange-700 mb-2">Step 5. 이미지 스타일 선택하기</h2>
       <p class="text-stone-600 mb-6 text-lg">원하는 그림 스타일을 선택하여 동화책의 분위기를 정해주세요.</p>
-        <div class="flex justify-between items-center mb-2">
-            <label for="image-style" class="block text-lg font-semibold text-stone-700">그림 스타일</label>
-            <button data-target="image-style" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
-        </div>
+      <div class="flex justify-between items-center mb-2">
+        <label for="image-style" class="block text-lg font-semibold text-stone-700">그림 스타일</label>
+        <button data-target="image-style" class="use-example-btn text-sm font-semibold text-orange-600 hover:text-orange-800 transition-colors">💡 예시 사용하기</button>
+      </div>
       <select id="image-style" class="w-full p-4 bg-stone-50 border border-stone-300 rounded-lg text-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
         <option>연필 드로잉 스타일</option>
         <option selected>수채화 스타일</option>
@@ -195,182 +188,131 @@
     </div>
 
     <div class="text-center mt-12">
-      <button id="generateBtn" class="w-full sm:w-auto bg-gradient-to-br from-orange-500 to-red-500 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+      <button id="generateBtn" type="button" class="w-full sm:w-auto bg-gradient-to-br from-orange-500 to-red-500 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
         AI 명령어 만들기
       </button>
     </div>
   </div>
 
   <script>
+    // Wrap ALL logic in DOMContentLoaded to avoid any timing/attachment issues
     document.addEventListener('DOMContentLoaded', () => {
-      // 'Use Example' button functionality
-      const exampleButtons = document.querySelectorAll('.use-example-btn');
-      exampleButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = button.dataset.target;
-          const targetInput = document.getElementById(targetId);
-          if (!targetInput) return;
-
-          if (targetInput.tagName.toLowerCase() === 'select') {
-            // Select 태그의 경우, 기본적으로 선택된 option의 텍스트가 이미 설정되어 있으므로
-            // font-bold 클래스만 추가하여 스타일을 적용
-            // (주의: selectbox의 스타일은 브라우저마다 다를 수 있어 font-bold가 시각적으로 크게 나타나지 않을 수 있습니다.)
-            targetInput.classList.add('font-bold');
-            // 예시로 '수채화 스타일'이 선택되어 있으므로, 이 상태를 유지
-          } else {
-            // input, textarea 태그의 경우 placeholder 값을 value로 설정
-            targetInput.value = targetInput.placeholder;
-            targetInput.classList.add('font-bold');
-          }
-          
-          // input 이벤트를 발생시켜, 아래 'Handle bold styling on user input' 로직이 실행되도록 함
-          targetInput.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-      });
-
-      // Handle bold styling on user input
-      const allInputs = document.querySelectorAll('textarea, input, select');
-      allInputs.forEach(input => {
-        input.addEventListener('input', () => {
-          if (input.tagName.toLowerCase() === 'select') {
-            // Select 태그는 value가 항상 있으므로, 단순히 클래스를 토글하는 방식으로 처리
-            // 여기서는 '예시 사용하기' 버튼을 눌렀을 때만 bold가 되도록 유지하거나
-            // 아니면 사용자가 선택을 변경하면 bold가 사라지도록 할 수 있습니다.
-            // 현재는 사용자가 직접 입력/변경했을 때 bold가 되거나 사라지도록 하는 일반 로직을 따릅니다.
-            if (input.value.trim() === '') { // select는 이 조건이 잘 맞지 않음
-                 input.classList.remove('font-bold');
+      try {
+        // 'Use Example' buttons
+        const exampleButtons = document.querySelectorAll('.use-example-btn');
+        exampleButtons.forEach((button) => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = button.dataset.target;
+            const targetInput = document.getElementById(targetId);
+            if (!targetInput) return;
+            if (targetInput.tagName.toLowerCase() === 'select') {
+              targetInput.classList.add('font-bold');
             } else {
-                 input.classList.add('font-bold');
+              targetInput.value = targetInput.placeholder || targetInput.value;
+              targetInput.classList.add('font-bold');
             }
-          } else {
-            if (input.value.trim() === '') {
-              input.classList.remove('font-bold');
-            } else {
-              input.classList.add('font-bold');
-            }
-          }
+            targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          });
         });
-        // 페이지 로드 시 이미 값이 있는 경우 bold 적용 (예: select의 default selected)
-        if (input.value.trim() !== '') {
-            input.classList.add('font-bold');
-        }
+
+        // Bold styling on input
+        const allInputs = document.querySelectorAll('textarea, input, select');
+        allInputs.forEach((input) => {
+          const toggle = () => {
+            const val = (input.value || '').trim();
+            if (val === '') input.classList.remove('font-bold');
+            else input.classList.add('font-bold');
+          };
+          input.addEventListener('input', toggle);
+          toggle(); // apply once on load
+        });
+
+        // Generate Button
+        const generateBtn = document.getElementById('generateBtn');
+        generateBtn.addEventListener('click', () => {
+          try {
+            const getValue = (id) => {
+              const el = document.getElementById(id);
+              return (el && typeof el.value === 'string' ? el.value.trim() : '').trim() || '(내용 없음)';
+            };
+
+            const values = {
+              topic: getValue('topic'),
+              title: getValue('title-input'), // updated id
+              protagonistSynopsis: getValue('protagonist-synopsis'),
+              problem: getValue('problem'),
+              solution: getValue('solution'),
+              lesson: getValue('lesson'),
+              characterMain: getValue('character-main'),
+              characterFriend1: getValue('character-friend1'),
+              characterFriend2: getValue('character-friend2'),
+              characterAntagonist: getValue('character-antagonist'),
+              scene1: getValue('scene1'),
+              scene2: getValue('scene2'),
+              scene3: getValue('scene3'),
+              scene4: getValue('scene4'),
+              scene5: getValue('scene5'),
+              imageStyle: getValue('image-style'),
+            };
+
+            const promptText = `\n너는 어린이를 위한 그림 동화책을 쓰는 전문 작가이자 일러스트레이터 프롬프트 전문가야.\n지금부터 내가 제공하는 정보에 맞춰서, 50대 이상 어르신들의 따뜻한 감성이 담긴 감동적이고 교훈적인 5장면짜리 그림 동화책을 만들어 줘.\n\n**반드시 지켜야 할 규칙:**\n1. 이야기는 매우 재미있고 창의적으로 전개해 줘.\n2. 각 장면의 내용은 동화책 스타일로 흥미진진하게 서술해 줘.\n3. 각 장면에 어울리는 이미지 프롬프트를 **한글과 영어로 모두** 상세하게 작성해 줘.\n4. 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 줘.\n\n---\n\n### **1. 동화책 기본 정보**\n\n*   **주제:** ${values.topic}\n*   **제목:** ${values.title}\n*   **교훈:** ${values.lesson}\n*   **이미지 스타일:** ${values.imageStyle}\n\n### **2. 시놉시스**\n\n*   **주인공:** ${values.protagonistSynopsis}\n*   **문제 상황:** ${values.problem}\n*   **해결 방법:** ${values.solution}\n\n### **3. 등장인물**\n\n*   **주인공:** ${values.characterMain}\n*   **친구 1:** ${values.characterFriend1}\n*   **친구 2:** ${values.characterFriend2}\n*   **문제 유발자 (선택):** ${values.characterAntagonist}\n\n### **4. 이야기 장면 구성 (5컷)**\n\n*   **장면 1:** ${values.scene1}\n*   **장면 2:** ${values.scene2}\n*   **장면 3:** ${values.scene3}\n*   **장면 4:** ${values.scene4}\n*   **장면 5:** ${values.scene5}\n\n---\n\n위 내용을 바탕으로 멋진 동화책을 만들어 줘.`.trim();
+
+            const popupHtml = `
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 동화책 명령어</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+  <div class="container mx-auto max-w-4xl bg-white p-8 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4 text-gray-800">생성된 AI 명령어</h1>
+    <p class="text-gray-600 mb-6">아래 내용을 복사해서 Gemini와 같은 AI에 붙여넣으세요.</p>
+    <button id="copyBtn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mb-6 hover:bg-blue-700 transition-colors">전체 내용 복사하기</button>
+    <pre id="prompt-text" class="bg-gray-50 p-6 rounded-md whitespace-pre-wrap text-left text-gray-800 text-base leading-relaxed border border-gray-200"></pre>
+  </div>
+  <script>
+    const text = ${JSON.stringify(promptText)};
+    document.getElementById('prompt-text').textContent = text;
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✅ 복사 완료!';
+        btn.classList.remove('bg-blue-600','hover:bg-blue-700');
+        btn.classList.add('bg-green-600');
+        setTimeout(() => {
+          btn.textContent = '전체 내용 복사하기';
+          btn.classList.remove('bg-green-600');
+          btn.classList.add('bg-blue-600','hover:bg-blue-700');
+        }, 2000);
+      }).catch((err) => {
+        console.error('복사 실패: ', err);
+        alert('자동 복사에 실패했습니다. 직접 복사해주세요.');
       });
     });
+  <\/script>
+</body>
+</html>`;
 
-    // AI prompt generation functionality
-    document.getElementById('generateBtn').addEventListener('click', function () {
-      const getValue = (id) => document.getElementById(id).value.trim() || '(내용 없음)';
-
-      const values = {
-        topic: getValue('topic'),
-        title: getValue('title'),
-        protagonistSynopsis: getValue('protagonist-synopsis'),
-        problem: getValue('problem'),
-        solution: getValue('solution'),
-        lesson: getValue('lesson'),
-        characterMain: getValue('character-main'),
-        characterFriend1: getValue('character-friend1'),
-        characterFriend2: getValue('character-friend2'),
-        characterAntagonist: getValue('character-antagonist'),
-        scene1: getValue('scene1'),
-        scene2: getValue('scene2'),
-        scene3: getValue('scene3'),
-        scene4: getValue('scene4'),
-        scene5: getValue('scene5'),
-        imageStyle: getValue('image-style'),
-      };
-
-      const promptText = `
-너는 어린이를 위한 그림 동화책을 쓰는 전문 작가이자 일러스트레이터 프롬프트 전문가야.
-지금부터 내가 제공하는 정보에 맞춰서, 50대 이상 어르신들의 따뜻한 감성이 담긴 감동적이고 교훈적인 5장면짜리 그림 동화책을 만들어 줘.
-
-**반드시 지켜야 할 규칙:**
-1. 이야기는 매우 재미있고 창의적으로 전개해 줘.
-2. 각 장면의 내용은 동화책 스타일로 흥미진진하게 서술해 줘.
-3. 각 장면에 어울리는 이미지 프롬프트를 **한글과 영어로 모두** 상세하게 작성해 줘.
-4. 표지 디자인에 어울리는 이미지 프롬프트도 한글과 영어로 작성해 줘.
-
----
-
-### **1. 동화책 기본 정보**
-
-*   **주제:** ${values.topic}
-*   **제목:** ${values.title}
-*   **교훈:** ${values.lesson}
-*   **이미지 스타일:** ${values.imageStyle}
-
-### **2. 시놉시스**
-
-*   **주인공:** ${values.protagonistSynopsis}
-*   **문제 상황:** ${values.problem}
-*   **해결 방법:** ${values.solution}
-
-### **3. 등장인물**
-
-*   **주인공:** ${values.characterMain}
-*   **친구 1:** ${values.characterFriend1}
-*   **친구 2:** ${values.characterFriend2}
-*   **문제 유발자 (선택):** ${values.characterAntagonist}
-
-### **4. 이야기 장면 구성 (5컷)**
-
-*   **장면 1:** ${values.scene1}
-*   **장면 2:** ${values.scene2}
-*   **장면 3:** ${values.scene3}
-*   **장면 4:** ${values.scene4}
-*   **장면 5:** ${values.scene5}
-
----
-
-위 내용을 바탕으로 멋진 동화책을 만들어 줘.
-      `.trim();
-
-      const popupHtml = `
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-          <meta charset="UTF-8">
-          <title>AI 동화책 명령어</title>
-          <script src="https://cdn.tailwindcss.com"></script>
-        </head>
-        <body class="bg-gray-100 font-sans p-8">
-          <div class="container mx-auto max-w-4xl bg-white p-8 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold mb-4 text-gray-800">생성된 AI 명령어</h1>
-            <p class="text-gray-600 mb-6">아래 내용을 복사해서 Gemini와 같은 AI에 붙여넣으세요.</p>
-            <button id="copyBtn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mb-6 hover:bg-blue-700 transition-colors">
-              전체 내용 복사하기
-            </button>
-            <pre id="prompt-text" class="bg-gray-50 p-6 rounded-md whitespace-pre-wrap text-left text-gray-800 text-base leading-relaxed border border-gray-200">${promptText}</pre>
-          </div>
-          <script>
-            document.getElementById('copyBtn').addEventListener('click', function() {
-              const textToCopy = document.getElementById('prompt-text').innerText;
-              navigator.clipboard.writeText(textToCopy).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.innerText = '✅ 복사 완료!';
-                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                btn.classList.add('bg-green-600');
-                setTimeout(() => {
-                  btn.innerText = '전체 내용 복사하기';
-                  btn.classList.remove('bg-green-600');
-                  btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                }, 2000);
-              }).catch(err => {
-                console.error('복사 실패: ', err);
-                alert('자동 복사에 실패했습니다. 직접 복사해주세요.');
-              });
-            });
-          <\/script>
-        </body>
-        </html>
-      `;
-      const newWindow = window.open('', '_blank');
-      if (newWindow) {
-        newWindow.document.write(popupHtml);
-        newWindow.document.close();
-      } else {
-        alert('팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도해주세요.');
+            // Open a real popup synchronously from the click event
+            const newWindow = window.open('', 'aiPromptWindow', 'noopener,noreferrer');
+            if (newWindow) {
+              newWindow.document.open();
+              newWindow.document.write(popupHtml);
+              newWindow.document.close();
+            } else {
+              alert('팝업이 차단되었습니다. 브라우저의 팝업 차단을 해제하고 다시 시도해주세요.');
+            }
+          } catch (err) {
+            console.error(err);
+            alert('AI 명령어 생성 중 오류가 발생했습니다. 콘솔을 확인해 주세요.');
+          }
+        });
+      } catch (err) {
+        console.error('초기화 오류:', err);
+        alert('초기화 중 오류가 발생했습니다. 콘솔을 확인해 주세요.');
       }
     });
   </script>
