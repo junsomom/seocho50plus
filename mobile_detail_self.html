@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 그림책 만들기 (풍성 버전)</title>
+
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 20px;
+    background: #f5f5f5;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    margin-top: 25px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+button:active {
+    background: #45a049;
+}
+
+.info {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📖 AI 그림책 만들기<br>(풍성 버전)</h2>
+
+<div class="info">
+👉 입력 후 버튼을 누르면 자동 복사 + ChatGPT로 이동합니다
+</div>
+
+<label>이름 *</label>
+<input type="text" id="name" placeholder="예: 영숙 할머니">
+
+<label>어린 시절 기억</label>
+<textarea id="past" rows="3" placeholder="예: 시골에서 뛰어놀던 기억"></textarea>
+
+<label>가장 행복했던 순간</label>
+<textarea id="happy" rows="3" placeholder="예: 손주가 태어났던 날"></textarea>
+
+<label>가장 힘들었던 순간</label>
+<textarea id="hard" rows="3" placeholder="예: 어려웠지만 이겨낸 이야기"></textarea>
+
+<label>내가 좋아하는 것</label>
+<input type="text" id="like" placeholder="예: 김치찌개, 산책">
+
+<label>소중한 사람</label>
+<input type="text" id="person" placeholder="예: 남편, 자녀, 친구">
+
+<label>지금 나의 꿈</label>
+<input type="text" id="dream" placeholder="예: 건강하게 여행하기">
+
+<label>이야기 분위기</label>
+<select id="mood">
+    <option>따뜻하고 감동적인 이야기</option>
+    <option>즐겁고 웃긴 이야기</option>
+    <option>잔잔하고 평화로운 이야기</option>
+</select>
+
+<button onclick="goChatGPT()">👉 그림책 만들기</button>
+
+</div>
+
+<script>
+function goChatGPT() {
+
+    let name = document.getElementById("name").value.trim();
+    let past = document.getElementById("past").value.trim();
+    let happy = document.getElementById("happy").value.trim();
+    let hard = document.getElementById("hard").value.trim();
+    let like = document.getElementById("like").value.trim();
+    let person = document.getElementById("person").value.trim();
+    let dream = document.getElementById("dream").value.trim();
+    let mood = document.getElementById("mood").value;
+
+    if (!name) {
+        alert("이름은 꼭 입력해주세요 😊");
+        return;
+    }
+
+    let prompt = `
+너는 따뜻한 감성의 그림책 전문 작가이다.
+
+다음 정보를 바탕으로
+어르신이 공감하고 감동할 수 있는 5페이지 그림책을 만들어라.
+
+[주인공]
+이름: ${name}
+
+[삶의 이야기]
+어린 시절: ${past}
+행복했던 기억: ${happy}
+힘들었던 기억: ${hard}
+
+[현재]
+좋아하는 것: ${like}
+소중한 사람: ${person}
+현재의 꿈: ${dream}
+
+[이야기 분위기]
+${mood}
+
+[출력 형식]
+
+제목:
+
+1페이지  
+내용:  
+이미지프롬프트:  
+
+2페이지  
+내용:  
+이미지프롬프트:  
+
+3페이지  
+내용:  
+이미지프롬프트:  
+
+4페이지  
+내용:  
+이미지프롬프트:  
+
+5페이지  
+내용:  
+이미지프롬프트:  
+`;
+
+    // 클립보드 복사
+    navigator.clipboard.writeText(prompt).then(function() {
+
+        alert("✅ 내용이 복사되었습니다!\n👉 ChatGPT에서 '붙여넣기' 해주세요");
+
+        // ChatGPT 열기
+        window.open("https://chat.openai.com/?model=gpt-4o", "_blank");
+
+    }).catch(function(err) {
+        alert("❌ 복사에 실패했습니다. 다시 시도해주세요.");
+    });
+}
+</script>
+
+</body>
+</html>
