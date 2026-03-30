@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI 그림동화책 만들기</title>
+
+<style>
+body {
+  font-family: sans-serif;
+  line-height: 1.8;
+  padding: 15px;
+  font-size: 20px;
+  background: #f5fafd;
+}
+
+/* 입력 */
+label {
+  display: block;
+  margin-top: 18px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  margin-top: 6px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* 버튼 */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+button {
+  padding: 16px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+}
+
+.chat-btn { background: #7e57c2; }
+
+</style>
+</head>
+
+<body>
+
+<h2>🖍 나의 그림동화책 만들기</h2>
+<p>질문에 답하고 버튼을 누르면 자동으로 연결됩니다.</p>
+
+<form>
+
+<label>1. 성함</label>
+<input id="name">
+
+<label>2. 연령대</label>
+<select id="age">
+<option>50대</option>
+<option selected>60대</option>
+<option>70대</option>
+</select>
+
+<label>3. 성별</label>
+<select id="gender">
+<option>남성</option>
+<option selected>여성</option>
+</select>
+
+<label>4. 성격</label>
+<input id="personality">
+
+<label>5. 의상 스타일</label>
+<input id="food">
+
+<label>6. 좋아하는 계절</label>
+<input id="season">
+
+<label>7. 어린 시절 꿈</label>
+<input id="childhoodDream">
+
+<label>8. 현재 바람</label>
+<input id="currentWish">
+
+<label>9. 특별한 순간</label>
+<input id="turningPoint">
+
+<label>10. 추억 장소</label>
+<input id="memoryPlace">
+
+<label>11. 삶의 가치</label>
+<input id="lifeValue">
+
+<label>12. 그림 스타일</label>
+<select id="style">
+<option>디즈니 스타일</option>
+<option selected>지브리 스타일</option>
+<option>수채화 스타일</option>
+</select>
+
+<div class="button-group">
+<button type="button" class="chat-btn" onclick="goChatGPT()">
+👉 ChatGPT 바로가기 (자동복사)
+</button>
+</div>
+
+</form>
+
+<script>
+function goChatGPT() {
+
+  const fields = [
+    { id: "name", label: "성함" },
+    { id: "age", label: "연령대" },
+    { id: "gender", label: "성별" },
+    { id: "personality", label: "성격" },
+    { id: "food", label: "의상 스타일" },
+    { id: "season", label: "계절" },
+    { id: "childhoodDream", label: "어릴 적 꿈" },
+    { id: "currentWish", label: "현재 바람" },
+    { id: "turningPoint", label: "특별한 순간" },
+    { id: "memoryPlace", label: "추억 장소" },
+    { id: "lifeValue", label: "삶의 가치" },
+    { id: "style", label: "그림 스타일" }
+  ];
+
+  let text = `
+당신은 따뜻한 그림동화책을 만드는 전문 작가이자 일러스트 기획자입니다.
+
+아래 어르신의 정보를 바탕으로 
+👉 총 5페이지 그림동화책을 만들어 주세요.
+
+[구성]
+1페이지: 표지 (제목 포함)
+2페이지: 어린 시절 이야기
+3페이지: 성장 과정
+4페이지: 현재 삶
+5페이지: 감동적인 마무리
+
+[필수 조건]
+- 따뜻하고 감동적인 이야기
+- 이해하기 쉬운 문장
+- 가족과 나눌 수 있는 내용
+
+[이미지 프롬프트 조건]
+각 페이지마다 반드시 포함:
+- 한글 이미지 프롬프트
+- 영어 이미지 프롬프트
+- 동일한 인물 설정 유지 (나이, 성별, 의상, 성격)
+- 그림 스타일 일관성 유지
+
+---------------------
+
+`;
+
+  fields.forEach(f => {
+    let el = document.getElementById(f.id);
+    let value = "";
+
+    if (el.tagName === "SELECT") {
+      value = el.options[el.selectedIndex].text;
+    } else {
+      value = el.value;
+    }
+
+    text += f.label + ": " + value + "\n";
+  });
+
+  // 📋 자동 복사 + ChatGPT 이동
+  navigator.clipboard.writeText(text).then(() => {
+
+    alert("✅ 복사되었습니다!\n👉 ChatGPT에서 붙여넣기 해주세요.");
+
+    window.open("https://chat.openai.com/", "_blank");
+
+  }).catch(() => {
+
+    alert("❗ 자동복사가 안될 경우\n👉 화면을 길게 눌러 복사해주세요.");
+
+  });
+}
+</script>
+
+</body>
+</html>
