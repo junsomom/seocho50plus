@@ -1,60 +1,203 @@
-<style>
-    /* 어르신들을 위해 가독성 추가 보완 */
-    body { font-size: 22px; line-height: 1.6; }
-    input, textarea { border: 2px solid #4CAF50; } /* 테두리를 더 진하게 */
-    .mic-btn { cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 8px; }
-    
-    /* 로딩이나 완료 시 시각적 안내를 위해 버튼 크기 키움 */
-    button.main-btn {
-        background: #2E7D32; /* 더 짙은 초록색으로 신뢰감 부여 */
-        font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서초50플러스 - AI 그림책 만들기</title>
+    <style>
+        /* 어르신들을 위한 큰 글씨와 명확한 디자인 */
+        body {
+            font-family: 'Pretendard', sans-serif;
+            padding: 20px;
+            background: #f9f9f9;
+            font-size: 22px;
+            line-height: 1.5;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            color: #2E7D32;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+        .input-wrap {
+            position: relative;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 18px;
+            box-sizing: border-box;
+            font-size: 20px;
+            border-radius: 12px;
+            border: 2px solid #4CAF50;
+            background: white;
+        }
+        .mic-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            background: #eee;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .gender-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .gender-btn {
+            flex: 1;
+            padding: 18px;
+            font-size: 22px;
+            border-radius: 12px;
+            border: 2px solid #ccc;
+            background: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .gender-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #2E7D32;
+        }
+        .checkbox-wrap {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+        }
+        button.main-btn {
+            width: 100%;
+            padding: 25px;
+            margin-top: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 15px;
+            border: none;
+            background: #2E7D32;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        button.main-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
 
-<script>
-function goChatGPT() {
-    let name = document.getElementById("name").value.trim();
-    let memory = document.getElementById("memory").value.trim();
-    let story = document.getElementById("story").value.trim();
-    let isChild = document.getElementById("isChild").checked;
+    <h2>📖 AI 그림책 만들기</h2>
 
-    if (!name || !memory || !story) {
-        alert("빈칸을 모두 채워주세요. 마이크 버튼을 눌러 말씀하셔도 됩니다! 😊");
-        return;
-    }
+    <label>성함이 어떻게 되시나요?</label>
+    <div class="input-wrap">
+        <input type="text" id="userName" placeholder="예: 영숙 할머니">
+        <button class="mic-btn" onclick="startVoice('userName')">🎤</button>
+    </div>
 
-    // 구글 환경(Imagen/Gemini) 및 그림책 제작에 최적화된 지시문
-    let prompt = `
-당신은 경도인지장애 어르신을 위한 전문 그림책 작가이자 프롬프트 엔지니어입니다.
-아래 정보를 바탕으로 [이야기 구성]과 [구글 Imagen/Gemini용 그림 프롬프트]를 생성하세요.
+    <label>성별을 선택해주세요</label>
+    <div class="gender-btns">
+        <button id="btn-female" class="gender-btn" onclick="setGender('할머니', 'btn-female')">할머니</button>
+        <button id="btn-male" class="gender-btn" onclick="setGender('할아버지', 'btn-male')">할아버지</button>
+    </div>
 
-[사용자 정보]
-- 이름: ${name} (${gender})
-- 주요 기억: ${memory}
-- 상세 에피소드: ${story}
+    <div class="checkbox-wrap">
+        <input type="checkbox" id="isChild">
+        <label for="isChild" style="margin-top:0;">어린 시절 이야기를 넣을까요?</label>
+    </div>
 
-[그림 스타일 가이드 - 구글 표준]
-- 스타일: 'Soft watercolor illustration in Studio Ghibli style'
-- 특징: 따뜻한 햇살, 부드러운 선, 정서적 안정감을 주는 파스텔 톤
-- 인물: 한국인 어르신 외형 유지 (흰 머리, 인자한 주름, 따뜻한 미소)
-${isChild ? "- 특이사항: 과거 장면은 아이의 모습으로, 현재는 노인의 모습으로 구분할 것" : ""}
+    <label>가장 행복했던 기억은?</label>
+    <div class="input-wrap">
+        <input type="text" id="memory" placeholder="예: 손주가 태어났을 때">
+        <button class="mic-btn" onclick="startVoice('memory')">🎤</button>
+    </div>
 
-[출력 요구사항]
-1. 총 5페이지 분량으로 이야기를 나누어주세요.
-2. 각 페이지마다 어르신이 읽기 쉬운 큰 글씨용 짧은 문장을 만드세요.
-3. 각 페이지의 '이미지 프롬프트'는 반드시 영문(English)으로 작성하세요. (구글 모델의 정확도를 위함)
-4. 프롬프트는 "A watercolor painting of..."로 시작하며 스타일 키워드를 포함하세요.
+    <label>그때 어떤 일이 있었나요?</label>
+    <div class="input-wrap">
+        <textarea id="story" rows="3" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
+        <button class="mic-btn" style="top: 25px;" onclick="startVoice('story')">🎤</button>
+    </div>
 
-[출력 형식]
+    <button class="main-btn" onclick="goChatGPT()">👉 그림책 만들기 시작!</button>
+
+    <script>
+        let selectedGender = "어르신";
+
+        function setGender(g, btnId) {
+            selectedGender = g;
+            document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById(btnId).classList.add("active");
+        }
+
+        function startVoice(targetId) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("이 핸드폰은 음성 입력을 지원하지 않아요 😢");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = "ko-KR";
+            recognition.start();
+            recognition.onresult = function(event) {
+                document.getElementById(targetId).value = event.results[0][0].transcript;
+            };
+        }
+
+        function goChatGPT() {
+            const name = document.getElementById("userName").value.trim();
+            const memory = document.getElementById("memory").value.trim();
+            const story = document.getElementById("story").value.trim();
+            const isChild = document.getElementById("isChild").checked;
+
+            if (!name || !memory || !story) {
+                alert("모든 빈칸을 채워주세요! 😊");
+                return;
+            }
+
+            const ageRule = isChild ? "과거 장면은 아이의 모습으로, 현재 장면은 노년의 모습으로 그리세요." : "모든 장면은 따뜻한 노년의 모습으로 그리세요.";
+
+            const prompt = `
+당신은 동화 작가입니다. 다음 내용을 바탕으로 5페이지 분량의 그림책을 만드세요.
+
+[주인공] 한국인 ${selectedGender} ${name}
+[기억] ${memory}
+[내용] ${story}
+
+[규칙]
+1. 한글로 따뜻한 이야기 내용을 작성하세요.
+2. 각 페이지별로 구글 Imagen(이미지 생성 AI)을 위한 영어 프롬프트를 만드세요.
+3. 스타일: 'Soft watercolor, Ghibli style, warm sunlight, peaceful'.
+4. ${ageRule}
+
+[형식]
 제목: 
-(1페이지부터 5페이지까지 동일하게 반복)
-- 내용: 
-- 이미지 프롬프트: 
-`;
+1페이지 내용:
+이미지 프롬프트: (영문으로)
+... (5페이지까지 반복)`;
 
-    // 챗GPT로 전달
-    const url = "https://chat.openai.com/?q=" + encodeURIComponent(prompt);
-    window.open(url, "_blank");
-}
-</script>
+            const chatGPTUrl = "https://chat.openai.com/?q=" + encodeURIComponent(prompt);
+            window.open(chatGPTUrl, "_blank");
+        }
+    </script>
+</body>
+</html>
