@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>서초50플러스 - AI 그림책 만들기</title>
     <style>
-        /* 어르신들을 위한 큰 글씨와 명확한 디자인 */
         body {
             font-family: 'Pretendard', sans-serif;
             padding: 20px;
             background: #f9f9f9;
             font-size: 22px;
-            line-height: 1.5;
+            line-height: 1.6;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -39,6 +38,9 @@
             border-radius: 12px;
             border: 2px solid #4CAF50;
             background: white;
+        }
+        textarea {
+            rows: 5;
         }
         .mic-btn {
             position: absolute;
@@ -73,6 +75,9 @@
             color: white;
             border-color: #2E7D32;
         }
+        .gender-btn:active {
+            transform: scale(0.97);
+        }
         .checkbox-wrap {
             margin-top: 20px;
             display: flex;
@@ -80,6 +85,7 @@
             gap: 10px;
             font-size: 20px;
             background: #e8f5e9;
+            color: #2E7D32;
             padding: 15px;
             border-radius: 10px;
         }
@@ -134,14 +140,17 @@
 
     <label>그때 어떤 일이 있었나요?</label>
     <div class="input-wrap">
-        <textarea id="story" rows="3" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
+        <textarea id="story" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
         <button class="mic-btn" style="top: 25px;" onclick="startVoice('story')">🎤</button>
     </div>
 
     <button class="main-btn" onclick="goChatGPT()">👉 그림책 만들기 시작!</button>
 
     <script>
-        let selectedGender = "어르신";
+        let selectedGender = "할머니";
+
+        // 초기 활성화
+        document.getElementById("btn-female").classList.add("active");
 
         function setGender(g, btnId) {
             selectedGender = g;
@@ -160,6 +169,9 @@
             recognition.start();
             recognition.onresult = function(event) {
                 document.getElementById(targetId).value = event.results[0][0].transcript;
+            };
+            recognition.onend = function() {
+                recognition.stop();
             };
         }
 
@@ -193,10 +205,10 @@
 제목: 
 1페이지 내용:
 이미지 프롬프트: (영문으로)
-... (5페이지까지 반복)`;
+... (5페이지까지 반복)
+`;
 
-            const chatGPTUrl = "https://chat.openai.com/?q=" + encodeURIComponent(prompt);
-            window.open(chatGPTUrl, "_blank");
+            alert("아래 프롬프트를 복사하여 ChatGPT에 붙여넣으세요:\n\n" + prompt);
         }
     </script>
 </body>
