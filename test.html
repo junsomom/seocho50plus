@@ -39,9 +39,6 @@
             border: 2px solid #4CAF50;
             background: white;
         }
-        textarea {
-            rows: 5;
-        }
         .mic-btn {
             position: absolute;
             right: 10px;
@@ -140,8 +137,8 @@
 
     <label>그때 어떤 일이 있었나요?</label>
     <div class="input-wrap">
-        <textarea id="story" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
-        <button class="mic-btn" style="top: 25px;" onclick="startVoice('story')">🎤</button>
+        <textarea id="story" rows="5" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
+        <button class="mic-btn" style="top: 10px;" onclick="startVoice('story')">🎤</button>
     </div>
 
     <button class="main-btn" onclick="goChatGPT()">👉 그림책 만들기 시작!</button>
@@ -171,7 +168,7 @@
                 document.getElementById(targetId).value = event.results[0][0].transcript;
             };
             recognition.onend = function() {
-                recognition.stop();
+                // 음성 인식 자동 종료, stop() 불필요
             };
         }
 
