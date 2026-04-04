@@ -1,0 +1,60 @@
+<style>
+    /* 어르신들을 위해 가독성 추가 보완 */
+    body { font-size: 22px; line-height: 1.6; }
+    input, textarea { border: 2px solid #4CAF50; } /* 테두리를 더 진하게 */
+    .mic-btn { cursor: pointer; padding: 5px 10px; background: #eee; border-radius: 8px; }
+    
+    /* 로딩이나 완료 시 시각적 안내를 위해 버튼 크기 키움 */
+    button.main-btn {
+        background: #2E7D32; /* 더 짙은 초록색으로 신뢰감 부여 */
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+</style>
+
+<script>
+function goChatGPT() {
+    let name = document.getElementById("name").value.trim();
+    let memory = document.getElementById("memory").value.trim();
+    let story = document.getElementById("story").value.trim();
+    let isChild = document.getElementById("isChild").checked;
+
+    if (!name || !memory || !story) {
+        alert("빈칸을 모두 채워주세요. 마이크 버튼을 눌러 말씀하셔도 됩니다! 😊");
+        return;
+    }
+
+    // 구글 환경(Imagen/Gemini) 및 그림책 제작에 최적화된 지시문
+    let prompt = `
+당신은 경도인지장애 어르신을 위한 전문 그림책 작가이자 프롬프트 엔지니어입니다.
+아래 정보를 바탕으로 [이야기 구성]과 [구글 Imagen/Gemini용 그림 프롬프트]를 생성하세요.
+
+[사용자 정보]
+- 이름: ${name} (${gender})
+- 주요 기억: ${memory}
+- 상세 에피소드: ${story}
+
+[그림 스타일 가이드 - 구글 표준]
+- 스타일: 'Soft watercolor illustration in Studio Ghibli style'
+- 특징: 따뜻한 햇살, 부드러운 선, 정서적 안정감을 주는 파스텔 톤
+- 인물: 한국인 어르신 외형 유지 (흰 머리, 인자한 주름, 따뜻한 미소)
+${isChild ? "- 특이사항: 과거 장면은 아이의 모습으로, 현재는 노인의 모습으로 구분할 것" : ""}
+
+[출력 요구사항]
+1. 총 5페이지 분량으로 이야기를 나누어주세요.
+2. 각 페이지마다 어르신이 읽기 쉬운 큰 글씨용 짧은 문장을 만드세요.
+3. 각 페이지의 '이미지 프롬프트'는 반드시 영문(English)으로 작성하세요. (구글 모델의 정확도를 위함)
+4. 프롬프트는 "A watercolor painting of..."로 시작하며 스타일 키워드를 포함하세요.
+
+[출력 형식]
+제목: 
+(1페이지부터 5페이지까지 동일하게 반복)
+- 내용: 
+- 이미지 프롬프트: 
+`;
+
+    // 챗GPT로 전달
+    const url = "https://chat.openai.com/?q=" + encodeURIComponent(prompt);
+    window.open(url, "_blank");
+}
+</script>
