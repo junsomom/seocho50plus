@@ -5,69 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>서초50플러스 - AI 그림책 도우미</title>
 <style>
-/* 기본 스타일 */
-body {
-    font-family: 'Pretendard', sans-serif;
-    background: #f9f9f9;
-    margin:0; padding:0;
-}
-header {
-    text-align:center;
-    background:#4CAF50;
-    color:white;
-    font-size:28px;
-    padding:15px 0;
-}
-.container {
-    max-width:600px;
-    margin:0 auto;
-    padding:20px;
-}
-button, .link-btn {
-    width:100%;
-    padding:18px;
-    margin-top:15px;
-    font-size:22px;
-    border-radius:12px;
-    border:none;
-    cursor:pointer;
-    box-shadow:0 3px 8px rgba(0,0,0,0.2);
-}
+body { font-family:'Pretendard',sans-serif; background:#f9f9f9; margin:0; padding:0;}
+header {text-align:center; background:#4CAF50; color:white; font-size:28px; padding:15px 0;}
+.container {max-width:600px; margin:0 auto; padding:20px;}
+button, .link-btn {width:100%; padding:18px; margin-top:15px; font-size:22px; border-radius:12px; border:none; cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,0.2);}
 button.main-btn { background:#2E7D32; color:white; }
 button.copy-btn { background:#FFA726; color:white; }
-.link-btn {
-    background:#29B6F6;
-    color:white;
-    text-align:center;
-    display:block;
-    text-decoration:none;
-    line-height:normal;
-    margin-top:5px;
-}
-input, textarea {
-    width:100%;
-    padding:16px;
-    font-size:20px;
-    border-radius:12px;
-    border:2px solid #4CAF50;
-    margin-top:8px;
-    box-sizing:border-box;
-    background:white;
-}
+.link-btn {background:#29B6F6; color:white; text-align:center; display:block; text-decoration:none; line-height:normal; margin-top:5px;}
+input, textarea {width:100%; padding:16px; font-size:20px; border-radius:12px; border:2px solid #4CAF50; margin-top:8px; box-sizing:border-box; background:white;}
 textarea { resize:none; }
-.mic-btn {
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:24px;
-    background:#eee;
-    border:1px solid #ccc;
-    border-radius:50%;
-    width:50px;
-    height:50px;
-    cursor:pointer;
-}
+.mic-btn {position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:24px; background:#eee; border:1px solid #ccc; border-radius:50%; width:50px; height:50px; cursor:pointer;}
 .mic-status { margin-top:5px; color:#2E7D32; font-size:18px; }
 .gender-btns { display:flex; gap:15px; margin-top:10px; }
 .gender-btn { flex:1; padding:18px; font-size:22px; border-radius:12px; border:2px solid #ccc; background:white; cursor:pointer; text-align:center; }
@@ -76,10 +23,12 @@ textarea { resize:none; }
 .tab-btn { flex:1; padding:15px; font-size:22px; cursor:pointer; background:#ccc; border-radius:12px; text-align:center; }
 .tab-btn.active { background:#2E7D32; color:white; }
 .box { background:#fffde7; padding:15px; border-radius:12px; margin-top:15px; font-size:20px; white-space:pre-wrap; overflow-x:auto; position:relative; }
-.box-header { font-weight:bold; margin-bottom:5px; }
+.box-header { font-weight:bold; margin-bottom:5px; cursor:pointer; }
 .copy-box-btn { margin-top:5px; background:#FFA726; color:white; border-radius:10px; padding:12px; font-size:20px; cursor:pointer; width:auto; }
 .box-footer { margin-top:5px; display:flex; gap:10px; }
-.box-footer a { flex:1; }
+.box-footer a { flex:1; text-decoration:none; color:white; text-align:center; padding:12px; border-radius:10px; }
+.accordion-content { display:none; margin-top:5px; }
+.accordion-content.show { display:block; }
 
 /* 모바일 최적화 */
 @media(max-width:400px){
@@ -96,17 +45,16 @@ textarea { resize:none; }
 <header id="header-title">생각주머니</header>
 
 <div class="container">
-    <!-- 탭 -->
     <div class="tab-btns">
         <div id="tab1" class="tab-btn active" onclick="switchTab(1)">생각주머니</div>
         <div id="tab2" class="tab-btn" onclick="switchTab(2)">만들기 상자</div>
     </div>
 
-    <!-- 생각주머니 화면 -->
+    <!-- 생각주머니 -->
     <div id="tabContent1">
-        <label>성함이 어떻게 되시나요?</label>
+        <label>성함을 알려주세요</label>
         <div style="position:relative;">
-            <input type="text" id="userName" placeholder="예: 영숙 할머니">
+            <input type="text" id="userName" placeholder="예: 영숙">
             <button class="mic-btn" onclick="startVoice('userName')">🎤</button>
         </div>
         <div id="micStatusName" class="mic-status"></div>
@@ -117,32 +65,61 @@ textarea { resize:none; }
             <div id="btn-male" class="gender-btn" onclick="setGender('할아버지','btn-male')">할아버지</div>
         </div>
 
-        <label>가장 행복했던 기억은?</label>
+        <label>어린 시절 가장 즐거웠던 기억</label>
         <div style="position:relative;">
-            <input type="text" id="memory" placeholder="예: 손주가 태어났을 때">
-            <button class="mic-btn" onclick="startVoice('memory')">🎤</button>
+            <input type="text" id="childMemory" placeholder="예: 친구들과 논에서 뛰어놀던 기억">
+            <button class="mic-btn" onclick="startVoice('childMemory')">🎤</button>
         </div>
-        <div id="micStatusMemory" class="mic-status"></div>
+        <div id="micStatusChildMemory" class="mic-status"></div>
 
-        <label>그때 어떤 일이 있었나요?</label>
+        <label>가족과 함께한 행복한 순간</label>
         <div style="position:relative;">
-            <textarea id="story" rows="5" placeholder="예: 가족들이 모여 밥을 먹었어요"></textarea>
-            <button class="mic-btn" style="top:10px;" onclick="startVoice('story')">🎤</button>
+            <input type="text" id="familyMemory" placeholder="예: 손주가 태어났을 때">
+            <button class="mic-btn" onclick="startVoice('familyMemory')">🎤</button>
         </div>
-        <div id="micStatusStory" class="mic-status"></div>
+        <div id="micStatusFamilyMemory" class="mic-status"></div>
+
+        <label>청년기 또는 중요한 사건</label>
+        <div style="position:relative;">
+            <input type="text" id="adultMemory" placeholder="예: 첫 직장에서 큰 프로젝트를 성공시켰을 때">
+            <button class="mic-btn" onclick="startVoice('adultMemory')">🎤</button>
+        </div>
+        <div id="micStatusAdultMemory" class="mic-status"></div>
+
+        <label>특별한 취미나 즐거움</label>
+        <div style="position:relative;">
+            <input type="text" id="hobby" placeholder="예: 꽃을 가꾸는 일">
+            <button class="mic-btn" onclick="startVoice('hobby')">🎤</button>
+        </div>
+        <div id="micStatusHobby" class="mic-status"></div>
+
+        <label>삶의 교훈</label>
+        <div style="position:relative;">
+            <input type="text" id="lesson" placeholder="예: 작은 행복을 소중히 여기라">
+            <button class="mic-btn" onclick="startVoice('lesson')">🎤</button>
+        </div>
+        <div id="micStatusLesson" class="mic-status"></div>
+
+        <label>후배나 손주에게 해주고 싶은 말</label>
+        <div style="position:relative;">
+            <input type="text" id="advice" placeholder="예: 늘 건강하고 행복하길 바란다">
+            <button class="mic-btn" onclick="startVoice('advice')">🎤</button>
+        </div>
+        <div id="micStatusAdvice" class="mic-status"></div>
 
         <button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
 
-        <div class="box">아래 텍스트를 ChatGPT에 붙여넣으면 AI가 그림책 내용을 만들어 줍니다.</div>
+        <div class="box">아래 텍스트를 ChatGPT에 붙여넣으면 AI가 그림책을 만들어 줍니다.</div>
         <div id="promptPreview" class="box"></div>
         <button class="copy-btn" onclick="copyPrompt()">📋 복사</button>
 
         <a href="https://chat.openai.com/" class="link-btn" target="_blank">💬 ChatGPT 열기</a>
+        <a href="index.html" class="link-btn" target="_self">⬅ 생각주머니로 돌아가기</a>
     </div>
 
-    <!-- 만들기 상자 화면 -->
+    <!-- 만들기상자 -->
     <div id="tabContent2" style="display:none;">
-        <label>ChatGPT에서 나온 전체 텍스트를 여기에 붙여넣으세요</label>
+        <label>ChatGPT에서 나온 전체 텍스트를 붙여넣으세요</label>
         <textarea id="fullText" rows="10" placeholder="전체 텍스트 붙여넣기"></textarea>
         <button class="main-btn" onclick="parseText()">📦 분류하기</button>
         <div id="parsedOutput"></div>
@@ -152,13 +129,22 @@ textarea { resize:none; }
 <script>
 let selectedGender = "할머니";
 
+// 로컬스토리지 로드
+window.onload = function(){
+    const savedData = JSON.parse(localStorage.getItem('thinkBoxData')||'{}');
+    for(const key in savedData){ const el = document.getElementById(key); if(el){ el.value=savedData[key]; } }
+    if(savedData.selectedGender){ setGender(savedData.selectedGender,savedData.selectedGender=='할머니'?'btn-female':'btn-male'); }
+    if(localStorage.getItem('lastTab')){ switchTab(parseInt(localStorage.getItem('lastTab'))); }
+}
+
 // 탭 전환
 function switchTab(n){
-    document.getElementById("tabContent1").style.display = n===1 ? "block" : "none";
-    document.getElementById("tabContent2").style.display = n===2 ? "block" : "none";
-    document.getElementById("header-title").textContent = n===1 ? "생각주머니" : "만들기 상자";
+    document.getElementById("tabContent1").style.display = n===1?"block":"none";
+    document.getElementById("tabContent2").style.display = n===2?"block":"none";
+    document.getElementById("header-title").textContent = n===1?"생각주머니":"만들기 상자";
     document.getElementById("tab1").classList.toggle("active", n===1);
     document.getElementById("tab2").classList.toggle("active", n===2);
+    localStorage.setItem('lastTab',n);
 }
 
 // 성별 선택
@@ -166,6 +152,7 @@ function setGender(g, btnId){
     selectedGender=g;
     document.querySelectorAll(".gender-btn").forEach(btn=>btn.classList.remove("active"));
     document.getElementById(btnId).classList.add("active");
+    localStorage.setItem('thinkBoxData', JSON.stringify({...JSON.parse(localStorage.getItem('thinkBoxData')||'{}'), selectedGender:g}));
 }
 
 // 음성 입력
@@ -176,79 +163,124 @@ function startVoice(targetId){
     if(!SpeechRecognition){ alert("이 핸드폰은 음성 입력을 지원하지 않아요 😢"); return; }
     const recognition = new SpeechRecognition();
     recognition.lang="ko-KR";
-    statusEl.textContent = "🎤 음성 입력 중… 말을 마치면 자동 종료됩니다";
+    statusEl.textContent = "🎤 음성 입력 중…";
     recognition.start();
-    recognition.onresult = function(event){
-        document.getElementById(targetId).value = event.results[0][0].transcript;
-        statusEl.textContent = "✅ 음성 입력 완료";
+    recognition.onresult=function(event){
+        document.getElementById(targetId).value=event.results[0][0].transcript;
+        statusEl.textContent="✅ 음성 입력 완료";
+        saveData();
         setTimeout(()=>{statusEl.textContent=""},3000);
     };
-    recognition.onerror=function(){
-        statusEl.textContent="❌ 음성 입력 실패"; 
-        setTimeout(()=>{statusEl.textContent=""},3000); 
-    }
+    recognition.onerror=function(){ statusEl.textContent="❌ 음성 입력 실패"; setTimeout(()=>{statusEl.textContent=""},3000); }
 }
 
 // 프롬프트 생성
 function generatePrompt(){
     const name = document.getElementById("userName").value.trim();
-    const memory = document.getElementById("memory").value.trim();
-    const story = document.getElementById("story").value.trim();
-    if(!name||!memory||!story){ alert("모든 빈칸을 채워주세요! 😊"); return; }
-    const prompt = `당신은 동화 작가입니다. 다음 내용을 바탕으로 5페이지 분량의 그림책을 만드세요.\n\n[주인공] 한국인 ${selectedGender} ${name}\n[기억] ${memory}\n[내용] ${story}\n\n[규칙]\n1. 한글로 따뜻한 이야기 내용을 작성하세요.\n2. 각 페이지별로 구글 플로우용 영어 프롬프트를 만드세요.\n3. 스타일: 'Soft watercolor, Ghibli style, warm sunlight, peaceful'.\n4. 과거 장면의 나이는 입력 내용에 따라 판단하여 적절하게 그리세요 (어린 시절, 청년기, 장년기 등).\n5. 현재 장면은 노년 모습으로 그리세요.\n6. 페이지는 반드시 5페이지로 고정 (표지 제외).\n\n[형식]\n제목: \n1페이지 내용:\n이미지 프롬프트: (영문)\n2페이지 내용:\n이미지 프롬프트: (영문)\n3페이지 내용:\n이미지 프롬프트: (영문)\n4페이지 내용:\n이미지 프롬프트: (영문)\n5페이지 내용:\n이미지 프롬프트: (영문)`;
-    document.getElementById("promptPreview").textContent = prompt;
+    const child = document.getElementById("childMemory").value.trim();
+    const family = document.getElementById("familyMemory").value.trim();
+    const adult = document.getElementById("adultMemory").value.trim();
+    const hobby = document.getElementById("hobby").value.trim();
+    const lesson = document.getElementById("lesson").value.trim();
+    const advice = document.getElementById("advice").value.trim();
+    if(!name||!child||!family||!adult||!hobby||!lesson||!advice){ alert("모든 질문에 답해주세요 😊"); return; }
+    const prompt=`당신은 동화 작가입니다. 다음 내용을 바탕으로 5페이지 분량의 그림책을 만드세요.
+
+[주인공] 한국인 ${selectedGender} ${name}
+[어린 시절] ${child}
+[가족 기억] ${family}
+[청년기/사건] ${adult}
+[취미] ${hobby}
+[교훈] ${lesson}
+[메시지] ${advice}
+
+[규칙]
+1. 한글로 따뜻한 이야기 작성
+2. 각 페이지별 구글 플로우용 영어 프롬프트
+3. 스타일: Soft watercolor, Ghibli, warm sunlight
+4. 과거 장면은 나이에 맞게, 현재는 노년 모습
+5. 페이지는 5페이지 고정 (표지 제외)
+
+[형식]
+제목:
+1페이지 내용:
+이미지 프롬프트:
+2페이지 내용:
+이미지 프롬프트:
+3페이지 내용:
+이미지 프롬프트:
+4페이지 내용:
+이미지 프롬프트:
+5페이지 내용:
+이미지 프롬프트:`;
+
+    document.getElementById("promptPreview").textContent=prompt;
+    saveData();
 }
 
 // 프롬프트 복사
 function copyPrompt(){
     const text=document.getElementById("promptPreview").textContent;
-    try{
-        navigator.clipboard.writeText(text).then(()=>{alert("프롬프트가 클립보드에 복사되었습니다!");});
-    }catch(e){
-        alert("클립보드 복사가 지원되지 않는 환경입니다.");
-    }
+    navigator.clipboard.writeText(text).then(()=>alert("프롬프트 복사 완료!"));
 }
 
-// 텍스트 분류
+// 아코디언 + 분류
 function parseText(){
     const full = document.getElementById("fullText").value.trim();
     if(!full){ alert("텍스트를 붙여넣어 주세요."); return; }
 
-    const titleMatch = full.match(/제목:\s*(.+)/i);
-    const pageMatches = full.match(/(\d+)페이지 내용:\s*([\s\S]*?)(?=\d+페이지 내용:|$)/gi) || [];
-    const imgMatches = full.match(/이미지 프롬프트:\s*([\s\S]*?)(?=\d+페이지 내용:|$)/gi) || [];
+    const titleMatch=full.match(/제목:\s*(.+)/i);
+    const pageMatches=full.match(/(\d+)페이지 내용:\s*([\s\S]*?)(?=\d+페이지 내용:|이미지 프롬프트:|$)/gi)||[];
+    const imgMatches=full.match(/이미지 프롬프트:\s*([\s\S]*?)(?=\d+페이지 내용:|$)/gi)||[];
 
-    let parsedHTML = "";
+    let parsedHTML="";
     if(titleMatch){
-        parsedHTML += `<div class="box"><div class="box-header">제목</div>${titleMatch[1].trim()}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바 바로가기</a></div></div>`;
+        parsedHTML += `<div class="box"><div class="box-header" onclick="toggleAccordion(this)">제목</div><div class="accordion-content">${titleMatch[1].trim()}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바</a></div></div></div>`;
     }
 
     for(let i=0;i<5;i++){
-        const pageNum = i+1;
-        // 글
-        let pageText = pageMatches[i]? pageMatches[i].replace(/\d+페이지 내용:/i,'').trim() : "";
-        parsedHTML += `<div class="box"><div class="box-header">${pageNum}페이지 글</div>${pageText}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바 바로가기</a></div></div>`;
-        // 그림
-        let imgText = imgMatches[i]? imgMatches[i].replace(/이미지 프롬프트:/i,'').trim() : "";
-        parsedHTML += `<div class="box"><div class="box-header">${pageNum}페이지 그림명령어</div>${imgText}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://flow.google.com/' target='_blank' class='link-btn'>🌐 구글 플로우 바로가기</a></div></div>`;
+        const pageNum=i+1;
+        let pageText=pageMatches[i]?pageMatches[i].replace(/\d+페이지 내용:/i,'').trim():"";
+        let imgText=imgMatches[i]?imgMatches[i].replace(/이미지 프롬프트:/i,'').trim():"";
+
+        parsedHTML+=`<div class="box"><div class="box-header" onclick="toggleAccordion(this)">${pageNum}페이지 글</div><div class="accordion-content">${pageText}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바</a></div></div></div>`;
+        parsedHTML+=`<div class="box"><div class="box-header" onclick="toggleAccordion(this)">${pageNum}페이지 그림명령어</div><div class="accordion-content">${imgText}<div class="box-footer"><button class='copy-box-btn' onclick='copyBox(this)'>📋 복사</button><a href='https://flow.google.com/' target='_blank' class='link-btn'>🌐 구글 플로우</a></div></div></div>`;
     }
 
-    document.getElementById("parsedOutput").innerHTML = parsedHTML;
+    document.getElementById("parsedOutput").innerHTML=parsedHTML;
+    localStorage.setItem('lastFullText', full);
+}
+
+// 아코디언 토글
+function toggleAccordion(header){
+    header.nextElementSibling.classList.toggle("show");
 }
 
 // 박스 복사
 function copyBox(btn){
-    try{
-        const text = btn.parentElement.parentElement.querySelector(".box-header").nextSibling.textContent.trim();
-        navigator.clipboard.writeText(text).then(()=>{
-            btn.style.background="#4CAF50";
-            btn.textContent="✅ 복사됨";
-            setTimeout(()=>{ btn.style.background="#FFA726"; btn.textContent="📋 복사"; },1500);
-        });
-    }catch(e){
-        alert("클립보드 복사가 지원되지 않는 환경입니다.");
-    }
+    const text=btn.parentElement.parentElement.textContent.replace('📋 복사','').trim();
+    navigator.clipboard.writeText(text).then(()=>{
+        btn.style.background="#4CAF50"; btn.textContent="✅ 복사됨";
+        setTimeout(()=>{ btn.style.background="#FFA726"; btn.textContent="📋 복사"; },1500);
+    });
 }
+
+// 데이터 저장
+function saveData(){
+    const data={
+        userName:document.getElementById("userName").value,
+        childMemory:document.getElementById("childMemory").value,
+        familyMemory:document.getElementById("familyMemory").value,
+        adultMemory:document.getElementById("adultMemory").value,
+        hobby:document.getElementById("hobby").value,
+        lesson:document.getElementById("lesson").value,
+        advice:document.getElementById("advice").value,
+        selectedGender:selectedGender
+    };
+    localStorage.setItem('thinkBoxData', JSON.stringify(data));
+}
+window.addEventListener('beforeunload', saveData);
+document.getElementById("fullText").value=localStorage.getItem('lastFullText')||"";
 </script>
 
 </body>
