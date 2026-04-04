@@ -67,13 +67,18 @@ textarea { resize:none; }
 <script>
 // ====== 질문 목록 (업데이트) ======
 const questionsList = [
-  {id:"name", q:"안녕하세요! 이름과 남자인지 여자인지 알려주세요.", type:"text", placeholder:"예: 영숙"},
-  {id:"childhood", q:"어릴 때 가장 즐거웠던 기억이 있나요? 어디서, 누구랑 있었나요?", type:"text", placeholder:"예: 친구들과 동네 골목에서 숨바꼭질"},
-  {id:"family", q:"가족과 함께 있어서 행복했던 순간이 있나요? 어떤 일이었나요?", type:"text", placeholder:"예: 손주가 태어나 처음 안았을 때"},
-  {id:"young", q:"젊었을 때 기억에 남는 일이나 즐거웠던 사건이 있나요?", type:"text", placeholder:"예: 첫 직장에서 큰 일을 잘 해냈을 때"},
-  {id:"hobby", q:"지금도 즐겁게 하고 있는 일이나 평생 좋아했던 취미가 있나요?", type:"text", placeholder:"예: 꽃을 가꾸는 일"},
-  {id:"lesson", q:"살아오면서 기억에 남는 말이나 깨달음이 있나요?", type:"text", placeholder:"예: 작은 행복을 소중히 하라"},
-  {id:"message", q:"손주나 후배에게 꼭 해주고 싶은 말이 있나요?", type:"text", placeholder:"예: 늘 건강하고 행복하길 바란다"}
+  {id:"name", q:"어르신, 성함을 알려주시겠어요?", type:"text", placeholder:"예: 김영자"},
+  {id:"age", q:"어르신의 연세는 어느 정도 되시나요? (예: 50대, 60대 등)", type:"text", placeholder:"예: 50대"},
+  {id:"gender", q:"어르신은 남성이신가요, 여성이신가요?", type:"text", placeholder:"예: 여성"},
+  {id:"personality", q:"어르신 성격을 소개해 주시겠어요? (차분하다, 활발하다 등)", type:"text", placeholder:"예: 따뜻하고 다정한 성격입니다."},
+  {id:"clothing", q:"어르신이 좋아하시는 의상스타일은 무엇인가요?", type:"text", placeholder:"예: 편안한 원피스 정장"},
+  {id:"season", q:"어르신이 좋아하시는 계절은 언제인가요?", type:"text", placeholder:"예: 가을이 되면 마음이 편안해져요."},
+  {id:"childhoodDream", q:"어릴 적 꿈이 무엇이었는지 기억나시나요?", type:"text", placeholder:"예: 선생님이 되고 싶었어요."},
+  {id:"currentWish", q:"지금 현재 어르신의 바람이나 꿈이 있으신가요?", type:"text", placeholder:"예: 그림책 작가가 되고 싶어요."},
+  {id:"specialMoment", q:"어르신을 성장하게 해준 특별한 순간이 있으셨나요?", type:"text", placeholder:"예: 아이들과 함께 무대에서 노래했던 순간이 가장 특별했어요."},
+  {id:"childhoodScene", q:"어린 시절 가장 기억에 남는 장소나 장면은 무엇인가요?", type:"text", placeholder:"예: 노란 은행잎이 가득했던 운동장 풍경이 아직도 떠올라요."},
+  {id:"values", q:"어르신이 소중히 여기는 삶의 가치는 무엇인가요?", type:"text", placeholder:"예: 저는 정직함과 배려를 가장 중요하게 생각해요."},
+  {id:"futureWish", q:"어르신이 앞으로 하시고 싶은 일은 무엇인가요?", type:"text", placeholder:"예: 손주와 여행 가기, 그림책 만들기 배우기"}
 ];
 
 let selectedGender="할머니";
