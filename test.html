@@ -65,15 +65,15 @@ textarea { resize:none; }
 </div>
 
 <script>
-// ====== 질문 목록 ======
+// ====== 질문 목록 (업데이트) ======
 const questionsList = [
-  {id:"name", q:"성함과 성별을 알려주세요", type:"text", placeholder:"예: 영숙"},
-  {id:"childhood", q:"어린 시절 가장 즐거웠던 기억은 무엇인가요?", type:"text", placeholder:"예: 친구들과 논에서 뛰어놀던 기억"},
-  {id:"family", q:"가족과 함께한 가장 행복했던 순간은 언제인가요?", type:"text", placeholder:"예: 손주가 태어나 처음 품에 안겼을 때"},
-  {id:"young", q:"젊었을 때 기억에 남는 사건이나 경험은 무엇인가요?", type:"text", placeholder:"예: 첫 직장에서 큰 프로젝트 성공"},
-  {id:"hobby", q:"평생 즐겨온 취미나 좋아하는 일은 무엇인가요?", type:"text", placeholder:"예: 꽃을 가꾸는 일"},
-  {id:"lesson", q:"살아오면서 가장 기억에 남는 조언이나 깨달음은 무엇인가요?", type:"text", placeholder:"예: 작은 행복을 소중히 여기라"},
-  {id:"message", q:"손주나 후배에게 꼭 해주고 싶은 이야기가 있다면 무엇인가요?", type:"text", placeholder:"예: 늘 건강하고 행복하길 바란다"}
+  {id:"name", q:"안녕하세요! 이름과 남자인지 여자인지 알려주세요.", type:"text", placeholder:"예: 영숙"},
+  {id:"childhood", q:"어릴 때 가장 즐거웠던 기억이 있나요? 어디서, 누구랑 있었나요?", type:"text", placeholder:"예: 친구들과 동네 골목에서 숨바꼭질"},
+  {id:"family", q:"가족과 함께 있어서 행복했던 순간이 있나요? 어떤 일이었나요?", type:"text", placeholder:"예: 손주가 태어나 처음 안았을 때"},
+  {id:"young", q:"젊었을 때 기억에 남는 일이나 즐거웠던 사건이 있나요?", type:"text", placeholder:"예: 첫 직장에서 큰 일을 잘 해냈을 때"},
+  {id:"hobby", q:"지금도 즐겁게 하고 있는 일이나 평생 좋아했던 취미가 있나요?", type:"text", placeholder:"예: 꽃을 가꾸는 일"},
+  {id:"lesson", q:"살아오면서 기억에 남는 말이나 깨달음이 있나요?", type:"text", placeholder:"예: 작은 행복을 소중히 하라"},
+  {id:"message", q:"손주나 후배에게 꼭 해주고 싶은 말이 있나요?", type:"text", placeholder:"예: 늘 건강하고 행복하길 바란다"}
 ];
 
 let selectedGender="할머니";
