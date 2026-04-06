@@ -181,7 +181,8 @@ textarea:focus {
 }
 
 .mic-btn.recording {
-    background: #ffe9e9;
+    background: #ff4d4d;
+    color: white;
 }
 
 .mic-status {
@@ -599,7 +600,10 @@ function getStatusEl(targetId){
 }
 
 function clearAllMicStates(){
-    document.querySelectorAll(".mic-btn").forEach(btn => btn.classList.remove("recording"));
+    document.querySelectorAll(".mic-btn").forEach(btn => {
+        btn.classList.remove("recording");
+        btn.textContent = "🎤";
+    });
 }
 
 function startVoice(targetId, btnEl){
@@ -624,7 +628,11 @@ function startVoice(targetId, btnEl){
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    if(btnEl) btnEl.classList.add("recording");
+    if(btnEl){
+        btnEl.classList.add("recording");
+        btnEl.textContent = "🔴";
+    }
+
     if(statusEl) statusEl.textContent = "🎤 듣고 있어요... 천천히 말씀해 주세요.";
 
     try {
