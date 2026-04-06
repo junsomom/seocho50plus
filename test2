@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 그림책 도우미</title>
+
+<style>
+body { font-family:sans-serif; margin:0; background:#fffbe6;}
+
+.stepbar {
+  text-align:center;
+  padding:10px;
+  background:#ffe0b2;
+  font-weight:bold;
+}
+
+.tabs { display:flex; }
+.tab {
+  flex:1;
+  padding:14px;
+  text-align:center;
+  font-size:16px;
+  background:#ffe0b2;
+}
+.tab.active {
+  background:#f57c00;
+  color:white;
+}
+
+.container { padding:15px; display:none;}
+.container.active { display:block;}
+
+.group-title {
+  margin-top:25px;
+  font-weight:bold;
+  font-size:18px;
+  border-left:5px solid #f57c00;
+  padding-left:10px;
+}
+
+.input-wrap { position:relative; margin-top:15px;}
+.question { font-weight:bold; margin-bottom:5px;}
+
+.example-box {
+  background:#f1f1f1;
+  color:#777;
+  padding:10px;
+  border-radius:8px;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+input {
+  width:100%;
+  padding:14px;
+  padding-right:45px;
+  font-size:16px;
+  border-radius:10px;
+  border:2px solid #f57c00;
+}
+
+.mic {
+  position:absolute;
+  right:10px;
+  top:48px;
+  cursor:pointer;
+}
+
+button {
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  background:#f57c00;
+  color:white;
+}
+
+.reset { background:#e53935; }
+
+.box {
+  background:#fff3e0;
+  padding:12px;
+  margin-top:15px;
+  border-radius:10px;
+  white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stepbar">
+① 이야기 만들기 → ② ChatGPT → ③ 책 만들기
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('think', this)">🧠 생각주머니</div>
+  <div class="tab" onclick="showTab('make', this)">📦 만들기상자</div>
+</div>
+
+<!-- 🧠 생각주머니 -->
+<div id="think" class="container active">
+<div id="questions"></div>
+
+<button onclick="generatePrompt()">✨ 이야기 준비하기</button>
+<button onclick="goChat()">📋 복사하고 ChatGPT로 가기</button>
+<button class="reset" onclick="resetAll()">🔄 새로 시작</button>
+
+<div class="box" id="preview"></div>
+</div>
+
+<!-- 📦 만들기상자 -->
+<div id="make" class="container">
+
+<div class="box">
+① ChatGPT 결과 붙여넣기  
+② 버튼 클릭  
+③ 페이지 자동 분리 + 이미지 생성
+</div>
+
+<textarea id="fullText" style="width:100%; height:150px;"></textarea>
+<button onclick="parseStory()">📖 책으로 나누기</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+
+// 질문 구성
+const groups = [
+{
+title:"① 기본 정보",
+items:[
+{id:"name", q:"성함은?", ex:"김영자입니다."},
+{id:"age", q:"연세는?", ex:"60대입니다."},
+{id:"gender", q:"성별은?", ex:"여성입니다."}
+]
+},
+{
+title:"② 나를 소개해요",
+items:[
+{id:"personality", q:"성격은?", ex:"따뜻하고 다정합니다."},
+{id:"clothing", q:"옷 스타일은?", ex:"편안한 옷을 좋아합니다."},
+{id:"season", q:"좋아하는 계절은?", ex:"가을이 좋습니다."}
+]
+},
+{
+title:"③ 나의 이야기",
+items:[
+{id:"childhoodDream", q:"어릴 적 꿈은?", ex:"선생님이 되고 싶었어요."},
+{id:"specialMoment", q:"특별한 순간은?", ex:"아이들과 노래한 순간입니다."},
+{id:"childhoodScene", q:"기억나는 장면은?", ex:"은행잎 운동장입니다."}
+]
+},
+{
+title:"④ 마음과 미래",
+items:[
+{id:"values", q:"소중한 가치는?", ex:"정직과 배려입니다."},
+{id:"currentWish", q:"지금의 꿈은?", ex:"그림책 작가입니다."},
+{id:"futureWish", q:"앞으로 하고 싶은 일은?", ex:"손주와 여행입니다."}
+]
+}
+];
+
+// UI 생성
+const qDiv = document.getElementById("questions");
+
+groups.forEach(g=>{
+  qDiv.innerHTML += `<div class="group-title">${g.title}</div>`;
+  g.items.forEach(q=>{
+    qDiv.innerHTML += `
+    <div class="input-wrap">
+      <div class="question">${q.q}</div>
+      <div class="example-box">${q.ex}</div>
+      <input id="${q.id}">
+      <span class="mic" onclick="voice('${q.id}', this)">🎤</span>
+    </div>`;
+  });
+});
+
+// 저장
+document.addEventListener("input", ()=>{
+  groups.forEach(g=>{
+    g.items.forEach(q=>{
+      localStorage.setItem(q.id, document.getElementById(q.id).value);
+    });
+  });
+});
+
+// 불러오기
+window.onload = ()=>{
+  groups.forEach(g=>{
+    g.items.forEach(q=>{
+      if(localStorage.getItem(q.id)){
+        document.getElementById(q.id).value = localStorage.getItem(q.id);
+      }
+    });
+  });
+};
+
+// 프롬프트 생성 (강화버전)
+function generatePrompt(){
+
+let guide = `
+당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.
+
+다음 정보를 바탕으로
+감동적인 5페이지 그림책을 만들어 주세요.
+
+[규칙]
+- 각 페이지는 짧고 부드러운 문장
+- 어르신이 공감할 수 있는 내용
+- 반드시 아래 형식 유지
+
+[출력 형식]
+
+제목:
+
+1페이지
+내용:
+이미지프롬프트:
+
+2페이지
+내용:
+이미지프롬프트:
+
+3페이지
+내용:
+이미지프롬프트:
+
+4페이지
+내용:
+이미지프롬프트:
+
+5페이지
+내용:
+이미지프롬프트:
+`;
+
+let data="";
+groups.forEach(g=>{
+  g.items.forEach(q=>{
+    data += `${q.q} ${val(q.id)}\n`;
+  });
+});
+
+window.fullPrompt = guide + "\n" + data;
+document.getElementById("preview").textContent = data;
+}
+
+function val(id){ return document.getElementById(id).value; }
+
+// ChatGPT 이동 개선
+function goChat(){
+  if(!window.fullPrompt){
+    alert("먼저 '이야기 준비하기'를 눌러주세요!");
+    return;
+  }
+
+  navigator.clipboard.writeText(window.fullPrompt);
+
+  if(confirm("복사 완료 👍\n\n👉 ChatGPT로 이동하시겠어요?")){
+    window.open("https://chat.openai.com/", "_blank");
+  }
+}
+
+// 초기화
+function resetAll(){
+  if(confirm("초기화할까요?")){
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+// 음성
+function voice(id, el){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("크롬 필요"); return; }
+
+  let r = new SR();
+  r.lang="ko-KR";
+
+  r.onstart=()=> el.innerText="🛑";
+  r.onresult=(e)=>{
+    document.getElementById(id).value = e.results[0][0].transcript;
+  };
+  r.onend=()=> el.innerText="🎤";
+
+  r.start();
+}
+
+// 탭
+function showTab(id, el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".container").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById(id).classList.add("active");
+}
+
+// 페이지 분리 강화
+function parseStory(){
+  let full = document.getElementById("fullText").value;
+
+  let pages = full.split(/(?:\d+페이지|페이지\s*\d+|Page\s*\d+|[①②③④⑤⑥⑦⑧⑨⑩])/i)
+                  .filter(t=>t.trim());
+
+  let html="";
+
+  pages.forEach((p,i)=>{
+
+    let match = p.match(/(이미지\s*프롬프트|이미지설명|image\s*prompt)[:：]?\s*([\s\S]*)/i);
+    let prompt = match ? match[2].trim() : "따뜻한 동화책 스타일 일러스트";
+
+    html += `
+    <div class="box">
+      <b>${i+1}페이지</b><br><br>
+      ${p}
+      <button onclick="flow(\`${prompt}\`)">🎨 이미지 만들기</button>
+    </div>`;
+  });
+
+  document.getElementById("result").innerHTML = html;
+}
+
+// Flow 연결
+function flow(prompt){
+  navigator.clipboard.writeText(prompt);
+  alert("이미지 설명 복사됨!");
+  window.open("https://labs.google/flow");
+}
+
+</script>
+
+</body>
+</html>
