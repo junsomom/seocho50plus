@@ -1,337 +1,996 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 그림책 도우미</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>서초50플러스 - AI 그림책 도우미 - 260406 오후9시 55분 /title>
 <style>
-body { font-family:sans-serif; margin:0; background:#fffbe6;}
+* { box-sizing: border-box; }
 
-.stepbar {
-  text-align:center;
-  padding:10px;
-  background:#ffe0b2;
-  font-weight:bold;
+:root{
+    --green:#2e7d32;
+    --green-soft:#eaf6ea;
+    --green-border:#9ccc9c;
+    --orange:#ef8f00;
+    --blue:#1fa3e0;
+    --purple:#7e57c2;
+    --gray:#7b8794;
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --text:#1f2933;
+    --sub:#52606d;
+    --danger:#b23b3b;
+    --shadow:0 6px 18px rgba(0,0,0,0.08);
+    --radius:20px;
 }
 
-.tabs { display:flex; }
-.tab {
-  flex:1;
-  padding:14px;
-  text-align:center;
-  font-size:16px;
-  background:#ffe0b2;
-}
-.tab.active {
-  background:#f57c00;
-  color:white;
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    -webkit-text-size-adjust: 100%;
 }
 
-.container { padding:15px; display:none;}
-.container.active { display:block;}
-
-.group-title {
-  margin-top:25px;
-  font-weight:bold;
-  font-size:18px;
-  border-left:5px solid #f57c00;
-  padding-left:10px;
+body {
+    line-height: 1.6;
 }
 
-.input-wrap { position:relative; margin-top:15px;}
-.question { font-weight:bold; margin-bottom:5px;}
-
-.example-box {
-  background:#f1f1f1;
-  color:#777;
-  padding:10px;
-  border-radius:8px;
-  font-size:14px;
-  margin-bottom:5px;
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--green);
+    color: white;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
 }
 
-input {
-  width:100%;
-  padding:14px;
-  padding-right:45px;
-  font-size:16px;
-  border-radius:10px;
-  border:2px solid #f57c00;
+.header-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
 }
 
-.mic {
-  position:absolute;
-  right:10px;
-  top:48px;
-  cursor:pointer;
+.header-sub {
+    margin-top: 4px;
+    font-size: 15px;
+    opacity: 0.95;
 }
 
-button {
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  font-size:16px;
-  border:none;
-  border-radius:10px;
-  background:#f57c00;
-  color:white;
+.container {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 14px 14px 36px;
 }
 
-.reset { background:#e53935; }
+.tab-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0 16px;
+}
 
-.box {
-  background:#fff3e0;
-  padding:12px;
-  margin-top:15px;
-  border-radius:10px;
-  white-space:pre-wrap;
+.tab-btn {
+    min-height: 58px;
+    padding: 14px 10px;
+    font-size: 19px;
+    font-weight: 800;
+    border-radius: 18px;
+    background: #d9dde1;
+    color: #334155;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-btn.active {
+    background: var(--green);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46,125,50,0.22);
+}
+
+.section-card {
+    background: var(--card);
+    border-radius: 22px;
+    padding: 18px 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+}
+
+.step-box {
+    background: #f8fbff;
+    border: 2px solid #d7ecfb;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.step-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: #174a68;
+}
+
+.step-text {
+    font-size: 17px;
+    color: #345;
+    line-height: 1.7;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.help-small {
+    margin-top: -2px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--sub);
+}
+
+.input-wrap {
+    position: relative;
+}
+
+input, textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 16px 66px 16px 16px;
+    font-size: 19px;
+    line-height: 1.6;
+    border-radius: 18px;
+    border: 2px solid var(--green-border);
+    background: #fff;
+    color: var(--text);
+    outline: none;
+}
+
+textarea {
+    min-height: 132px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #9aa5b1;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(46,125,50,0.10);
+}
+
+.mic-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 999px;
+    background: #eef2f5;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textarea-wrap .mic-btn {
+    top: 12px;
+    transform: none;
+}
+
+.mic-btn.recording {
+    background: #ffe9e9;
+}
+
+.mic-status {
+    margin-top: 8px;
+    min-height: 24px;
+    font-size: 16px;
+    color: var(--green);
+    font-weight: 700;
+}
+
+.gender-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.gender-btn {
+    min-height: 58px;
+    padding: 14px 10px;
+    font-size: 19px;
+    font-weight: 800;
+    border-radius: 18px;
+    border: 2px solid #cfd8df;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gender-btn.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+
+button, .link-btn {
+    width: 100%;
+    min-height: 60px;
+    border: none;
+    border-radius: 18px;
+    padding: 16px 14px;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.main-btn {
+    background: var(--green);
+    color: white;
+}
+
+.copy-btn {
+    background: var(--orange);
+    color: white;
+}
+
+.smart-btn {
+    background: var(--purple);
+    color: white;
+}
+
+.link-btn {
+    background: var(--blue);
+    color: white;
+}
+
+.gray-btn {
+    background: #a0a8b0;
+    color: white;
+}
+
+.outline-btn {
+    background: white;
+    color: var(--green);
+    border: 2px solid var(--green-border);
+}
+
+.helper-box {
+    background: #fff8d9;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 17px;
+    line-height: 1.75;
+    margin-top: 14px;
+}
+
+.notice-box {
+    background: #eef7ff;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 14px;
+    color: #234;
+}
+
+.prompt-box {
+    background: #fffef7;
+    border: 2px solid #efe2a1;
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-height: 110px;
+}
+
+.result-box {
+    background: #fffef8;
+    border: 2px solid #efe6bc;
+    border-radius: 18px;
+    padding: 15px;
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.box-header {
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    color: var(--green);
+}
+
+.box-content {
+    margin-bottom: 12px;
+}
+
+.box-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.copy-box-btn {
+    background: var(--orange);
+    color: white;
+    margin-top: 0;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.two-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.sticky-action {
+    position: sticky;
+    bottom: 10px;
+    z-index: 50;
+    margin-top: 12px;
+}
+
+.sticky-inner {
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(6px);
+    border: 1px solid #e4ece8;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 480px) {
+    .header-title { font-size: 23px; }
+    .header-sub { font-size: 14px; }
+    .container { padding: 12px 12px 30px; }
+    .tab-btn { font-size: 18px; min-height: 56px; }
+    .section-card { padding: 16px 14px; }
+    label { font-size: 18px; }
+    input, textarea { font-size: 18px; }
+    button, .link-btn { font-size: 19px; }
+    .prompt-box, .result-box { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
 }
 </style>
 </head>
-
 <body>
 
-<div class="stepbar">
-① 이야기 만들기 → ② ChatGPT → ③ 책 만들기
-</div>
+<header>
+    <div id="header-title" class="header-title">생각주머니</div>
+    <div class="header-sub">핸드폰으로 쉽게 만드는 나의 그림책</div>
+</header>
 
-<div class="tabs">
-  <div class="tab active" onclick="showTab('think', this)">🧠 생각주머니</div>
-  <div class="tab" onclick="showTab('make', this)">📦 만들기상자</div>
-</div>
+<div class="container">
+    <div class="tab-btns">
+        <button id="tab1" class="tab-btn active" onclick="switchTab(1)">생각주머니</button>
+        <button id="tab2" class="tab-btn" onclick="switchTab(2)">만들기 상자</button>
+    </div>
 
-<!-- 🧠 생각주머니 -->
-<div id="think" class="container active">
-<div id="questions"></div>
+    <div id="tabContent1">
+        <div class="section-card">
+            <div class="step-box">
+                <div class="step-title">1단계</div>
+                <div class="step-text">
+                    질문에 답을 적거나 마이크로 말해 보세요.<br>
+                    모두 적은 뒤 <b>프롬프트 생성</b>을 누르세요.
+                </div>
+            </div>
 
-<button onclick="generatePrompt()">✨ 이야기 준비하기</button>
-<button onclick="goChat()">📋 복사하고 ChatGPT로 가기</button>
-<button class="reset" onclick="resetAll()">🔄 새로 시작</button>
+            <label for="userName">1. 성함이 어떻게 되시나요?</label>
+            <div class="help-small">짧게 이름만 적어도 괜찮아요.</div>
+            <div class="input-wrap">
+                <input type="text" id="userName" placeholder="예: 김영자">
+                <button type="button" class="mic-btn" onclick="startVoice('userName', this)" aria-label="성함 음성입력">🎤</button>
+            </div>
+            <div id="micStatusName" class="mic-status"></div>
 
-<div class="box" id="preview"></div>
-</div>
+            <label>2. 성별을 선택해주세요</label>
+            <div class="gender-btns">
+                <button type="button" id="btn-female" class="gender-btn active" onclick="setGender('할머니','btn-female')">할머니</button>
+                <button type="button" id="btn-male" class="gender-btn" onclick="setGender('할아버지','btn-male')">할아버지</button>
+            </div>
 
-<!-- 📦 만들기상자 -->
-<div id="make" class="container">
+            <label for="personality">3. 성격은 어떠신가요?</label>
+            <div class="help-small">예: 따뜻해요 / 차분해요 / 부지런해요</div>
+            <div class="input-wrap">
+                <input type="text" id="personality" placeholder="예: 따뜻하고 다정해요">
+                <button type="button" class="mic-btn" onclick="startVoice('personality', this)" aria-label="성격 음성입력">🎤</button>
+            </div>
+            <div id="micStatusPersonality" class="mic-status"></div>
 
-<div class="box">
-① ChatGPT 결과 붙여넣기  
-② 버튼 클릭  
-③ 페이지 자동 분리 + 이미지 생성
-</div>
+            <label for="childhood">4. 어린 시절 기억나는 장면은 무엇인가요?</label>
+            <div class="help-small">예: 친구들과 놀던 일, 학교 가던 길, 시골 풍경</div>
+            <div class="input-wrap">
+                <input type="text" id="childhood" placeholder="예: 시골에서 친구들과 뛰어놀았어요">
+                <button type="button" class="mic-btn" onclick="startVoice('childhood', this)" aria-label="어린 시절 음성입력">🎤</button>
+            </div>
+            <div id="micStatusChildhood" class="mic-status"></div>
 
-<textarea id="fullText" style="width:100%; height:150px;"></textarea>
-<button onclick="parseStory()">📖 책으로 나누기</button>
+            <label for="specialMoment">5. 가장 특별하거나 행복했던 순간은 언제였나요?</label>
+            <div class="help-small">예: 결혼, 아이 출산, 손주 탄생, 여행</div>
+            <div class="input-wrap">
+                <input type="text" id="specialMoment" placeholder="예: 손주가 태어났을 때">
+                <button type="button" class="mic-btn" onclick="startVoice('specialMoment', this)" aria-label="특별한 순간 음성입력">🎤</button>
+            </div>
+            <div id="micStatusSpecialMoment" class="mic-status"></div>
 
-<div id="result"></div>
+            <label for="valuableThing">6. 지금 가장 소중하게 생각하는 것은 무엇인가요?</label>
+            <div class="help-small">예: 가족, 건강, 친구, 믿음, 일상</div>
+            <div class="input-wrap">
+                <input type="text" id="valuableThing" placeholder="예: 가족, 건강, 손주">
+                <button type="button" class="mic-btn" onclick="startVoice('valuableThing', this)" aria-label="소중한 것 음성입력">🎤</button>
+            </div>
+            <div id="micStatusValuableThing" class="mic-status"></div>
+
+            <label for="futureWish">7. 앞으로 하고 싶은 일이나 바람은 무엇인가요?</label>
+            <div class="help-small">길게 적지 않아도 됩니다. 한 문장도 괜찮아요.</div>
+            <div class="input-wrap textarea-wrap">
+                <textarea id="futureWish" rows="4" placeholder="예: 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요"></textarea>
+                <button type="button" class="mic-btn" onclick="startVoice('futureWish', this)" aria-label="앞으로의 바람 음성입력">🎤</button>
+            </div>
+            <div id="micStatusFutureWish" class="mic-status"></div>
+
+            <div class="two-btns">
+                <button class="outline-btn" onclick="fillExample()">예시 넣기</button>
+                <button class="gray-btn" onclick="clearAllInputs()">입력 지우기</button>
+            </div>
+
+            <div class="sticky-action">
+                <div class="sticky-inner">
+                    <button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
+                    <button class="copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button>
+                    <button class="smart-btn" onclick="copyPromptAndOpenChatGPT()">🚀 복사하고 ChatGPT 열기</button>
+                    <a href="https://chat.openai.com/" class="link-btn" target="_blank" rel="noopener">💬 ChatGPT만 열기</a>
+                </div>
+            </div>
+
+            <div class="helper-box">
+                <b>가장 쉬운 방법</b><br>
+                1. 질문에 답하기<br>
+                2. 프롬프트 생성 누르기<br>
+                3. <b>복사하고 ChatGPT 열기</b> 누르기
+            </div>
+
+            <div class="notice-box">
+                음성 입력은 휴대폰과 브라우저에 따라 다를 수 있습니다.<br>
+                가장 안정적인 사용은 <b>크롬 브라우저</b>를 권장합니다.
+            </div>
+
+            <div id="promptPreview" class="prompt-box"></div>
+        </div>
+    </div>
+
+    <div id="tabContent2" class="hidden">
+        <div class="section-card">
+            <div class="step-box">
+                <div class="step-title">2단계</div>
+                <div class="step-text">
+                    ChatGPT에서 나온 전체 글을 아래에 붙여넣고<br>
+                    <b>분류하기</b>를 누르세요.
+                </div>
+            </div>
+
+            <label for="fullText">ChatGPT에서 나온 전체 텍스트를 여기에 붙여넣으세요</label>
+            <div class="help-small">제목, 페이지 글, 이미지 프롬프트를 나누어 드립니다.</div>
+            <textarea id="fullText" rows="10" placeholder="전체 텍스트 붙여넣기"></textarea>
+
+            <div class="two-btns">
+                <button class="main-btn" onclick="parseText()">📦 분류하기</button>
+                <button class="gray-btn" onclick="clearParsedArea()">지우기</button>
+            </div>
+
+            <div class="helper-box">
+                글은 <b>캔바</b>에 넣고,<br>
+                그림명령어는 <b>구글 Flow</b>에 넣으면 됩니다.
+            </div>
+
+            <div id="parsedOutput"></div>
+        </div>
+    </div>
 </div>
 
 <script>
+let selectedGender = "할머니";
+let currentRecognition = null;
 
-// 질문 구성
-const groups = [
-{
-title:"① 기본 정보",
-items:[
-{id:"name", q:"성함은?", ex:"김영자입니다."},
-{id:"age", q:"연세는?", ex:"60대입니다."},
-{id:"gender", q:"성별은?", ex:"여성입니다."}
-]
-},
-{
-title:"② 나를 소개해요",
-items:[
-{id:"personality", q:"성격은?", ex:"따뜻하고 다정합니다."},
-{id:"clothing", q:"옷 스타일은?", ex:"편안한 옷을 좋아합니다."},
-{id:"season", q:"좋아하는 계절은?", ex:"가을이 좋습니다."}
-]
-},
-{
-title:"③ 나의 이야기",
-items:[
-{id:"childhoodDream", q:"어릴 적 꿈은?", ex:"선생님이 되고 싶었어요."},
-{id:"specialMoment", q:"특별한 순간은?", ex:"아이들과 노래한 순간입니다."},
-{id:"childhoodScene", q:"기억나는 장면은?", ex:"은행잎 운동장입니다."}
-]
-},
-{
-title:"④ 마음과 미래",
-items:[
-{id:"values", q:"소중한 가치는?", ex:"정직과 배려입니다."},
-{id:"currentWish", q:"지금의 꿈은?", ex:"그림책 작가입니다."},
-{id:"futureWish", q:"앞으로 하고 싶은 일은?", ex:"손주와 여행입니다."}
-]
-}
-];
+const CHATGPT_URL = "https://chat.openai.com/";
 
-// UI 생성
-const qDiv = document.getElementById("questions");
-
-groups.forEach(g=>{
-  qDiv.innerHTML += `<div class="group-title">${g.title}</div>`;
-  g.items.forEach(q=>{
-    qDiv.innerHTML += `
-    <div class="input-wrap">
-      <div class="question">${q.q}</div>
-      <div class="example-box">${q.ex}</div>
-      <input id="${q.id}">
-      <span class="mic" onclick="voice('${q.id}', this)">🎤</span>
-    </div>`;
-  });
-});
-
-// 저장
-document.addEventListener("input", ()=>{
-  groups.forEach(g=>{
-    g.items.forEach(q=>{
-      localStorage.setItem(q.id, document.getElementById(q.id).value);
-    });
-  });
-});
-
-// 불러오기
-window.onload = ()=>{
-  groups.forEach(g=>{
-    g.items.forEach(q=>{
-      if(localStorage.getItem(q.id)){
-        document.getElementById(q.id).value = localStorage.getItem(q.id);
-      }
-    });
-  });
+const STORAGE_KEYS = {
+    userName: "storybook_userName",
+    personality: "storybook_personality",
+    childhood: "storybook_childhood",
+    specialMoment: "storybook_specialMoment",
+    valuableThing: "storybook_valuableThing",
+    futureWish: "storybook_futureWish",
+    fullText: "storybook_fullText",
+    promptPreview: "storybook_promptPreview",
+    selectedGender: "storybook_selectedGender"
 };
 
-// 프롬프트 생성 (강화버전)
+function switchTab(n){
+    document.getElementById("tabContent1").classList.toggle("hidden", n !== 1);
+    document.getElementById("tabContent2").classList.toggle("hidden", n !== 2);
+    document.getElementById("header-title").textContent = n === 1 ? "생각주머니" : "만들기 상자";
+    document.getElementById("tab1").classList.toggle("active", n === 1);
+    document.getElementById("tab2").classList.toggle("active", n === 2);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function setGender(g, btnId){
+    selectedGender = g;
+    document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(btnId).classList.add("active");
+    saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+}
+
+function saveToStorage(key, value){
+    try {
+        localStorage.setItem(key, value);
+    } catch(e) {}
+}
+
+function loadFromStorage(key){
+    try {
+        return localStorage.getItem(key) || "";
+    } catch(e) {
+        return "";
+    }
+}
+
+async function copyText(text){
+    if(!text) return false;
+
+    if(navigator.clipboard && window.isSecureContext){
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch(e) {
+            return fallbackCopy(text);
+        }
+    }
+    return fallbackCopy(text);
+}
+
+function fallbackCopy(text){
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    let success = false;
+    try {
+        success = document.execCommand("copy");
+    } catch(e) {
+        success = false;
+    }
+
+    document.body.removeChild(textarea);
+    return success;
+}
+
+function getStatusEl(targetId){
+    const map = {
+        userName: "micStatusName",
+        personality: "micStatusPersonality",
+        childhood: "micStatusChildhood",
+        specialMoment: "micStatusSpecialMoment",
+        valuableThing: "micStatusValuableThing",
+        futureWish: "micStatusFutureWish"
+    };
+    return document.getElementById(map[targetId]);
+}
+
+function clearAllMicStates(){
+    document.querySelectorAll(".mic-btn").forEach(btn => btn.classList.remove("recording"));
+}
+
+function startVoice(targetId, btnEl){
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const statusEl = getStatusEl(targetId);
+
+    if(!SpeechRecognition){
+        alert("이 기기에서는 음성 입력이 지원되지 않아요. 크롬 브라우저에서 다시 시도해 보세요.");
+        return;
+    }
+
+    if(currentRecognition){
+        try { currentRecognition.stop(); } catch(e) {}
+        currentRecognition = null;
+        clearAllMicStates();
+    }
+
+    const recognition = new SpeechRecognition();
+    currentRecognition = recognition;
+
+    recognition.lang = "ko-KR";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    if(btnEl) btnEl.classList.add("recording");
+    if(statusEl) statusEl.textContent = "🎤 듣고 있어요... 천천히 말씀해 주세요.";
+
+    try {
+        recognition.start();
+    } catch(e) {
+        if(statusEl) statusEl.textContent = "❌ 음성 입력을 시작할 수 없습니다.";
+        clearAllMicStates();
+        currentRecognition = null;
+        return;
+    }
+
+    recognition.onresult = function(event){
+        const text = event.results[0][0].transcript || "";
+        const target = document.getElementById(targetId);
+        if(target){
+            target.value = text.trim();
+            triggerAutoSave(targetId);
+        }
+        if(statusEl){
+            statusEl.textContent = "✅ 입력이 끝났습니다.";
+            setTimeout(() => { statusEl.textContent = ""; }, 2500);
+        }
+    };
+
+    recognition.onerror = function(){
+        if(statusEl){
+            statusEl.textContent = "❌ 음성 입력에 실패했습니다.";
+            setTimeout(() => { statusEl.textContent = ""; }, 2500);
+        }
+        clearAllMicStates();
+        currentRecognition = null;
+    };
+
+    recognition.onend = function(){
+        clearAllMicStates();
+        currentRecognition = null;
+    };
+}
+
+function fillExample(){
+    document.getElementById("userName").value = "김영자";
+    document.getElementById("personality").value = "따뜻하고 다정해요";
+    document.getElementById("childhood").value = "시골에서 친구들과 뛰어놀았어요";
+    document.getElementById("specialMoment").value = "손주가 태어났을 때";
+    document.getElementById("valuableThing").value = "가족과 건강";
+    document.getElementById("futureWish").value = "건강하게 지내며 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요";
+    setGender("할머니", "btn-female");
+    saveAllInputs();
+    alert("예시가 들어갔습니다.");
+}
+
+function saveAllInputs(){
+    ["userName","personality","childhood","specialMoment","valuableThing","futureWish","fullText"].forEach(id => {
+        const el = document.getElementById(id);
+        if(el && STORAGE_KEYS[id]) saveToStorage(STORAGE_KEYS[id], el.value);
+    });
+    saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+}
+
 function generatePrompt(){
+    const name = document.getElementById("userName").value.trim();
+    const personality = document.getElementById("personality").value.trim();
+    const childhood = document.getElementById("childhood").value.trim();
+    const specialMoment = document.getElementById("specialMoment").value.trim();
+    const valuableThing = document.getElementById("valuableThing").value.trim();
+    const futureWish = document.getElementById("futureWish").value.trim();
 
-let guide = `
-당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.
+    if(!name || !personality || !childhood || !specialMoment || !valuableThing || !futureWish){
+        alert("질문을 모두 입력해주세요.");
+        return;
+    }
 
-다음 정보를 바탕으로
-감동적인 5페이지 그림책을 만들어 주세요.
+    const prompt = `당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.
+
+다음 정보를 바탕으로 감동적인 5페이지 그림책을 만들어 주세요.
+
+[주인공]
+한국인 ${selectedGender} ${name}
+
+[인물 정보]
+성격: ${personality}
+
+[삶의 이야기]
+어린 시절 기억: ${childhood}
+특별하고 행복했던 순간: ${specialMoment}
+지금 소중하게 생각하는 것: ${valuableThing}
+앞으로의 바람: ${futureWish}
 
 [규칙]
-- 각 페이지는 짧고 부드러운 문장
-- 어르신이 공감할 수 있는 내용
-- 반드시 아래 형식 유지
+1. 한글로 짧고 따뜻한 문장으로 써 주세요.
+2. 어르신이 공감할 수 있게 부드럽고 존중하는 말투로 써 주세요.
+3. 각 페이지마다 영어 이미지 프롬프트도 함께 써 주세요.
+4. 그림 스타일은 soft watercolor, warm light, gentle children's book style입니다.
+5. 과거 장면은 그 시기의 나이대로, 현재나 미래 장면은 노년의 모습이 자연스럽게 드러나게 해 주세요.
+6. 페이지는 반드시 5페이지로 해 주세요. (표지 제외)
+7. 출력 형식은 반드시 아래 형식을 그대로 지켜 주세요.
 
-[출력 형식]
-
+[형식]
 제목:
 
-1페이지
-내용:
-이미지프롬프트:
+1페이지 내용:
+이미지 프롬프트:
 
-2페이지
-내용:
-이미지프롬프트:
+2페이지 내용:
+이미지 프롬프트:
 
-3페이지
-내용:
-이미지프롬프트:
+3페이지 내용:
+이미지 프롬프트:
 
-4페이지
-내용:
-이미지프롬프트:
+4페이지 내용:
+이미지 프롬프트:
 
-5페이지
-내용:
-이미지프롬프트:
-`;
+5페이지 내용:
+이미지 프롬프트:`;
 
-let data="";
-groups.forEach(g=>{
-  g.items.forEach(q=>{
-    data += `${q.q} ${val(q.id)}\n`;
-  });
+    const preview = document.getElementById("promptPreview");
+    preview.textContent = prompt;
+    saveToStorage(STORAGE_KEYS.promptPreview, prompt);
+    saveAllInputs();
+    preview.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function copyPrompt(){
+    const text = document.getElementById("promptPreview").textContent.trim();
+    if(!text){
+        alert("먼저 프롬프트를 생성해주세요.");
+        return false;
+    }
+    const ok = await copyText(text);
+    alert(ok ? "프롬프트가 복사되었습니다." : "복사에 실패했습니다.");
+    return ok;
+}
+
+async function copyPromptAndOpenChatGPT(){
+    const text = document.getElementById("promptPreview").textContent.trim();
+    if(!text){
+        alert("먼저 프롬프트를 생성해주세요.");
+        return;
+    }
+
+    const ok = await copyText(text);
+
+    if(ok){
+        alert("프롬프트를 복사했습니다. 이제 열리는 ChatGPT 화면에 길게 눌러 붙여넣으세요.");
+    } else {
+        alert("복사는 실패했지만 ChatGPT 화면은 열어드릴게요. 프롬프트를 직접 길게 눌러 복사해 주세요.");
+    }
+
+    window.open(CHATGPT_URL, "_blank", "noopener");
+}
+
+function createCopyBox(title, content, linkText, linkUrl){
+    const safeTitle = escapeHtml(title);
+    const safeContent = escapeHtml(content || "");
+
+    return `
+        <div class="result-box">
+            <div class="box-header">${safeTitle}</div>
+            <div class="box-content">${safeContent}</div>
+            <div class="box-footer">
+                <button class="copy-box-btn" onclick="copyBox(this)">📋 복사</button>
+                <a href="${linkUrl}" class="link-btn" target="_blank" rel="noopener">${linkText}</a>
+            </div>
+        </div>
+    `;
+}
+
+function parseText(){
+    const full = document.getElementById("fullText").value.trim();
+    const output = document.getElementById("parsedOutput");
+
+    if(!full){
+        alert("텍스트를 붙여넣어 주세요.");
+        return;
+    }
+
+    saveToStorage(STORAGE_KEYS.fullText, full);
+
+    let parsedHTML = "";
+
+    const titleMatch = full.match(/(?:^|\n)\s*(?:제목|책\s*제목)\s*:\s*(.+)/i);
+    if(titleMatch && titleMatch[1]){
+        parsedHTML += createCopyBox("제목", titleMatch[1].trim(), "🎨 캔바 바로가기", "https://www.canva.com/create/books/");
+    }
+
+    for(let i = 1; i <= 5; i++){
+        const pageText = extractPageContent(full, i);
+        const imgText = extractImagePrompt(full, i);
+
+        if(pageText){
+            parsedHTML += createCopyBox(`${i}페이지 글`, pageText, "🎨 캔바 바로가기", "https://www.canva.com/create/books/");
+        }
+
+        if(imgText){
+            parsedHTML += createCopyBox(`${i}페이지 그림명령어`, imgText, "🌐 구글 Flow 바로가기", "https://labs.google/fx/ko/tools/flow");
+        }
+    }
+
+    if(!parsedHTML){
+        parsedHTML = `<div class="result-box">분류할 내용을 찾지 못했습니다.\n\n예: 제목 / 1페이지 내용 / 이미지 프롬프트 형식을 확인해주세요.</div>`;
+    }
+
+    output.innerHTML = parsedHTML;
+    output.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function extractPageContent(fullText, pageNum){
+    const patterns = [
+        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지\\s*내용\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:|\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i"),
+        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:|\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i")
+    ];
+
+    for(const regex of patterns){
+        const match = fullText.match(regex);
+        if(match && match[1]) return match[1].trim();
+    }
+    return "";
+}
+
+function extractImagePrompt(fullText, pageNum){
+    const patterns = [
+        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지[\\s\\S]*?(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i")
+    ];
+
+    for(const regex of patterns){
+        const match = fullText.match(regex);
+        if(match && match[1]) return match[1].trim();
+    }
+    return "";
+}
+
+async function copyBox(btn){
+    const box = btn.closest(".result-box");
+    const contentEl = box.querySelector(".box-content");
+    const text = contentEl ? contentEl.innerText.trim() : "";
+
+    if(!text){
+        alert("복사할 내용이 없습니다.");
+        return;
+    }
+
+    const ok = await copyText(text);
+
+    if(ok){
+        const originalText = btn.textContent;
+        btn.textContent = "✅ 복사됨";
+        btn.style.background = "#2e7d32";
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = "#ef8f00";
+        }, 1500);
+    } else {
+        alert("복사에 실패했습니다.");
+    }
+}
+
+function triggerAutoSave(targetId){
+    const el = document.getElementById(targetId);
+    if(!el) return;
+    if(STORAGE_KEYS[targetId]){
+        saveToStorage(STORAGE_KEYS[targetId], el.value);
+    }
+}
+
+function attachAutoSave(){
+    const ids = ["userName", "personality", "childhood", "specialMoment", "valuableThing", "futureWish", "fullText"];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if(el){
+            el.addEventListener("input", () => triggerAutoSave(id));
+            el.addEventListener("change", () => triggerAutoSave(id));
+        }
+    });
+}
+
+function restoreSavedData(){
+    document.getElementById("userName").value = loadFromStorage(STORAGE_KEYS.userName);
+    document.getElementById("personality").value = loadFromStorage(STORAGE_KEYS.personality);
+    document.getElementById("childhood").value = loadFromStorage(STORAGE_KEYS.childhood);
+    document.getElementById("specialMoment").value = loadFromStorage(STORAGE_KEYS.specialMoment);
+    document.getElementById("valuableThing").value = loadFromStorage(STORAGE_KEYS.valuableThing);
+    document.getElementById("futureWish").value = loadFromStorage(STORAGE_KEYS.futureWish);
+    document.getElementById("fullText").value = loadFromStorage(STORAGE_KEYS.fullText);
+    document.getElementById("promptPreview").textContent = loadFromStorage(STORAGE_KEYS.promptPreview);
+
+    const savedGender = loadFromStorage(STORAGE_KEYS.selectedGender);
+    if(savedGender === "할아버지"){
+        setGender("할아버지", "btn-male");
+    } else {
+        setGender("할머니", "btn-female");
+    }
+}
+
+function clearAllInputs(){
+    if(!confirm("입력 내용과 생성된 프롬프트를 모두 지울까요?")) return;
+
+    ["userName","personality","childhood","specialMoment","valuableThing","futureWish"].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.value = "";
+        if(STORAGE_KEYS[id]) saveToStorage(STORAGE_KEYS[id], "");
+    });
+
+    document.getElementById("promptPreview").textContent = "";
+    saveToStorage(STORAGE_KEYS.promptPreview, "");
+    setGender("할머니", "btn-female");
+}
+
+function clearParsedArea(){
+    if(!confirm("붙여넣은 내용과 분류 결과를 지울까요?")) return;
+    document.getElementById("fullText").value = "";
+    document.getElementById("parsedOutput").innerHTML = "";
+    saveToStorage(STORAGE_KEYS.fullText, "");
+}
+
+function escapeHtml(str){
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    restoreSavedData();
+    attachAutoSave();
 });
-
-window.fullPrompt = guide + "\n" + data;
-document.getElementById("preview").textContent = data;
-}
-
-function val(id){ return document.getElementById(id).value; }
-
-// ChatGPT 이동 개선
-function goChat(){
-  if(!window.fullPrompt){
-    alert("먼저 '이야기 준비하기'를 눌러주세요!");
-    return;
-  }
-
-  navigator.clipboard.writeText(window.fullPrompt);
-
-  if(confirm("복사 완료 👍\n\n👉 ChatGPT로 이동하시겠어요?")){
-    window.open("https://chat.openai.com/", "_blank");
-  }
-}
-
-// 초기화
-function resetAll(){
-  if(confirm("초기화할까요?")){
-    localStorage.clear();
-    location.reload();
-  }
-}
-
-// 음성
-function voice(id, el){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ alert("크롬 필요"); return; }
-
-  let r = new SR();
-  r.lang="ko-KR";
-
-  r.onstart=()=> el.innerText="🛑";
-  r.onresult=(e)=>{
-    document.getElementById(id).value = e.results[0][0].transcript;
-  };
-  r.onend=()=> el.innerText="🎤";
-
-  r.start();
-}
-
-// 탭
-function showTab(id, el){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".container").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  document.getElementById(id).classList.add("active");
-}
-
-// 페이지 분리 강화
-function parseStory(){
-  let full = document.getElementById("fullText").value;
-
-  let pages = full.split(/(?:\d+페이지|페이지\s*\d+|Page\s*\d+|[①②③④⑤⑥⑦⑧⑨⑩])/i)
-                  .filter(t=>t.trim());
-
-  let html="";
-
-  pages.forEach((p,i)=>{
-
-    let match = p.match(/(이미지\s*프롬프트|이미지설명|image\s*prompt)[:：]?\s*([\s\S]*)/i);
-    let prompt = match ? match[2].trim() : "따뜻한 동화책 스타일 일러스트";
-
-    html += `
-    <div class="box">
-      <b>${i+1}페이지</b><br><br>
-      ${p}
-      <button onclick="flow(\`${prompt}\`)">🎨 이미지 만들기</button>
-    </div>`;
-  });
-
-  document.getElementById("result").innerHTML = html;
-}
-
-// Flow 연결
-function flow(prompt){
-  navigator.clipboard.writeText(prompt);
-  alert("이미지 설명 복사됨!");
-  window.open("https://labs.google/flow");
-}
-
 </script>
 
 </body>
