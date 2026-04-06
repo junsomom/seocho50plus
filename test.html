@@ -3,80 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 그림책 도우미 (최종 완성)</title>
+<title>AI 그림책 도우미 (최종)</title>
 
 <style>
-body { font-family: 'Pretendard', sans-serif; background:#fffbe6; margin:0;}
-header {text-align:center; background:#f57c00; color:white; font-size:30px; padding:18px; font-weight:bold;}
-.container {max-width:700px; margin:0 auto; padding:20px;}
+body { font-family:sans-serif; margin:0; background:#fffbe6;}
 
-input, textarea {
-  width:100%; padding:18px; font-size:22px;
-  border-radius:16px; border:2px solid #f57c00;
-  margin-top:10px;
+.tabs { display:flex; }
+.tab {
+  flex:1;
+  padding:14px;
+  text-align:center;
+  font-size:18px;
+  background:#ffe0b2;
 }
-
-button {
-  width:100%; padding:18px; margin-top:12px;
-  font-size:22px; border-radius:16px;
-  border:none; cursor:pointer;
-}
-
-.main-btn { background:#f57c00; color:white; }
-.reset-btn { background:#e53935; color:white; }
-
-.example { color:#888; font-size:18px; }
-
-.box {
-  background:#fff3e0;
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px;
-  white-space:pre-wrap;
-}
-
-.gender-btns { display:flex; gap:10px; margin-top:10px;}
-.gender-btn {
-  flex:1; padding:12px;
-  font-size:20px;
-  border-radius:12px;
-  border:2px solid #f57c00;
-  background:white;
-}
-.gender-btn.active {
+.tab.active {
   background:#f57c00;
   color:white;
 }
+
+.container { padding:15px; display:none;}
+.container.active { display:block;}
+
+.input-wrap {
+  position:relative;
+  margin-top:18px;
+}
+
+input, textarea {
+  width:100%;
+  padding:14px;
+  padding-right:50px;
+  font-size:18px;
+  border-radius:10px;
+  border:2px solid #f57c00;
+}
+
+.mic {
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  cursor:pointer;
+}
+
+button {
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#f57c00;
+  color:white;
+}
+
+.reset { background:#e53935; }
+
+.box {
+  background:#fff3e0;
+  padding:12px;
+  margin-top:15px;
+  border-radius:10px;
+  white-space:pre-wrap;
+}
+
+.example { font-size:14px; color:#888;}
 </style>
 </head>
 
 <body>
 
-<header>🧠 생각주머니</header>
+<!-- 탭 -->
+<div class="tabs">
+  <div class="tab active" onclick="showTab('think', this)">🧠 생각주머니</div>
+  <div class="tab" onclick="showTab('make', this)">📦 만들기상자</div>
+</div>
 
-<div class="container">
+<!-- 생각주머니 -->
+<div id="think" class="container active">
+
 <div id="questions"></div>
 
-<button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
-<button class="main-btn" onclick="goToChatGPT()">💬 ChatGPT 이동 (복사됨)</button>
-<button class="reset-btn" onclick="resetAll()">🔄 새로 시작</button>
+<button onclick="generatePrompt()">✨ 이야기 만들기</button>
+<button onclick="goChat()">📋 복사 + ChatGPT 이동</button>
+<button class="reset" onclick="resetAll()">🔄 새로 시작</button>
 
 <div class="box" id="promptPreview"></div>
+
 </div>
 
-<header>📦 만들기상자</header>
-
-<div class="container">
+<!-- 만들기상자 -->
+<div id="make" class="container">
 
 <div class="box">
-① ChatGPT 결과를 전체 복사<br>
-② 아래에 붙여넣기<br>
-③ 자동 분류 버튼 누르기
+① ChatGPT 결과 복사<br>
+② 아래 붙여넣기<br>
+③ 버튼 누르기
 </div>
 
-<textarea id="fullText" placeholder="여기에 붙여넣으세요"></textarea>
+<textarea id="fullText" placeholder="여기에 붙여넣기"></textarea>
 
-<button class="main-btn" onclick="parseStory()">📦 자동 분류</button>
+<button onclick="parseStory()">📖 책으로 나누기</button>
 
 <div id="result"></div>
 
@@ -86,62 +114,44 @@ button {
 
 // 질문
 const questionsList = [
-{id:"name", q:"성함을 알려주세요", ex:"김영자"},
-{id:"personality", q:"어떤 성격이신가요?", ex:"밝고 따뜻함"},
-{id:"childhoodScene", q:"어린 시절 기억", ex:"친구들과 놀던 기억"},
-{id:"specialMoment", q:"가장 특별했던 순간", ex:"아이를 낳던 날"},
-{id:"childhoodDream", q:"어릴 적 꿈", ex:"선생님"},
-{id:"currentWish", q:"요즘 즐거운 일", ex:"손주와 시간"},
-{id:"values", q:"중요한 가치", ex:"가족, 사랑"},
-{id:"futureWish", q:"앞으로 하고 싶은 일", ex:"여행"}
+{id:"name", q:"성함", ex:"김영자"},
+{id:"personality", q:"성격", ex:"따뜻함"},
+{id:"childhood", q:"어린 시절 기억", ex:"친구들과 놀던 기억"},
+{id:"moment", q:"특별한 순간", ex:"아이 출산"},
+{id:"dream", q:"어릴 적 꿈", ex:"선생님"},
+{id:"now", q:"요즘 즐거운 일", ex:"손주"},
+{id:"value", q:"중요한 가치", ex:"가족"},
+{id:"future", q:"앞으로 하고 싶은 일", ex:"여행"}
 ];
 
-let selectedGender="할머니";
-let recognition = null;
+// 탭
+function showTab(id, el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".container").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById(id).classList.add("active");
+}
 
-// 질문 생성 (🎤 포함)
+// 질문 생성
 const qDiv = document.getElementById("questions");
 
 questionsList.forEach(q=>{
-  let html = `
-  <div style="margin-top:25px;">
-    <div style="font-size:22px; font-weight:bold;">👉 ${q.q}</div>
+  qDiv.innerHTML += `
+  <div class="input-wrap">
+    <div><b>${q.q}</b></div>
     <div class="example">예: ${q.ex}</div>
 
     <input id="${q.id}">
-
-    <button onclick="startVoice('${q.id}', this)" 
-      style="background:#ffd54f;">
-      🎤 말로 입력하기
-    </button>
-
+    <span class="mic" onclick="startVoice('${q.id}', this)">🎤</span>
   </div>`;
-
-  if(q.id==="name"){
-    html += `
-    <div class="gender-btns">
-      <div class="gender-btn active" onclick="setGender('할머니',this)">할머니</div>
-      <div class="gender-btn" onclick="setGender('할아버지',this)">할아버지</div>
-    </div>`;
-  }
-
-  qDiv.innerHTML += html;
 });
 
-// 성별
-function setGender(g, el){
-  selectedGender = g;
-  document.querySelectorAll(".gender-btn").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");
-}
-
 // 저장
-function saveData(){
+document.addEventListener("input", ()=>{
   questionsList.forEach(q=>{
     localStorage.setItem(q.id, document.getElementById(q.id).value);
   });
-}
-document.addEventListener("input", saveData);
+});
 
 // 불러오기
 window.onload = ()=>{
@@ -159,42 +169,38 @@ window.onload = ()=>{
 // 프롬프트 생성
 function generatePrompt(){
   let p = `
-당신은 따뜻한 그림책 작가입니다.
-
-주인공: ${selectedGender} ${val("name")}
+주인공: ${val("name")}
 
 성격: ${val("personality")}
-어린시절: ${val("childhoodScene")}
-특별한 순간: ${val("specialMoment")}
-어릴적 꿈: ${val("childhoodDream")}
-현재 즐거움: ${val("currentWish")}
-삶의 가치: ${val("values")}
-미래 희망: ${val("futureWish")}
+어린시절: ${val("childhood")}
+특별한 순간: ${val("moment")}
+꿈: ${val("dream")}
+현재: ${val("now")}
+가치: ${val("value")}
+미래: ${val("future")}
 
-[요청]
-- 5페이지 그림책
-- 각 페이지 "페이지 내용"
-- 각 페이지 "이미지 프롬프트"
+5페이지 그림책 작성
 `;
 
   document.getElementById("promptPreview").textContent = p;
   localStorage.setItem("prompt", p);
+  document.getElementById("promptPreview").scrollIntoView({behavior:"smooth"});
 }
 
 function val(id){ return document.getElementById(id).value; }
 
-// ChatGPT 이동
-function goToChatGPT(){
-  const text = document.getElementById("promptPreview").textContent;
+// 이동
+function goChat(){
+  let text = document.getElementById("promptPreview").textContent;
 
   if(!text){
-    alert("프롬프트 먼저 생성하세요");
+    alert("먼저 이야기 만들기");
     return;
   }
 
   navigator.clipboard.writeText(text).then(()=>{
-    alert("복사 완료! ChatGPT로 이동합니다");
-    window.open("https://chat.openai.com/", "_blank");
+    alert("복사 완료 → ChatGPT 이동");
+    window.open("https://chat.openai.com/");
   });
 }
 
@@ -206,108 +212,69 @@ function resetAll(){
   }
 }
 
-// 🎤 음성 입력
-function startVoice(id, btn){
+// 음성
+function startVoice(id, el){
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if(!SpeechRecognition){
-    alert("크롬 브라우저를 사용해주세요");
+    alert("크롬 사용해주세요");
     return;
   }
 
-  if(recognition){
-    recognition.stop();
-    recognition = null;
-    return;
-  }
-
-  recognition = new SpeechRecognition();
+  let recognition = new SpeechRecognition();
   recognition.lang="ko-KR";
-  recognition.continuous=true;
-  recognition.interimResults=true;
-
-  let finalText="";
 
   recognition.onstart=()=>{
-    btn.innerText = "🛑 듣는 중... (누르면 종료)";
-    btn.style.background = "#ff7043";
+    el.innerText="🛑";
   };
 
   recognition.onresult=(e)=>{
-    let interim="";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      let txt=e.results[i][0].transcript;
-      if(e.results[i].isFinal){
-        finalText += txt + " ";
-      } else {
-        interim += txt;
-      }
-    }
-    document.getElementById(id).value = finalText + interim;
+    document.getElementById(id).value = e.results[0][0].transcript;
   };
 
   recognition.onend=()=>{
-    btn.innerText = "🎤 말로 입력하기";
-    btn.style.background = "#ffd54f";
-    recognition = null;
-    saveData();
-    alert("입력이 완료되었습니다 👍");
-  };
-
-  recognition.onerror=()=>{
-    alert("음성 인식 오류");
-    recognition = null;
+    el.innerText="🎤";
+    moveNext(id);
   };
 
   recognition.start();
+}
 
-  setTimeout(()=>{
-    if(recognition){
-      recognition.stop();
-    }
-  },5000);
+// 다음 이동
+function moveNext(currentId){
+  const idx = questionsList.findIndex(q=>q.id===currentId);
+  if(idx < questionsList.length-1){
+    const next = questionsList[idx+1].id;
+    document.getElementById(next).focus();
+    document.getElementById(next).scrollIntoView({behavior:"smooth"});
+  }
 }
 
 // 분류
 function parseStory(){
 
-  const full = document.getElementById("fullText").value;
+  let full = document.getElementById("fullText").value;
 
   if(!full){
-    alert("붙여넣어 주세요");
+    alert("붙여넣기 필요");
     return;
   }
 
-  const pages = full.split(/페이지\s*\d+/).filter(t=>t.trim());
+  let pages = full.split(/페이지\s*\d+/).filter(t=>t.trim());
 
-  let html = "";
+  if(pages.length===0){
+    alert("형식 오류");
+    return;
+  }
+
+  let html = `<div class="box">✔ ${pages.length}페이지 분리됨</div>`;
 
   pages.forEach((p,i)=>{
-
-    let content = p.split("이미지")[0] || p;
-    let image = p.split("이미지")[1] || "";
-
-    html += `
-    <div class="box">
-    <b>${i+1}페이지</b><br><br>
-
-    📖 내용<br>${content}<br><br>
-
-    🎨 그림<br>${image}<br><br>
-
-    <button onclick="copyText(\`${content}\`)">내용 복사</button>
-    <button onclick="copyText(\`${image}\`)">그림 복사</button>
-    </div>`;
+    html += `<div class="box"><b>${i+1}페이지</b><br>${p}</div>`;
   });
 
   document.getElementById("result").innerHTML = html;
-}
-
-// 복사
-function copyText(text){
-  navigator.clipboard.writeText(text);
-  alert("복사되었습니다");
 }
 
 </script>
