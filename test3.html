@@ -222,6 +222,37 @@ textarea:focus {
     border-color: var(--green);
 }
 
+.style-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.style-btn {
+    min-height: 64px;
+    padding: 10px 8px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 16px;
+    border: 2px solid #cfd8df;
+    background: white;
+    color: #334155;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.35;
+}
+
+.style-btn.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+
 button, .link-btn {
     width: 100%;
     border: none;
@@ -373,6 +404,11 @@ button:disabled {
     .box-header { font-size: 15px; }
     .copy-box-btn, .open-box-btn { font-size: 13px; padding: 8px 8px; min-height: 38px; }
     .example-mini-btn { font-size: 14px; min-width: 58px; }
+    .style-btn {
+        font-size: 13px;
+        min-height: 62px;
+        padding: 8px 6px;
+    }
 }
 </style>
 </head>
@@ -455,6 +491,24 @@ button:disabled {
             </div>
             <div id="micStatusFutureWish" class="mic-status"></div>
 
+            <div class="label-row">
+                <label>8. 그림책 스타일을 선택해주세요</label>
+            </div>
+            <div class="style-btns" id="storyStyleGroup">
+                <button type="button" id="style-warm" class="style-btn active" onclick="setStoryStyle('warm','style-warm')">🌼 따뜻한 감동형</button>
+                <button type="button" id="style-happy" class="style-btn" onclick="setStoryStyle('happy','style-happy')">😊 밝고 즐거운 추억형</button>
+                <button type="button" id="style-hope" class="style-btn" onclick="setStoryStyle('hope','style-hope')">🌈 희망과 꿈 강조형</button>
+            </div>
+
+            <div class="label-row">
+                <label>9. 그림 스타일을 선택해주세요</label>
+            </div>
+            <div class="style-btns" id="artStyleGroup">
+                <button type="button" id="art-ghibli" class="style-btn active" onclick="setArtStyle('ghibli','art-ghibli')">🌿 따뜻한 동화 느낌 (지브리)</button>
+                <button type="button" id="art-pencil" class="style-btn" onclick="setArtStyle('pencil','art-pencil')">🎨 손그림 색연필 느낌</button>
+                <button type="button" id="art-cute" class="style-btn" onclick="setArtStyle('cute','art-cute')">🌸 밝고 귀여운 캐릭터 스타일</button>
+            </div>
+
             <button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
 
             <div class="notice-box">
@@ -488,6 +542,8 @@ button:disabled {
 
 <script>
 let selectedGender = "할머니";
+let selectedStoryStyle = "warm";
+let selectedArtStyle = "ghibli";
 let currentRecognition = null;
 
 const CHATGPT_URL = "https://chat.openai.com/";
@@ -504,6 +560,8 @@ const STORAGE_KEYS = {
     fullText: "storybook_fullText",
     promptPreview: "storybook_promptPreview",
     selectedGender: "storybook_selectedGender",
+    selectedStoryStyle: "storybook_selectedStoryStyle",
+    selectedArtStyle: "storybook_selectedArtStyle",
     parsedOutput: "storybook_parsedOutput"
 };
 
@@ -529,6 +587,68 @@ function setGender(g, btnId){
     document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("active"));
     document.getElementById(btnId).classList.add("active");
     saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+}
+
+function setStoryStyle(styleKey, btnId){
+    selectedStoryStyle = styleKey;
+    document.querySelectorAll("#storyStyleGroup .style-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(btnId).classList.add("active");
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, selectedStoryStyle);
+}
+
+function setArtStyle(styleKey, btnId){
+    selectedArtStyle = styleKey;
+    document.querySelectorAll("#artStyleGroup .style-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(btnId).classList.add("active");
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, selectedArtStyle);
+}
+
+function getStoryStyleText(){
+    if(selectedStoryStyle === "happy"){
+        return `[이야기 분위기]
+이야기는 밝고 경쾌한 분위기로 작성합니다.
+어린 시절과 행복했던 순간을 즐겁게 표현합니다.
+읽는 사람이 미소 짓도록 따뜻한 유머를 살짝 담습니다.
+전체적으로 밝고 생동감 있게 전개합니다.`;
+    }
+
+    if(selectedStoryStyle === "hope"){
+        return `[이야기 분위기]
+이야기는 희망과 앞으로의 삶에 초점을 맞춥니다.
+주인공의 바람과 꿈이 자연스럽게 드러나도록 합니다.
+읽는 사람이 용기와 희망을 느끼도록 합니다.
+마지막은 미래를 향한 따뜻한 메시지로 마무리합니다.`;
+    }
+
+    return `[이야기 분위기]
+이야기는 짧고 따뜻한 문장으로 작성합니다.
+읽는 사람이 편안함과 감동을 느낄 수 있도록 합니다.
+잔잔하고 따뜻한 분위기로 전개하며,
+마지막은 마음이 따뜻해지는 여운으로 마무리합니다.`;
+}
+
+function getArtStyleText(){
+    if(selectedArtStyle === "pencil"){
+        return `colored pencil drawing, hand-drawn illustration, soft texture, paper grain, warm nostalgic feeling, consistent character design`;
+    }
+
+    if(selectedArtStyle === "cute"){
+        return `cute character illustration, soft pastel colors, simple shapes, friendly expression, bright and cheerful mood, consistent character design`;
+    }
+
+    return `Ghibli-inspired, soft watercolor illustration, warm light, gentle children's book style, cinematic composition, consistent character design`;
+}
+
+function getArtStyleGuideKo(){
+    if(selectedArtStyle === "pencil"){
+        return `그림은 손그림 색연필 느낌으로 표현해 주세요. 종이 질감과 부드러운 색연필 터치가 느껴지게 하고, 따뜻한 추억의 분위기가 살아나게 해 주세요.`;
+    }
+
+    if(selectedArtStyle === "cute"){
+        return `그림은 밝고 귀여운 캐릭터 스타일로 표현해 주세요. 부드러운 파스텔 색감과 단순한 형태, 친근한 표정이 느껴지게 해 주세요.`;
+    }
+
+    return `그림은 따뜻한 동화 느낌의 지브리 감성으로 표현해 주세요. 부드러운 수채화 느낌과 따뜻한 빛, 영화 같은 장면 구성이 느껴지게 해 주세요.`;
 }
 
 function fillOneExample(targetId){
@@ -678,6 +798,8 @@ function saveAllInputs(){
         if(el && STORAGE_KEYS[id]) saveToStorage(STORAGE_KEYS[id], el.value);
     });
     saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, selectedStoryStyle);
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, selectedArtStyle);
 }
 
 function updateCopyOpenButtonState(){
@@ -693,17 +815,20 @@ function generatePrompt(){
     const specialMoment = document.getElementById("specialMoment").value.trim();
     const valuableThing = document.getElementById("valuableThing").value.trim();
     const futureWish = document.getElementById("futureWish").value.trim();
+    const storyStyleText = getStoryStyleText();
+    const artStyleText = getArtStyleText();
+    const artStyleGuideKo = getArtStyleGuideKo();
 
     if(!name || !personality || !childhood || !specialMoment || !valuableThing || !futureWish){
         alert("질문을 모두 입력해주세요.");
         return;
     }
 
-    const prompt = `당신은 어르신의 삶을 따뜻하게 담아내는 뛰어난 그림책 작가입니다.
+    const prompt = `당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.
 
 이 그림책의 목표는 경도의 인지장애가 있으신 어르신들이
 자신의 인생 이야기를 통해 삶의 가치와 사랑, 희망, 소망을 보여주는 것입니다.
-이 목표를 마음에 두고 밝고 창의적이며 따뜻한 그림책을 만들어 주세요.
+이 목표를 마음에 두고 밝고 따뜻한 그림책을 만들어 주세요.
 
 다음 정보를 바탕으로 표지를 포함한 총 5페이지 그림책을 만들어 주세요.
 
@@ -719,22 +844,28 @@ function generatePrompt(){
 지금 소중하게 생각하는 것: ${valuableThing}
 앞으로의 바람: ${futureWish}
 
-[규칙]
+${storyStyleText}
+
+[그림 스타일]
+${artStyleGuideKo}
+
+[영어 이미지 스타일]
+각 페이지의 영어 이미지 프롬프트에는 다음 스타일을 자연스럽게 반영해 주세요:
+${artStyleText}, peaceful and hopeful atmosphere
+
+[공통 규칙]
 1. 내용은 밝고 따뜻하며 존중이 느껴지게 써 주세요.
-2. 전체 분위기는 밝고 즐겁고 창의적으로 전개해 주세요.
-3. 마지막은 독자에게 감동과 교훈을 주는 마무리로 써 주세요.
-4. 제목은 호기심을 불러일으키고, 감정을 불러일으키며, 사랑과 존중을 표현하는 말로 만들어 주세요.
-5. 표지를 포함해 총 5페이지로 만들어 주세요.
-6. 표지는 제목에 어울리는 표지 이미지 프롬프트만 작성해 주세요. 표지 내용은 쓰지 마세요.
-7. 표지를 제외한 1~4페이지는 각각 따뜻하고 밝은 동화책 스타일의 내용을 써 주세요.
-8. 표지와 각 페이지마다 구글플로우에서 사용하기에 가장 적합한 이미지 프롬프트를 한글과 영어로 모두 자세히 작성해 주세요.
-9. 각 페이지의 영어 이미지 프롬프트에는 다음 스타일을 자연스럽게 반영해 주세요:
-soft watercolor illustration, warm light,  Ghibli-inspired mood, cinematic composition, consistent character design, peaceful and hopeful atmosphere.
-10. 등장인물은 모든 페이지에서 일관되게 유지해 주세요. 다만 시간 흐름에 따른 자연스러운 나이 변화는 괜찮습니다.
-11. 이미지에는 글자나 한글이 들어가지 않게 해 주세요.
-12. 각 페이지는 서로 다른 장면이 되도록 써 주세요.
-13. 내용이 비어 있는 부분은 전체 이야기 흐름에 어울리게 자연스럽게 채워 주세요.
-14. 출력 형식은 반드시 아래 형식을 정확히 지켜 주세요.
+2. 마지막은 독자에게 감동과 교훈을 주는 마무리로 써 주세요.
+3. 제목은 호기심을 불러일으키고, 감정을 불러일으키며, 사랑과 존중을 표현하는 말로 만들어 주세요.
+4. 표지를 포함해 총 5페이지로 만들어 주세요.
+5. 표지는 제목에 어울리는 표지 이미지 프롬프트만 작성해 주세요. 표지 내용은 쓰지 마세요.
+6. 표지를 제외한 1~4페이지는 각각 따뜻하고 밝은 동화책 스타일의 내용을 써 주세요.
+7. 표지와 각 페이지마다 구글 플로우에서 사용할 수 있도록 이미지 프롬프트를 한글과 영어로 모두 자세히 작성해 주세요.
+8. 등장인물은 모든 페이지에서 일관되게 유지해 주세요. 다만 시간 흐름에 따른 자연스러운 나이 변화는 괜찮습니다.
+9. 이미지에는 글자나 한글이 들어가지 않게 해 주세요.
+10. 각 페이지는 서로 다른 장면이 되도록 써 주세요.
+11. 내용이 비어 있는 부분은 전체 이야기 흐름에 어울리게 자연스럽게 채워 주세요.
+12. 출력 형식은 반드시 아래 형식을 정확히 지켜 주세요.
 
 [출력 형식]
 제목:
@@ -786,8 +917,18 @@ async function copyPromptAndOpenChatGPT(){
 function createCopyBox(title, content, type){
     const safeTitle = escapeHtml(title);
     const safeContent = escapeHtml(content || "");
-    const openLabel = type === "flow" ? "🌐 플로우 열기" : "🎨 캔바 열기";
-    const openUrl = type === "flow" ? FLOW_URL : CANVA_URL;
+
+    if(type === "flow"){
+        return `
+            <div class="result-box">
+                <div class="box-header">${safeTitle}</div>
+                <div class="box-content">${safeContent}</div>
+                <div class="box-footer" style="grid-template-columns: 1fr;">
+                    <button class="open-box-btn" onclick="copyAndOpenFlow(this)">📋 복사하고 플로우 열기</button>
+                </div>
+            </div>
+        `;
+    }
 
     return `
         <div class="result-box">
@@ -795,7 +936,7 @@ function createCopyBox(title, content, type){
             <div class="box-content">${safeContent}</div>
             <div class="box-footer">
                 <button class="copy-box-btn" onclick="copyBox(this)">📋 복사</button>
-                <a href="${openUrl}" class="open-box-btn" target="_blank" rel="noopener">${openLabel}</a>
+                <a href="${CANVA_URL}" class="open-box-btn" target="_blank" rel="noopener">🎨 캔바 열기</a>
             </div>
         </div>
     `;
@@ -912,6 +1053,35 @@ async function copyBox(btn){
     }
 }
 
+async function copyAndOpenFlow(btn){
+    const box = btn.closest(".result-box");
+    const contentEl = box.querySelector(".box-content");
+    const text = contentEl ? contentEl.innerText.trim() : "";
+
+    if(!text){
+        alert("복사할 내용이 없습니다.");
+        return;
+    }
+
+    const ok = await copyText(text);
+
+    if(ok){
+        const originalText = btn.textContent;
+        btn.textContent = "✅ 복사하고 열기";
+        btn.style.background = "#2e7d32";
+
+        window.open(FLOW_URL, "_blank", "noopener");
+
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = "#1fa3e0";
+        }, 1500);
+    } else {
+        alert("복사는 실패했지만 플로우 화면은 열어드릴게요.");
+        window.open(FLOW_URL, "_blank", "noopener");
+    }
+}
+
 function triggerAutoSave(targetId){
     const el = document.getElementById(targetId);
     if(!el) return;
@@ -949,6 +1119,24 @@ function restoreSavedData(){
         setGender("할머니", "btn-female");
     }
 
+    const savedStoryStyle = loadFromStorage(STORAGE_KEYS.selectedStoryStyle);
+    if(savedStoryStyle === "happy"){
+        setStoryStyle("happy", "style-happy");
+    } else if(savedStoryStyle === "hope"){
+        setStoryStyle("hope", "style-hope");
+    } else {
+        setStoryStyle("warm", "style-warm");
+    }
+
+    const savedArtStyle = loadFromStorage(STORAGE_KEYS.selectedArtStyle);
+    if(savedArtStyle === "pencil"){
+        setArtStyle("pencil", "art-pencil");
+    } else if(savedArtStyle === "cute"){
+        setArtStyle("cute", "art-cute");
+    } else {
+        setArtStyle("ghibli", "art-ghibli");
+    }
+
     updateCopyOpenButtonState();
 }
 
@@ -962,7 +1150,11 @@ function resetThinkingTab(){
     document.getElementById("promptPreview").textContent = "";
     saveToStorage(STORAGE_KEYS.promptPreview, "");
     saveToStorage(STORAGE_KEYS.selectedGender, "할머니");
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, "warm");
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, "ghibli");
     setGender("할머니", "btn-female");
+    setStoryStyle("warm", "style-warm");
+    setArtStyle("ghibli", "art-ghibli");
     updateCopyOpenButtonState();
 }
 
