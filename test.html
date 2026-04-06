@@ -3,224 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>서초50플러스 - AI 그림책 도우미</title>
+<title>AI 그림책 도우미</title>
+
 <style>
-body { font-family: 'Pretendard', sans-serif; background: #fffbe6; margin:0; padding:0;}
-header {text-align:center; background:#f57c00; color:white; font-size:32px; padding:20px 0; font-weight:bold;}
+body { font-family: 'Pretendard', sans-serif; background:#fffbe6; margin:0;}
+header {text-align:center; background:#f57c00; color:white; font-size:32px; padding:20px; font-weight:bold;}
 .container {max-width:700px; margin:0 auto; padding:20px;}
-button, .link-btn {width:100%; padding:22px; margin-top:15px; font-size:26px; border-radius:16px; border:none; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,0.3);}
-button.main-btn { background:#f57c00; color:white; font-weight:bold; }
-button.copy-btn { background:#ffb74d; color:white; font-weight:bold; }
-button.reset-btn { background:#e53935; color:white; font-weight:bold; }
-.link-btn { background:#4dd0e1; color:white; text-align:center; display:block; text-decoration:none; line-height:normal; margin-top:5px; font-weight:bold;}
-input, textarea {width:100%; padding:20px; font-size:24px; border-radius:16px; border:2px solid #f57c00; margin-top:12px; box-sizing:border-box; background:white;}
-textarea { resize:none; }
-.mic-btn {position:absolute; right:15px; top:50%; transform:translateY(-50%); font-size:28px; background:#ffd54f; border:2px solid #f57c00; border-radius:50%; width:60px; height:60px; cursor:pointer;}
-.mic-status { margin-top:5px; color:#f57c00; font-size:20px; font-weight:bold;}
-.gender-btns { display:flex; gap:15px; margin-top:12px; }
-.gender-btn { flex:1; padding:20px; font-size:24px; border-radius:16px; border:2px solid #f57c00; background:white; cursor:pointer; text-align:center; font-weight:bold; }
-.gender-btn.active { background:#f57c00; color:white; border-color:#e65100; }
-.tab-btns { display:flex; gap:5px; margin-bottom:20px; }
-.tab-btn { flex:1; padding:18px; font-size:24px; cursor:pointer; background:#ffcc80; border-radius:16px; text-align:center; font-weight:bold;}
-.tab-btn.active { background:#f57c00; color:white; }
-.box { background:#fff3e0; padding:20px; border-radius:16px; margin-top:15px; font-size:22px; white-space:pre-wrap; overflow-x:auto; position:relative; }
-.accordion { background:#ffd54f; border-radius:14px; cursor:pointer; padding:16px; margin-top:10px; font-size:22px; font-weight:bold; border:none; text-align:left; outline:none; transition:0.2s; }
-.accordion.active, .accordion:hover { background:#ffca28; }
-.panel { padding:0 12px; display:none; background:white; overflow:hidden; border-radius:0 0 14px 14px; margin-bottom:10px; font-size:22px; }
-.panel button { width:auto; margin-top:10px; margin-right:5px; font-size:20px; }
-@media(max-width:400px){
-    .mic-btn { width:50px; height:50px; font-size:22px; right:5px; }
-    button, .link-btn { font-size:20px; padding:16px; }
-    input, textarea { font-size:20px; padding:16px; }
-    .gender-btn { font-size:20px; padding:16px; }
-    .tab-btn { font-size:18px; padding:12px; }
+
+input, textarea {
+  width:100%; padding:20px; font-size:24px;
+  border-radius:16px; border:2px solid #f57c00;
+  margin-top:10px;
+}
+
+button {
+  width:100%; padding:20px; margin-top:15px;
+  font-size:24px; border-radius:16px;
+  border:none; cursor:pointer;
+}
+
+.main-btn { background:#f57c00; color:white; }
+.reset-btn { background:#e53935; color:white; }
+
+.example {
+  color:#888;
+  font-size:20px;
+  margin-top:5px;
+}
+
+.mic-btn {
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:24px;
+  width:50px; height:50px;
+  border-radius:50%;
+  background:#ffd54f;
+  border:2px solid #f57c00;
+}
+
+.gender-btns { display:flex; gap:10px; margin-top:10px;}
+.gender-btn {
+  flex:1; padding:15px;
+  font-size:22px;
+  border-radius:12px;
+  border:2px solid #f57c00;
+  background:white;
+}
+.gender-btn.active {
+  background:#f57c00;
+  color:white;
+}
+
+.box {
+  background:#fff3e0;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+  white-space:pre-wrap;
 }
 </style>
 </head>
+
 <body>
 
-<header id="header-title">생각주머니</header>
+<header>생각주머니</header>
+
 <div class="container">
-    <div class="tab-btns">
-        <div id="tab1" class="tab-btn active" onclick="switchTab(1)">생각주머니</div>
-        <div id="tab2" class="tab-btn" onclick="switchTab(2)">만들기 상자</div>
-    </div>
 
-    <!-- 생각주머니 -->
-    <div id="tabContent1">
-        <div id="questions"></div>
-        <button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
-        <button class="reset-btn" onclick="resetAll()">🔄 새로 시작</button>
-        <div class="box">생성된 프롬프트는 아래에 표시됩니다. ChatGPT에 붙여넣으세요.</div>
-        <div id="promptPreview" class="box"></div>
-        <button class="copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button>
-        <a href="https://chat.openai.com/" class="link-btn" target="_blank">💬 ChatGPT 열기</a>
-    </div>
+<div id="questions"></div>
 
-    <!-- 만들기상자 -->
-    <div id="tabContent2" style="display:none;">
-        <label style="font-size:24px; font-weight:bold;">ChatGPT에서 나온 전체 텍스트를 붙여넣으세요</label>
-        <textarea id="fullText" rows="10" placeholder="전체 텍스트 붙여넣기"></textarea>
-        <button class="main-btn" onclick="parseText()">📦 분류하기</button>
-        <div id="parsedOutput"></div>
-    </div>
+<button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
+<button class="main-btn" onclick="goToChatGPT()">💬 ChatGPT로 바로 보내기</button>
+<button class="reset-btn" onclick="resetAll()">🔄 새로 시작</button>
+
+<div class="box" id="promptPreview"></div>
+
 </div>
 
 <script>
-// ====== 질문 목록 ======
+
+// ===== 질문 리스트 =====
 const questionsList = [
-  {id:"name", q:"어르신, 성함을 알려주시겠어요?", type:"text", placeholder:"예: 김영자"},
-  {id:"age", q:"어르신의 연세는 어느 정도 되시나요?", type:"text", placeholder:"예: 50대"},
-  {id:"gender", q:"어르신은 남성이신가요, 여성이신가요?", type:"text", placeholder:"예: 여성"},
-  {id:"personality", q:"어르신 성격을 소개해 주시겠어요?", type:"text", placeholder:"예: 따뜻하고 다정한 성격입니다."},
-  {id:"clothing", q:"어르신이 좋아하시는 의상스타일은 무엇인가요?", type:"text", placeholder:"예: 편안한 원피스 정장"},
-  {id:"season", q:"어르신이 좋아하시는 계절은 언제인가요?", type:"text", placeholder:"예: 가을이 되면 마음이 편안해져요."},
-  {id:"childhoodDream", q:"어릴 적 꿈이 무엇이었는지 기억나시나요?", type:"text", placeholder:"예: 선생님이 되고 싶었어요."},
-  {id:"currentWish", q:"지금 현재 어르신의 바람이나 꿈이 있으신가요?", type:"text", placeholder:"예: 그림책 작가가 되고 싶어요."},
-  {id:"specialMoment", q:"어르신을 성장하게 해준 특별한 순간이 있으셨나요?", type:"text", placeholder:"예: 아이들과 함께 무대에서 노래했던 순간이 가장 특별했어요."},
-  {id:"childhoodScene", q:"어린 시절 가장 기억에 남는 장소나 장면은 무엇인가요?", type:"text", placeholder:"예: 노란 은행잎이 가득했던 운동장 풍경이 아직도 떠올라요."},
-  {id:"values", q:"어르신이 소중히 여기는 삶의 가치는 무엇인가요?", type:"text", placeholder:"예: 저는 정직함과 배려를 가장 중요하게 생각해요."},
-  {id:"futureWish", q:"어르신이 앞으로 하시고 싶은 일은 무엇인가요?", type:"text", placeholder:"예: 손주와 여행 가기, 그림책 만들기 배우기"}
+  {id:"name", q:"성함을 알려주세요", ex:"예: 김영자"},
+  {id:"personality", q:"어떤 성격이신가요?", ex:"예: 밝고 따뜻한 성격"},
+  {id:"childhoodScene", q:"어린 시절 기억나는 장면은?", ex:"예: 운동장에서 뛰놀던 기억"},
+  {id:"specialMoment", q:"인생에서 특별했던 순간은?", ex:"예: 첫 아이를 낳던 날"},
+  {id:"childhoodDream", q:"어릴 적 꿈은?", ex:"예: 선생님"},
+  {id:"currentWish", q:"요즘 즐거운 일은?", ex:"예: 손주와 시간 보내기"},
+  {id:"values", q:"중요하게 생각하는 가치는?", ex:"예: 정직과 배려"},
+  {id:"futureWish", q:"앞으로 하고 싶은 일은?", ex:"예: 여행, 그림책 만들기"}
 ];
 
 let selectedGender="할머니";
-const questionsDiv = document.getElementById("questions");
+let recognition;
+let isListening=false;
+
+// ===== 질문 생성 =====
+const qDiv = document.getElementById("questions");
+
 questionsList.forEach(q=>{
-  let html = `<label style="font-size:24px; font-weight:bold;">${q.q}</label>`;
-  html += `<div style="position:relative;">`;
-  html += `<input type="${q.type}" id="${q.id}" placeholder="${q.placeholder}">`;
-  html += `<button class="mic-btn" onclick="startVoice('${q.id}')">🎤</button>`;
-  html += `</div><div id="micStatus${q.id}" class="mic-status"></div>`;
+  let html = `
+    <div style="margin-top:20px;">
+      <div style="font-size:24px; font-weight:bold;">👉 ${q.q}</div>
+      <div class="example">${q.ex}</div>
+      <div style="position:relative;">
+        <input id="${q.id}">
+        <button class="mic-btn" onclick="startVoice('${q.id}')">🎤</button>
+      </div>
+    </div>
+  `;
+
   if(q.id==="name"){
-      html += `<div class="gender-btns">
-        <div id="btn-female" class="gender-btn active" onclick="setGender('할머니','btn-female')">할머니</div>
-        <div id="btn-male" class="gender-btn" onclick="setGender('할아버지','btn-male')">할아버지</div>
-      </div>`;
+    html += `
+    <div class="gender-btns">
+      <div class="gender-btn active" onclick="setGender('할머니',this)">할머니</div>
+      <div class="gender-btn" onclick="setGender('할아버지',this)">할아버지</div>
+    </div>`;
   }
-  questionsDiv.innerHTML += html;
+
+  qDiv.innerHTML += html;
 });
 
-// ====== 탭 전환 ======
-function switchTab(n){
-    document.getElementById("tabContent1").style.display = n===1 ? "block" : "none";
-    document.getElementById("tabContent2").style.display = n===2 ? "block" : "none";
-    document.getElementById("header-title").textContent = n===1 ? "생각주머니" : "만들기 상자";
-    document.getElementById("tab1").classList.toggle("active", n===1);
-    document.getElementById("tab2").classList.toggle("active", n===2);
+// ===== 성별 =====
+function setGender(g, el){
+  selectedGender = g;
+  document.querySelectorAll(".gender-btn").forEach(b=>b.classList.remove("active"));
+  el.classList.add("active");
 }
 
-// ====== 성별 ======
-function setGender(g, btnId){
-    selectedGender=g;
-    document.querySelectorAll(".gender-btn").forEach(btn=>btn.classList.remove("active"));
-    document.getElementById(btnId).classList.add("active");
+// ===== 🎤 음성 입력 (강화 버전) =====
+function startVoice(id){
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    alert("크롬 브라우저를 사용해주세요");
+    return;
+  }
+
+  if(isListening){
+    recognition.stop();
+    isListening=false;
+    return;
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang="ko-KR";
+  recognition.continuous=true;
+  recognition.interimResults=true;
+
+  let finalText="";
+
+  recognition.onstart=()=>{
+    isListening=true;
+    alert("🎤 말씀해주세요");
+  };
+
+  recognition.onresult=(e)=>{
+    let interim="";
+
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      let txt=e.results[i][0].transcript;
+
+      if(e.results[i].isFinal){
+        finalText += txt+" ";
+      } else {
+        interim += txt;
+      }
+    }
+
+    document.getElementById(id).value = finalText + interim;
+  };
+
+  recognition.onend=()=>{
+    isListening=false;
+    saveData();
+  };
+
+  recognition.onerror=()=>{
+    alert("음성 인식 오류");
+  };
+
+  recognition.start();
+
+  setTimeout(()=>{
+    if(isListening){
+      recognition.stop();
+    }
+  },5000);
 }
 
-// ====== 음성 입력 ======
-function startVoice(targetId){
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const statusId = "micStatus" + targetId;
-    const statusEl = document.getElementById(statusId);
-    if(!SpeechRecognition){ alert("음성 입력을 지원하지 않습니다."); return; }
-    const recognition = new SpeechRecognition();
-    recognition.lang="ko-KR";
-    statusEl.textContent = "🎤 음성 입력 중… 말을 마치면 자동 종료됩니다";
-    recognition.start();
-    recognition.onresult = function(event){
-        document.getElementById(targetId).value = event.results[0][0].transcript;
-        statusEl.textContent = "✅ 입력 완료";
-        setTimeout(()=>{statusEl.textContent=""},3000);
-    };
-    recognition.onerror=function(){ statusEl.textContent="❌ 입력 실패"; setTimeout(()=>{statusEl.textContent=""},3000); }
+// ===== 저장 =====
+function saveData(){
+  questionsList.forEach(q=>{
+    localStorage.setItem(q.id, document.getElementById(q.id).value);
+  });
 }
 
-// ====== 프롬프트 생성 ======
+document.addEventListener("input", saveData);
+
+// ===== 불러오기 =====
+window.onload = ()=>{
+  questionsList.forEach(q=>{
+    if(localStorage.getItem(q.id)){
+      document.getElementById(q.id).value = localStorage.getItem(q.id);
+    }
+  });
+
+  if(localStorage.getItem("prompt")){
+    document.getElementById("promptPreview").textContent = localStorage.getItem("prompt");
+  }
+};
+
+// ===== 프롬프트 =====
 function generatePrompt(){
-    let prompt = `당신은 동화 작가입니다. 다음 내용을 바탕으로 5페이지 그림책을 만드세요.\n\n[주인공] ${selectedGender} ${document.getElementById("name").value}\n`;
-    prompt += `[어린 시절] ${document.getElementById("childhood").value}\n`;
-    prompt += `[가족] ${document.getElementById("family").value}\n`;
-    prompt += `[청년기] ${document.getElementById("young").value}\n`;
-    prompt += `[취미] ${document.getElementById("hobby").value}\n`;
-    prompt += `[교훈] ${document.getElementById("lesson").value}\n`;
-    prompt += `[메시지] ${document.getElementById("message").value}\n`;
-    prompt += `[규칙]\n1. 5페이지로 작성\n2. 각 페이지별 구글 플로우용 영문 이미지 프롬프트 생성\n3. 스타일: Soft watercolor, Ghibli style, warm sunlight, peaceful\n`;
-    document.getElementById("promptPreview").textContent = prompt;
-    localStorage.setItem("savedPrompt", prompt);
+
+  let p = `
+당신은 감성적인 동화 작가입니다.
+
+주인공: ${selectedGender} ${val("name")}
+
+성격: ${val("personality")}
+어린시절: ${val("childhoodScene")}
+특별한 순간: ${val("specialMoment")}
+어릴적 꿈: ${val("childhoodDream")}
+현재 즐거움: ${val("currentWish")}
+삶의 가치: ${val("values")}
+미래 희망: ${val("futureWish")}
+
+[요청]
+- 5페이지 그림책 작성
+- 각 페이지마다 "페이지 내용:"
+- 각 페이지마다 "이미지 프롬프트:"
+`;
+
+  document.getElementById("promptPreview").textContent = p;
+  localStorage.setItem("prompt", p);
 }
 
-// ====== 복사 ======
-function copyPrompt(){
-    const text=document.getElementById("promptPreview").textContent;
-    navigator.clipboard.writeText(text).then(()=>{alert("프롬프트가 복사되었습니다!");});
+function val(id){
+  return document.getElementById(id).value;
 }
 
-// ====== 텍스트 분류 및 아코디언 ======
-function parseText(){
-    const full = document.getElementById("fullText").value.trim();
-    if(!full){ alert("텍스트를 붙여넣어 주세요."); return; }
-    let lines = full.split(/\n/);
-    let parsedHTML = "";
-    lines.forEach((line)=>{
-        if(line.match(/^제목:/)){
-            parsedHTML += `<button class="accordion">제목</button><div class="panel">${line.replace(/^제목:/,'').trim()}<br><button class="copy-box-btn" onclick="copyText(this)">📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바 바로가기</a></div>`;
-        } else if(line.match(/페이지 내용:/)){
-            let pageNum = line.match(/(\d+)페이지/)[1];
-            parsedHTML += `<button class="accordion">${pageNum}페이지 글</button><div class="panel">${line.replace(/\d+페이지 내용:/,'').trim()}<br><button class="copy-box-btn" onclick="copyText(this)">📋 복사</button><a href='https://www.canva.com/create/books/' target='_blank' class='link-btn'>🎨 캔바 바로가기</a></div>`;
-        } else if(line.match(/이미지 프롬프트:/)){
-            let pageNum = line.match(/(\d+)/)[1];
-            parsedHTML += `<button class="accordion">${pageNum}페이지 그림명령어</button><div class="panel">${line.replace(/이미지 프롬프트:/,'').trim()}<br><button class="copy-box-btn" onclick="copyText(this)">📋 복사</button><a href='https://flow.google.com/' target='_blank' class='link-btn'>🌐 구글 플로우 바로가기</a></div>`;
-        }
-    });
-    document.getElementById("parsedOutput").innerHTML = parsedHTML;
+// ===== ChatGPT 이동 =====
+function goToChatGPT(){
 
-    let acc = document.getElementsByClassName("accordion");
-    for(let i=0;i<acc.length;i++){
-        acc[i].onclick=function(){
-            this.classList.toggle("active");
-            let panel=this.nextElementSibling;
-            panel.style.display = (panel.style.display==='block') ? 'none':'block';
-        }
-    }
-    localStorage.setItem("savedFullText", full);
+  const text = document.getElementById("promptPreview").textContent;
+
+  if(!text){
+    alert("먼저 프롬프트를 생성하세요");
+    return;
+  }
+
+  navigator.clipboard.writeText(text).then(()=>{
+    alert("복사 완료! ChatGPT로 이동합니다");
+    window.open("https://chat.openai.com/", "_blank");
+  });
 }
 
-// ====== 박스 복사 ======
-function copyText(btn){
-    const text = btn.parentElement.textContent.replace('📋 복사','').trim();
-    navigator.clipboard.writeText(text).then(()=>{
-        btn.textContent="✅ 복사됨";
-        setTimeout(()=>{btn.textContent="📋 복사";},1500);
-    });
-}
-
-// ====== 새로 시작 ======
+// ===== 리셋 =====
 function resetAll(){
-    if(confirm("정말 새로 시작하시겠습니까? 모든 입력과 저장된 데이터가 삭제됩니다.")){
-        localStorage.clear();
-        // 입력 필드 초기화
-        questionsList.forEach(q=>{
-            const el=document.getElementById(q.id);
-            if(el) el.value="";
-        });
-        document.getElementById("promptPreview").textContent="";
-        document.getElementById("fullText").value="";
-        document.getElementById("parsedOutput").innerHTML="";
-        selectedGender="할머니";
-        document.getElementById("btn-female").classList.add("active");
-        document.getElementById("btn-male").classList.remove("active");
-    }
+  if(confirm("정말 초기화할까요?")){
+    localStorage.clear();
+    location.reload();
+  }
 }
 
-// ====== 로컬스토리지 복원 ======
-window.onload=function(){
-    if(localStorage.getItem("savedPrompt")){
-        document.getElementById("promptPreview").textContent = localStorage.getItem("savedPrompt");
+// ===== (추가 준비) 텍스트 파싱 =====
+function parseTextAdvanced(full){
+
+  let pages = full.split(/페이지\s*\d+/g).filter(t=>t.trim());
+
+  return pages.map((p,i)=>{
+    let text = p.match(/페이지 내용[:：]?\s*([\s\S]*?)(이미지|$)/);
+    let img = p.match(/이미지.*?[:：]\s*([\s\S]*)/);
+
+    return {
+      page:i+1,
+      content:text ? text[1].trim() : p.trim(),
+      image:img ? img[1].trim() : ""
     }
-    if(localStorage.getItem("savedFullText")){
-        document.getElementById("fullText").value = localStorage.getItem("savedFullText");
-        parseText();
-    }
+  });
 }
+
 </script>
+
 </body>
 </html>
