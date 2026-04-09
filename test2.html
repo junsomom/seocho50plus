@@ -19,6 +19,7 @@
     --orange:#ef8f00;
     --blue:#1fa3e0;
     --gray:#a0a8b0;
+    --disabled:#cfd8dc;
 }
 
 html, body {
@@ -86,21 +87,40 @@ body {
     margin-bottom: 16px;
 }
 
-label {
-    display: block;
+.label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     margin-top: 16px;
     margin-bottom: 8px;
+}
+
+.label-row label {
+    margin: 0;
+    flex: 1;
+}
+
+.example-mini-btn {
+    flex: 0 0 auto;
+    min-width: 64px;
+    width: auto;
+    margin-top: 0;
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 12px;
+    border: 2px solid var(--green-border);
+    background: white;
+    color: var(--green);
+}
+
+label {
+    display: block;
     font-size: 19px;
     font-weight: 800;
     line-height: 1.5;
     color: var(--text);
-}
-
-.help-small {
-    margin-top: -2px;
-    margin-bottom: 8px;
-    font-size: 15px;
-    color: var(--sub);
 }
 
 .input-wrap {
@@ -161,7 +181,8 @@ textarea:focus {
 }
 
 .mic-btn.recording {
-    background: #ffe9e9;
+    background: #ff4d4d;
+    color: white;
 }
 
 .mic-status {
@@ -201,6 +222,37 @@ textarea:focus {
     border-color: var(--green);
 }
 
+.style-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.style-btn {
+    min-height: 64px;
+    padding: 10px 8px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 16px;
+    border: 2px solid #cfd8df;
+    background: white;
+    color: #334155;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.35;
+}
+
+.style-btn.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+
 button, .link-btn {
     width: 100%;
     border: none;
@@ -232,15 +284,16 @@ button, .link-btn {
     color: white;
 }
 
-.outline-btn {
-    background: white;
-    color: var(--green);
-    border: 2px solid var(--green-border);
-}
-
 .link-btn {
     background: var(--blue);
     color: white;
+}
+
+button:disabled {
+    background: var(--disabled) !important;
+    color: #6b7280 !important;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .notice-box {
@@ -257,10 +310,10 @@ button, .link-btn {
     background: #fffef7;
     border: 2px solid #efe2a1;
     border-radius: 18px;
-    padding: 16px;
+    padding: 14px;
     margin-top: 14px;
     font-size: 18px;
-    line-height: 1.75;
+    line-height: 1.7;
     white-space: pre-wrap;
     word-break: break-word;
     overflow-wrap: break-word;
@@ -270,41 +323,58 @@ button, .link-btn {
 .result-box {
     background: #fffef8;
     border: 2px solid #efe6bc;
-    border-radius: 16px;
-    padding: 10px 12px;
-    margin-top: 10px;
-    font-size: 16px;
-    line-height: 1.55;
+    border-radius: 14px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.45;
     white-space: pre-wrap;
     word-break: break-word;
     overflow-wrap: break-word;
 }
 
 .box-header {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 900;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     color: var(--green);
+    line-height: 1.3;
 }
 
 .box-content {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    line-height: 1.45;
 }
 
 .box-footer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 6px;
+    margin-top: 2px;
+}
+
+.copy-box-btn,
+.open-box-btn {
+    margin-top: 0;
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 12px;
+    min-height: 40px;
 }
 
 .copy-box-btn {
     background: var(--orange);
     color: white;
-    margin-top: 0;
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 16px;
-    border-radius: 14px;
+}
+
+.open-box-btn {
+    background: var(--blue);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hidden {
@@ -318,15 +388,8 @@ button, .link-btn {
     margin-top: 12px;
 }
 
-.action-buttons {
-    margin-top: 14px;
-}
-
-.tool-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 16px;
+.bottom-reset {
+    margin-top: 18px;
 }
 
 @media (max-width: 480px) {
@@ -337,8 +400,15 @@ button, .link-btn {
     input, textarea { font-size: 18px; }
     button, .link-btn { font-size: 17px; padding: 12px 12px; }
     .prompt-box { font-size: 17px; }
-    .result-box { font-size: 16px; }
-    .copy-box-btn { font-size: 15px; padding: 9px 10px; }
+    .result-box { font-size: 15px; padding: 8px 10px; }
+    .box-header { font-size: 15px; }
+    .copy-box-btn, .open-box-btn { font-size: 13px; padding: 8px 8px; min-height: 38px; }
+    .example-mini-btn { font-size: 14px; min-width: 58px; }
+    .style-btn {
+        font-size: 13px;
+        min-height: 62px;
+        padding: 8px 6px;
+    }
 }
 </style>
 </head>
@@ -352,107 +422,132 @@ button, .link-btn {
 
     <div id="tabContent1">
         <div class="section-card">
-            <label for="userName">1. 성함이 어떻게 되시나요?</label>
-            <div class="help-small">짧게 이름만 적어도 괜찮아요.</div>
+
+            <div class="label-row">
+                <label for="userName">1. 성함이 어떻게 되시나요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('userName')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap">
                 <input type="text" id="userName" placeholder="예: 김영자">
                 <button type="button" class="mic-btn" onclick="startVoice('userName', this)" aria-label="성함 음성입력">🎤</button>
             </div>
             <div id="micStatusName" class="mic-status"></div>
 
-            <label>2. 성별을 선택해주세요</label>
+            <div class="label-row">
+                <label>2. 성별을 선택해주세요</label>
+            </div>
             <div class="gender-btns">
                 <button type="button" id="btn-female" class="gender-btn active" onclick="setGender('할머니','btn-female')">할머니</button>
                 <button type="button" id="btn-male" class="gender-btn" onclick="setGender('할아버지','btn-male')">할아버지</button>
             </div>
 
-            <label for="personality">3. 성격은 어떠신가요?</label>
-            <div class="help-small">예: 따뜻해요 / 차분해요 / 부지런해요</div>
+            <div class="label-row">
+                <label for="personality">3. 성격은 어떠신가요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('personality')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap">
                 <input type="text" id="personality" placeholder="예: 따뜻하고 다정해요">
                 <button type="button" class="mic-btn" onclick="startVoice('personality', this)" aria-label="성격 음성입력">🎤</button>
             </div>
             <div id="micStatusPersonality" class="mic-status"></div>
 
-            <label for="childhood">4. 어린 시절 기억나는 장면은 무엇인가요?</label>
-            <div class="help-small">예: 친구들과 놀던 일, 학교 가던 길, 시골 풍경</div>
+            <div class="label-row">
+                <label for="childhood">4. 어린 시절 기억나는 장면은 무엇인가요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('childhood')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap">
                 <input type="text" id="childhood" placeholder="예: 시골에서 친구들과 뛰어놀았어요">
                 <button type="button" class="mic-btn" onclick="startVoice('childhood', this)" aria-label="어린 시절 음성입력">🎤</button>
             </div>
             <div id="micStatusChildhood" class="mic-status"></div>
 
-            <label for="specialMoment">5. 가장 특별하거나 행복했던 순간은 언제였나요?</label>
-            <div class="help-small">예: 결혼, 아이 출산, 손주 탄생, 여행</div>
+            <div class="label-row">
+                <label for="specialMoment">5. 가장 특별하거나 행복했던 순간은 언제였나요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('specialMoment')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap">
                 <input type="text" id="specialMoment" placeholder="예: 손주가 태어났을 때">
                 <button type="button" class="mic-btn" onclick="startVoice('specialMoment', this)" aria-label="특별한 순간 음성입력">🎤</button>
             </div>
             <div id="micStatusSpecialMoment" class="mic-status"></div>
 
-            <label for="valuableThing">6. 지금 가장 소중하게 생각하는 것은 무엇인가요?</label>
-            <div class="help-small">예: 가족, 건강, 친구, 믿음, 일상</div>
+            <div class="label-row">
+                <label for="valuableThing">6. 지금 가장 소중하게 생각하는 것은 무엇인가요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('valuableThing')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap">
-                <input type="text" id="valuableThing" placeholder="예: 가족, 건강, 손주">
+                <input type="text" id="valuableThing" placeholder="예: 가족과 건강">
                 <button type="button" class="mic-btn" onclick="startVoice('valuableThing', this)" aria-label="소중한 것 음성입력">🎤</button>
             </div>
             <div id="micStatusValuableThing" class="mic-status"></div>
 
-            <label for="futureWish">7. 앞으로 하고 싶은 일이나 바람은 무엇인가요?</label>
-            <div class="help-small">길게 적지 않아도 됩니다. 한 문장도 괜찮아요.</div>
+            <div class="label-row">
+                <label for="futureWish">7. 앞으로 하고 싶은 일이나 바람은 무엇인가요?</label>
+                <button type="button" class="example-mini-btn" onclick="fillOneExample('futureWish')">그대로 사용 ⭕</button>
+            </div>
             <div class="input-wrap textarea-wrap">
-                <textarea id="futureWish" rows="4" placeholder="예: 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요"></textarea>
+                <textarea id="futureWish" rows="4" placeholder="예: 건강하게 지내며 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요"></textarea>
                 <button type="button" class="mic-btn" onclick="startVoice('futureWish', this)" aria-label="앞으로의 바람 음성입력">🎤</button>
             </div>
             <div id="micStatusFutureWish" class="mic-status"></div>
 
-            <div class="two-btns">
-                <button class="outline-btn" onclick="fillExample()">예시 넣기</button>
-                <button class="gray-btn" onclick="clearAllInputs()">입력 지우기</button>
-                <button class="gray-btn" onclick="resetThinkingTab()">리셋 모두지우기</button>
+            <div class="label-row">
+                <label>8. 그림책 스타일을 선택해주세요</label>
+            </div>
+            <div class="style-btns" id="storyStyleGroup">
+                <button type="button" id="style-warm" class="style-btn active" onclick="setStoryStyle('warm','style-warm')">🌼 따뜻한 감동형</button>
+                <button type="button" id="style-happy" class="style-btn" onclick="setStoryStyle('happy','style-happy')">😊 밝고 즐거운 추억형</button>
+                <button type="button" id="style-hope" class="style-btn" onclick="setStoryStyle('hope','style-hope')">🌈 희망과 꿈 강조형</button>
             </div>
 
-            <div class="action-buttons">
-                <button class="main-btn" onclick="generatePrompt()">👉 프롬프트 생성</button>
-                <button class="smart-btn" onclick="copyPromptAndOpenChatGPT()">📋 프롬프트복사 및 챗지피티 열기</button>
+            <div class="label-row">
+                <label>9. 그림 스타일을 선택해주세요</label>
             </div>
+            <div class="style-btns" id="artStyleGroup">
+                <button type="button" id="art-ghibli" class="style-btn active" onclick="setArtStyle('ghibli','art-ghibli')">🌿 따뜻한 동화 느낌 (지브리)</button>
+                <button type="button" id="art-pencil" class="style-btn" onclick="setArtStyle('pencil','art-pencil')">🎨 손그림 색연필 느낌</button>
+                <button type="button" id="art-cute" class="style-btn" onclick="setArtStyle('cute','art-cute')">🌸 밝고 귀여운 캐릭터 스타일</button>
+            </div>
+
+            <button class="main-btn" onclick="generatePrompt()">👉 이야기 만들기</button>
 
             <div class="notice-box">
-                음성 입력은 휴대폰과 브라우저에 따라 다를 수 있습니다.<br>
-                가장 안정적인 사용은 <b>크롬 브라우저</b>를 권장합니다.
+                음성 입력은 크롬이 가장 좋아요
             </div>
 
             <div id="promptPreview" class="prompt-box"></div>
+
+            <button id="copyOpenBtn" class="smart-btn" onclick="copyPromptAndOpenChatGPT()" disabled>👉 복사하고 ChatGPT 열기</button>
+
+            <button class="gray-btn bottom-reset" onclick="resetThinkingTab()">👉 전체 지우기</button>
         </div>
     </div>
 
     <div id="tabContent2" class="hidden">
         <div class="section-card">
             <label for="fullText">ChatGPT에서 나온 전체 텍스트를 여기에 붙여넣으세요</label>
-            <div class="help-small">제목, 페이지 글, 그림명령어를 나누어 드립니다.</div>
             <textarea id="fullText" rows="10" placeholder="전체 텍스트 붙여넣기"></textarea>
 
             <div class="two-btns">
-                <button class="main-btn" onclick="parseText()">📦 분류하기</button>
-                <button class="gray-btn" onclick="clearParsedArea()">내용 지우기</button>
-                <button class="gray-btn" onclick="resetMakerTab()">리셋 모두지우기</button>
-            </div>
-
-            <div class="tool-links">
-                <a href="https://www.canva.com/create/books/" class="link-btn" target="_blank" rel="noopener">🎨 캔바 열기</a>
-                <a href="https://labs.google/fx/ko/tools/flow" class="link-btn" target="_blank" rel="noopener">🌐 플로우 열기</a>
+                <button class="main-btn" onclick="parseText()">👉 결과 나누어 보기</button>
             </div>
 
             <div id="parsedOutput"></div>
+
+            <button class="gray-btn bottom-reset" onclick="resetMakerTab()">👉 전체 지우기</button>
         </div>
     </div>
 </div>
 
 <script>
 let selectedGender = "할머니";
+let selectedStoryStyle = "warm";
+let selectedArtStyle = "ghibli";
 let currentRecognition = null;
 
 const CHATGPT_URL = "https://chat.openai.com/";
+const CANVA_URL = "https://www.canva.com";
+const FLOW_URL = "https://labs.google/fx/ko/tools/flow";
 
 const STORAGE_KEYS = {
     userName: "storybook_userName",
@@ -464,7 +559,18 @@ const STORAGE_KEYS = {
     fullText: "storybook_fullText",
     promptPreview: "storybook_promptPreview",
     selectedGender: "storybook_selectedGender",
+    selectedStoryStyle: "storybook_selectedStoryStyle",
+    selectedArtStyle: "storybook_selectedArtStyle",
     parsedOutput: "storybook_parsedOutput"
+};
+
+const EXAMPLE_VALUES = {
+    userName: "김영자",
+    personality: "따뜻하고 다정해요",
+    childhood: "시골에서 친구들과 뛰어놀았어요",
+    specialMoment: "손주가 태어났을 때",
+    valuableThing: "가족과 건강",
+    futureWish: "건강하게 지내며 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요"
 };
 
 function switchTab(n){
@@ -480,6 +586,80 @@ function setGender(g, btnId){
     document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("active"));
     document.getElementById(btnId).classList.add("active");
     saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+}
+
+function setStoryStyle(styleKey, btnId){
+    selectedStoryStyle = styleKey;
+    document.querySelectorAll("#storyStyleGroup .style-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(btnId).classList.add("active");
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, selectedStoryStyle);
+}
+
+function setArtStyle(styleKey, btnId){
+    selectedArtStyle = styleKey;
+    document.querySelectorAll("#artStyleGroup .style-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById(btnId).classList.add("active");
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, selectedArtStyle);
+}
+
+function getStoryStyleText(){
+    if(selectedStoryStyle === "happy"){
+        return `[이야기 분위기]
+이야기는 밝고 경쾌한 분위기로 작성합니다.
+어린 시절과 행복했던 순간을 즐겁게 표현합니다.
+읽는 사람이 미소 짓도록 따뜻한 유머를 살짝 담습니다.
+전체적으로 밝고 생동감 있게 전개합니다.`;
+    }
+
+    if(selectedStoryStyle === "hope"){
+        return `[이야기 분위기]
+이야기는 희망과 앞으로의 삶에 초점을 맞춥니다.
+주인공의 바람과 꿈이 자연스럽게 드러나도록 합니다.
+읽는 사람이 용기와 희망을 느끼도록 합니다.
+마지막은 미래를 향한 따뜻한 메시지로 마무리합니다.`;
+    }
+
+    return `[이야기 분위기]
+이야기는 짧고 따뜻한 문장으로 작성합니다.
+읽는 사람이 편안함과 감동을 느낄 수 있도록 합니다.
+잔잔하고 따뜻한 분위기로 전개하며,
+마지막은 마음이 따뜻해지는 여운으로 마무리합니다.`;
+}
+
+function getArtStyleText(){
+    if(selectedArtStyle === "pencil"){
+        return `colored pencil drawing, hand-drawn illustration, soft texture, paper grain, warm nostalgic feeling, consistent character design`;
+    }
+
+    if(selectedArtStyle === "cute"){
+        return `cute character illustration, soft pastel colors, simple shapes, friendly expression, bright and cheerful mood, consistent character design`;
+    }
+
+    return `Ghibli-inspired, soft watercolor illustration, warm light, gentle children's book style, cinematic composition, consistent character design`;
+}
+
+function getArtStyleGuideKo(){
+    if(selectedArtStyle === "pencil"){
+        return `그림은 손그림 색연필 느낌으로 표현해 주세요. 종이 질감과 부드러운 색연필 터치가 느껴지게 하고, 따뜻한 추억의 분위기가 살아나게 해 주세요.`;
+    }
+
+    if(selectedArtStyle === "cute"){
+        return `그림은 밝고 귀여운 캐릭터 스타일로 표현해 주세요. 부드러운 파스텔 색감과 단순한 형태, 친근한 표정이 느껴지게 해 주세요.`;
+    }
+
+    return `그림은 따뜻한 동화 느낌의 지브리 감성으로 표현해 주세요. 부드러운 수채화 느낌과 따뜻한 빛, 영화 같은 장면 구성이 느껴지게 해 주세요.`;
+}
+
+function showShortMessage(message){
+    alert(message);
+}
+
+function fillOneExample(targetId){
+    const el = document.getElementById(targetId);
+    if(!el) return;
+    el.value = EXAMPLE_VALUES[targetId] || "";
+    triggerAutoSave(targetId);
+    showShortMessage("예시가 들어갔어요");
 }
 
 function saveToStorage(key, value){
@@ -544,7 +724,10 @@ function getStatusEl(targetId){
 }
 
 function clearAllMicStates(){
-    document.querySelectorAll(".mic-btn").forEach(btn => btn.classList.remove("recording"));
+    document.querySelectorAll(".mic-btn").forEach(btn => {
+        btn.classList.remove("recording");
+        btn.textContent = "🎤";
+    });
 }
 
 function startVoice(targetId, btnEl){
@@ -552,7 +735,7 @@ function startVoice(targetId, btnEl){
     const statusEl = getStatusEl(targetId);
 
     if(!SpeechRecognition){
-        alert("이 기기에서는 음성 입력이 지원되지 않아요. 크롬 브라우저에서 다시 시도해 보세요.");
+        alert("이 기기에서는 음성 입력이 지원되지 않아요.");
         return;
     }
 
@@ -569,13 +752,17 @@ function startVoice(targetId, btnEl){
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    if(btnEl) btnEl.classList.add("recording");
-    if(statusEl) statusEl.textContent = "🎤 듣고 있어요... 천천히 말씀해 주세요.";
+    if(btnEl){
+        btnEl.classList.add("recording");
+        btnEl.textContent = "🔴";
+    }
+
+    if(statusEl) statusEl.textContent = "듣고 있어요";
 
     try {
         recognition.start();
     } catch(e) {
-        if(statusEl) statusEl.textContent = "❌ 음성 입력을 시작할 수 없습니다.";
+        if(statusEl) statusEl.textContent = "";
         clearAllMicStates();
         currentRecognition = null;
         return;
@@ -589,15 +776,13 @@ function startVoice(targetId, btnEl){
             triggerAutoSave(targetId);
         }
         if(statusEl){
-            statusEl.textContent = "✅ 입력이 끝났습니다.";
-            setTimeout(() => { statusEl.textContent = ""; }, 2500);
+            statusEl.textContent = "";
         }
     };
 
     recognition.onerror = function(){
         if(statusEl){
-            statusEl.textContent = "❌ 음성 입력에 실패했습니다.";
-            setTimeout(() => { statusEl.textContent = ""; }, 2500);
+            statusEl.textContent = "";
         }
         clearAllMicStates();
         currentRecognition = null;
@@ -606,19 +791,10 @@ function startVoice(targetId, btnEl){
     recognition.onend = function(){
         clearAllMicStates();
         currentRecognition = null;
+        if(statusEl){
+            setTimeout(() => { statusEl.textContent = ""; }, 300);
+        }
     };
-}
-
-function fillExample(){
-    document.getElementById("userName").value = "김영자";
-    document.getElementById("personality").value = "따뜻하고 다정해요";
-    document.getElementById("childhood").value = "시골에서 친구들과 뛰어놀았어요";
-    document.getElementById("specialMoment").value = "손주가 태어났을 때";
-    document.getElementById("valuableThing").value = "가족과 건강";
-    document.getElementById("futureWish").value = "건강하게 지내며 손주와 여행도 가고, 내 이야기를 책으로 남기고 싶어요";
-    setGender("할머니", "btn-female");
-    saveAllInputs();
-    alert("예시가 들어갔습니다.");
 }
 
 function saveAllInputs(){
@@ -627,6 +803,14 @@ function saveAllInputs(){
         if(el && STORAGE_KEYS[id]) saveToStorage(STORAGE_KEYS[id], el.value);
     });
     saveToStorage(STORAGE_KEYS.selectedGender, selectedGender);
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, selectedStoryStyle);
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, selectedArtStyle);
+}
+
+function updateCopyOpenButtonState(){
+    const btn = document.getElementById("copyOpenBtn");
+    const hasPrompt = !!document.getElementById("promptPreview").textContent.trim();
+    btn.disabled = !hasPrompt;
 }
 
 function generatePrompt(){
@@ -636,6 +820,9 @@ function generatePrompt(){
     const specialMoment = document.getElementById("specialMoment").value.trim();
     const valuableThing = document.getElementById("valuableThing").value.trim();
     const futureWish = document.getElementById("futureWish").value.trim();
+    const storyStyleText = getStoryStyleText();
+    const artStyleText = getArtStyleText();
+    const artStyleGuideKo = getArtStyleGuideKo();
 
     if(!name || !personality || !childhood || !specialMoment || !valuableThing || !futureWish){
         alert("질문을 모두 입력해주세요.");
@@ -644,7 +831,11 @@ function generatePrompt(){
 
     const prompt = `당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.
 
-다음 정보를 바탕으로 감동적인 5페이지 그림책을 만들어 주세요.
+이 그림책의 목표는 경도의 인지장애가 있으신 어르신들이
+자신의 인생 이야기를 통해 삶의 가치와 사랑, 희망, 소망을 보여주는 것입니다.
+이 목표를 마음에 두고 밝고 따뜻한 그림책을 만들어 주세요.
+
+다음 정보를 바탕으로 표지를 포함한 총 5페이지 그림책을 만들어 주세요.
 
 [주인공]
 한국인 ${selectedGender} ${name}
@@ -658,66 +849,90 @@ function generatePrompt(){
 지금 소중하게 생각하는 것: ${valuableThing}
 앞으로의 바람: ${futureWish}
 
-[규칙]
-1. 한글로 짧고 따뜻한 문장으로 써 주세요.
-2. 어르신이 공감할 수 있게 부드럽고 존중하는 말투로 써 주세요.
-3. 각 페이지마다 영어 이미지 프롬프트도 함께 써 주세요.
-4. 각 페이지의 영어 이미지 프롬프트에는 다음 스타일을 자연스럽게 반영해 주세요:
-soft watercolor illustration, warm light, gentle children's book style, Ghibli-inspired mood, cinematic composition, consistent character design, peaceful and hopeful atmosphere.
-5. 과거 장면은 그 시기의 나이대로, 현재나 미래 장면은 노년의 모습이 자연스럽게 드러나게 해 주세요.
-6. 페이지는 반드시 5페이지로 해 주세요. (표지 제외)
-7. 출력 형식은 반드시 아래 형식을 그대로 지켜 주세요.
-8. 각 페이지는 반드시 "1페이지 내용:", "이미지 프롬프트:" 형식을 정확히 지켜 주세요.
-9. 각 페이지는 서로 다른 장면이 되도록 써 주세요.
-10. 이미지에는 글자나 한글이 들어가지 않게 해 주세요.
-11. 모든 페이지에서 같은 주인공이 유지되도록 인물의 얼굴, 머리모양, 분위기를 일관되게 해 주세요.
+${storyStyleText}
 
-[형식]
+[그림 스타일]
+${artStyleGuideKo}
+
+[영어 이미지 스타일]
+각 페이지의 영어 이미지 프롬프트에는 다음 스타일을 자연스럽게 반영해 주세요:
+${artStyleText}, peaceful and hopeful atmosphere
+
+[공통 규칙]
+1. 내용은 밝고 따뜻하며 존중이 느껴지게 써 주세요.
+2. 마지막은 독자에게 감동과 교훈을 주는 마무리로 써 주세요.
+3. 제목은 호기심을 불러일으키고, 감정을 불러일으키며, 사랑과 존중을 표현하는 말로 만들어 주세요.
+4. 표지를 포함해 총 5페이지로 만들어 주세요.
+5. 표지는 제목에 어울리는 표지 이미지 프롬프트만 작성해 주세요. 표지 내용은 쓰지 마세요.
+6. 표지를 제외한 1~4페이지는 각각 따뜻하고 밝은 동화책 스타일의 내용을 써 주세요.
+7. 표지와 각 페이지마다 구글 플로우에서 사용할 수 있도록 이미지 프롬프트를 한글과 영어로 모두 자세히 작성해 주세요.
+8. 등장인물은 모든 페이지에서 일관되게 유지해 주세요. 다만 시간 흐름에 따른 자연스러운 나이 변화는 괜찮습니다.
+9. 이미지에는 글자나 한글이 들어가지 않게 해 주세요.
+10. 각 페이지는 서로 다른 장면이 되도록 써 주세요.
+11. 내용이 비어 있는 부분은 전체 이야기 흐름에 어울리게 자연스럽게 채워 주세요.
+12. 출력 형식은 반드시 아래 형식을 정확히 지켜 주세요.
+
+[출력 형식]
 제목:
+표지 이미지 프롬프트(한글):
+표지 이미지 프롬프트(영어):
 
 1페이지 내용:
-이미지 프롬프트:
+1페이지 이미지 프롬프트(한글):
+1페이지 이미지 프롬프트(영어):
 
 2페이지 내용:
-이미지 프롬프트:
+2페이지 이미지 프롬프트(한글):
+2페이지 이미지 프롬프트(영어):
 
 3페이지 내용:
-이미지 프롬프트:
+3페이지 이미지 프롬프트(한글):
+3페이지 이미지 프롬프트(영어):
 
 4페이지 내용:
-이미지 프롬프트:
-
-5페이지 내용:
-이미지 프롬프트:`;
+4페이지 이미지 프롬프트(한글):
+4페이지 이미지 프롬프트(영어):`;
 
     const preview = document.getElementById("promptPreview");
     preview.textContent = prompt;
     saveToStorage(STORAGE_KEYS.promptPreview, prompt);
     saveAllInputs();
+    updateCopyOpenButtonState();
+    showShortMessage("이야기가 만들어졌어요");
     preview.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 async function copyPromptAndOpenChatGPT(){
     const text = document.getElementById("promptPreview").textContent.trim();
     if(!text){
-        alert("먼저 프롬프트를 생성해주세요.");
+        alert("먼저 이야기를 만들어주세요.");
         return;
     }
 
     const ok = await copyText(text);
 
     if(ok){
-        alert("프롬프트를 복사했습니다. 이제 열리는 ChatGPT 화면에 길게 눌러 붙여넣으세요.");
-    } else {
-        alert("복사는 실패했지만 ChatGPT 화면은 열어드릴게요. 프롬프트를 직접 길게 눌러 복사해 주세요.");
+        showShortMessage("복사했어요");
     }
 
     window.open(CHATGPT_URL, "_blank", "noopener");
 }
 
-function createCopyBox(title, content){
+function createCopyBox(title, content, type){
     const safeTitle = escapeHtml(title);
     const safeContent = escapeHtml(content || "");
+
+    if(type === "flow"){
+        return `
+            <div class="result-box">
+                <div class="box-header">${safeTitle}</div>
+                <div class="box-content">${safeContent}</div>
+                <div class="box-footer" style="grid-template-columns: 1fr;">
+                    <button class="open-box-btn" onclick="copyAndOpenFlow(this)">📋 복사하고 플로우 열기</button>
+                </div>
+            </div>
+        `;
+    }
 
     return `
         <div class="result-box">
@@ -725,6 +940,7 @@ function createCopyBox(title, content){
             <div class="box-content">${safeContent}</div>
             <div class="box-footer">
                 <button class="copy-box-btn" onclick="copyBox(this)">📋 복사</button>
+                <a href="${CANVA_URL}" class="open-box-btn" target="_blank" rel="noopener">🎨 캔바 열기</a>
             </div>
         </div>
     `;
@@ -742,63 +958,79 @@ function parseText(){
     saveToStorage(STORAGE_KEYS.fullText, full);
 
     let parsedHTML = "";
-    const title = extractTitle(full);
+    const title = extractSingleLine(full, /(?:^|\n)\s*제목\s*:\s*(.+)/i);
+    const coverKo = extractSectionByLabel(full, `표지\\s*이미지\\s*프롬프트\\s*\\(한글\\)`);
+    const coverEn = extractSectionByLabel(full, `표지\\s*이미지\\s*프롬프트\\s*\\(영어\\)`);
 
     if(title){
-        parsedHTML += createCopyBox("제목", title);
+        parsedHTML += createCopyBox("제목", title, "canva");
     }
 
-    for(let i = 1; i <= 5; i++){
-        const pageText = extractPageContent(full, i);
+    let combinedCoverPrompt = "";
+    if(coverKo){
+        combinedCoverPrompt += `표지 이미지 프롬프트(한글):\n${coverKo}`;
+    }
+    if(coverEn){
+        if(combinedCoverPrompt) combinedCoverPrompt += `\n\n`;
+        combinedCoverPrompt += `표지 이미지 프롬프트(영어):\n${coverEn}`;
+    }
+    if(combinedCoverPrompt){
+        parsedHTML += createCopyBox("표지 그림명령어", combinedCoverPrompt, "flow");
+    }
+
+    for(let i = 1; i <= 4; i++){
+        const pageText = extractSectionByLabel(full, `${i}\\s*페이지\\s*내용`);
+        const imgKo = extractSectionByLabel(full, `${i}\\s*페이지\\s*이미지\\s*프롬프트\\s*\\(한글\\)`);
+        const imgEn = extractSectionByLabel(full, `${i}\\s*페이지\\s*이미지\\s*프롬프트\\s*\\(영어\\)`);
+
         if(pageText){
-            parsedHTML += createCopyBox(`${i}페이지 글`, pageText);
+            parsedHTML += createCopyBox(`${i}페이지 글`, pageText, "canva");
         }
-    }
 
-    for(let i = 1; i <= 5; i++){
-        const imgText = extractImagePrompt(full, i);
-        if(imgText){
-            parsedHTML += createCopyBox(`${i}페이지 그림명령어`, imgText);
+        let combinedPrompt = "";
+        if(imgKo){
+            combinedPrompt += `${i}페이지 이미지 프롬프트(한글):\n${imgKo}`;
+        }
+        if(imgEn){
+            if(combinedPrompt) combinedPrompt += `\n\n`;
+            combinedPrompt += `${i}페이지 이미지 프롬프트(영어):\n${imgEn}`;
+        }
+
+        if(combinedPrompt){
+            parsedHTML += createCopyBox(`${i}페이지 그림명령어`, combinedPrompt, "flow");
         }
     }
 
     if(!parsedHTML){
-        parsedHTML = `<div class="result-box">분류할 내용을 찾지 못했습니다.\n\n예: 제목 / 1페이지 내용 / 이미지 프롬프트 형식을 확인해주세요.</div>`;
+        parsedHTML = `<div class="result-box">분류할 내용을 찾지 못했습니다.
+
+확인해주세요:
+1. 제목:
+2. 표지 이미지 프롬프트(한글):
+3. 표지 이미지 프롬프트(영어):
+4. 1페이지 내용:
+5. 1페이지 이미지 프롬프트(한글):
+6. 1페이지 이미지 프롬프트(영어):</div>`;
     }
 
     output.innerHTML = parsedHTML;
     saveToStorage(STORAGE_KEYS.parsedOutput, parsedHTML);
+    showShortMessage("이야기가 만들어졌어요");
     output.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function extractTitle(fullText){
-    const titleMatch = fullText.match(/(?:^|\n)\s*(?:제목|책\s*제목)\s*:\s*(.+)/i);
-    return titleMatch && titleMatch[1] ? titleMatch[1].trim() : "";
+function extractSingleLine(fullText, regex){
+    const match = fullText.match(regex);
+    return match && match[1] ? match[1].trim() : "";
 }
 
-function extractPageContent(fullText, pageNum){
-    const patterns = [
-        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지\\s*내용\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:|\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i"),
-        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:|\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i")
-    ];
-
-    for(const regex of patterns){
-        const match = fullText.match(regex);
-        if(match && match[1]) return match[1].trim();
-    }
-    return "";
-}
-
-function extractImagePrompt(fullText, pageNum){
-    const patterns = [
-        new RegExp(`(?:^|\\n)\\s*${pageNum}\\s*페이지[\\s\\S]*?(?:이미지\\s*프롬프트|영어\\s*이미지\\s*프롬프트|이미지프롬프트)\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*\\d+\\s*페이지\\s*(?:내용)?\\s*:|$)`, "i")
-    ];
-
-    for(const regex of patterns){
-        const match = fullText.match(regex);
-        if(match && match[1]) return match[1].trim();
-    }
-    return "";
+function extractSectionByLabel(fullText, labelPattern){
+    const regex = new RegExp(
+        `(?:^|\\n)\\s*${labelPattern}\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:제목|표지\\s*이미지\\s*프롬프트\\s*\\(한글\\)|표지\\s*이미지\\s*프롬프트\\s*\\(영어\\)|\\d+\\s*페이지\\s*내용|\\d+\\s*페이지\\s*이미지\\s*프롬프트\\s*\\(한글\\)|\\d+\\s*페이지\\s*이미지\\s*프롬프트\\s*\\(영어\\))\\s*:|$)`,
+        "i"
+    );
+    const match = fullText.match(regex);
+    return match && match[1] ? match[1].trim() : "";
 }
 
 async function copyBox(btn){
@@ -817,12 +1049,42 @@ async function copyBox(btn){
         const originalText = btn.textContent;
         btn.textContent = "✅ 복사됨";
         btn.style.background = "#2e7d32";
+        showShortMessage("복사했어요");
         setTimeout(() => {
             btn.textContent = originalText;
             btn.style.background = "#ef8f00";
         }, 1500);
     } else {
         alert("복사에 실패했습니다.");
+    }
+}
+
+async function copyAndOpenFlow(btn){
+    const box = btn.closest(".result-box");
+    const contentEl = box.querySelector(".box-content");
+    const text = contentEl ? contentEl.innerText.trim() : "";
+
+    if(!text){
+        alert("복사할 내용이 없습니다.");
+        return;
+    }
+
+    const ok = await copyText(text);
+
+    if(ok){
+        const originalText = btn.textContent;
+        btn.textContent = "✅ 복사하고 열기";
+        btn.style.background = "#2e7d32";
+        showShortMessage("복사했어요");
+
+        window.open(FLOW_URL, "_blank", "noopener");
+
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = "#1fa3e0";
+        }, 1500);
+    } else {
+        window.open(FLOW_URL, "_blank", "noopener");
     }
 }
 
@@ -862,24 +1124,30 @@ function restoreSavedData(){
     } else {
         setGender("할머니", "btn-female");
     }
-}
 
-function clearAllInputs(){
-    if(!confirm("입력 내용과 생성된 프롬프트를 모두 지울까요?")) return;
+    const savedStoryStyle = loadFromStorage(STORAGE_KEYS.selectedStoryStyle);
+    if(savedStoryStyle === "happy"){
+        setStoryStyle("happy", "style-happy");
+    } else if(savedStoryStyle === "hope"){
+        setStoryStyle("hope", "style-hope");
+    } else {
+        setStoryStyle("warm", "style-warm");
+    }
 
-    ["userName","personality","childhood","specialMoment","valuableThing","futureWish"].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.value = "";
-        if(STORAGE_KEYS[id]) saveToStorage(STORAGE_KEYS[id], "");
-    });
+    const savedArtStyle = loadFromStorage(STORAGE_KEYS.selectedArtStyle);
+    if(savedArtStyle === "pencil"){
+        setArtStyle("pencil", "art-pencil");
+    } else if(savedArtStyle === "cute"){
+        setArtStyle("cute", "art-cute");
+    } else {
+        setArtStyle("ghibli", "art-ghibli");
+    }
 
-    document.getElementById("promptPreview").textContent = "";
-    saveToStorage(STORAGE_KEYS.promptPreview, "");
-    setGender("할머니", "btn-female");
+    updateCopyOpenButtonState();
 }
 
 function resetThinkingTab(){
-    if(!confirm("생각주머니의 입력 내용과 생성된 프롬프트를 모두 지울까요?")) return;
+    if(!confirm("생각주머니의 내용을 지울까요?")) return;
     ["userName","personality","childhood","specialMoment","valuableThing","futureWish"].forEach(id => {
         const el = document.getElementById(id);
         if(el) el.value = "";
@@ -888,21 +1156,22 @@ function resetThinkingTab(){
     document.getElementById("promptPreview").textContent = "";
     saveToStorage(STORAGE_KEYS.promptPreview, "");
     saveToStorage(STORAGE_KEYS.selectedGender, "할머니");
+    saveToStorage(STORAGE_KEYS.selectedStoryStyle, "warm");
+    saveToStorage(STORAGE_KEYS.selectedArtStyle, "ghibli");
     setGender("할머니", "btn-female");
-}
-
-function clearParsedArea(){
-    if(!confirm("붙여넣은 내용만 지울까요? 분류된 결과는 그대로 둡니다.")) return;
-    document.getElementById("fullText").value = "";
-    saveToStorage(STORAGE_KEYS.fullText, "");
+    setStoryStyle("warm", "style-warm");
+    setArtStyle("ghibli", "art-ghibli");
+    updateCopyOpenButtonState();
+    showShortMessage("내용을 지웠어요");
 }
 
 function resetMakerTab(){
-    if(!confirm("만들기상자의 붙여넣은 내용과 분류 결과를 모두 지울까요?")) return;
+    if(!confirm("만들기상자의 내용을 지울까요?")) return;
     document.getElementById("fullText").value = "";
     document.getElementById("parsedOutput").innerHTML = "";
     saveToStorage(STORAGE_KEYS.fullText, "");
     saveToStorage(STORAGE_KEYS.parsedOutput, "");
+    showShortMessage("내용을 지웠어요");
 }
 
 function escapeHtml(str){
@@ -922,5 +1191,3 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </body>
 </html>
-
-
