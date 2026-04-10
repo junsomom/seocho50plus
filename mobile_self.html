@@ -1,123 +1,691 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 그림책 만들기</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AI 그림동화책 생각주머니</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-body {
-    font-family: sans-serif;
-    padding: 20px;
-    background: #f5f5f5;
-}
-
-h2 {
-    text-align: center;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-}
-
-button {
-    width: 100%;
-    padding: 18px;
-    margin-top: 20px;
-    font-size: 18px;
-    border-radius: 12px;
-    border: none;
-    background: #4CAF50;
-    color: white;
-}
-
-button:active {
-    background: #45a049;
-}
-</style>
-</head>
-
-<body>
-
-<h2>📖 AI 그림책 만들기</h2>
-
-<label>이름</label>
-<input type="text" id="name" placeholder="예: 영숙 할머니">
-
-<label>주인공이 하고 싶은 것</label>
-<input type="text" id="dream" placeholder="예: 맛있는 음식을 만들고 싶어요">
-
-<label>기억에 남는 이야기</label>
-<textarea id="story" rows="4" placeholder="예: 손주들과 함께 요리했던 날"></textarea>
-
-<button onclick="goChatGPT()">👉 그림책 만들기</button>
-
-<script>
-function goChatGPT() {
-
-    let name = document.getElementById("name").value.trim();
-    let dream = document.getElementById("dream").value.trim();
-    let story = document.getElementById("story").value.trim();
-
-    if (!name || !dream || !story) {
-        alert("모든 내용을 입력해주세요 😊");
-        return;
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: #f7f8fb;
+      color: #222;
+      line-height: 1.5;
     }
 
-    let prompt = `
-너는 따뜻한 감성의 그림책 작가이다.
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #5c6bc0;
+      color: white;
+      text-align: center;
+      padding: 18px 12px;
+      font-size: 24px;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
 
-다음 정보를 바탕으로
-어르신이 감동할 수 있는 5페이지 그림책을 만들어라.
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-[주인공]
-이름: ${name}
-꿈: ${dream}
-이야기: ${story}
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
 
-[출력 형식]
+    .tab-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 16px 14px;
+      font-size: 20px;
+      font-weight: 700;
+      background: #e8eaf6;
+      color: #303f9f;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    }
 
-제목:
+    .tab-btn.active {
+      background: #5c6bc0;
+      color: #fff;
+      transform: translateY(-1px);
+    }
 
-1페이지  
-내용:  
-이미지프롬프트:  
+    .panel {
+      display: none;
+      background: #fff;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
 
-2페이지  
-내용:  
-이미지프롬프트:  
+    .panel.active {
+      display: block;
+    }
 
-3페이지  
-내용:  
-이미지프롬프트:  
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      color: #3949ab;
+    }
 
-4페이지  
-내용:  
-이미지프롬프트:  
+    .panel p.desc {
+      margin: 0 0 18px;
+      font-size: 17px;
+      color: #555;
+    }
 
-5페이지  
-내용:  
-이미지프롬프트:  
-`;
+    .question-card {
+      background: #f9fafe;
+      border: 1px solid #e1e5f5;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
 
-    // ✅ 클립보드 복사
-    navigator.clipboard.writeText(prompt).then(function() {
+    .question-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
 
-        alert("✅ 내용이 자동 복사되었습니다!\n👉 ChatGPT에서 붙여넣기 해주세요");
+    .answer-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
 
-        // ✅ ChatGPT 열기
-        window.open("https://chat.openai.com/?model=gpt-4o", "_blank");
+    .answer-box {
+      flex: 1;
+      min-height: 68px;
+      border: 2px solid #d7dcf3;
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 19px;
+      resize: vertical;
+      outline: none;
+      background: #fff;
+    }
 
-    }, function(err) {
-        alert("❌ 복사 실패! 다시 시도해주세요");
-    });
-}
-</script>
+    .answer-box:focus {
+      border-color: #5c6bc0;
+      box-shadow: 0 0 0 4px rgba(92,107,192,0.12);
+    }
 
+    .answer-box::placeholder {
+      color: #9e9e9e;
+      opacity: 1;
+    }
+
+    .mic-btn {
+      width: 74px;
+      min-width: 74px;
+      border: none;
+      border-radius: 16px;
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #ffecb3;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      transition: 0.2s ease;
+    }
+
+    .mic-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .mic-btn.recording {
+      background: #ef5350;
+      color: white;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 15px;
+      color: #666;
+      min-height: 22px;
+    }
+
+    .gender-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gender-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .gender-btn {
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      transition: 0.2s ease;
+    }
+
+    .gender-btn.male {
+      background: #bbdefb;
+      color: #0d47a1;
+    }
+
+    .gender-btn.female {
+      background: #f8bbd0;
+      color: #880e4f;
+    }
+
+    .gender-btn.selected {
+      outline: 3px solid #5c6bc0;
+      transform: translateY(-1px);
+    }
+
+    .bottom-tools {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tool-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 19px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #3949ab;
+      color: white;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+    .tool-btn.secondary {
+      background: #eceff1;
+      color: #37474f;
+    }
+
+    .output-title {
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-size: 21px;
+      font-weight: 700;
+      color: #3949ab;
+    }
+
+    .output-box {
+      margin-top: 8px;
+      width: 100%;
+      min-height: 280px;
+      border: 2px solid #d7dcf3;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 18px;
+      background: #fff;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    @media (min-width: 720px) {
+      .tabs {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        font-size: 21px;
+        padding: 16px 10px;
+      }
+
+      .tab-btn {
+        font-size: 18px;
+      }
+
+      .panel h2 {
+        font-size: 24px;
+      }
+
+      .question-title {
+        font-size: 18px;
+      }
+
+      .answer-box {
+        font-size: 18px;
+        min-height: 64px;
+      }
+
+      .mic-btn {
+        width: 68px;
+        min-width: 68px;
+        font-size: 26px;
+      }
+
+      .tool-btn {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>AI 그림동화책 생각주머니</header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab1">나를 소개합니다</button>
+      <button class="tab-btn" data-tab="tab2">나의 행복을 자랑합니다</button>
+      <button class="tab-btn" data-tab="tab3">나는 이렇게 살고 싶어요</button>
+    </div>
+
+    <section id="tab1" class="panel active">
+      <h2>나를 소개합니다</h2>
+      <p class="desc">나를 따뜻하게 떠올리며 말씀해보세요.</p>
+      <div id="questions-tab1"></div>
+    </section>
+
+    <section id="tab2" class="panel">
+      <h2>나의 행복을 자랑합니다</h2>
+      <p class="desc">행복했던 순간을 편안하게 떠올려보세요.</p>
+      <div id="questions-tab2"></div>
+    </section>
+
+    <section id="tab3" class="panel">
+      <h2>나는 이렇게 살고 싶어요</h2>
+      <p class="desc">앞으로의 바람을 밝게 이야기해보세요.</p>
+      <div id="questions-tab3"></div>
+    </section>
+
+    <div class="bottom-tools">
+      <button class="tool-btn" id="makePromptBtn">프롬프트 만들기</button>
+      <button class="tool-btn secondary" id="copyBtn">복사하기</button>
+      <button class="tool-btn secondary" id="openGemBtn">재미나이 스토리북젬 열기</button>
+      <button class="tool-btn secondary" id="resetBtn">모든 내용 지우기</button>
+    </div>
+
+    <div class="output-title">그림책 만들기 명령문</div>
+    <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과"></div>
+  </div>
+
+  <script>
+    const GEM_URL = 'https://gemini.google.com/gem/storybook';
+
+    const questionSets = {
+      tab1: [
+        '이름을 적어주세요.',
+        '성별을 선택해주세요.',
+        '사람들이 나를 어떻게 생각하나요?',
+        '내가 좋아하는 것은 무엇인가요?',
+        '나는 요즘 무엇을 하며 지내나요?',
+        '내가 하면 잘 되는 것은 무엇인가요?',
+        '내가 꼭 지키고 싶은 것은 무엇인가요?'
+      ],
+      tab2: [
+        '이름을 적어주세요.',
+        '성별을 선택해주세요.',
+        '가장 행복했던 순간은 언제인가요?',
+        '그때 누구와 함께였나요?',
+        '가장 기억나는 장면은 무엇인가요?',
+        '그때 기분은 어땠나요?',
+        '그때 나는 어떤 마음이었나요?'
+      ],
+      tab3: [
+        '이름을 적어주세요.',
+        '성별을 선택해주세요.',
+        '앞으로 하고 싶은 일은 무엇인가요?',
+        '가보고 싶은 곳은 어디인가요?',
+        '누구와 함께 하고 싶나요?',
+        '아침에 눈 뜨면 어떤 하루였으면 좋겠나요?',
+        '앞으로 나에게 해주고 싶은 응원 한마디는?'
+      ]
+    };
+
+    const placeholderSets = {
+      tab1: [
+        '예: 김영자',
+        '예: 여성',
+        '예: 따뜻하고 성실한 사람이라고 해요',
+        '예: 산책하고 손주 만나는 것을 좋아해요',
+        '예: 운동도 하고 책도 읽으며 지내요',
+        '예: 음식을 정성껏 만드는 것을 잘해요',
+        '예: 가족의 건강과 평안을 지키고 싶어요'
+      ],
+      tab2: [
+        '예: 김영자',
+        '예: 여성',
+        '예: 손주가 태어났을 때가 가장 행복했어요',
+        '예: 가족들과 함께 있었어요',
+        '예: 모두가 웃으며 축하하던 모습이 떠올라요',
+        '예: 정말 기쁘고 마음이 따뜻했어요',
+        '예: 살아온 보람을 느끼는 마음이었어요'
+      ],
+      tab3: [
+        '예: 김영자',
+        '예: 여성',
+        '예: 건강하게 지내며 여행도 하고 싶어요',
+        '예: 바다가 보이는 곳에 가보고 싶어요',
+        '예: 가족이나 친구와 함께 가고 싶어요',
+        '예: 아침에 웃으며 시작하는 하루면 좋겠어요',
+        '예: 잘 살아왔으니 앞으로도 행복하자'
+      ]
+    };
+
+    const tabTitles = {
+      tab1: '나를 소개합니다',
+      tab2: '나의 행복을 자랑합니다',
+      tab3: '나는 이렇게 살고 싶어요'
+    };
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let activeRecognition = null;
+    let activeMicButton = null;
+    let activeStatus = null;
+
+    function saveData() {
+      const data = {};
+      document.querySelectorAll('.answer-box').forEach(box => {
+        data[box.id] = box.value;
+      });
+      localStorage.setItem('aiStoryVoiceAnswers', JSON.stringify(data));
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem('aiStoryVoiceAnswers');
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        Object.keys(data).forEach(id => {
+          const box = document.getElementById(id);
+          if (box) box.value = data[id];
+        });
+        refreshGenderSelections();
+      } catch (e) {
+        console.error('저장 데이터 불러오기 실패', e);
+      }
+    }
+
+    function createQuestionCards() {
+      Object.keys(questionSets).forEach(tabKey => {
+        const wrap = document.getElementById(`questions-${tabKey}`);
+        questionSets[tabKey].forEach((question, index) => {
+          const qNum = index + 1;
+          const answerId = `${tabKey}-q${qNum}`;
+          const statusId = `${tabKey}-status${qNum}`;
+          const placeholder = placeholderSets[tabKey][index] || '예: 천천히 말씀해주세요.';
+
+          const card = document.createElement('div');
+          card.className = 'question-card';
+
+          if (qNum === 2) {
+            card.innerHTML = `
+              <div class="question-title">${qNum}. ${question}</div>
+              <div class="answer-row">
+                <div class="gender-wrap">
+                  <div class="gender-buttons">
+                    <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남성">남성</button>
+                    <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여성">여성</button>
+                  </div>
+                  <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}"></textarea>
+                </div>
+              </div>
+              <div class="status" id="${statusId}"></div>
+            `;
+          } else {
+            card.innerHTML = `
+              <div class="question-title">${qNum}. ${question}</div>
+              <div class="answer-row">
+                <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}"></textarea>
+                <button class="mic-btn" type="button" aria-label="음성 입력 시작" data-target="${answerId}" data-status="${statusId}">🎤</button>
+              </div>
+              <div class="status" id="${statusId}"></div>
+            `;
+          }
+
+          wrap.appendChild(card);
+        });
+      });
+    }
+
+    function stopCurrentRecognition() {
+      if (activeRecognition) {
+        try { activeRecognition.stop(); } catch (e) {}
+      }
+      if (activeMicButton) {
+        activeMicButton.classList.remove('recording');
+        activeMicButton.textContent = '🎤';
+        activeMicButton.setAttribute('aria-label', '음성 입력 시작');
+      }
+      activeRecognition = null;
+      activeMicButton = null;
+      activeStatus = null;
+    }
+
+    function startVoiceInput(targetId, statusId, micButton) {
+      const textarea = document.getElementById(targetId);
+      const statusEl = document.getElementById(statusId);
+
+      if (!SpeechRecognition) {
+        statusEl.textContent = '이 기기에서는 음성 입력이 지원되지 않습니다.';
+        return;
+      }
+
+      if (activeMicButton === micButton && activeRecognition) {
+        stopCurrentRecognition();
+        return;
+      }
+
+      stopCurrentRecognition();
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ko-KR';
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+      recognition.continuous = false;
+
+      let finalTranscript = '';
+      let silenceTimer = null;
+      const originalValue = textarea.value.trim();
+
+      activeRecognition = recognition;
+      activeMicButton = micButton;
+      activeStatus = statusEl;
+
+      micButton.classList.add('recording');
+      micButton.textContent = '⏹';
+      micButton.setAttribute('aria-label', '녹음 중지');
+      statusEl.textContent = '녹음 중입니다.';
+
+      recognition.onresult = function(event) {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcriptPiece = event.results[i][0].transcript.trim();
+          if (event.results[i].isFinal) {
+            finalTranscript += (finalTranscript ? ' ' : '') + transcriptPiece;
+          } else {
+            interimTranscript += (interimTranscript ? ' ' : '') + transcriptPiece;
+          }
+        }
+
+        const combined = [originalValue, finalTranscript, interimTranscript].filter(Boolean).join(' ');
+        textarea.value = combined;
+
+        if (silenceTimer) clearTimeout(silenceTimer);
+        silenceTimer = setTimeout(() => {
+          try { recognition.stop(); } catch (e) {}
+        }, 1800);
+      };
+
+      recognition.onerror = function(event) {
+        if (silenceTimer) clearTimeout(silenceTimer);
+        let message = '음성 입력에 문제가 생겼습니다.';
+        if (event.error === 'not-allowed') {
+          message = '마이크 권한을 허용해주세요.';
+        } else if (event.error === 'no-speech') {
+          message = '말씀이 들리지 않았습니다. 다시 눌러주세요.';
+        } else if (event.error === 'audio-capture') {
+          message = '마이크를 찾을 수 없습니다.';
+        }
+        statusEl.textContent = message;
+      };
+
+      recognition.onend = function() {
+        if (silenceTimer) clearTimeout(silenceTimer);
+        textarea.value = textarea.value.trim();
+        saveData();
+        if (textarea.value) {
+          statusEl.textContent = '입력이 완료되었습니다.';
+        }
+        if (activeMicButton === micButton) {
+          micButton.classList.remove('recording');
+          micButton.textContent = '🎤';
+          micButton.setAttribute('aria-label', '음성 입력 시작');
+          activeRecognition = null;
+          activeMicButton = null;
+          activeStatus = null;
+        }
+      };
+
+      recognition.start();
+    }
+
+    function setupTabs() {
+      const buttons = document.querySelectorAll('.tab-btn');
+      const panels = document.querySelectorAll('.panel');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.tab;
+          buttons.forEach(btn => btn.classList.remove('active'));
+          panels.forEach(panel => panel.classList.remove('active'));
+          button.classList.add('active');
+          document.getElementById(target).classList.add('active');
+        });
+      });
+    }
+
+    function setupMicButtons() {
+      document.addEventListener('click', function(e) {
+        const micButton = e.target.closest('.mic-btn');
+        if (micButton) {
+          const targetId = micButton.dataset.target;
+          const statusId = micButton.dataset.status;
+          startVoiceInput(targetId, statusId, micButton);
+          return;
+        }
+
+        const genderButton = e.target.closest('.gender-btn');
+        if (genderButton) {
+          const targetId = genderButton.dataset.target;
+          const value = genderButton.dataset.value;
+          setGenderValue(targetId, value);
+        }
+      });
+    }
+
+    function setGenderValue(targetId, value) {
+      const textarea = document.getElementById(targetId);
+      if (!textarea) return;
+      textarea.value = value;
+      saveData();
+      refreshGenderSelections();
+    }
+
+    function refreshGenderSelections() {
+      document.querySelectorAll('.gender-btn').forEach(btn => {
+        const targetId = btn.dataset.target;
+        const value = btn.dataset.value;
+        const textarea = document.getElementById(targetId);
+        btn.classList.toggle('selected', textarea && textarea.value === value);
+      });
+    }
+
+    function buildThemeGuide(tabKey) {
+      if (tabKey === 'tab1') {
+        return '이 그림책의 주제는 "나를 소개합니다"입니다. 주인공이 어떤 사람인지, 무엇을 좋아하는지, 요즘 어떻게 지내는지, 무엇을 잘하는지, 무엇을 소중하게 여기는지를 따뜻하고 친근하게 보여주세요.';
+      }
+      if (tabKey === 'tab2') {
+        return '이 그림책의 주제는 "나의 행복을 자랑합니다"입니다. 가장 행복했던 순간, 함께한 사람, 기억나는 장면, 감정, 그리고 그때의 마음이 자연스럽게 드러나도록 써주세요.';
+      }
+      return '이 그림책의 주제는 "나는 이렇게 살고 싶어요"입니다. 앞으로 하고 싶은 일, 가고 싶은 곳, 함께하고 싶은 사람, 바라는 하루, 스스로에게 해주고 싶은 응원을 희망적으로 담아주세요.';
+    }
+
+    function compileCurrentAnswers() {
+      const activePanel = document.querySelector('.panel.active');
+      const key = activePanel.id;
+      const title = tabTitles[key];
+      const answers = questionSets[key].map((q, i) => {
+        return document.getElementById(`${key}-q${i + 1}`).value.trim();
+      });
+
+      const [name, gender, a3, a4, a5, a6, a7] = answers;
+
+      const prompt = `당신은 어르신의 삶을 따뜻하게 담아내는 그림책 작가입니다.\n\n이 그림책의 목표는 경도의 인지장애가 있으신 어르신들이 자신의 인생 이야기와 감정을 통해 삶의 가치, 사랑, 희망, 소망을 자연스럽게 표현하도록 돕는 것입니다. 밝고 따뜻하고 이해하기 쉬운 그림책을 만들어 주세요.\n\n다음 정보를 바탕으로 표지를 포함한 총 5페이지 그림책을 만들어 주세요.\n\n[그림책 주제]\n${title}\n\n[작성 방향]\n${buildThemeGuide(key)}\n\n[주인공]\n이름: ${name || '이름 미입력'}\n성별: ${gender || '성별 미입력'}\n\n[어르신 답변 정보]\n- 답변 1: ${a3 || '미입력'}\n- 답변 2: ${a4 || '미입력'}\n- 답변 3: ${a5 || '미입력'}\n- 답변 4: ${a6 || '미입력'}\n- 답변 5: ${a7 || '미입력'}\n\n[규칙]\n1. 글은 한글로 작성합니다.\n2. 문장은 짧고 부드럽고 따뜻하게 작성합니다.\n3. 어려운 말은 쓰지 않습니다.\n4. 주인공을 존중하는 말투로 씁니다.\n5. 표지를 포함한 총 5페이지로 구성합니다.\n6. 각 페이지마다 다음 형식으로 씁니다.\n   - 제목\n   - 내용\n7. 어르신의 입력이 짧거나 조금 불완전해도 자연스럽게 보완하되, 과장하지 말고 따뜻하게 연결해 주세요.\n8. 이야기 전체 분위기는 포근하고 희망적이어야 합니다.\n9. 마지막 페이지는 편안하고 밝은 마무리로 끝나게 해 주세요.\n10. 문장은 매우 쉬운 단어를 사용하고, 한 문장은 10~15자 정도로 짧게 작성하세요.\n11. 각 페이지는 읽었을 때 편안하고 리듬감 있게 구성해주세요.\n12. 주인공이 스스로를 긍정적으로 느낄 수 있도록 따뜻한 표현을 사용해주세요.\n13. 이야기 속에서 주인공이 잘 살아온 사람이라는 느낌이 자연스럽게 드러나게 해주세요.\n\n[출력 형식]\n제목:\n\n표지\n내용:\n\n1페이지\n내용:\n\n2페이지\n내용:\n\n3페이지\n내용:\n\n4페이지\n내용:`;
+
+      document.getElementById('compiledOutput').textContent = prompt;
+    }
+
+    function copyCompiledText() {
+      const text = document.getElementById('compiledOutput').textContent.trim();
+      if (!text) {
+        alert('먼저 프롬프트 만들기 버튼을 눌러주세요.');
+        return;
+      }
+      navigator.clipboard.writeText(text)
+        .then(() => alert('명령문을 복사했습니다.'))
+        .catch(() => alert('복사에 실패했습니다. 직접 길게 눌러 복사해주세요.'));
+    }
+
+    function openGemPage() {
+      window.open(GEM_URL, '_blank');
+    }
+
+    function resetAllAnswers() {
+      if (!confirm('모든 내용을 지울까요?')) return;
+      document.querySelectorAll('.answer-box').forEach(box => box.value = '');
+      document.getElementById('compiledOutput').textContent = '';
+      localStorage.removeItem('aiStoryVoiceAnswers');
+      stopCurrentRecognition();
+      refreshGenderSelections();
+    }
+
+    function setupInputs() {
+      document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('answer-box')) {
+          saveData();
+          refreshGenderSelections();
+        }
+      });
+    }
+
+    createQuestionCards();
+    setupTabs();
+    setupMicButtons();
+    setupInputs();
+    loadData();
+
+    document.getElementById('makePromptBtn').addEventListener('click', compileCurrentAnswers);
+    document.getElementById('copyBtn').addEventListener('click', copyCompiledText);
+    document.getElementById('openGemBtn').addEventListener('click', openGemPage);
+    document.getElementById('resetBtn').addEventListener('click', resetAllAnswers);
+  </script>
 </body>
 </html>
