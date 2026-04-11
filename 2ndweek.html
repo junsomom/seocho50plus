@@ -37,7 +37,7 @@
       font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       background: var(--light-bg);
       color: var(--text-main);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     header {
@@ -47,8 +47,8 @@
       background: var(--primary);
       color: white;
       text-align: center;
-      padding: 16px 12px;
-      font-size: 22px;
+      padding: 18px 14px;
+      font-size: 24px;
       font-weight: 700;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
     }
@@ -56,40 +56,40 @@
     .container {
       max-width: 860px;
       margin: 0 auto;
-      padding: 14px;
+      padding: 16px;
     }
 
     .panel {
       background: var(--card-bg);
-      border-radius: 22px;
-      padding: 18px;
+      border-radius: 24px;
+      padding: 20px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
     .panel h2 {
-      margin: 0 0 8px;
-      font-size: 27px;
+      margin: 0 0 10px;
+      font-size: 28px;
       color: var(--primary-dark);
     }
 
     .panel p.desc {
-      margin: 0 0 18px;
-      font-size: 16px;
+      margin: 0 0 20px;
+      font-size: 17px;
       color: var(--text-sub);
     }
 
     .question-card {
       background: var(--soft-card);
       border: 1px solid #e1e5f5;
-      border-radius: 18px;
-      padding: 14px;
-      margin-bottom: 14px;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
 
     .question-title {
-      font-size: 19px;
+      font-size: 21px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .question-label {
@@ -99,11 +99,11 @@
 
     .answer-box {
       width: 100%;
-      min-height: 68px;
+      min-height: 78px;
       border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 18px;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 19px;
       resize: vertical;
       outline: none;
       background: #fff;
@@ -127,16 +127,17 @@
 
     .answer-actions {
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-top: 12px;
     }
 
     .mini-btn {
       flex: 1;
       border: none;
-      border-radius: 14px;
-      padding: 12px 10px;
-      font-size: 16px;
+      border-radius: 16px;
+      min-height: 56px;
+      padding: 14px 10px;
+      font-size: 18px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
@@ -176,9 +177,9 @@
 
     .status {
       margin-top: 8px;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-sub);
-      min-height: 22px;
+      min-height: 24px;
     }
 
     .gender-wrap {
@@ -195,9 +196,10 @@
     .gender-btn {
       flex: 1;
       border: none;
-      border-radius: 14px;
+      border-radius: 16px;
+      min-height: 58px;
       padding: 14px 12px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
@@ -220,17 +222,18 @@
     }
 
     .tool-section {
-      margin-top: 18px;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .tool-btn {
       border: none;
-      border-radius: 16px;
+      border-radius: 18px;
+      min-height: 62px;
       padding: 16px 18px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
@@ -252,57 +255,73 @@
     }
 
     .output-title {
-      margin-top: 14px;
+      margin-top: 16px;
       margin-bottom: 8px;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--primary-dark);
     }
 
     .output-box {
       width: 100%;
-      min-height: 260px;
+      min-height: 280px;
       border: 2px solid var(--border-color);
       border-radius: 18px;
       padding: 16px;
-      font-size: 17px;
+      font-size: 18px;
       background: #fff;
       white-space: pre-wrap;
       overflow-wrap: break-word;
     }
 
     .save-indicator {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--primary-dark);
-      min-height: 18px;
+      min-height: 20px;
       text-align: right;
       margin-top: 4px;
     }
 
     @media (max-width: 640px) {
       header {
-        font-size: 20px;
+        font-size: 21px;
+        padding: 16px 10px;
       }
 
       .panel h2 {
         font-size: 24px;
       }
 
+      .panel p.desc {
+        font-size: 16px;
+      }
+
       .question-title {
-        font-size: 17px;
+        font-size: 18px;
       }
 
       .answer-box {
-        font-size: 17px;
-        min-height: 64px;
+        font-size: 18px;
+        min-height: 72px;
       }
 
       .mini-btn {
-        font-size: 15px;
-        padding: 11px 8px;
+        min-height: 54px;
+        font-size: 16px;
+        padding: 12px 8px;
+      }
+
+      .gender-btn {
+        min-height: 56px;
+        font-size: 18px;
       }
 
       .tool-btn {
+        min-height: 58px;
+        font-size: 18px;
+      }
+
+      .output-box {
         font-size: 17px;
       }
     }
@@ -332,7 +351,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week2ThoughtPocket_v20_storybook_v2';
+    const STORAGE_KEY = 'week2ThoughtPocket_v20_storybook_v2_big';
 
     const questions = [
       '성함이 어떻게 되세요?',
