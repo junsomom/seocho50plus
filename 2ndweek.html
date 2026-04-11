@@ -18,11 +18,12 @@
       --example-active: #aed581;
       --mic-bg: #ffe0b2;
       --mic-recording: #ef9a9a;
+      --clear-bg: #eceff1;
+      --clear-text: #37474f;
       --male-bg: #bbdefb;
       --female-bg: #f8bbd0;
       --prompt-btn: #c5cae9;
-      --copy-btn: #b2dfdb;
-      --gem-btn: #ffe0b2;
+      --gemcopy-btn: #b2dfdb;
       --reset-btn: #f8bbd0;
       --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
     }
@@ -96,14 +97,8 @@
       margin-bottom: 8px;
     }
 
-    .answer-row {
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
-    }
-
     .answer-box {
-      flex: 1;
+      width: 100%;
       min-height: 68px;
       border: 2px solid var(--border-color);
       border-radius: 16px;
@@ -130,38 +125,45 @@
       box-shadow: var(--focus-ring);
     }
 
-    .mic-btn,
-    .example-btn {
+    .answer-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .mini-btn {
+      flex: 1;
       border: none;
       border-radius: 14px;
+      padding: 12px 10px;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
       transition: 0.2s ease;
-      font-weight: 700;
     }
 
-    .mic-btn {
-      width: 72px;
-      min-width: 72px;
-      font-size: 28px;
+    .mini-btn.mic-btn {
       background: var(--mic-bg);
     }
 
-    .mic-btn.recording {
+    .mini-btn.mic-btn.recording {
       background: var(--mic-recording);
-      color: white;
+      color: #fff;
       animation: pulse 1s infinite;
     }
 
-    .example-btn {
-      min-width: 68px;
-      padding: 0 12px;
-      font-size: 16px;
+    .mini-btn.clear-btn {
+      background: var(--clear-bg);
+      color: var(--clear-text);
+    }
+
+    .mini-btn.example-btn {
       background: var(--example-bg);
       color: #33691e;
     }
 
-    .example-btn.active {
+    .mini-btn.example-btn.active {
       background: var(--example-active);
       color: #1b5e20;
     }
@@ -180,7 +182,6 @@
     }
 
     .gender-wrap {
-      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -240,14 +241,9 @@
       color: #283593;
     }
 
-    .tool-btn.copy {
-      background: var(--copy-btn);
+    .tool-btn.gemcopy {
+      background: var(--gemcopy-btn);
       color: #004d40;
-    }
-
-    .tool-btn.gem {
-      background: var(--gem-btn);
-      color: #e65100;
     }
 
     .tool-btn.reset {
@@ -301,15 +297,9 @@
         min-height: 64px;
       }
 
-      .mic-btn {
-        width: 64px;
-        min-width: 64px;
-        font-size: 25px;
-      }
-
-      .example-btn {
-        min-width: 62px;
+      .mini-btn {
         font-size: 15px;
+        padding: 11px 8px;
       }
 
       .tool-btn {
@@ -324,26 +314,25 @@
   <div class="container">
     <section class="panel">
       <h2>나를 소개합니다</h2>
-      <p class="desc">질문을 보고, 마이크를 누르거나 직접 적어보세요.</p>
+      <p class="desc">질문을 보고, 말하거나 적어보세요.</p>
       <div id="questions-wrap"></div>
       <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
     </section>
 
     <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="프롬프트 생성하기">프롬프트 생성하기</button>
+      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="프롬프트 생성하기">✨ 프롬프트 생성하기</button>
 
       <div class="output-title">스토리북 프롬프트</div>
       <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
 
-      <button class="tool-btn copy" id="copyBtn" type="button" aria-label="프롬프트 복사하기">복사하기</button>
-      <button class="tool-btn gem" id="openGemBtn" type="button" aria-label="제미나이 스토리북 열기">제미나이 스토리북 열기</button>
-      <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">모두 지우기</button>
+      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 제미나이 스토리북 열기">📋✨ 복사하고 스토리북 열기</button>
+      <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
     </div>
   </div>
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week2ThoughtPocket_v20_storybook';
+    const STORAGE_KEY = 'week2ThoughtPocket_v20_storybook_v2';
 
     const questions = [
       '성함이 어떻게 되세요?',
@@ -358,9 +347,6 @@
       '그 시간에 무엇을 하고 계세요?',
       '그때 어디에 계세요?',
       '그때 기분은 어떠세요?',
-      '집에서 가장 좋아하는 자리는 어디인가요?',
-      '그 자리는 어떤 모습인가요?',
-      '그곳에서 무엇을 하고 계세요?',
       '좋아하는 음식은 무엇인가요?',
       '그 음식 누구와 함께 드시고 싶으세요?',
       '그건 어디에서 먹고 싶으세요?',
@@ -381,9 +367,6 @@
       '예: 차 마시고 있어요',
       '예: 거실 창가에 있어요',
       '예: 편안하고 좋아요',
-      '예: 창가 자리가 좋아요',
-      '예: 햇빛이 잘 들어와요',
-      '예: 앉아서 쉬고 있어요',
       '예: 김치찌개 좋아해요',
       '예: 손주랑 같이 먹고 싶어요',
       '예: 집에서 먹고 싶어요',
@@ -459,14 +442,12 @@
         if (qNum === 2) {
           card.innerHTML = `
             <div class="question-title">${qNum}. ${question}</div>
-            <div class="answer-row">
-              <div class="gender-wrap">
-                <div class="gender-buttons" role="radiogroup" aria-label="성별 선택">
-                  <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자예요" aria-label="남자 선택" aria-pressed="false">남자</button>
-                  <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여자예요" aria-label="여자 선택" aria-pressed="false">여자</button>
-                </div>
-                <input type="hidden" id="${answerId}" class="answer-box" />
+            <div class="gender-wrap">
+              <div class="gender-buttons" role="radiogroup" aria-label="성별 선택">
+                <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자예요" aria-label="남자 선택" aria-pressed="false">👨 남자</button>
+                <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여자예요" aria-label="여자 선택" aria-pressed="false">👩 여자</button>
               </div>
+              <input type="hidden" id="${answerId}" class="answer-box" />
             </div>
             <div class="status" id="${statusId}" aria-live="polite"></div>
           `;
@@ -475,10 +456,11 @@
             <label class="question-label" for="${answerId}">
               <div class="question-title">${qNum}. ${question}</div>
             </label>
-            <div class="answer-row">
-              <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}" aria-label="${question}"></textarea>
-              <button class="mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question} 음성 입력">🎤</button>
-              <button class="example-btn" type="button" data-target="${answerId}" data-example="${placeholder}" aria-label="${question} 예시 넣기">예시</button>
+            <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}" aria-label="${question}"></textarea>
+            <div class="answer-actions">
+              <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question} 음성 입력">🎤 말하기</button>
+              <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question} 지우기">🗑 지우기</button>
+              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${placeholder}" aria-label="${question} 예시 넣기">💡 예시</button>
             </div>
             <div class="status" id="${statusId}" aria-live="polite"></div>
           `;
@@ -498,7 +480,7 @@
       }
       if (activeMicButton) {
         activeMicButton.classList.remove('recording');
-        activeMicButton.textContent = '🎤';
+        activeMicButton.textContent = '🎤 말하기';
         activeMicButton.setAttribute('aria-label', '음성 입력');
       }
       activeRecognition = null;
@@ -537,7 +519,7 @@
       activeMicButton = micButton;
 
       micButton.classList.add('recording');
-      micButton.textContent = '⏹';
+      micButton.textContent = '⏹ 녹음중';
       micButton.setAttribute('aria-label', '녹음 중');
       statusEl.textContent = '녹음 중입니다.';
 
@@ -580,7 +562,7 @@
         if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
         if (activeMicButton === micButton) {
           micButton.classList.remove('recording');
-          micButton.textContent = '🎤';
+          micButton.textContent = '🎤 말하기';
           micButton.setAttribute('aria-label', '음성 입력');
         }
         activeRecognition = null;
@@ -593,6 +575,13 @@
         console.error('음성 인식 시작 실패:', error);
         statusEl.textContent = '음성 입력을 시작할 수 없습니다.';
       }
+    }
+
+    function clearAnswer(targetId) {
+      const textarea = document.getElementById(targetId);
+      if (!textarea) return;
+      textarea.value = '';
+      saveData();
     }
 
     function setGenderValue(targetId, value) {
@@ -619,6 +608,12 @@
         const micButton = e.target.closest('.mic-btn');
         if (micButton) {
           startVoiceInput(micButton.dataset.target, micButton.dataset.status, micButton);
+          return;
+        }
+
+        const clearBtn = e.target.closest('.clear-btn');
+        if (clearBtn) {
+          clearAnswer(clearBtn.dataset.target);
           return;
         }
 
@@ -685,16 +680,12 @@
 그때 있는 장소: ${get(11) || '미입력'}
 그때의 기분: ${get(12) || '미입력'}
 
-집에서 좋아하는 자리: ${get(13) || '미입력'}
-그 자리의 모습: ${get(14) || '미입력'}
-그곳에서 하는 일: ${get(15) || '미입력'}
+좋아하는 음식: ${get(13) || '미입력'}
+함께 먹고 싶은 사람: ${get(14) || '미입력'}
+먹고 싶은 장소: ${get(15) || '미입력'}
 
-좋아하는 음식: ${get(16) || '미입력'}
-함께 먹고 싶은 사람: ${get(17) || '미입력'}
-먹고 싶은 장소: ${get(18) || '미입력'}
-
-좋아하는 사람과 하는 일: ${get(19) || '미입력'}
-전체 분위기: ${get(20) || '미입력'}
+좋아하는 사람과 하는 일: ${get(16) || '미입력'}
+전체 분위기: ${get(17) || '미입력'}
 
 [작성 방식]
 이 내용을 바탕으로
@@ -720,19 +711,20 @@
       }
     }
 
-    function copyPrompt() {
+    function copyAndOpenGem() {
       const text = document.getElementById('compiledOutput').textContent.trim();
       if (!text || text === '프롬프트를 만드는 중입니다...') {
         alert('먼저 프롬프트 생성하기 버튼을 눌러주세요.');
         return;
       }
-      navigator.clipboard.writeText(text)
-        .then(() => alert('프롬프트를 복사했습니다.'))
-        .catch(() => alert('복사에 실패했습니다. 길게 눌러 직접 복사해주세요.'));
-    }
 
-    function openGemPage() {
-      window.open(GEM_URL, '_blank');
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          window.open(GEM_URL, '_blank');
+        })
+        .catch(() => {
+          alert('복사에 실패했습니다. 다시 눌러주세요.');
+        });
     }
 
     function resetAll() {
@@ -766,8 +758,7 @@
     loadData();
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
-    document.getElementById('copyBtn').addEventListener('click', copyPrompt);
-    document.getElementById('openGemBtn').addEventListener('click', openGemPage);
+    document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenGem);
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
