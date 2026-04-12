@@ -477,7 +477,7 @@
       <div class="output-title">스토리북 프롬프트</div>
       <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
 
-      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 제미나이 스토리북 열기">📋✨ 복사하고 스토리북 열기</button>
+      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 제미나이 스토리북 열기">📋✨ 복사하고 제미나이 스토리북 열기</button>
       <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
     </div>
   </div>
@@ -549,8 +549,11 @@
 
         const storyMood = document.getElementById('storyMood');
         const imageStyle = document.getElementById('imageStyle');
+        const compiledOutput = document.getElementById('compiledOutput');
+
         if (storyMood) data.storyMood = storyMood.value;
         if (imageStyle) data.imageStyle = imageStyle.value;
+        if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         showSaveIndicator();
@@ -620,6 +623,13 @@
           document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
             btn.classList.toggle('selected', btn.dataset.value === data.imageStyle);
           });
+        }
+
+        if (data.compiledOutput) {
+          const compiledOutput = document.getElementById('compiledOutput');
+          if (compiledOutput) {
+            compiledOutput.textContent = data.compiledOutput;
+          }
         }
 
         refreshGenderSelections();
@@ -971,28 +981,46 @@ ${imageStyle}
 - 마지막은 행복하고 포근하게 마무리해 주세요`;
 
         output.textContent = prompt;
+        saveData();
       } catch (error) {
         console.error('프롬프트 생성 실패:', error);
         document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
       }
     }
 
-    function copyAndOpenGem() {
+    async function copyAndOpenGem() {
       const text = document.getElementById('compiledOutput').textContent.trim();
       if (!text || text === '프롬프트를 만드는 중입니다...') {
         alert('먼저 프롬프트 생성하기 버튼을 눌러주세요.');
         return;
       }
 
+      saveData();
+
+      let copied = false;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (error) {
+        console.error('복사 실패:', error);
+      }
+
       const newWindow = window.open(GEM_URL, '_blank');
 
-      navigator.clipboard.writeText(text)
-        .catch(() => {
-          alert('복사에 실패했습니다. 다시 눌러주세요.');
-        });
-
       if (!newWindow) {
-        alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        if (copied) {
+          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        } else {
+          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
+        }
+        return;
+      }
+
+      if (copied) {
+        alert('프롬프트를 복사했어요. 제미나이에서 길게 눌러 붙여넣기 해주세요.');
+      } else {
+        alert('제미나이는 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
       }
     }
 
@@ -1037,6 +1065,10 @@ ${imageStyle}
     function setupInputs() {
       document.addEventListener('input', function (e) {
         if (e.target.classList.contains('answer-box')) {
+          document.querySelectorAll(`.example-btn[data-target="${e.target.id}"]`).forEach(btn => {
+            btn.classList.remove('active');
+          });
+
           saveDataDebounced();
           updateCompletionState(e.target.id);
         }
