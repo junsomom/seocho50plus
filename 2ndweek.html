@@ -26,6 +26,8 @@
       --gemcopy-btn: #b2dfdb;
       --reset-btn: #f8bbd0;
       --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
+      --done-bg: #e8f5e9;
+      --done-text: #2e7d32;
     }
 
     * {
@@ -87,9 +89,36 @@
     }
 
     .question-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       font-size: 19px;
       font-weight: 700;
       margin-bottom: 10px;
+    }
+
+    .question-title-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .completion-badge {
+      display: none;
+      flex-shrink: 0;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--done-bg);
+      color: var(--done-text);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .completion-badge.show {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .question-label {
@@ -107,6 +136,7 @@
       resize: vertical;
       outline: none;
       background: #fff;
+      color: #111111;
     }
 
     .answer-box:focus {
@@ -115,8 +145,12 @@
     }
 
     .answer-box::placeholder {
-      color: #9e9e9e;
+      color: #b8b8b8;
       opacity: 1;
+    }
+
+    .answer-box:not(:placeholder-shown) {
+      border-color: #5c6bc0;
     }
 
     button:focus-visible,
@@ -221,6 +255,51 @@
       transform: translateY(-1px);
     }
 
+    .style-section {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .style-card {
+      background: var(--soft-card);
+      border: 1px solid #e1e5f5;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .style-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .style-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .style-btn {
+      border: none;
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 12px 10px;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      background: #eceff1;
+      color: #37474f;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .style-btn.selected {
+      background: var(--primary);
+      color: white;
+    }
+
     .tool-section {
       margin-top: 18px;
       display: flex;
@@ -282,6 +361,12 @@
       margin-top: 4px;
     }
 
+    @media (min-width: 720px) {
+      .style-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 640px) {
       header {
         font-size: 20px;
@@ -299,6 +384,11 @@
 
       .question-title {
         font-size: 17px;
+      }
+
+      .completion-badge {
+        font-size: 12px;
+        padding: 4px 7px;
       }
 
       .answer-box {
@@ -324,6 +414,16 @@
         padding: 10px 8px;
       }
 
+      .style-title {
+        font-size: 17px;
+      }
+
+      .style-btn {
+        min-height: 48px;
+        font-size: 15px;
+        padding: 10px 8px;
+      }
+
       .tool-btn {
         min-height: 52px;
         font-size: 17px;
@@ -345,6 +445,29 @@
       <h2>나를 소개합니다</h2>
       <p class="desc">질문을 보고, 말하거나 적어보세요.</p>
       <div id="questions-wrap"></div>
+
+      <div class="style-section">
+        <div class="style-card">
+          <div class="style-title">어떤 느낌의 이야기로 만들까요?</div>
+          <div class="style-options" id="storyMoodOptions">
+            <button type="button" class="style-btn selected" data-group="storyMood" data-value="밝고 즐거운 이야기">😊 밝고 즐거운 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="따뜻하고 감동적인 이야기">🌷 따뜻하고 감동적인 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="희망이 느껴지는 이야기">🌈 희망이 느껴지는 이야기</button>
+          </div>
+          <input type="hidden" id="storyMood" value="밝고 즐거운 이야기" />
+        </div>
+
+        <div class="style-card">
+          <div class="style-title">그림은 어떤 느낌이 좋으세요?</div>
+          <div class="style-options" id="imageStyleOptions">
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="따뜻한 동화 그림">🌿 따뜻한 동화 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="색연필 손그림">🎨 색연필 손그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="밝고 귀여운 그림">🌸 밝고 귀여운 그림</button>
+          </div>
+          <input type="hidden" id="imageStyle" value="따뜻한 동화 그림" />
+        </div>
+      </div>
+
       <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
     </section>
 
@@ -361,7 +484,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week2ThoughtPocket_v20_storybook_v2_big';
+    const STORAGE_KEY = 'week2ThoughtPocket_v5_done';
 
     const questions = [
       '성함이 어떻게 되세요?',
@@ -423,6 +546,12 @@
         document.querySelectorAll('.answer-box').forEach(box => {
           data[box.id] = box.value;
         });
+
+        const storyMood = document.getElementById('storyMood');
+        const imageStyle = document.getElementById('imageStyle');
+        if (storyMood) data.storyMood = storyMood.value;
+        if (imageStyle) data.imageStyle = imageStyle.value;
+
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         showSaveIndicator();
       } catch (error) {
@@ -441,16 +570,60 @@
 
     const saveDataDebounced = debounce(saveData, 500);
 
+    function updateCompletionState(targetId) {
+      const input = document.getElementById(targetId);
+      if (!input) return;
+
+      const num = targetId.replace('q', '');
+      const badge = document.getElementById(`complete-${num}`);
+      if (!badge) return;
+
+      const hasValue = !!input.value.trim();
+      badge.classList.toggle('show', hasValue);
+    }
+
+    function updateAllCompletionStates() {
+      for (let i = 1; i <= questions.length; i++) {
+        updateCompletionState(`q${i}`);
+      }
+    }
+
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
+        if (!raw) {
+          updateAllCompletionStates();
+          return;
+        }
         const data = JSON.parse(raw);
+
         Object.keys(data).forEach(id => {
           const el = document.getElementById(id);
-          if (el) el.value = data[id];
+          if (el && el.classList.contains('answer-box')) {
+            el.value = data[id];
+          }
         });
+
+        if (data.storyMood) {
+          const storyMoodInput = document.getElementById('storyMood');
+          if (storyMoodInput) storyMoodInput.value = data.storyMood;
+
+          document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.value === data.storyMood);
+          });
+        }
+
+        if (data.imageStyle) {
+          const imageStyleInput = document.getElementById('imageStyle');
+          if (imageStyleInput) imageStyleInput.value = data.imageStyle;
+
+          document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.value === data.imageStyle);
+          });
+        }
+
         refreshGenderSelections();
+        updateAllCompletionStates();
       } catch (error) {
         console.error('불러오기 실패:', error);
       }
@@ -470,7 +643,10 @@
 
         if (qNum === 2) {
           card.innerHTML = `
-            <div class="question-title">${qNum}. ${question}</div>
+            <div class="question-title">
+              <span class="question-title-text">${qNum}. ${question}</span>
+              <span class="completion-badge" id="complete-${qNum}">완료</span>
+            </div>
             <div class="gender-wrap">
               <div class="gender-buttons" role="radiogroup" aria-label="성별 선택">
                 <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자예요" aria-label="남자 선택" aria-pressed="false">👨 남자</button>
@@ -483,7 +659,10 @@
         } else {
           card.innerHTML = `
             <label class="question-label" for="${answerId}">
-              <div class="question-title">${qNum}. ${question}</div>
+              <div class="question-title">
+                <span class="question-title-text">${qNum}. ${question}</span>
+                <span class="completion-badge" id="complete-${qNum}">완료</span>
+              </div>
             </label>
             <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}" aria-label="${question}"></textarea>
             <div class="answer-actions">
@@ -588,6 +767,7 @@
         if (silenceTimer) clearTimeout(silenceTimer);
         textarea.value = textarea.value.trim();
         saveData();
+        updateCompletionState(targetId);
         if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
         if (activeMicButton === micButton) {
           micButton.classList.remove('recording');
@@ -609,8 +789,19 @@
     function clearAnswer(targetId) {
       const textarea = document.getElementById(targetId);
       if (!textarea) return;
+
+      if (activeMicButton && activeMicButton.dataset.target === targetId) {
+        stopCurrentRecognition();
+      }
+
       textarea.value = '';
+
+      document.querySelectorAll(`.example-btn[data-target="${targetId}"]`).forEach(btn => {
+        btn.classList.remove('active');
+      });
+
       saveData();
+      updateCompletionState(targetId);
     }
 
     function setGenderValue(targetId, value) {
@@ -619,6 +810,7 @@
       input.value = value;
       saveData();
       refreshGenderSelections();
+      updateCompletionState(targetId);
     }
 
     function refreshGenderSelections() {
@@ -630,6 +822,23 @@
         btn.classList.toggle('selected', selected);
         btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
       });
+    }
+
+    function setStyleValue(group, value, buttonEl) {
+      const hiddenInput = document.getElementById(group);
+      if (!hiddenInput) return;
+
+      hiddenInput.value = value;
+
+      document.querySelectorAll(`.style-btn[data-group="${group}"]`).forEach(btn => {
+        btn.classList.remove('selected');
+      });
+
+      if (buttonEl) {
+        buttonEl.classList.add('selected');
+      }
+
+      saveData();
     }
 
     function setupInteractions() {
@@ -655,6 +864,7 @@
             textarea.value = example;
             exampleBtn.classList.add('active');
             saveData();
+            updateCompletionState(targetId);
           }
           return;
         }
@@ -662,6 +872,14 @@
         const genderBtn = e.target.closest('.gender-btn');
         if (genderBtn) {
           setGenderValue(genderBtn.dataset.target, genderBtn.dataset.value);
+          return;
+        }
+
+        const styleBtn = e.target.closest('.style-btn');
+        if (styleBtn) {
+          const group = styleBtn.dataset.group;
+          const value = styleBtn.dataset.value;
+          setStyleValue(group, value, styleBtn);
         }
       });
     }
@@ -678,6 +896,8 @@
 
         const name = get(1);
         const gender = get(2);
+        const storyMood = document.getElementById('storyMood')?.value || '밝고 즐거운 이야기';
+        const imageStyle = document.getElementById('imageStyle')?.value || '따뜻한 동화 그림';
 
         const prompt = `당신은 따뜻한 감성의 그림책 작가입니다.
 
@@ -694,6 +914,12 @@
 [주인공]
 이름: ${name || '이름 미입력'}
 성별: ${gender || '성별 미입력'}
+
+[이야기 느낌]
+${storyMood}
+
+[그림 느낌]
+${imageStyle}
 
 [이야기 재료]
 나는 이런 사람입니다: ${get(3) || '미입력'}
@@ -724,6 +950,9 @@
 봄 햇살, 집 안의 편안함, 가족과 함께하는 따뜻함이
 눈에 보이듯 느껴지게 써주세요.
 
+이야기의 분위기는 선택한 느낌을 자연스럽게 반영해 주세요.
+그림은 선택한 그림 느낌이 떠오르도록 부드럽게 표현해 주세요.
+
 [이미지 표현 기준]
 주인공은 60대 초반의 건강하고 밝은 모습입니다.
 너무 나이가 많아 보이지 않게 자연스럽고 부드러운 인상으로 표현해 주세요.
@@ -736,6 +965,8 @@
 - 어려운 단어는 사용하지 않습니다
 - 장면이 떠오르도록 구체적으로 표현해 주세요
 - 따뜻하고 편안한 분위기로 써주세요
+- 이야기 분위기는 "${storyMood}" 느낌으로 표현해 주세요
+- 그림은 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 써주세요
 - 주인공이 소중한 사람이라는 느낌이 들게 해주세요
 - 마지막은 행복하고 포근하게 마무리해 주세요`;
 
@@ -753,29 +984,53 @@
         return;
       }
 
+      const newWindow = window.open(GEM_URL, '_blank');
+
       navigator.clipboard.writeText(text)
-        .then(() => {
-          window.open(GEM_URL, '_blank');
-        })
         .catch(() => {
           alert('복사에 실패했습니다. 다시 눌러주세요.');
         });
+
+      if (!newWindow) {
+        alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+      }
     }
 
     function resetAll() {
       if (!confirm('모든 내용을 지울까요?')) return;
+
       document.querySelectorAll('.answer-box').forEach(box => {
         box.value = '';
       });
-      document.querySelectorAll('.example-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.querySelectorAll('.example-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
       document.getElementById('compiledOutput').textContent = '';
+
+      const storyMoodInput = document.getElementById('storyMood');
+      const imageStyleInput = document.getElementById('imageStyle');
+      if (storyMoodInput) storyMoodInput.value = '밝고 즐거운 이야기';
+      if (imageStyleInput) imageStyleInput.value = '따뜻한 동화 그림';
+
+      document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === '밝고 즐거운 이야기');
+      });
+
+      document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === '따뜻한 동화 그림');
+      });
+
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch (error) {
         console.error('저장 삭제 실패:', error);
       }
+
       stopCurrentRecognition();
       refreshGenderSelections();
+      updateAllCompletionStates();
       showSaveIndicator('모두 지워졌어요');
     }
 
@@ -783,6 +1038,7 @@
       document.addEventListener('input', function (e) {
         if (e.target.classList.contains('answer-box')) {
           saveDataDebounced();
+          updateCompletionState(e.target.id);
         }
       });
     }
@@ -797,4 +1053,4 @@
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-</html>
+  </html>
