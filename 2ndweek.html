@@ -20,14 +20,17 @@
       --mic-recording: #ef9a9a;
       --clear-bg: #eceff1;
       --clear-text: #37474f;
-      --male-bg: #bbdefb;
-      --female-bg: #f8bbd0;
       --prompt-btn: #c5cae9;
       --gemcopy-btn: #b2dfdb;
       --reset-btn: #f8bbd0;
       --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
       --done-bg: #e8f5e9;
       --done-text: #2e7d32;
+      --photo-bg: #fff8e1;
+      --photo-btn: #ffe082;
+      --photo-remove: #ffccbc;
+      --male-bg: #bbdefb;
+      --female-bg: #f8bbd0;
     }
 
     * {
@@ -75,9 +78,19 @@
     }
 
     .panel p.desc {
-      margin: 0 0 16px;
+      margin: 0 0 8px;
       font-size: 16px;
       color: var(--text-sub);
+    }
+
+    .guide-box {
+      margin: 0 0 16px;
+      background: #eef3ff;
+      color: #3949ab;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 600;
     }
 
     .question-card {
@@ -101,6 +114,13 @@
     .question-title-text {
       flex: 1;
       min-width: 0;
+    }
+
+    .question-sub {
+      margin-top: -2px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text-sub);
     }
 
     .completion-badge {
@@ -154,7 +174,8 @@
     }
 
     button:focus-visible,
-    textarea:focus-visible {
+    textarea:focus-visible,
+    input:focus-visible {
       outline: none;
       box-shadow: var(--focus-ring);
     }
@@ -203,19 +224,6 @@
       color: #1b5e20;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-      100% { transform: scale(1); }
-    }
-
-    .status {
-      margin-top: 6px;
-      font-size: 14px;
-      color: var(--text-sub);
-      min-height: 20px;
-    }
-
     .gender-wrap {
       display: flex;
       flex-direction: column;
@@ -253,6 +261,78 @@
     .gender-btn.selected {
       outline: 3px solid var(--primary);
       transform: translateY(-1px);
+    }
+
+    .photo-card {
+      background: var(--photo-bg);
+      border: 1px solid #ffe0b2;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .photo-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .photo-btn {
+      flex: 1;
+      min-width: 140px;
+      border: none;
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 12px 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .photo-btn.capture {
+      background: var(--photo-btn);
+      color: #6d4c41;
+    }
+
+    .photo-btn.remove {
+      background: var(--photo-remove);
+      color: #bf360c;
+    }
+
+    .photo-input {
+      display: none;
+    }
+
+    .photo-preview-wrap {
+      margin-top: 12px;
+      display: none;
+    }
+
+    .photo-preview-wrap.show {
+      display: block;
+    }
+
+    .photo-preview {
+      width: 100%;
+      max-width: 280px;
+      border-radius: 16px;
+      border: 2px solid #e0e0e0;
+      display: block;
+    }
+
+    .photo-info {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+
+    .status {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-sub);
+      min-height: 20px;
     }
 
     .style-section {
@@ -343,7 +423,7 @@
 
     .output-box {
       width: 100%;
-      min-height: 250px;
+      min-height: 340px;
       border: 2px solid var(--border-color);
       border-radius: 16px;
       padding: 14px;
@@ -359,6 +439,12 @@
       min-height: 18px;
       text-align: right;
       margin-top: 4px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
     }
 
     @media (min-width: 720px) {
@@ -379,7 +465,11 @@
 
       .panel p.desc {
         font-size: 15px;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
+      }
+
+      .guide-box {
+        font-size: 14px;
       }
 
       .question-title {
@@ -402,7 +492,8 @@
         margin-top: 8px;
       }
 
-      .mini-btn {
+      .mini-btn,
+      .photo-btn {
         min-height: 48px;
         font-size: 15px;
         padding: 10px 6px;
@@ -432,7 +523,7 @@
 
       .output-box {
         font-size: 16px;
-        min-height: 220px;
+        min-height: 280px;
       }
     }
   </style>
@@ -443,12 +534,43 @@
   <div class="container">
     <section class="panel">
       <h2>나를 소개합니다</h2>
-      <p class="desc">질문을 보고, 말하거나 적어보세요.</p>
+      <p class="desc">질문을 보고, 떠오르는 대로 짧게 적거나 말해보세요.</p>
+      <div class="guide-box">길게 쓰지 않아도 됩니다. 한 줄이면 충분합니다 😊</div>
+
       <div id="questions-wrap"></div>
+
+      <div class="photo-card">
+        <div class="question-title">
+          <span class="question-title-text">15. 내 사진 또는 좋아하는 사진을 찍어주세요</span>
+          <span class="completion-badge" id="photoComplete">완료</span>
+        </div>
+        <div class="question-sub">사진은 프롬프트 글 안에 들어가지는 않지만, 제미나이 스토리북에서 함께 참고하도록 요청할 수 있어요.</div>
+
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          id="photoInput"
+          class="photo-input"
+          aria-label="사진 찍기 또는 사진 선택"
+        />
+
+        <div class="photo-actions">
+          <button type="button" class="photo-btn capture" id="capturePhotoBtn">📸 사진 찍기</button>
+          <button type="button" class="photo-btn remove" id="removePhotoBtn">🗑 사진 지우기</button>
+        </div>
+
+        <div class="photo-preview-wrap" id="photoPreviewWrap">
+          <img id="photoPreview" class="photo-preview" alt="선택한 사진 미리보기" />
+          <div class="photo-info" id="photoInfo"></div>
+        </div>
+
+        <div class="status" id="photoStatus" aria-live="polite"></div>
+      </div>
 
       <div class="style-section">
         <div class="style-card">
-          <div class="style-title">어떤 느낌의 이야기로 만들까요?</div>
+          <div class="style-title">어떤 느낌의 동화책으로 만들까요?</div>
           <div class="style-options" id="storyMoodOptions">
             <button type="button" class="style-btn selected" data-group="storyMood" data-value="밝고 즐거운 이야기">😊 밝고 즐거운 이야기</button>
             <button type="button" class="style-btn" data-group="storyMood" data-value="따뜻하고 감동적인 이야기">🌷 따뜻하고 감동적인 이야기</button>
@@ -484,52 +606,86 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week2ThoughtPocket_v5_done';
+    const STORAGE_KEY = 'week2ThoughtPocket_v9_final_checked';
 
     const questions = [
-      '성함이 어떻게 되세요?',
-      '남자세요, 여자세요?',
-      '주변에서 나를 어떤 사람이라고 하나요?',
-      '좋아하는 계절은 언제세요?',
-      '그 계절에는 어디 가고 싶으세요?',
-      '그곳은 어떤 곳인가요?',
-      '거기 가시면 무엇을 하고 싶으세요?',
-      '그때 날씨는 어떤 느낌이면 좋으세요?',
-      '하루 중 좋아하는 시간은 언제세요?',
-      '그 시간에 무엇을 하고 계세요?',
-      '그때 어디에 계세요?',
-      '그때 기분은 어떠세요?',
-      '좋아하는 음식은 무엇인가요?',
-      '그 음식 누구와 함께 드시고 싶으세요?',
-      '그건 어디에서 먹고 싶으세요?',
-      '좋아하는 사람과 함께 있을 때 무엇을 하고 계세요?',
-      '그때 분위기는 어떤가요?'
-    ];
-
-    const placeholders = [
-      '예: 김영자예요',
-      '예: 여자예요',
-      '예: 따뜻한 사람이라고 해요',
-      '예: 봄이 좋아요',
-      '예: 벚꽃 공원 가고 싶어요',
-      '예: 꽃이 많고 조용한 곳이에요',
-      '예: 천천히 걸으면서 구경하고 싶어요',
-      '예: 햇살이 따뜻하면 좋겠어요',
-      '예: 아침이 좋아요',
-      '예: 차 마시고 있어요',
-      '예: 거실 창가에 있어요',
-      '예: 편안하고 좋아요',
-      '예: 김치찌개 좋아해요',
-      '예: 손주랑 같이 먹고 싶어요',
-      '예: 집에서 먹고 싶어요',
-      '예: 이야기하고 있어요',
-      '예: 웃으면서 행복해요'
+      {
+        title: '내 이름은 무엇인가요?',
+        sub: '',
+        placeholder: '예: 김영자'
+      },
+      {
+        title: '남자세요, 여자세요?',
+        sub: '',
+        type: 'gender'
+      },
+      {
+        title: '나는 어디에 살고 있나요?',
+        sub: '',
+        placeholder: '예: 서울 서초구'
+      },
+      {
+        title: '함께 지내거나 가까운 소중한 존재는 누구인가요?',
+        sub: '가족, 친구, 이웃, 강아지나 고양이도 괜찮아요',
+        placeholder: '예: 강아지와 함께 지내는 시간이 가장 소중해요'
+      },
+      {
+        title: '예전의 나는 어떤 모습으로 살고 있었나요?',
+        sub: '자랑스럽게 떠올려 보세요',
+        placeholder: '예: 바쁘게 일하며 아이를 키우던 사람이었어요'
+      },
+      {
+        title: '그때 나는 무엇을 하며 지냈나요?',
+        sub: '직업, 생활, 하루 모습도 좋습니다',
+        placeholder: '예: 장사를 하며 열심히 살았어요'
+      },
+      {
+        title: '요즘 나는 무엇을 할 때 기분이 좋나요?',
+        sub: '지금 좋아하는 순간을 떠올려 보세요',
+        placeholder: '예: 산책할 때 마음이 편안해요'
+      },
+      {
+        title: '어릴 적 꿈은 무엇이었나요?',
+        sub: '',
+        placeholder: '예: 선생님이 되고 싶었어요'
+      },
+      {
+        title: '어린 시절 가장 기억에 남는 장소나 장면은 무엇인가요?',
+        sub: '그림처럼 떠오르는 장면이면 더 좋아요',
+        placeholder: '예: 친구들과 뛰어놀던 운동장이 생각나요'
+      },
+      {
+        title: '나는 무엇을 할 때 즐겁고 잘한다고 느끼나요?',
+        sub: '좋아하는 것과 잘하는 것을 떠올려보세요',
+        placeholder: '예: 노래를 부를 때 즐겁고 자신 있어요'
+      },
+      {
+        title: '나에게 가장 소중한 것은 무엇인가요?',
+        sub: '',
+        placeholder: '예: 가족과 건강이 가장 소중해요'
+      },
+      {
+        title: '앞으로 나는 어떻게 살고 싶나요?',
+        sub: '',
+        placeholder: '예: 건강하게 여행하며 살고 싶어요'
+      },
+      {
+        title: '내가 좋아하는 옷차림이나 모습은 무엇인가요?',
+        sub: '그림 속 모습이 더 자연스러워져요',
+        placeholder: '예: 편안한 옷을 입고 웃고 있는 모습이 좋아요'
+      },
+      {
+        title: '내가 좋아하는 계절은 언제인가요?',
+        sub: '배경 분위기를 만드는 데 도움이 돼요',
+        placeholder: '예: 봄, 꽃이 피는 계절이 좋아요'
+      }
     ];
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let activeRecognition = null;
     let activeMicButton = null;
     let saveIndicatorTimer = null;
+    let photoSelected = false;
 
     function showSaveIndicator(message = '자동 저장됨') {
       const el = document.getElementById('saveIndicator');
@@ -554,6 +710,8 @@
         if (storyMood) data.storyMood = storyMood.value;
         if (imageStyle) data.imageStyle = imageStyle.value;
         if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
+
+        data.photoSelected = photoSelected;
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         showSaveIndicator();
@@ -585,10 +743,28 @@
       badge.classList.toggle('show', hasValue);
     }
 
+    function updatePhotoCompletionState() {
+      const badge = document.getElementById('photoComplete');
+      if (!badge) return;
+      badge.classList.toggle('show', photoSelected);
+    }
+
     function updateAllCompletionStates() {
       for (let i = 1; i <= questions.length; i++) {
         updateCompletionState(`q${i}`);
       }
+      updatePhotoCompletionState();
+    }
+
+    function refreshGenderSelections() {
+      document.querySelectorAll('.gender-btn').forEach(btn => {
+        const targetId = btn.dataset.target;
+        const value = btn.dataset.value;
+        const input = document.getElementById(targetId);
+        const selected = !!(input && input.value === value);
+        btn.classList.toggle('selected', selected);
+        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
     }
 
     function loadData() {
@@ -598,6 +774,7 @@
           updateAllCompletionStates();
           return;
         }
+
         const data = JSON.parse(raw);
 
         Object.keys(data).forEach(id => {
@@ -632,6 +809,14 @@
           }
         }
 
+        // 사진은 보안상 복원 불가. 완료 표시도 띄우지 않음.
+        if (data.photoSelected) {
+          photoSelected = false;
+          document.getElementById('photoStatus').textContent = '이전에 사진을 선택하셨다면, 보안상 다시 사진을 골라주세요.';
+          document.getElementById('photoInfo').textContent = '';
+          document.getElementById('photoPreviewWrap').classList.remove('show');
+        }
+
         refreshGenderSelections();
         updateAllCompletionStates();
       } catch (error) {
@@ -646,21 +831,20 @@
         const qNum = index + 1;
         const answerId = `q${qNum}`;
         const statusId = `status${qNum}`;
-        const placeholder = placeholders[index] || '예: 떠오르는 대로 말씀해주세요';
 
         const card = document.createElement('div');
         card.className = 'question-card';
 
-        if (qNum === 2) {
+        if (question.type === 'gender') {
           card.innerHTML = `
             <div class="question-title">
-              <span class="question-title-text">${qNum}. ${question}</span>
+              <span class="question-title-text">${qNum}. ${question.title}</span>
               <span class="completion-badge" id="complete-${qNum}">완료</span>
             </div>
             <div class="gender-wrap">
               <div class="gender-buttons" role="radiogroup" aria-label="성별 선택">
-                <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자예요" aria-label="남자 선택" aria-pressed="false">👨 남자</button>
-                <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여자예요" aria-label="여자 선택" aria-pressed="false">👩 여자</button>
+                <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자" aria-label="남자 선택" aria-pressed="false">👨 남자</button>
+                <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여자" aria-label="여자 선택" aria-pressed="false">👩 여자</button>
               </div>
               <input type="hidden" id="${answerId}" class="answer-box" />
             </div>
@@ -670,15 +854,16 @@
           card.innerHTML = `
             <label class="question-label" for="${answerId}">
               <div class="question-title">
-                <span class="question-title-text">${qNum}. ${question}</span>
+                <span class="question-title-text">${qNum}. ${question.title}</span>
                 <span class="completion-badge" id="complete-${qNum}">완료</span>
               </div>
             </label>
-            <textarea id="${answerId}" class="answer-box" placeholder="${placeholder}" aria-label="${question}"></textarea>
+            ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
+            <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
             <div class="answer-actions">
-              <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question} 음성 입력">🎤 말하기</button>
-              <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question} 지우기">🗑 지우기</button>
-              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${placeholder}" aria-label="${question} 예시 넣기">💡 예시</button>
+              <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
+              <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
+              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
             </div>
             <div class="status" id="${statusId}" aria-live="polite"></div>
           `;
@@ -797,14 +982,14 @@
     }
 
     function clearAnswer(targetId) {
-      const textarea = document.getElementById(targetId);
-      if (!textarea) return;
+      const input = document.getElementById(targetId);
+      if (!input) return;
 
       if (activeMicButton && activeMicButton.dataset.target === targetId) {
         stopCurrentRecognition();
       }
 
-      textarea.value = '';
+      input.value = '';
 
       document.querySelectorAll(`.example-btn[data-target="${targetId}"]`).forEach(btn => {
         btn.classList.remove('active');
@@ -823,17 +1008,6 @@
       updateCompletionState(targetId);
     }
 
-    function refreshGenderSelections() {
-      document.querySelectorAll('.gender-btn').forEach(btn => {
-        const targetId = btn.dataset.target;
-        const value = btn.dataset.value;
-        const input = document.getElementById(targetId);
-        const selected = !!(input && input.value === value);
-        btn.classList.toggle('selected', selected);
-        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
-      });
-    }
-
     function setStyleValue(group, value, buttonEl) {
       const hiddenInput = document.getElementById(group);
       if (!hiddenInput) return;
@@ -848,6 +1022,54 @@
         buttonEl.classList.add('selected');
       }
 
+      saveData();
+    }
+
+    function triggerPhotoInput() {
+      document.getElementById('photoInput').click();
+    }
+
+    function handlePhotoChange(event) {
+      const file = event.target.files && event.target.files[0];
+      const statusEl = document.getElementById('photoStatus');
+      const previewWrap = document.getElementById('photoPreviewWrap');
+      const previewImg = document.getElementById('photoPreview');
+      const photoInfo = document.getElementById('photoInfo');
+
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        statusEl.textContent = '사진 파일만 선택해주세요.';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        previewWrap.classList.add('show');
+        photoInfo.textContent = `선택한 사진: ${file.name}`;
+        statusEl.textContent = '사진이 선택되었습니다.';
+        photoSelected = true;
+        updatePhotoCompletionState();
+        saveData();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removePhoto() {
+      const photoInput = document.getElementById('photoInput');
+      const statusEl = document.getElementById('photoStatus');
+      const previewWrap = document.getElementById('photoPreviewWrap');
+      const previewImg = document.getElementById('photoPreview');
+      const photoInfo = document.getElementById('photoInfo');
+
+      photoInput.value = '';
+      previewImg.src = '';
+      photoInfo.textContent = '';
+      previewWrap.classList.remove('show');
+      statusEl.textContent = '사진이 지워졌습니다.';
+      photoSelected = false;
+      updatePhotoCompletionState();
       saveData();
     }
 
@@ -890,8 +1112,21 @@
           const group = styleBtn.dataset.group;
           const value = styleBtn.dataset.value;
           setStyleValue(group, value, styleBtn);
+          return;
+        }
+
+        if (e.target.id === 'capturePhotoBtn') {
+          triggerPhotoInput();
+          return;
+        }
+
+        if (e.target.id === 'removePhotoBtn') {
+          removePhoto();
+          return;
         }
       });
+
+      document.getElementById('photoInput').addEventListener('change', handlePhotoChange);
     }
 
     function compilePrompt() {
@@ -904,81 +1139,73 @@
           return el ? el.value.trim() : '';
         };
 
-        const name = get(1);
-        const gender = get(2);
-        const storyMood = document.getElementById('storyMood')?.value || '밝고 즐거운 이야기';
+        const storyMood = document.getElementById('storyMood')?.value || '따뜻하고 감동적인 이야기';
         const imageStyle = document.getElementById('imageStyle')?.value || '따뜻한 동화 그림';
+        const photoText = photoSelected ? '사진 첨부됨' : '사진 없음';
 
-        const prompt = `당신은 따뜻한 감성의 그림책 작가입니다.
+        const importantBeing = get(4);
 
-한 어르신의 하루와 마음을 담은
-부드럽고 편안한 그림책을 만들어 주세요.
+        let extraInstruction = '';
 
-이 이야기는
-“나는 어떤 사람인지”를 자연스럽게 보여주는
-따뜻한 자기소개 이야기입니다.
+        if (importantBeing.includes('강아지') || importantBeing.includes('개')) {
+          extraInstruction = '이야기와 그림에 강아지가 자연스럽게 함께 등장하도록 해 주세요.';
+        } else if (importantBeing.includes('고양이') || importantBeing.includes('냥')) {
+          extraInstruction = '이야기와 그림에 고양이가 자연스럽게 함께 등장하도록 해 주세요.';
+        } else if (importantBeing.includes('손주')) {
+          extraInstruction = '이야기와 그림에 손주와 함께 있는 따뜻한 장면이 자연스럽게 표현되도록 해 주세요.';
+        }
 
-설명처럼 쓰지 말고,
-눈에 보이는 장면처럼 써주세요.
+        const prompt = `어르신 그림책 만들기 수업입니다.
 
-[주인공]
-이름: ${name || '이름 미입력'}
-성별: ${gender || '성별 미입력'}
+“나를 소개하는 그림동화책”을 만들어 주세요.
 
-[이야기 느낌]
-${storyMood}
+이야기는 반드시 "${storyMood}" 느낌의 동화책 스타일로 작성해 주세요.
+그림은 반드시 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 표현해 주세요.
 
-[그림 느낌]
-${imageStyle}
+이야기는 한 사람의 삶이 자연스럽게 드러나도록
+과거 → 현재 → 미래 흐름으로 이어지게 써 주세요.
 
-[이야기 재료]
-나는 이런 사람입니다: ${get(3) || '미입력'}
+문장은 짧고 쉽고 따뜻하게 써 주세요.
 
-좋아하는 계절: ${get(4) || '미입력'}
-그 계절에 가고 싶은 곳: ${get(5) || '미입력'}
-그곳의 모습: ${get(6) || '미입력'}
-그곳에서 하고 싶은 일: ${get(7) || '미입력'}
-그때의 날씨 느낌: ${get(8) || '미입력'}
-
-좋아하는 시간: ${get(9) || '미입력'}
-그 시간에 하는 일: ${get(10) || '미입력'}
-그때 있는 장소: ${get(11) || '미입력'}
-그때의 기분: ${get(12) || '미입력'}
-
-좋아하는 음식: ${get(13) || '미입력'}
-함께 먹고 싶은 사람: ${get(14) || '미입력'}
-먹고 싶은 장소: ${get(15) || '미입력'}
-
-좋아하는 사람과 하는 일: ${get(16) || '미입력'}
-전체 분위기: ${get(17) || '미입력'}
-
-[작성 방식]
-이 내용을 바탕으로
-하루가 천천히 흐르는 것처럼
-장면이 자연스럽게 이어지는 이야기로 만들어 주세요.
-
-봄 햇살, 집 안의 편안함, 가족과 함께하는 따뜻함이
-눈에 보이듯 느껴지게 써주세요.
-
-이야기의 분위기는 선택한 느낌을 자연스럽게 반영해 주세요.
-그림은 선택한 그림 느낌이 떠오르도록 부드럽게 표현해 주세요.
-
-[이미지 표현 기준]
-주인공은 60대 초반의 건강하고 밝은 모습입니다.
-너무 나이가 많아 보이지 않게 자연스럽고 부드러운 인상으로 표현해 주세요.
+첨부된 사진이 있다면
+주인공의 얼굴과 분위기를 참고하되,
+실제보다 조금 더 젊고 밝고 생동감 있게 표현해 주세요.
+너무 나이가 들어 보이지 않게 자연스럽고 건강한 모습으로 표현해 주세요.
 표정은 따뜻하고 미소가 있으며 활기 있는 느낌으로 표현해 주세요.
 주름은 자연스럽게 표현하되 과하게 강조하지 말아 주세요.
 
-[규칙]
-- 글은 한글로 작성합니다
-- 문장은 짧고 부드럽게 작성합니다
-- 어려운 단어는 사용하지 않습니다
-- 장면이 떠오르도록 구체적으로 표현해 주세요
-- 따뜻하고 편안한 분위기로 써주세요
-- 이야기 분위기는 "${storyMood}" 느낌으로 표현해 주세요
-- 그림은 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 써주세요
-- 주인공이 소중한 사람이라는 느낌이 들게 해주세요
-- 마지막은 행복하고 포근하게 마무리해 주세요`;
+${extraInstruction}
+
+[중요 규칙]
+- 정보 나열 금지
+- 모든 정보는 이야기 속에 자연스럽게 녹여서 표현
+- 존중과 따뜻함이 느껴지게 작성
+- 읽기 쉬운 짧은 문장으로 작성
+- 그림책 발표 수업에 어울리게 따뜻하고 밝게 작성
+
+[구성] (총 5페이지)
+1페이지: 이름, 성별, 사는 곳, 소중한 존재
+2페이지: 예전의 나와 그때의 삶
+3페이지: 요즘 기분 좋은 순간, 어릴 적 꿈, 기억에 남는 장면
+4페이지: 즐겁고 잘하는 것, 소중한 것, 좋아하는 옷차림과 계절
+5페이지: 앞으로의 바람
+
+[입력 정보]
+이름: ${get(1) || '미입력'}
+성별: ${get(2) || '미입력'}
+사는 곳: ${get(3) || '미입력'}
+소중한 존재: ${get(4) || '미입력'}
+예전의 나: ${get(5) || '미입력'}
+그때 하던 일: ${get(6) || '미입력'}
+요즘 기분 좋은 순간: ${get(7) || '미입력'}
+어릴 적 꿈: ${get(8) || '미입력'}
+기억에 남는 장소나 장면: ${get(9) || '미입력'}
+즐겁고 잘하는 것: ${get(10) || '미입력'}
+소중한 것: ${get(11) || '미입력'}
+앞으로의 바람: ${get(12) || '미입력'}
+좋아하는 옷차림이나 모습: ${get(13) || '미입력'}
+좋아하는 계절: ${get(14) || '미입력'}
+어르신 사진: ${photoText}`;
 
         output.textContent = prompt;
         saveData();
@@ -1018,7 +1245,7 @@ ${imageStyle}
       }
 
       if (copied) {
-        alert('프롬프트를 복사했어요. 제미나이에서 길게 눌러 붙여넣기 해주세요.');
+        alert('프롬프트를 복사했어요. 제미나이에서 길게 눌러 붙여넣기 해주세요. 사진은 제미나이 화면에서 따로 첨부해야 해요.');
       } else {
         alert('제미나이는 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
       }
@@ -1050,6 +1277,12 @@ ${imageStyle}
         btn.classList.toggle('selected', btn.dataset.value === '따뜻한 동화 그림');
       });
 
+      const genderInput = document.getElementById('q2');
+      if (genderInput) genderInput.value = '';
+      refreshGenderSelections();
+
+      removePhoto();
+
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch (error) {
@@ -1057,9 +1290,9 @@ ${imageStyle}
       }
 
       stopCurrentRecognition();
-      refreshGenderSelections();
       updateAllCompletionStates();
       showSaveIndicator('모두 지워졌어요');
+      document.getElementById('photoStatus').textContent = '';
     }
 
     function setupInputs() {
@@ -1085,4 +1318,4 @@ ${imageStyle}
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-</html>
+  </html>
