@@ -943,22 +943,13 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
         console.error('복사 실패:', error);
       }
 
-      const newWindow = window.open(GEM_URL, '_blank');
-
-      if (!newWindow) {
-        if (copied) {
-          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
-        } else {
-          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
-        }
-        return;
-      }
-
       if (copied) {
-        alert('프롬프트를 복사했어요. 재미나이 화면에서 길게 눌러 붙여넣기 해주세요.');
+        alert('프롬프트를 복사했어요. 열리는 재미나이 화면에서 길게 눌러 붙여넣기 해주세요.');
       } else {
-        alert('재미나이는 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+        alert('재미나이는 열리지만 복사는 안 되었어요. 돌아와서 직접 복사해주세요.');
       }
+
+      window.location.href = GEM_URL;
     }
 
     function resetAll() {
@@ -1022,4 +1013,4 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-  </html>
+</html>
