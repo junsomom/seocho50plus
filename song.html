@@ -515,7 +515,7 @@
   </div>
 
   <script>
-    const GEM_URL = 'https://gemini.google.com/app';
+    const GEM_URL = 'https://gemini.google.com/';
     const STORAGE_KEY = 'song_thought_pocket_v1';
 
     const questions = [
@@ -951,7 +951,7 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
     }
 
     function openGemOnly() {
-      alert('열리는 재미나이 화면에서 길게 눌러 붙여넣기 해주세요.');
+      alert('재미나이 메인으로 이동합니다. 이동 후 아래에서 음악 만들기를 눌러 주세요.');
       window.location.href = GEM_URL;
     }
 
@@ -1017,4 +1017,4 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-  </html>
+</html>
