@@ -31,6 +31,10 @@
       --genre-bg: #fff3cd;
       --voice-bg: #d8efff;
       --age-bg: #f6e1ff;
+      --mode-bg: #e0f7fa;
+      --mood-bg: #ffe0f0;
+      --tempo-bg: #e8f5e9;
+      --instrument-bg: #fff8e1;
 
       --selected-shadow: 0 0 0 3px rgba(109, 95, 209, 0.28);
     }
@@ -86,13 +90,19 @@
     }
 
     .guide-box {
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       background: #f0efff;
       color: #4f46b5;
       border-radius: 16px;
       padding: 12px 14px;
       font-size: 15px;
       font-weight: 700;
+    }
+
+    .guide-box.secondary {
+      background: #eefaf3;
+      color: #2e7d32;
+      margin-bottom: 16px;
     }
 
     .question-card {
@@ -244,6 +254,10 @@
       padding: 14px;
     }
 
+    .choice-card.mode {
+      background: linear-gradient(180deg, #f1fcff, #fbfeff);
+    }
+
     .choice-card.genre {
       background: linear-gradient(180deg, #fffaf0, #fffef8);
     }
@@ -254,6 +268,18 @@
 
     .choice-card.age {
       background: linear-gradient(180deg, #fcf6ff, #fffafe);
+    }
+
+    .choice-card.instrument {
+      background: linear-gradient(180deg, #fffdf2, #fffefb);
+    }
+
+    .choice-card.mood {
+      background: linear-gradient(180deg, #fff5fa, #fffafd);
+    }
+
+    .choice-card.tempo {
+      background: linear-gradient(180deg, #f4fff6, #fbfffc);
     }
 
     .choice-title {
@@ -283,6 +309,11 @@
       transition: 0.18s ease;
     }
 
+    .choice-card.mode .choice-btn {
+      background: var(--mode-bg);
+      color: #006064;
+    }
+
     .choice-card.genre .choice-btn {
       background: var(--genre-bg);
       color: #7a5600;
@@ -298,10 +329,29 @@
       color: #7b1fa2;
     }
 
+    .choice-card.instrument .choice-btn {
+      background: var(--instrument-bg);
+      color: #8d6e00;
+    }
+
+    .choice-card.mood .choice-btn {
+      background: var(--mood-bg);
+      color: #ad1457;
+    }
+
+    .choice-card.tempo .choice-btn {
+      background: var(--tempo-bg);
+      color: #2e7d32;
+    }
+
     .choice-btn.selected {
       transform: translateY(-1px);
       box-shadow: var(--selected-shadow);
       filter: saturate(1.05);
+    }
+
+    .hidden-section {
+      display: none;
     }
 
     .tool-section {
@@ -377,13 +427,12 @@
     }
 
     @media (min-width: 720px) {
-      .choice-options.genre-grid {
+      .choice-options.grid-3 {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .choice-options.voice-grid,
-      .choice-options.age-grid {
-        grid-template-columns: repeat(3, 1fr);
+      .choice-options.grid-4 {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
 
@@ -460,27 +509,65 @@
   <div class="container">
     <section class="panel">
       <h2>내 이야기를 노래로 만들어요</h2>
-      <p class="desc">질문에 답하고, 버튼을 누르면 재미나이에 넣을 음악 프롬프트가 만들어집니다.</p>
-      <div class="guide-box">길게 쓰지 않아도 됩니다. 예시를 눌러 시작해도 되고, 말하기로 입력해도 됩니다 😊</div>
+      <p class="desc">질문에 답하고, 음악 스타일을 고르면 재미나이에 넣을 글이 만들어집니다.</p>
+      <div class="guide-box">노래로 만들 수도 있고, 연주곡으로 만들 수도 있어요 😊</div>
+      <div class="guide-box secondary">👉 순서: 노래 글 만들기 → 글 복사하기 → 음악 만들러 가기 → 붙여넣기</div>
 
       <div id="questions-wrap"></div>
 
       <div class="choice-section">
+        <div class="choice-card mode">
+          <div class="choice-title">🎶 어떤 형태로 만들까요?</div>
+          <div class="choice-options grid-3">
+            <button type="button" class="choice-btn selected" data-group="musicMode" data-value="노래">🎤 노래</button>
+            <button type="button" class="choice-btn" data-group="musicMode" data-value="연주곡">🎻 연주곡</button>
+          </div>
+          <input type="hidden" id="musicMode" value="노래" />
+        </div>
+
         <div class="choice-card genre">
           <div class="choice-title">🎼 장르를 골라주세요</div>
-          <div class="choice-options genre-grid">
+          <div class="choice-options grid-3">
             <button type="button" class="choice-btn selected" data-group="genre" data-value="트로트">🎤 트로트</button>
             <button type="button" class="choice-btn" data-group="genre" data-value="케이팝">🎧 케이팝</button>
             <button type="button" class="choice-btn" data-group="genre" data-value="올드팝">📻 올드팝</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="클래식">🎻 클래식</button>
             <button type="button" class="choice-btn" data-group="genre" data-value="가곡">🌸 가곡</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="클래식">🎻 클래식</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="피아노 연주">🎹 피아노 연주</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="오르골">🧸 오르골</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="영화음악">🎬 영화음악</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="재즈">🎷 재즈</button>
+            <button type="button" class="choice-btn" data-group="genre" data-value="국악 감성">🥁 국악 감성</button>
           </div>
           <input type="hidden" id="genre" value="트로트" />
         </div>
 
-        <div class="choice-card voice">
+        <div class="choice-card mood">
+          <div class="choice-title">💗 전체 분위기를 골라주세요</div>
+          <div class="choice-options grid-3">
+            <button type="button" class="choice-btn selected" data-group="musicMood" data-value="따뜻하게">🌷 따뜻하게</button>
+            <button type="button" class="choice-btn" data-group="musicMood" data-value="그립게">🌙 그립게</button>
+            <button type="button" class="choice-btn" data-group="musicMood" data-value="밝고 경쾌하게">☀ 밝고 경쾌하게</button>
+            <button type="button" class="choice-btn" data-group="musicMood" data-value="잔잔하게">🍃 잔잔하게</button>
+            <button type="button" class="choice-btn" data-group="musicMood" data-value="웅장하게">🏛 웅장하게</button>
+            <button type="button" class="choice-btn" data-group="musicMood" data-value="슬프지만 아름답게">💧 슬프지만 아름답게</button>
+          </div>
+          <input type="hidden" id="musicMood" value="따뜻하게" />
+        </div>
+
+        <div class="choice-card tempo">
+          <div class="choice-title">⏱ 속도를 골라주세요</div>
+          <div class="choice-options grid-3">
+            <button type="button" class="choice-btn" data-group="musicTempo" data-value="느리게">🐢 느리게</button>
+            <button type="button" class="choice-btn selected" data-group="musicTempo" data-value="보통">🚶 보통</button>
+            <button type="button" class="choice-btn" data-group="musicTempo" data-value="신나게">💃 신나게</button>
+          </div>
+          <input type="hidden" id="musicTempo" value="보통" />
+        </div>
+
+        <div class="choice-card voice" id="voiceSection">
           <div class="choice-title">🎤 가수 목소리를 골라주세요</div>
-          <div class="choice-options voice-grid">
+          <div class="choice-options grid-3">
             <button type="button" class="choice-btn selected" data-group="voiceGender" data-value="여자">👩 여자</button>
             <button type="button" class="choice-btn" data-group="voiceGender" data-value="남자">👨 남자</button>
             <button type="button" class="choice-btn" data-group="voiceGender" data-value="혼성">👫 혼성</button>
@@ -488,14 +575,27 @@
           <input type="hidden" id="voiceGender" value="여자" />
         </div>
 
-        <div class="choice-card age">
-          <div class="choice-title">🕰 가수 나이대 느낌을 골라주세요</div>
-          <div class="choice-options age-grid">
+        <div class="choice-card age" id="voiceAgeSection">
+          <div class="choice-title">🕰 목소리 나이대 느낌을 골라주세요</div>
+          <div class="choice-options grid-3">
             <button type="button" class="choice-btn selected" data-group="voiceAge" data-value="젊은 목소리">✨ 젊은 목소리</button>
             <button type="button" class="choice-btn" data-group="voiceAge" data-value="중년 목소리">🌷 중년 목소리</button>
             <button type="button" class="choice-btn" data-group="voiceAge" data-value="노년 목소리">🌿 노년 목소리</button>
           </div>
           <input type="hidden" id="voiceAge" value="젊은 목소리" />
+        </div>
+
+        <div class="choice-card instrument hidden-section" id="instrumentSection">
+          <div class="choice-title">🎼 어떤 악기로 연주할까요?</div>
+          <div class="choice-options grid-3">
+            <button type="button" class="choice-btn selected" data-group="instrument" data-value="피아노">🎹 피아노</button>
+            <button type="button" class="choice-btn" data-group="instrument" data-value="바이올린">🎻 바이올린</button>
+            <button type="button" class="choice-btn" data-group="instrument" data-value="첼로">🎻 첼로</button>
+            <button type="button" class="choice-btn" data-group="instrument" data-value="플루트">🪈 플루트</button>
+            <button type="button" class="choice-btn" data-group="instrument" data-value="오르골">🧸 오르골</button>
+            <button type="button" class="choice-btn" data-group="instrument" data-value="국악기">🥁 국악기</button>
+          </div>
+          <input type="hidden" id="instrument" value="피아노" />
         </div>
       </div>
 
@@ -503,44 +603,44 @@
     </section>
 
     <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button">✨ 음악 프롬프트 생성하기</button>
+      <button class="tool-btn prompt" id="makePromptBtn" type="button">🎵 노래 글 만들기</button>
 
-      <div class="output-title">음악 프롬프트</div>
+      <div class="output-title">음악 글</div>
       <div id="compiledOutput" class="output-box" aria-live="polite"></div>
 
-      <button class="tool-btn copy" id="copyPromptBtn" type="button">📋 프롬프트 복사하기</button>
-      <button class="tool-btn open" id="openGemBtn" type="button">🤖 재미나이 열기</button>
-      <button class="tool-btn reset" id="resetBtn" type="button">🗑 모두 지우기</button>
+      <button class="tool-btn copy" id="copyPromptBtn" type="button">📋 글 복사하기</button>
+      <button class="tool-btn open" id="openGemBtn" type="button">🤖 음악 만들러 가기</button>
+      <button class="tool-btn reset" id="resetBtn" type="button">🗑 다시 만들기</button>
     </div>
   </div>
 
   <script>
     const GEM_URL = 'https://gemini.google.com/';
-    const STORAGE_KEY = 'song_thought_pocket_v1';
+    const STORAGE_KEY = 'song_thought_pocket_v2_upgrade';
 
     const questions = [
       {
-        title: '이 노래는 누구 이야기인가요?',
+        title: '이 음악은 누구 이야기인가요?',
         sub: '연애, 여행, 청춘, 가족, 인생 이야기 모두 괜찮아요',
         placeholder: '예: 남편과 처음 기차 타고 여행 갔던 내 청춘 이야기예요'
       },
       {
-        title: '이 노래에서 가장 전하고 싶은 마음은 무엇인가요?',
+        title: '이 음악에 가장 담고 싶은 마음은 무엇인가요?',
         sub: '설렘, 그리움, 고마움, 대견함 같은 마음을 떠올려 보세요',
         placeholder: '예: 그때는 참 설레고 예뻤다는 마음을 담고 싶어요'
       },
       {
         title: '어떤 순간이나 장면이 떠오르시나요?',
-        sub: '한 장면처럼 말하면 가사가 더 잘 만들어져요',
+        sub: '한 장면처럼 말하면 더 잘 만들어져요',
         placeholder: '예: 꽃무늬 원피스를 입고 바닷가에서 사진 찍던 순간이 떠올라요'
       },
       {
-        title: '이 노래를 들으면 어떤 기분이었으면 좋겠나요?',
-        sub: '노래를 듣는 사람이 느끼는 분위기를 정해보세요',
+        title: '이 음악을 들으면 어떤 기분이었으면 좋겠나요?',
+        sub: '듣는 사람이 느끼는 분위기를 정해보세요',
         placeholder: '예: 듣는 사람이 추억여행을 하는 것처럼 웃고 울었으면 좋겠어요'
       },
       {
-        title: '이 노래를 누구에게 들려주고 싶나요?',
+        title: '이 음악을 누구에게 들려주고 싶나요?',
         sub: '가족, 손주, 친구, 젊은 시절의 나에게도 들려줄 수 있어요',
         placeholder: '예: 지금의 나와 젊은 날의 나에게 같이 들려주고 싶어요'
       }
@@ -567,11 +667,20 @@
           data[box.id] = box.value;
         });
 
-        data.genre = document.getElementById('genre')?.value || '트로트';
-        data.voiceGender = document.getElementById('voiceGender')?.value || '여자';
-        data.voiceAge = document.getElementById('voiceAge')?.value || '젊은 목소리';
-        data.compiledOutput = document.getElementById('compiledOutput')?.textContent || '';
+        [
+          'musicMode',
+          'genre',
+          'musicMood',
+          'musicTempo',
+          'voiceGender',
+          'voiceAge',
+          'instrument'
+        ].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) data[id] = el.value;
+        });
 
+        data.compiledOutput = document.getElementById('compiledOutput')?.textContent || '';
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         showSaveIndicator();
       } catch (error) {
@@ -605,10 +714,49 @@
       }
     }
 
+    function applyChoiceSelection(group, value) {
+      document.querySelectorAll(`.choice-btn[data-group="${group}"]`).forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+      });
+      const hidden = document.getElementById(group);
+      if (hidden) hidden.value = value;
+    }
+
+    function updateModeUI() {
+      const musicMode = document.getElementById('musicMode').value;
+      const voiceSection = document.getElementById('voiceSection');
+      const voiceAgeSection = document.getElementById('voiceAgeSection');
+      const instrumentSection = document.getElementById('instrumentSection');
+
+      if (musicMode === '노래') {
+        voiceSection.classList.remove('hidden-section');
+        voiceAgeSection.classList.remove('hidden-section');
+        instrumentSection.classList.add('hidden-section');
+      } else {
+        voiceSection.classList.add('hidden-section');
+        voiceAgeSection.classList.add('hidden-section');
+        instrumentSection.classList.remove('hidden-section');
+      }
+    }
+
+    function enforceGenreModeCompatibility(selectedGenre) {
+      const instrumentalGenres = ['클래식', '피아노 연주', '오르골', '영화음악', '재즈', '국악 감성'];
+      const vocalGenres = ['트로트', '케이팝', '올드팝', '가곡'];
+
+      if (instrumentalGenres.includes(selectedGenre)) {
+        applyChoiceSelection('musicMode', '연주곡');
+      } else if (vocalGenres.includes(selectedGenre)) {
+        applyChoiceSelection('musicMode', '노래');
+      }
+
+      updateModeUI();
+    }
+
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
+          updateModeUI();
           updateAllCompletionStates();
           return;
         }
@@ -622,31 +770,23 @@
           }
         });
 
-        if (data.genre) {
-          document.getElementById('genre').value = data.genre;
-          document.querySelectorAll('.choice-btn[data-group="genre"]').forEach(btn => {
-            btn.classList.toggle('selected', btn.dataset.value === data.genre);
-          });
-        }
-
-        if (data.voiceGender) {
-          document.getElementById('voiceGender').value = data.voiceGender;
-          document.querySelectorAll('.choice-btn[data-group="voiceGender"]').forEach(btn => {
-            btn.classList.toggle('selected', btn.dataset.value === data.voiceGender);
-          });
-        }
-
-        if (data.voiceAge) {
-          document.getElementById('voiceAge').value = data.voiceAge;
-          document.querySelectorAll('.choice-btn[data-group="voiceAge"]').forEach(btn => {
-            btn.classList.toggle('selected', btn.dataset.value === data.voiceAge);
-          });
-        }
+        [
+          'musicMode',
+          'genre',
+          'musicMood',
+          'musicTempo',
+          'voiceGender',
+          'voiceAge',
+          'instrument'
+        ].forEach(id => {
+          if (data[id]) applyChoiceSelection(id, data[id]);
+        });
 
         if (data.compiledOutput) {
           document.getElementById('compiledOutput').textContent = data.compiledOutput;
         }
 
+        updateModeUI();
         updateAllCompletionStates();
       } catch (error) {
         console.error('불러오기 실패:', error);
@@ -674,9 +814,9 @@
           ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
           <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
           <div class="answer-actions">
-            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}">🎤 말하기</button>
-            <button class="mini-btn clear-btn" type="button" data-target="${answerId}">🗑 지우기</button>
-            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}">💡 예시</button>
+            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}">🎤 말로 쓰기</button>
+            <button class="mini-btn clear-btn" type="button" data-target="${answerId}">🗑 다시 쓰기</button>
+            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}">💡 이렇게 써보기</button>
           </div>
           <div class="status" id="${statusId}" aria-live="polite"></div>
         `;
@@ -695,7 +835,7 @@
       }
       if (activeMicButton) {
         activeMicButton.classList.remove('recording');
-        activeMicButton.textContent = '🎤 말하기';
+        activeMicButton.textContent = '🎤 말로 쓰기';
       }
       activeRecognition = null;
       activeMicButton = null;
@@ -776,7 +916,7 @@
         if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
         if (activeMicButton === micButton) {
           micButton.classList.remove('recording');
-          micButton.textContent = '🎤 말하기';
+          micButton.textContent = '🎤 말로 쓰기';
         }
         activeRecognition = null;
         activeMicButton = null;
@@ -818,6 +958,15 @@
       });
 
       if (buttonEl) buttonEl.classList.add('selected');
+
+      if (group === 'musicMode') {
+        updateModeUI();
+      }
+
+      if (group === 'genre') {
+        enforceGenreModeCompatibility(value);
+      }
+
       saveData();
     }
 
@@ -857,23 +1006,22 @@
       });
     }
 
-    function buildGenrePrompt(genre) {
-      if (genre === '트로트') {
-        return '트로트 느낌의 노래를 만들어 주세요.\n흥이 나고 따라 부르기 쉽게 만들어 주세요.\n후렴이 반복되게 해 주세요.';
+    function buildGenrePrompt(genre, mode) {
+      if (mode === '연주곡') {
+        if (genre === '클래식') return '클래식 분위기의 연주곡으로 만들어 주세요.';
+        if (genre === '피아노 연주') return '피아노 중심의 연주곡으로 만들어 주세요.';
+        if (genre === '오르골') return '오르골 느낌의 연주곡으로 만들어 주세요.';
+        if (genre === '영화음악') return '영화음악처럼 장면이 떠오르는 연주곡으로 만들어 주세요.';
+        if (genre === '재즈') return '재즈 감성의 연주곡으로 만들어 주세요.';
+        if (genre === '국악 감성') return '국악 감성이 느껴지는 연주곡으로 만들어 주세요.';
+        return `${genre} 느낌의 연주곡으로 만들어 주세요.`;
       }
-      if (genre === '케이팝') {
-        return '케이팝 스타일의 노래를 만들어 주세요.\n밝고 리듬감 있게 만들어 주세요.\n기분이 좋아지는 느낌으로 해 주세요.';
-      }
-      if (genre === '올드팝') {
-        return '올드팝 느낌의 노래를 만들어 주세요.\n추억이 느껴지고 부드럽게 만들어 주세요.';
-      }
-      if (genre === '클래식') {
-        return '클래식 분위기의 음악으로 만들어 주세요.\n차분하고 우아한 느낌으로 만들어 주세요.';
-      }
-      if (genre === '가곡') {
-        return '가곡 느낌의 노래를 만들어 주세요.\n서정적이고 아름답게 표현해 주세요.';
-      }
-      return '따뜻한 노래를 만들어 주세요.';
+
+      if (genre === '트로트') return '트로트 느낌의 노래를 만들어 주세요.';
+      if (genre === '케이팝') return '케이팝 스타일의 노래를 만들어 주세요.';
+      if (genre === '올드팝') return '올드팝 느낌의 노래를 만들어 주세요.';
+      if (genre === '가곡') return '가곡 느낌의 노래를 만들어 주세요.';
+      return `${genre} 느낌의 노래를 만들어 주세요.`;
     }
 
     function buildVoicePrompt(voiceGender, voiceAge) {
@@ -888,33 +1036,59 @@
       return `${genderText}\n${ageText} 불러주세요.`;
     }
 
+    function buildInstrumentPrompt(instrument) {
+      if (instrument === '피아노') return '피아노 중심으로 연주해 주세요.';
+      if (instrument === '바이올린') return '바이올린 중심으로 연주해 주세요.';
+      if (instrument === '첼로') return '첼로 중심으로 연주해 주세요.';
+      if (instrument === '플루트') return '플루트 중심으로 연주해 주세요.';
+      if (instrument === '오르골') return '오르골 중심으로 연주해 주세요.';
+      if (instrument === '국악기') return '국악기 중심으로 연주해 주세요.';
+      return `${instrument} 중심으로 연주해 주세요.`;
+    }
+
     function compilePrompt() {
       try {
         const output = document.getElementById('compiledOutput');
-        output.textContent = '프롬프트를 만드는 중입니다...';
+        output.textContent = '글을 만드는 중입니다...';
 
         const get = (n) => {
           const el = document.getElementById(`q${n}`);
           return el ? el.value.trim() : '';
         };
 
+        const musicMode = document.getElementById('musicMode')?.value || '노래';
         const genre = document.getElementById('genre')?.value || '트로트';
+        const musicMood = document.getElementById('musicMood')?.value || '따뜻하게';
+        const musicTempo = document.getElementById('musicTempo')?.value || '보통';
         const voiceGender = document.getElementById('voiceGender')?.value || '여자';
         const voiceAge = document.getElementById('voiceAge')?.value || '젊은 목소리';
+        const instrument = document.getElementById('instrument')?.value || '피아노';
 
-        const prompt = `위 이야기를 바탕으로 노래를 만들어 주세요.
+        let prompt = `위 이야기를 바탕으로 ${musicMode}을 만들어 주세요.
 
-[노래 이야기]
-이 노래는 누구 이야기인가요: ${get(1) || '미입력'}
-이 노래에서 가장 전하고 싶은 마음: ${get(2) || '미입력'}
+[이야기]
+이 음악은 누구 이야기인가요: ${get(1) || '미입력'}
+이 음악에 가장 담고 싶은 마음: ${get(2) || '미입력'}
 떠오르는 순간이나 장면: ${get(3) || '미입력'}
-이 노래를 들으면 좋을 기분: ${get(4) || '미입력'}
-이 노래를 들려주고 싶은 사람: ${get(5) || '미입력'}
+이 음악을 들으면 좋을 기분: ${get(4) || '미입력'}
+이 음악을 들려주고 싶은 사람: ${get(5) || '미입력'}
+
+[형태]
+${musicMode}
 
 [장르]
-${buildGenrePrompt(genre)}
+${buildGenrePrompt(genre, musicMode)}
 
-[목소리]
+[분위기]
+전체 분위기는 ${musicMood} 느낌으로 만들어 주세요.
+
+[속도]
+속도는 ${musicTempo} 느낌으로 진행해 주세요.
+`;
+
+        if (musicMode === '노래') {
+          prompt += `
+[보컬]
 ${buildVoicePrompt(voiceGender, voiceAge)}
 
 [추가 요청]
@@ -922,20 +1096,43 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
 - 감정이 잘 느껴지게 써 주세요.
 - 너무 어렵지 않게 써 주세요.
 - 어르신도 따라 부르기 쉽게 만들어 주세요.
-- 이야기와 감정이 살아 있는 노래로 만들어 주세요.`;
+- 이야기와 감정이 살아 있는 노래로 만들어 주세요.
+- 입력 내용이 일부 비어 있거나 짧아도, 전체 분위기와 감정을 자연스럽게 살려서 완성도 높게 만들어 주세요.
+- 부족한 부분은 과하게 상상하지 말고, 어르신의 삶과 추억에 어울리게 부드럽고 자연스럽게 보완해 주세요.
+- 전체 결과는 어설프지 않게, 전문 작곡가와 전문 보컬 디렉터가 다듬은 것처럼 완성도 있게 만들어 주세요.
+- 멜로디, 가사, 분위기가 서로 잘 어울리도록 정리해 주세요.
+- 감정은 진심 있게, 표현은 과하지 않게, 품위 있고 듣기 좋게 만들어 주세요.
+`;
+        } else {
+          prompt += `
+[연주 악기]
+${buildInstrumentPrompt(instrument)}
 
-        output.textContent = prompt;
+[추가 요청]
+- 보컬 없이 연주곡으로 만들어 주세요.
+- 장면과 감정이 떠오르는 음악으로 만들어 주세요.
+- 너무 복잡하지 않고 듣기 편하게 만들어 주세요.
+- 추억과 분위기가 잘 느껴지게 만들어 주세요.
+- 입력 내용이 일부 비어 있거나 짧아도, 전체 분위기와 장면이 자연스럽게 떠오르도록 완성도 높게 만들어 주세요.
+- 부족한 부분은 과하게 상상하지 말고, 어르신의 추억과 감정에 어울리게 부드럽고 자연스럽게 보완해 주세요.
+- 전체 결과는 어설프지 않게, 전문 작곡가와 전문 연주자가 다듬은 것처럼 아름답고 안정감 있게 만들어 주세요.
+- 악기 구성, 흐름, 분위기가 서로 잘 어울리도록 정리해 주세요.
+- 너무 복잡하거나 산만하지 않게, 듣기 편하면서도 수준 있게 만들어 주세요.
+`;
+        }
+
+        output.textContent = prompt.trim();
         saveData();
       } catch (error) {
         console.error('프롬프트 생성 실패:', error);
-        document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
+        document.getElementById('compiledOutput').textContent = '글을 만드는 중 오류가 생겼습니다.';
       }
     }
 
     async function copyPromptOnly() {
       const text = document.getElementById('compiledOutput').textContent.trim();
-      if (!text || text === '프롬프트를 만드는 중입니다...') {
-        alert('먼저 음악 프롬프트 생성하기 버튼을 눌러주세요.');
+      if (!text || text === '글을 만드는 중입니다...') {
+        alert('먼저 노래 글 만들기 버튼을 눌러주세요.');
         return;
       }
 
@@ -943,7 +1140,7 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
 
       try {
         await navigator.clipboard.writeText(text);
-        alert('프롬프트를 복사했어요.');
+        alert('글을 복사했어요.');
       } catch (error) {
         console.error('복사 실패:', error);
         alert('복사가 되지 않았어요. 다시 눌러주세요.');
@@ -968,19 +1165,15 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
 
       document.getElementById('compiledOutput').textContent = '';
 
-      document.getElementById('genre').value = '트로트';
-      document.getElementById('voiceGender').value = '여자';
-      document.getElementById('voiceAge').value = '젊은 목소리';
+      applyChoiceSelection('musicMode', '노래');
+      applyChoiceSelection('genre', '트로트');
+      applyChoiceSelection('musicMood', '따뜻하게');
+      applyChoiceSelection('musicTempo', '보통');
+      applyChoiceSelection('voiceGender', '여자');
+      applyChoiceSelection('voiceAge', '젊은 목소리');
+      applyChoiceSelection('instrument', '피아노');
 
-      document.querySelectorAll('.choice-btn[data-group="genre"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '트로트');
-      });
-      document.querySelectorAll('.choice-btn[data-group="voiceGender"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '여자');
-      });
-      document.querySelectorAll('.choice-btn[data-group="voiceAge"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '젊은 목소리');
-      });
+      updateModeUI();
 
       try {
         localStorage.removeItem(STORAGE_KEY);
@@ -1017,4 +1210,4 @@ ${buildVoicePrompt(voiceGender, voiceAge)}
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-</html>
+  </html>
