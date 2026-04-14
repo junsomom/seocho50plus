@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>무릎 건강 10분 루틴</title>
 
+<style>
+body {
+    font-family: sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    text-align: center;
+}
+
+header {
+    background: #2E7D32;
+    color: white;
+    padding: 18px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.container {
+    padding: 20px;
+}
+
+.step {
+    display: none;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.active {
+    display: block;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    font-size: 20px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+button:active {
+    background: #388E3C;
+}
+
+.big {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.desc {
+    font-size: 18px;
+    line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<header>🦵 무릎 건강 10분 루틴</header>
+
+<div class="container">
+
+<!-- 시작 -->
+<div class="step active" id="step0">
+    <div class="big">시작하기</div>
+    <div class="desc">하루 10분, 무릎을 지켜드립니다</div>
+    <button onclick="nextStep(1)">👉 시작하기</button>
+</div>
+
+<!-- 준비 -->
+<div class="step" id="step1">
+    <div class="big">① 준비운동 (2분)</div>
+    <div class="desc">
+        제자리 걷기<br>
+        다리 흔들기<br>
+        무릎 가볍게 굽히기
+    </div>
+    <button onclick="nextStep(2)">👉 다음</button>
+</div>
+
+<!-- 근력 -->
+<div class="step" id="step2">
+    <div class="big">② 근육운동</div>
+    <div class="desc">
+        의자에서 천천히<br>
+        앉았다 일어나기<br>
+        (5~10회)
+    </div>
+    <button onclick="nextStep(3)">👉 다음</button>
+</div>
+
+<!-- 다리올리기 -->
+<div class="step" id="step3">
+    <div class="big">다리 들어올리기</div>
+    <div class="desc">
+        누워서 한쪽씩<br>
+        천천히 올렸다 내리기<br>
+        (10회)
+    </div>
+    <button onclick="nextStep(4)">👉 다음</button>
+</div>
+
+<!-- 스트레칭 -->
+<div class="step" id="step4">
+    <div class="big">③ 스트레칭</div>
+    <div class="desc">
+        허벅지 앞/뒤<br>
+        10초씩 늘리기
+    </div>
+    <button onclick="nextStep(5)">👉 다음</button>
+</div>
+
+<!-- 걷기 -->
+<div class="step" id="step5">
+    <div class="big">④ 마무리 걷기</div>
+    <div class="desc">
+        천천히 걷기<br>
+        쿵쿵 말고 살살
+    </div>
+    <button onclick="nextStep(6)">👉 완료</button>
+</div>
+
+<!-- 완료 -->
+<div class="step" id="step6">
+    <div class="big">👏 잘하셨습니다!</div>
+    <div class="desc">
+        하루 10분이면 충분합니다<br><br>
+        꾸준히 하시면 좋아집니다
+    </div>
+    <button onclick="location.reload()">👉 다시하기</button>
+</div>
+
+</div>
+
+<script>
+function nextStep(num) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + num).classList.add('active');
+}
+</script>
+
+</body>
+</html>
