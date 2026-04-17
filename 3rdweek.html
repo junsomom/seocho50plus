@@ -461,7 +461,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week3DrawingPocket_v2_final';
+    const STORAGE_KEY = 'week3DrawingPocket_v2_fixed';
 
     const questions = [
       {
@@ -1007,7 +1007,7 @@
     function setupInputs() {
       document.addEventListener('input', function (e) {
         if (e.target.classList.contains('answer-box')) {
-          document.querySelectorAll(\`.example-btn[data-target="\${e.target.id}"]\`).forEach(btn => {
+          document.querySelectorAll(`.example-btn[data-target="${e.target.id}"]`).forEach(btn => {
             btn.classList.remove('active');
           });
 
