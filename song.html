@@ -3,40 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>노래 주머니 - 내 이야기를 노래로 만들기</title>
+  <title>오늘 기분 30초 노래 만들기</title>
   <style>
     :root {
-      --primary: #8a7cf0;
-      --primary-dark: #6d5fd1;
-      --light-bg: #f8f8fe;
+      --primary: #7986cb;
+      --primary-dark: #5c6bc0;
+      --light-bg: #f7f8fb;
       --card-bg: #ffffff;
-      --soft-card: #faf9ff;
-      --border-color: #ddd9fb;
+      --soft-card: #f9fafe;
+      --border-color: #d7dcf3;
       --text-main: #222;
       --text-sub: #666;
-      --example-bg: #dff2d8;
-      --example-active: #b8e6a5;
-      --mic-bg: #ffe8bf;
+      --example-bg: #dcedc8;
+      --example-active: #aed581;
+      --mic-bg: #ffe0b2;
       --mic-recording: #ef9a9a;
-      --clear-bg: #edf1f4;
+      --clear-bg: #eceff1;
       --clear-text: #37474f;
-      --prompt-btn: #ddd9ff;
-      --copy-btn: #ffe0b2;
-      --open-btn: #c9efe6;
-      --reset-btn: #ffd6de;
-      --focus-ring: 0 0 0 4px rgba(138, 124, 240, 0.18);
+      --prompt-btn: #c5cae9;
+      --gemcopy-btn: #b2dfdb;
+      --reset-btn: #f8bbd0;
+      --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
       --done-bg: #e8f5e9;
       --done-text: #2e7d32;
-
-      --genre-bg: #fff3cd;
-      --voice-bg: #d8efff;
-      --age-bg: #f6e1ff;
-      --mode-bg: #e0f7fa;
-      --mood-bg: #ffe0f0;
-      --tempo-bg: #e8f5e9;
-      --instrument-bg: #fff8e1;
-
-      --selected-shadow: 0 0 0 3px rgba(109, 95, 209, 0.28);
     }
 
     * {
@@ -55,13 +44,13 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: var(--primary);
       color: white;
       text-align: center;
       padding: 16px 12px;
       font-size: 22px;
-      font-weight: 800;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
     }
 
     .container {
@@ -72,14 +61,14 @@
 
     .panel {
       background: var(--card-bg);
-      border-radius: 24px;
+      border-radius: 22px;
       padding: 18px;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
     .panel h2 {
       margin: 0 0 8px;
-      font-size: 27px;
+      font-size: 26px;
       color: var(--primary-dark);
     }
 
@@ -90,27 +79,22 @@
     }
 
     .guide-box {
-      margin: 0 0 12px;
-      background: #f0efff;
-      color: #4f46b5;
-      border-radius: 16px;
-      padding: 12px 14px;
-      font-size: 15px;
+      margin: 0 0 18px;
+      background: #eef3ff;
+      color: #3949ab;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 16px;
       font-weight: 700;
-    }
-
-    .guide-box.secondary {
-      background: #eefaf3;
-      color: #2e7d32;
-      margin-bottom: 16px;
+      line-height: 1.5;
     }
 
     .question-card {
       background: var(--soft-card);
-      border: 1px solid #e7e3ff;
+      border: 1px solid #e1e5f5;
       border-radius: 20px;
-      padding: 14px;
-      margin-bottom: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
 
     .question-title {
@@ -118,7 +102,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 800;
       margin-bottom: 10px;
     }
@@ -130,20 +114,20 @@
 
     .question-sub {
       margin-top: -2px;
-      margin-bottom: 10px;
-      font-size: 14px;
+      margin-bottom: 12px;
+      font-size: 15px;
       color: var(--text-sub);
     }
 
     .completion-badge {
       display: none;
       flex-shrink: 0;
-      padding: 4px 9px;
+      padding: 4px 8px;
       border-radius: 999px;
       background: var(--done-bg);
       color: var(--done-text);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1;
     }
 
@@ -160,15 +144,15 @@
 
     .answer-box {
       width: 100%;
-      min-height: 78px;
+      min-height: 82px;
       border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 18px;
+      border-radius: 18px;
+      padding: 15px;
+      font-size: 19px;
       resize: vertical;
       outline: none;
       background: #fff;
-      color: #111;
+      color: #111111;
     }
 
     .answer-box:focus {
@@ -181,6 +165,10 @@
       opacity: 1;
     }
 
+    .answer-box:not(:placeholder-shown) {
+      border-color: #5c6bc0;
+    }
+
     button:focus-visible,
     textarea:focus-visible,
     input:focus-visible {
@@ -191,25 +179,24 @@
     .answer-actions {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .mini-btn {
       flex: 1;
       border: none;
-      border-radius: 14px;
-      min-height: 52px;
+      border-radius: 16px;
+      min-height: 56px;
       padding: 12px 8px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 3px 9px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
       transition: 0.2s ease;
     }
 
     .mini-btn.mic-btn {
       background: var(--mic-bg);
-      color: #6d4c41;
     }
 
     .mini-btn.mic-btn.recording {
@@ -240,120 +227,6 @@
       min-height: 20px;
     }
 
-    .choice-section {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .choice-card {
-      background: var(--soft-card);
-      border: 1px solid #e7e3ff;
-      border-radius: 20px;
-      padding: 14px;
-    }
-
-    .choice-card.mode {
-      background: linear-gradient(180deg, #f1fcff, #fbfeff);
-    }
-
-    .choice-card.genre {
-      background: linear-gradient(180deg, #fffaf0, #fffef8);
-    }
-
-    .choice-card.voice {
-      background: linear-gradient(180deg, #f3fbff, #fcfeff);
-    }
-
-    .choice-card.age {
-      background: linear-gradient(180deg, #fcf6ff, #fffafe);
-    }
-
-    .choice-card.instrument {
-      background: linear-gradient(180deg, #fffdf2, #fffefb);
-    }
-
-    .choice-card.mood {
-      background: linear-gradient(180deg, #fff5fa, #fffafd);
-    }
-
-    .choice-card.tempo {
-      background: linear-gradient(180deg, #f4fff6, #fbfffc);
-    }
-
-    .choice-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .choice-options {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    .choice-btn {
-      border: none;
-      border-radius: 14px;
-      min-height: 52px;
-      padding: 12px 10px;
-      font-size: 17px;
-      font-weight: 800;
-      text-align: center;
-      background: #edf1f6;
-      color: #37474f;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-      transition: 0.18s ease;
-    }
-
-    .choice-card.mode .choice-btn {
-      background: var(--mode-bg);
-      color: #006064;
-    }
-
-    .choice-card.genre .choice-btn {
-      background: var(--genre-bg);
-      color: #7a5600;
-    }
-
-    .choice-card.voice .choice-btn {
-      background: var(--voice-bg);
-      color: #0b5e87;
-    }
-
-    .choice-card.age .choice-btn {
-      background: var(--age-bg);
-      color: #7b1fa2;
-    }
-
-    .choice-card.instrument .choice-btn {
-      background: var(--instrument-bg);
-      color: #8d6e00;
-    }
-
-    .choice-card.mood .choice-btn {
-      background: var(--mood-bg);
-      color: #ad1457;
-    }
-
-    .choice-card.tempo .choice-btn {
-      background: var(--tempo-bg);
-      color: #2e7d32;
-    }
-
-    .choice-btn.selected {
-      transform: translateY(-1px);
-      box-shadow: var(--selected-shadow);
-      filter: saturate(1.05);
-    }
-
-    .hidden-section {
-      display: none;
-    }
-
     .tool-section {
       margin-top: 18px;
       display: flex;
@@ -364,27 +237,22 @@
     .tool-btn {
       border: none;
       border-radius: 18px;
-      min-height: 58px;
+      min-height: 60px;
       padding: 14px 16px;
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     }
 
     .tool-btn.prompt {
       background: var(--prompt-btn);
-      color: #3d32a8;
+      color: #283593;
     }
 
-    .tool-btn.copy {
-      background: var(--copy-btn);
-      color: #8d4e00;
-    }
-
-    .tool-btn.open {
-      background: var(--open-btn);
-      color: #00695c;
+    .tool-btn.gemcopy {
+      background: var(--gemcopy-btn);
+      color: #004d40;
     }
 
     .tool-btn.reset {
@@ -396,15 +264,15 @@
       margin-top: 14px;
       margin-bottom: 8px;
       font-size: 20px;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--primary-dark);
     }
 
     .output-box {
       width: 100%;
-      min-height: 290px;
+      min-height: 340px;
       border: 2px solid var(--border-color);
-      border-radius: 18px;
+      border-radius: 16px;
       padding: 14px;
       font-size: 17px;
       background: #fff;
@@ -426,20 +294,10 @@
       100% { transform: scale(1); }
     }
 
-    @media (min-width: 720px) {
-      .choice-options.grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .choice-options.grid-4 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
     @media (max-width: 640px) {
       header {
-        font-size: 20px;
-        padding: 14px 10px;
+        font-size: 21px;
+        padding: 15px 10px;
       }
 
       .panel h2 {
@@ -447,15 +305,21 @@
       }
 
       .panel p.desc {
-        font-size: 15px;
+        font-size: 16px;
+        margin-bottom: 10px;
       }
 
       .guide-box {
-        font-size: 14px;
+        font-size: 15px;
+        padding: 14px;
       }
 
       .question-title {
-        font-size: 17px;
+        font-size: 18px;
+      }
+
+      .question-sub {
+        font-size: 14px;
       }
 
       .completion-badge {
@@ -464,185 +328,108 @@
       }
 
       .answer-box {
-        font-size: 17px;
-        min-height: 70px;
-        padding: 13px;
+        font-size: 18px;
+        min-height: 78px;
+        padding: 14px;
       }
 
       .answer-actions {
         gap: 6px;
-        margin-top: 8px;
+        margin-top: 10px;
       }
 
       .mini-btn {
-        min-height: 48px;
-        font-size: 15px;
+        min-height: 54px;
+        font-size: 16px;
         padding: 10px 6px;
       }
 
-      .choice-title {
-        font-size: 17px;
-      }
-
-      .choice-btn {
-        min-height: 48px;
-        font-size: 15px;
-        padding: 10px 8px;
-      }
-
       .tool-btn {
-        min-height: 52px;
-        font-size: 17px;
+        min-height: 56px;
+        font-size: 18px;
         padding: 12px 14px;
       }
 
       .output-box {
         font-size: 16px;
-        min-height: 250px;
+        min-height: 280px;
       }
     }
   </style>
 </head>
 <body>
-  <header>🎵 노래 주머니</header>
+  <header>2주차 생각주머니</header>
 
   <div class="container">
     <section class="panel">
-      <h2>내 이야기를 노래로 만들어요</h2>
-      <p class="desc">질문에 답하고, 음악 스타일을 고르면 재미나이에 넣을 글이 만들어집니다.</p>
-      <div class="guide-box">노래로 만들 수도 있고, 연주곡으로 만들 수도 있어요 😊</div>
-      <div class="guide-box secondary">👉 순서: 노래 글 만들기 → 글 복사하기 → 음악 만들러 가기 → 붙여넣기</div>
+      <h2>오늘 기분 30초 노래 만들기</h2>
+      <p class="desc">오늘 내 마음에 어울리는 짧은 노래를 만들어 보세요 🎵</p>
+      <div class="guide-box">짧게 적거나 말해도 됩니다 😊<br>30초 노래 한 곡이면 충분합니다.</div>
 
       <div id="questions-wrap"></div>
-
-      <div class="choice-section">
-        <div class="choice-card mode">
-          <div class="choice-title">🎶 어떤 형태로 만들까요?</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="musicMode" data-value="노래">🎤 노래</button>
-            <button type="button" class="choice-btn" data-group="musicMode" data-value="연주곡">🎻 연주곡</button>
-          </div>
-          <input type="hidden" id="musicMode" value="노래" />
-        </div>
-
-        <div class="choice-card genre">
-          <div class="choice-title">🎼 장르를 골라주세요</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="genre" data-value="트로트">🎤 트로트</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="케이팝">🎧 케이팝</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="올드팝">📻 올드팝</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="가곡">🌸 가곡</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="클래식">🎻 클래식</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="피아노 연주">🎹 피아노 연주</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="오르골">🧸 오르골</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="영화음악">🎬 영화음악</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="재즈">🎷 재즈</button>
-            <button type="button" class="choice-btn" data-group="genre" data-value="국악 감성">🥁 국악 감성</button>
-          </div>
-          <input type="hidden" id="genre" value="트로트" />
-        </div>
-
-        <div class="choice-card mood">
-          <div class="choice-title">💗 전체 분위기를 골라주세요</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="musicMood" data-value="따뜻하게">🌷 따뜻하게</button>
-            <button type="button" class="choice-btn" data-group="musicMood" data-value="그립게">🌙 그립게</button>
-            <button type="button" class="choice-btn" data-group="musicMood" data-value="밝고 경쾌하게">☀ 밝고 경쾌하게</button>
-            <button type="button" class="choice-btn" data-group="musicMood" data-value="잔잔하게">🍃 잔잔하게</button>
-            <button type="button" class="choice-btn" data-group="musicMood" data-value="웅장하게">🏛 웅장하게</button>
-            <button type="button" class="choice-btn" data-group="musicMood" data-value="슬프지만 아름답게">💧 슬프지만 아름답게</button>
-          </div>
-          <input type="hidden" id="musicMood" value="따뜻하게" />
-        </div>
-
-        <div class="choice-card tempo">
-          <div class="choice-title">⏱ 속도를 골라주세요</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn" data-group="musicTempo" data-value="느리게">🐢 느리게</button>
-            <button type="button" class="choice-btn selected" data-group="musicTempo" data-value="보통">🚶 보통</button>
-            <button type="button" class="choice-btn" data-group="musicTempo" data-value="신나게">💃 신나게</button>
-          </div>
-          <input type="hidden" id="musicTempo" value="보통" />
-        </div>
-
-        <div class="choice-card voice" id="voiceSection">
-          <div class="choice-title">🎤 가수 목소리를 골라주세요</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="voiceGender" data-value="여자">👩 여자</button>
-            <button type="button" class="choice-btn" data-group="voiceGender" data-value="남자">👨 남자</button>
-            <button type="button" class="choice-btn" data-group="voiceGender" data-value="혼성">👫 혼성</button>
-          </div>
-          <input type="hidden" id="voiceGender" value="여자" />
-        </div>
-
-        <div class="choice-card age" id="voiceAgeSection">
-          <div class="choice-title">🕰 목소리 나이대 느낌을 골라주세요</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="voiceAge" data-value="젊은 목소리">✨ 젊은 목소리</button>
-            <button type="button" class="choice-btn" data-group="voiceAge" data-value="중년 목소리">🌷 중년 목소리</button>
-            <button type="button" class="choice-btn" data-group="voiceAge" data-value="노년 목소리">🌿 노년 목소리</button>
-          </div>
-          <input type="hidden" id="voiceAge" value="젊은 목소리" />
-        </div>
-
-        <div class="choice-card instrument hidden-section" id="instrumentSection">
-          <div class="choice-title">🎼 어떤 악기로 연주할까요?</div>
-          <div class="choice-options grid-3">
-            <button type="button" class="choice-btn selected" data-group="instrument" data-value="피아노">🎹 피아노</button>
-            <button type="button" class="choice-btn" data-group="instrument" data-value="바이올린">🎻 바이올린</button>
-            <button type="button" class="choice-btn" data-group="instrument" data-value="첼로">🎻 첼로</button>
-            <button type="button" class="choice-btn" data-group="instrument" data-value="플루트">🪈 플루트</button>
-            <button type="button" class="choice-btn" data-group="instrument" data-value="오르골">🧸 오르골</button>
-            <button type="button" class="choice-btn" data-group="instrument" data-value="국악기">🥁 국악기</button>
-          </div>
-          <input type="hidden" id="instrument" value="피아노" />
-        </div>
-      </div>
-
       <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
     </section>
 
     <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button">🎵 노래 글 만들기</button>
+      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="30초 노래 글 만들기">✨ 30초 노래 글 만들기</button>
 
-      <div class="output-title">음악 글</div>
-      <div id="compiledOutput" class="output-box" aria-live="polite"></div>
+      <div class="output-title">노래 프롬프트</div>
+      <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
 
-      <button class="tool-btn copy" id="copyPromptBtn" type="button">📋 글 복사하기</button>
-      <button class="tool-btn open" id="openGemBtn" type="button">🤖 음악 만들러 가기</button>
-      <button class="tool-btn reset" id="resetBtn" type="button">🗑 다시 만들기</button>
+      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 노래 만들기 열기">📋✨ 복사하고 노래 만들기 열기</button>
+      <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
     </div>
   </div>
 
   <script>
-    const GEM_URL = 'https://gemini.google.com/';
-    const STORAGE_KEY = 'song_thought_pocket_v2_upgrade';
+    const MUSIC_URL = 'https://gemini.google.com/';
+    const STORAGE_KEY = 'song_html_final_v1';
 
     const questions = [
       {
-        title: '이 음악은 누구 이야기인가요?',
-        sub: '연애, 여행, 청춘, 가족, 인생 이야기 모두 괜찮아요',
-        placeholder: '예: 남편과 처음 기차 타고 여행 갔던 내 청춘 이야기예요'
+        title: '오늘 마음은 어떤가요?',
+        sub: '지금 마음 느낌',
+        placeholder: '예: 기쁘고 편안해요, 조금 외롭지만 괜찮아요'
       },
       {
-        title: '이 음악에 가장 담고 싶은 마음은 무엇인가요?',
-        sub: '설렘, 그리움, 고마움, 대견함 같은 마음을 떠올려 보세요',
-        placeholder: '예: 그때는 참 설레고 예뻤다는 마음을 담고 싶어요'
+        title: '무슨 일로 그런 마음이 드셨나요?',
+        sub: '짧게 이유 한 가지',
+        placeholder: '예: 손주를 만나서 기분이 좋아요'
       },
       {
-        title: '어떤 순간이나 장면이 떠오르시나요?',
-        sub: '한 장면처럼 말하면 더 잘 만들어져요',
-        placeholder: '예: 꽃무늬 원피스를 입고 바닷가에서 사진 찍던 순간이 떠올라요'
+        title: '이 마음은 어떤 느낌인가요?',
+        sub: '',
+        placeholder: '예: 따뜻한 느낌, 조용한 느낌'
       },
       {
-        title: '이 음악을 들으면 어떤 기분이었으면 좋겠나요?',
-        sub: '듣는 사람이 느끼는 분위기를 정해보세요',
-        placeholder: '예: 듣는 사람이 추억여행을 하는 것처럼 웃고 울었으면 좋겠어요'
+        title: '어떤 노래 느낌이 좋으세요?',
+        sub: '동요, 찬양, 트로트 등',
+        placeholder: '예: 동요, 찬양, 트로트, K-POP, 옛날 팝, 국악'
       },
       {
-        title: '이 음악을 누구에게 들려주고 싶나요?',
-        sub: '가족, 손주, 친구, 젊은 시절의 나에게도 들려줄 수 있어요',
-        placeholder: '예: 지금의 나와 젊은 날의 나에게 같이 들려주고 싶어요'
+        title: '빠른 노래가 좋으세요, 느린 노래가 좋으세요?',
+        sub: '',
+        placeholder: '예: 느린 노래'
+      },
+      {
+        title: '어떤 악기 느낌이 좋으세요?',
+        sub: '',
+        placeholder: '예: 피아노, 기타, 국악 악기'
+      },
+      {
+        title: '노래 분위기는 어떤가요?',
+        sub: '',
+        placeholder: '예: 따뜻하고 희망적, 밝고 즐거운'
+      },
+      {
+        title: '노래에 어떤 말이 들어가면 좋을까요?',
+        sub: '',
+        placeholder: '예: 가족 이야기, 오늘 하루'
+      },
+      {
+        title: '한 줄로 말해볼까요?',
+        sub: '노래의 핵심 문장',
+        placeholder: '예: 오늘은 참 따뜻한 하루였어요'
       }
     ];
 
@@ -667,20 +454,9 @@
           data[box.id] = box.value;
         });
 
-        [
-          'musicMode',
-          'genre',
-          'musicMood',
-          'musicTempo',
-          'voiceGender',
-          'voiceAge',
-          'instrument'
-        ].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) data[id] = el.value;
-        });
+        const compiledOutput = document.getElementById('compiledOutput');
+        if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
 
-        data.compiledOutput = document.getElementById('compiledOutput')?.textContent || '';
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         showSaveIndicator();
       } catch (error) {
@@ -714,49 +490,10 @@
       }
     }
 
-    function applyChoiceSelection(group, value) {
-      document.querySelectorAll(`.choice-btn[data-group="${group}"]`).forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === value);
-      });
-      const hidden = document.getElementById(group);
-      if (hidden) hidden.value = value;
-    }
-
-    function updateModeUI() {
-      const musicMode = document.getElementById('musicMode').value;
-      const voiceSection = document.getElementById('voiceSection');
-      const voiceAgeSection = document.getElementById('voiceAgeSection');
-      const instrumentSection = document.getElementById('instrumentSection');
-
-      if (musicMode === '노래') {
-        voiceSection.classList.remove('hidden-section');
-        voiceAgeSection.classList.remove('hidden-section');
-        instrumentSection.classList.add('hidden-section');
-      } else {
-        voiceSection.classList.add('hidden-section');
-        voiceAgeSection.classList.add('hidden-section');
-        instrumentSection.classList.remove('hidden-section');
-      }
-    }
-
-    function enforceGenreModeCompatibility(selectedGenre) {
-      const instrumentalGenres = ['클래식', '피아노 연주', '오르골', '영화음악', '재즈', '국악 감성'];
-      const vocalGenres = ['트로트', '케이팝', '올드팝', '가곡'];
-
-      if (instrumentalGenres.includes(selectedGenre)) {
-        applyChoiceSelection('musicMode', '연주곡');
-      } else if (vocalGenres.includes(selectedGenre)) {
-        applyChoiceSelection('musicMode', '노래');
-      }
-
-      updateModeUI();
-    }
-
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
-          updateModeUI();
           updateAllCompletionStates();
           return;
         }
@@ -770,23 +507,11 @@
           }
         });
 
-        [
-          'musicMode',
-          'genre',
-          'musicMood',
-          'musicTempo',
-          'voiceGender',
-          'voiceAge',
-          'instrument'
-        ].forEach(id => {
-          if (data[id]) applyChoiceSelection(id, data[id]);
-        });
-
         if (data.compiledOutput) {
-          document.getElementById('compiledOutput').textContent = data.compiledOutput;
+          const compiledOutput = document.getElementById('compiledOutput');
+          if (compiledOutput) compiledOutput.textContent = data.compiledOutput;
         }
 
-        updateModeUI();
         updateAllCompletionStates();
       } catch (error) {
         console.error('불러오기 실패:', error);
@@ -814,9 +539,9 @@
           ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
           <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
           <div class="answer-actions">
-            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}">🎤 말로 쓰기</button>
-            <button class="mini-btn clear-btn" type="button" data-target="${answerId}">🗑 다시 쓰기</button>
-            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}">💡 이렇게 써보기</button>
+            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
+            <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
+            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
           </div>
           <div class="status" id="${statusId}" aria-live="polite"></div>
         `;
@@ -835,7 +560,8 @@
       }
       if (activeMicButton) {
         activeMicButton.classList.remove('recording');
-        activeMicButton.textContent = '🎤 말로 쓰기';
+        activeMicButton.textContent = '🎤 말하기';
+        activeMicButton.setAttribute('aria-label', '음성 입력');
       }
       activeRecognition = null;
       activeMicButton = null;
@@ -874,6 +600,7 @@
 
       micButton.classList.add('recording');
       micButton.textContent = '⏹ 녹음중';
+      micButton.setAttribute('aria-label', '녹음 중');
       statusEl.textContent = '녹음 중입니다.';
 
       recognition.onresult = function (event) {
@@ -888,7 +615,6 @@
         }
 
         textarea.value = [originalValue, finalTranscript, interimTranscript].filter(Boolean).join(' ');
-
         if (silenceTimer) clearTimeout(silenceTimer);
         silenceTimer = setTimeout(() => {
           try {
@@ -916,7 +642,8 @@
         if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
         if (activeMicButton === micButton) {
           micButton.classList.remove('recording');
-          micButton.textContent = '🎤 말로 쓰기';
+          micButton.textContent = '🎤 말하기';
+          micButton.setAttribute('aria-label', '음성 입력');
         }
         activeRecognition = null;
         activeMicButton = null;
@@ -931,14 +658,14 @@
     }
 
     function clearAnswer(targetId) {
-      const textarea = document.getElementById(targetId);
-      if (!textarea) return;
+      const input = document.getElementById(targetId);
+      if (!input) return;
 
       if (activeMicButton && activeMicButton.dataset.target === targetId) {
         stopCurrentRecognition();
       }
 
-      textarea.value = '';
+      input.value = '';
 
       document.querySelectorAll(`.example-btn[data-target="${targetId}"]`).forEach(btn => {
         btn.classList.remove('active');
@@ -946,28 +673,6 @@
 
       saveData();
       updateCompletionState(targetId);
-    }
-
-    function setChoiceValue(group, value, buttonEl) {
-      const hiddenInput = document.getElementById(group);
-      if (!hiddenInput) return;
-
-      hiddenInput.value = value;
-      document.querySelectorAll(`.choice-btn[data-group="${group}"]`).forEach(btn => {
-        btn.classList.remove('selected');
-      });
-
-      if (buttonEl) buttonEl.classList.add('selected');
-
-      if (group === 'musicMode') {
-        updateModeUI();
-      }
-
-      if (group === 'genre') {
-        enforceGenreModeCompatibility(value);
-      }
-
-      saveData();
     }
 
     function setupInteractions() {
@@ -997,159 +702,100 @@
           }
           return;
         }
-
-        const choiceBtn = e.target.closest('.choice-btn');
-        if (choiceBtn) {
-          setChoiceValue(choiceBtn.dataset.group, choiceBtn.dataset.value, choiceBtn);
-          return;
-        }
       });
-    }
-
-    function buildGenrePrompt(genre, mode) {
-      if (mode === '연주곡') {
-        if (genre === '클래식') return '클래식 분위기의 연주곡으로 만들어 주세요.';
-        if (genre === '피아노 연주') return '피아노 중심의 연주곡으로 만들어 주세요.';
-        if (genre === '오르골') return '오르골 느낌의 연주곡으로 만들어 주세요.';
-        if (genre === '영화음악') return '영화음악처럼 장면이 떠오르는 연주곡으로 만들어 주세요.';
-        if (genre === '재즈') return '재즈 감성의 연주곡으로 만들어 주세요.';
-        if (genre === '국악 감성') return '국악 감성이 느껴지는 연주곡으로 만들어 주세요.';
-        return `${genre} 느낌의 연주곡으로 만들어 주세요.`;
-      }
-
-      if (genre === '트로트') return '트로트 느낌의 노래를 만들어 주세요.';
-      if (genre === '케이팝') return '케이팝 스타일의 노래를 만들어 주세요.';
-      if (genre === '올드팝') return '올드팝 느낌의 노래를 만들어 주세요.';
-      if (genre === '가곡') return '가곡 느낌의 노래를 만들어 주세요.';
-      return `${genre} 느낌의 노래를 만들어 주세요.`;
-    }
-
-    function buildVoicePrompt(voiceGender, voiceAge) {
-      let genderText = '여자 목소리로';
-      if (voiceGender === '남자') genderText = '남자 목소리로';
-      if (voiceGender === '혼성') genderText = '혼성 보컬로';
-
-      let ageText = '젊고 맑은 느낌으로';
-      if (voiceAge === '중년 목소리') ageText = '편안하고 안정된 느낌으로';
-      if (voiceAge === '노년 목소리') ageText = '깊고 따뜻한 느낌으로';
-
-      return `${genderText}\n${ageText} 불러주세요.`;
-    }
-
-    function buildInstrumentPrompt(instrument) {
-      if (instrument === '피아노') return '피아노 중심으로 연주해 주세요.';
-      if (instrument === '바이올린') return '바이올린 중심으로 연주해 주세요.';
-      if (instrument === '첼로') return '첼로 중심으로 연주해 주세요.';
-      if (instrument === '플루트') return '플루트 중심으로 연주해 주세요.';
-      if (instrument === '오르골') return '오르골 중심으로 연주해 주세요.';
-      if (instrument === '국악기') return '국악기 중심으로 연주해 주세요.';
-      return `${instrument} 중심으로 연주해 주세요.`;
     }
 
     function compilePrompt() {
       try {
         const output = document.getElementById('compiledOutput');
-        output.textContent = '글을 만드는 중입니다...';
+        output.textContent = '프롬프트를 만드는 중입니다...';
 
         const get = (n) => {
           const el = document.getElementById(`q${n}`);
           return el ? el.value.trim() : '';
         };
 
-        const musicMode = document.getElementById('musicMode')?.value || '노래';
-        const genre = document.getElementById('genre')?.value || '트로트';
-        const musicMood = document.getElementById('musicMood')?.value || '따뜻하게';
-        const musicTempo = document.getElementById('musicTempo')?.value || '보통';
-        const voiceGender = document.getElementById('voiceGender')?.value || '여자';
-        const voiceAge = document.getElementById('voiceAge')?.value || '젊은 목소리';
-        const instrument = document.getElementById('instrument')?.value || '피아노';
+        const genre = get(4);
+        let genreDetail = genre || '동요';
 
-        let prompt = `위 이야기를 바탕으로 ${musicMode}을 만들어 주세요.
-
-[이야기]
-이 음악은 누구 이야기인가요: ${get(1) || '미입력'}
-이 음악에 가장 담고 싶은 마음: ${get(2) || '미입력'}
-떠오르는 순간이나 장면: ${get(3) || '미입력'}
-이 음악을 들으면 좋을 기분: ${get(4) || '미입력'}
-이 음악을 들려주고 싶은 사람: ${get(5) || '미입력'}
-
-[형태]
-${musicMode}
-
-[장르]
-${buildGenrePrompt(genre, musicMode)}
-
-[분위기]
-전체 분위기는 ${musicMood} 느낌으로 만들어 주세요.
-
-[속도]
-속도는 ${musicTempo} 느낌으로 진행해 주세요.
-`;
-
-        if (musicMode === '노래') {
-          prompt += `
-[보컬]
-${buildVoicePrompt(voiceGender, voiceAge)}
-
-[추가 요청]
-- 가사는 짧고 반복되게 만들어 주세요.
-- 감정이 잘 느껴지게 써 주세요.
-- 너무 어렵지 않게 써 주세요.
-- 어르신도 따라 부르기 쉽게 만들어 주세요.
-- 이야기와 감정이 살아 있는 노래로 만들어 주세요.
-- 입력 내용이 일부 비어 있거나 짧아도, 전체 분위기와 감정을 자연스럽게 살려서 완성도 높게 만들어 주세요.
-- 부족한 부분은 과하게 상상하지 말고, 어르신의 삶과 추억에 어울리게 부드럽고 자연스럽게 보완해 주세요.
-- 전체 결과는 어설프지 않게, 전문 작곡가와 전문 보컬 디렉터가 다듬은 것처럼 완성도 있게 만들어 주세요.
-- 멜로디, 가사, 분위기가 서로 잘 어울리도록 정리해 주세요.
-- 감정은 진심 있게, 표현은 과하지 않게, 품위 있고 듣기 좋게 만들어 주세요.
-`;
-        } else {
-          prompt += `
-[연주 악기]
-${buildInstrumentPrompt(instrument)}
-
-[추가 요청]
-- 보컬 없이 연주곡으로 만들어 주세요.
-- 장면과 감정이 떠오르는 음악으로 만들어 주세요.
-- 너무 복잡하지 않고 듣기 편하게 만들어 주세요.
-- 추억과 분위기가 잘 느껴지게 만들어 주세요.
-- 입력 내용이 일부 비어 있거나 짧아도, 전체 분위기와 장면이 자연스럽게 떠오르도록 완성도 높게 만들어 주세요.
-- 부족한 부분은 과하게 상상하지 말고, 어르신의 추억과 감정에 어울리게 부드럽고 자연스럽게 보완해 주세요.
-- 전체 결과는 어설프지 않게, 전문 작곡가와 전문 연주자가 다듬은 것처럼 아름답고 안정감 있게 만들어 주세요.
-- 악기 구성, 흐름, 분위기가 서로 잘 어울리도록 정리해 주세요.
-- 너무 복잡하거나 산만하지 않게, 듣기 편하면서도 수준 있게 만들어 주세요.
-`;
+        if (genre.includes('국악')) {
+          genreDetail = '국악, 판소리 느낌, 한국 전통 악기';
+        } else if (genre.includes('찬양') || genre.includes('성가')) {
+          genreDetail = '찬양 또는 성가 느낌, 부드럽고 은혜로운 스타일';
+        } else if (genre.includes('트로트')) {
+          genreDetail = '트로트 스타일, 익숙하고 정겨운 느낌';
+        } else if (genre.includes('K-POP')) {
+          genreDetail = 'K-POP 스타일, 세련되고 밝은 느낌';
+        } else if (genre.includes('옛날 팝')) {
+          genreDetail = '올드팝 스타일, 추억이 느껴지는 부드러운 느낌';
+        } else if (genre.includes('동요')) {
+          genreDetail = '동요 스타일, 쉽고 따뜻한 느낌';
         }
 
-        output.textContent = prompt.trim();
+        const prompt = `짧은 30초 노래를 만들어 주세요.
+
+오늘 마음은 ${get(1) || '따뜻하고 편안한 느낌'}입니다.
+이 마음은 ${get(2) || '소중한 기억'} 때문에 생겼습니다.
+이 느낌은 ${get(3) || '조용하고 따뜻한 느낌'}입니다.
+
+노래 스타일은 ${genreDetail}입니다.
+속도는 ${get(5) || '보통'}입니다.
+주요 악기는 ${get(6) || '피아노'} 느낌으로 해 주세요.
+노래 분위기는 ${get(7) || '따뜻하고 희망적인 느낌'}입니다.
+
+가사에는 ${get(8) || '오늘 하루의 이야기'}가 담기고,
+핵심 문장은 "${get(9) || '오늘도 괜찮은 하루입니다'}" 입니다.
+
+현재 감정이 슬프거나 외로운 마음이어도 괜찮습니다.
+그 감정은 자연스럽게 담아 주세요.
+하지만 노래 전체는 너무 어둡거나 절망적으로 만들지 말고,
+마지막에는 따뜻함, 위로, 평안, 희망이 느껴지도록 만들어 주세요.
+짧은 30초 안에서 마음이 조금 밝아지는 느낌으로 마무리해 주세요.
+
+듣기 편하고 부드러운 30초 노래로 만들어 주세요.`;
+
+        output.textContent = prompt;
         saveData();
       } catch (error) {
         console.error('프롬프트 생성 실패:', error);
-        document.getElementById('compiledOutput').textContent = '글을 만드는 중 오류가 생겼습니다.';
+        document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
       }
     }
 
-    async function copyPromptOnly() {
+    async function copyAndOpenMusic() {
       const text = document.getElementById('compiledOutput').textContent.trim();
-      if (!text || text === '글을 만드는 중입니다...') {
-        alert('먼저 노래 글 만들기 버튼을 눌러주세요.');
+      if (!text || text === '프롬프트를 만드는 중입니다...') {
+        alert('먼저 30초 노래 글 만들기 버튼을 눌러주세요.');
         return;
       }
 
       saveData();
 
+      let copied = false;
+
       try {
         await navigator.clipboard.writeText(text);
-        alert('글을 복사했어요.');
+        copied = true;
       } catch (error) {
         console.error('복사 실패:', error);
-        alert('복사가 되지 않았어요. 다시 눌러주세요.');
       }
-    }
 
-    function openGemOnly() {
-      alert('재미나이 메인으로 이동합니다. 이동 후 아래에서 음악 만들기를 눌러 주세요.');
-      window.location.href = GEM_URL;
+      const newWindow = window.open(MUSIC_URL, '_blank');
+
+      if (!newWindow) {
+        if (copied) {
+          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        } else {
+          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
+        }
+        return;
+      }
+
+      if (copied) {
+        alert('프롬프트를 복사했어요. 음악 만들기 화면에서 길게 눌러 붙여넣기 해주세요.');
+      } else {
+        alert('노래 만들기 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+      }
     }
 
     function resetAll() {
@@ -1164,16 +810,6 @@ ${buildInstrumentPrompt(instrument)}
       });
 
       document.getElementById('compiledOutput').textContent = '';
-
-      applyChoiceSelection('musicMode', '노래');
-      applyChoiceSelection('genre', '트로트');
-      applyChoiceSelection('musicMood', '따뜻하게');
-      applyChoiceSelection('musicTempo', '보통');
-      applyChoiceSelection('voiceGender', '여자');
-      applyChoiceSelection('voiceAge', '젊은 목소리');
-      applyChoiceSelection('instrument', '피아노');
-
-      updateModeUI();
 
       try {
         localStorage.removeItem(STORAGE_KEY);
@@ -1205,9 +841,8 @@ ${buildInstrumentPrompt(instrument)}
     loadData();
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
-    document.getElementById('copyPromptBtn').addEventListener('click', copyPromptOnly);
-    document.getElementById('openGemBtn').addEventListener('click', openGemOnly);
+    document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenMusic);
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
-  </html>
+</html>
