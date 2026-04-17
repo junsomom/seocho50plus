@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>3주차 그림주머니 - 내 이야기 꺼내기</title>
+  <style>
+    :root {
+      --primary: #7986cb;
+      --primary-dark: #5c6bc0;
+      --light-bg: #f7f8fb;
+      --card-bg: #ffffff;
+      --soft-card: #f9fafe;
+      --border-color: #d7dcf3;
+      --text-main: #222;
+      --text-sub: #666;
+      --example-bg: #dcedc8;
+      --example-active: #aed581;
+      --mic-bg: #ffe0b2;
+      --mic-recording: #ef9a9a;
+      --clear-bg: #eceff1;
+      --clear-text: #37474f;
+      --prompt-btn: #c5cae9;
+      --gemcopy-btn: #b2dfdb;
+      --reset-btn: #f8bbd0;
+      --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
+      --done-bg: #e8f5e9;
+      --done-text: #2e7d32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: var(--light-bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 16px 12px;
+      font-size: 22px;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      color: var(--primary-dark);
+    }
+
+    .panel p.desc {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: var(--text-sub);
+    }
+
+    .guide-box {
+      margin: 0 0 16px;
+      background: #eef3ff;
+      color: #3949ab;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .question-card {
+      background: var(--soft-card);
+      border: 1px solid #e1e5f5;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .question-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .question-title-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .question-sub {
+      margin-top: -2px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+
+    .completion-badge {
+      display: none;
+      flex-shrink: 0;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--done-bg);
+      color: var(--done-text);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .completion-badge.show {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .question-label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .answer-box {
+      width: 100%;
+      min-height: 72px;
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 18px;
+      resize: vertical;
+      outline: none;
+      background: #fff;
+      color: #111111;
+    }
+
+    .answer-box:focus {
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+    }
+
+    .answer-box::placeholder {
+      color: #b8b8b8;
+      opacity: 1;
+    }
+
+    .answer-box:not(:placeholder-shown) {
+      border-color: #5c6bc0;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    input:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .answer-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .mini-btn {
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 12px 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      transition: 0.2s ease;
+    }
+
+    .mini-btn.mic-btn {
+      background: var(--mic-bg);
+    }
+
+    .mini-btn.mic-btn.recording {
+      background: var(--mic-recording);
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+
+    .mini-btn.clear-btn {
+      background: var(--clear-bg);
+      color: var(--clear-text);
+    }
+
+    .mini-btn.example-btn {
+      background: var(--example-bg);
+      color: #33691e;
+    }
+
+    .mini-btn.example-btn.active {
+      background: var(--example-active);
+      color: #1b5e20;
+    }
+
+    .status {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-sub);
+      min-height: 20px;
+    }
+
+    .style-section {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .style-card {
+      background: var(--soft-card);
+      border: 1px solid #e1e5f5;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .style-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .style-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .style-btn {
+      border: none;
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 12px 10px;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      background: #eceff1;
+      color: #37474f;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .style-btn.selected {
+      background: var(--primary);
+      color: white;
+    }
+
+    .tool-section {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tool-btn {
+      border: none;
+      border-radius: 16px;
+      min-height: 56px;
+      padding: 14px 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .tool-btn.prompt {
+      background: var(--prompt-btn);
+      color: #283593;
+    }
+
+    .tool-btn.gemcopy {
+      background: var(--gemcopy-btn);
+      color: #004d40;
+    }
+
+    .tool-btn.reset {
+      background: var(--reset-btn);
+      color: #880e4f;
+    }
+
+    .output-title {
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .output-box {
+      width: 100%;
+      min-height: 340px;
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 17px;
+      background: #fff;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    .save-indicator {
+      font-size: 13px;
+      color: var(--primary-dark);
+      min-height: 18px;
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    @media (min-width: 720px) {
+      .style-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        font-size: 20px;
+        padding: 14px 10px;
+      }
+
+      .panel h2 {
+        font-size: 23px;
+      }
+
+      .panel p.desc {
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      .guide-box {
+        font-size: 14px;
+      }
+
+      .question-title {
+        font-size: 17px;
+      }
+
+      .completion-badge {
+        font-size: 12px;
+        padding: 4px 7px;
+      }
+
+      .answer-box {
+        font-size: 17px;
+        min-height: 68px;
+        padding: 13px;
+      }
+
+      .answer-actions {
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .mini-btn {
+        min-height: 48px;
+        font-size: 15px;
+        padding: 10px 6px;
+      }
+
+      .style-title {
+        font-size: 17px;
+      }
+
+      .style-btn {
+        min-height: 48px;
+        font-size: 15px;
+        padding: 10px 8px;
+      }
+
+      .tool-btn {
+        min-height: 52px;
+        font-size: 17px;
+        padding: 12px 14px;
+      }
+
+      .output-box {
+        font-size: 16px;
+        min-height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>3주차 그림주머니</header>
+
+  <div class="container">
+    <section class="panel">
+      <h2>내 이야기 꺼내기</h2>
+      <p class="desc">질문을 보고, 떠오르는 대로 짧게 적거나 말해보세요.</p>
+      <div class="guide-box">길게 쓰지 않아도 됩니다. 한 줄이면 충분합니다 😊</div>
+
+      <div id="questions-wrap"></div>
+
+      <div class="style-section">
+        <div class="style-card">
+          <div class="style-title">어떤 느낌의 동화책으로 만들까요?</div>
+          <div class="style-options" id="storyMoodOptions">
+            <button type="button" class="style-btn selected" data-group="storyMood" data-value="밝고 따뜻한 이야기">😊 밝고 따뜻한 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="따뜻하고 감동적인 이야기">🌷 따뜻하고 감동적인 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="희망이 느껴지는 이야기">🌈 희망이 느껴지는 이야기</button>
+          </div>
+          <input type="hidden" id="storyMood" value="밝고 따뜻한 이야기" />
+        </div>
+
+        <div class="style-card">
+          <div class="style-title">그림은 어떤 느낌이 좋으세요?</div>
+          <div class="style-options" id="imageStyleOptions">
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="따뜻한 동화 그림">🌿 따뜻한 동화 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="색연필 손그림">🎨 색연필 손그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="밝고 귀여운 그림">🌸 밝고 귀여운 그림</button>
+          </div>
+          <input type="hidden" id="imageStyle" value="따뜻한 동화 그림" />
+        </div>
+      </div>
+
+      <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
+    </section>
+
+    <div class="tool-section">
+      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="프롬프트 생성하기">✨ 프롬프트 생성하기</button>
+
+      <div class="output-title">스토리북 프롬프트</div>
+      <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
+
+      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 제미나이 스토리북 열기">📋✨ 복사하고 제미나이 스토리북 열기</button>
+      <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
+    </div>
+  </div>
+
+  <script>
+    const GEM_URL = 'https://gemini.google.com/gem/storybook';
+    const STORAGE_KEY = 'week3DrawingPocket_v1';
+
+    const questions = [
+      {
+        title: '어디를 다녀오셨어요?',
+        sub: '',
+        placeholder: '예: 설악산에 다녀왔어요'
+      },
+      {
+        title: '누구와 함께였어요?',
+        sub: '',
+        placeholder: '예: 남편과 함께 갔어요'
+      },
+      {
+        title: '떠날 때 기분은 어땠어요?',
+        sub: '',
+        placeholder: '예: 설레고 기분이 좋았어요'
+      },
+      {
+        title: '어떻게 가셨어요?',
+        sub: '',
+        placeholder: '예: 기차를 타고 갔어요'
+      },
+      {
+        title: '거기서 무엇을 하셨어요?',
+        sub: '',
+        placeholder: '예: 같이 걸으며 구경했어요'
+      },
+      {
+        title: '기억나는 일 하나만 말해 주세요',
+        sub: '작은 일도 괜찮아요',
+        placeholder: '예: 맛있는 국수를 함께 먹었어요'
+      },
+      {
+        title: '가장 기억에 남는 순간은 언제예요?',
+        sub: '한 장면처럼 떠오르면 더 좋아요',
+        placeholder: '예: 정상에서 바람을 맞던 순간이 제일 기억나요'
+      },
+      {
+        title: '그날은 어떤 날이었어요?',
+        sub: '계절, 날씨, 느낌을 떠올려 보세요',
+        placeholder: '예: 가을이고 맑은 날이었어요'
+      },
+      {
+        title: '그때 무엇을 하고 있었어요?',
+        sub: '',
+        placeholder: '예: 웃으면서 경치를 보고 있었어요'
+      },
+      {
+        title: '그날 나는 어떤 모습이었어요?',
+        sub: '표정이나 느낌을 떠올려 보세요',
+        placeholder: '예: 밝게 웃고 있었어요'
+      },
+      {
+        title: '어떤 옷을 입고 있었어요?',
+        sub: '그림 속 모습이 더 자연스러워져요',
+        placeholder: '예: 예쁜 원피스를 입고 있었어요'
+      },
+      {
+        title: '그 여행이 왜 좋았어요? 지금 생각하면 어떤 마음이에요?',
+        sub: '좋았던 이유와 지금의 마음을 함께 떠올려 보세요',
+        placeholder: '예: 함께해서 좋았고, 지금 생각하면 마음이 따뜻해져요'
+      }
+    ];
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let activeRecognition = null;
+    let activeMicButton = null;
+    let saveIndicatorTimer = null;
+
+    function showSaveIndicator(message = '자동 저장됨') {
+      const el = document.getElementById('saveIndicator');
+      el.textContent = message;
+      if (saveIndicatorTimer) clearTimeout(saveIndicatorTimer);
+      saveIndicatorTimer = setTimeout(() => {
+        el.textContent = '';
+      }, 1500);
+    }
+
+    function saveData() {
+      try {
+        const data = {};
+        document.querySelectorAll('.answer-box').forEach(box => {
+          data[box.id] = box.value;
+        });
+
+        const storyMood = document.getElementById('storyMood');
+        const imageStyle = document.getElementById('imageStyle');
+        const compiledOutput = document.getElementById('compiledOutput');
+
+        if (storyMood) data.storyMood = storyMood.value;
+        if (imageStyle) data.imageStyle = imageStyle.value;
+        if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        showSaveIndicator();
+      } catch (error) {
+        console.error('저장 실패:', error);
+        showSaveIndicator('저장되지 않았어요');
+      }
+    }
+
+    function debounce(fn, delay) {
+      let timer = null;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    const saveDataDebounced = debounce(saveData, 500);
+
+    function updateCompletionState(targetId) {
+      const input = document.getElementById(targetId);
+      if (!input) return;
+
+      const num = targetId.replace('q', '');
+      const badge = document.getElementById(`complete-${num}`);
+      if (!badge) return;
+
+      const hasValue = !!input.value.trim();
+      badge.classList.toggle('show', hasValue);
+    }
+
+    function updateAllCompletionStates() {
+      for (let i = 1; i <= questions.length; i++) {
+        updateCompletionState(`q${i}`);
+      }
+    }
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          updateAllCompletionStates();
+          return;
+        }
+
+        const data = JSON.parse(raw);
+
+        Object.keys(data).forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.classList.contains('answer-box')) {
+            el.value = data[id];
+          }
+        });
+
+        if (data.storyMood) {
+          const storyMoodInput = document.getElementById('storyMood');
+          if (storyMoodInput) storyMoodInput.value = data.storyMood;
+
+          document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.value === data.storyMood);
+          });
+        }
+
+        if (data.imageStyle) {
+          const imageStyleInput = document.getElementById('imageStyle');
+          if (imageStyleInput) imageStyleInput.value = data.imageStyle;
+
+          document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.value === data.imageStyle);
+          });
+        }
+
+        if (data.compiledOutput) {
+          const compiledOutput = document.getElementById('compiledOutput');
+          if (compiledOutput) {
+            compiledOutput.textContent = data.compiledOutput;
+          }
+        }
+
+        updateAllCompletionStates();
+      } catch (error) {
+        console.error('불러오기 실패:', error);
+      }
+    }
+
+    function createQuestionCards() {
+      const wrap = document.getElementById('questions-wrap');
+
+      questions.forEach((question, index) => {
+        const qNum = index + 1;
+        const answerId = `q${qNum}`;
+        const statusId = `status${qNum}`;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        card.innerHTML = `
+          <label class="question-label" for="${answerId}">
+            <div class="question-title">
+              <span class="question-title-text">${qNum}. ${question.title}</span>
+              <span class="completion-badge" id="complete-${qNum}">완료</span>
+            </div>
+          </label>
+          ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
+          <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
+          <div class="answer-actions">
+            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
+            <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
+            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
+          </div>
+          <div class="status" id="${statusId}" aria-live="polite"></div>
+        `;
+
+        wrap.appendChild(card);
+      });
+    }
+
+    function stopCurrentRecognition() {
+      if (activeRecognition) {
+        try {
+          activeRecognition.stop();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      if (activeMicButton) {
+        activeMicButton.classList.remove('recording');
+        activeMicButton.textContent = '🎤 말하기';
+        activeMicButton.setAttribute('aria-label', '음성 입력');
+      }
+      activeRecognition = null;
+      activeMicButton = null;
+    }
+
+    function startVoiceInput(targetId, statusId, micButton) {
+      const textarea = document.getElementById(targetId);
+      const statusEl = document.getElementById(statusId);
+
+      if (!textarea || !statusEl) return;
+
+      if (!SpeechRecognition) {
+        statusEl.textContent = '이 기기에서는 음성 입력이 지원되지 않습니다.';
+        return;
+      }
+
+      if (activeMicButton === micButton && activeRecognition) {
+        stopCurrentRecognition();
+        return;
+      }
+
+      stopCurrentRecognition();
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ko-KR';
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+      recognition.continuous = false;
+
+      let finalTranscript = '';
+      let silenceTimer = null;
+      const originalValue = textarea.value.trim();
+
+      activeRecognition = recognition;
+      activeMicButton = micButton;
+
+      micButton.classList.add('recording');
+      micButton.textContent = '⏹ 녹음중';
+      micButton.setAttribute('aria-label', '녹음 중');
+      statusEl.textContent = '녹음 중입니다.';
+
+      recognition.onresult = function (event) {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const piece = event.results[i][0].transcript.trim();
+          if (event.results[i].isFinal) {
+            finalTranscript += (finalTranscript ? ' ' : '') + piece;
+          } else {
+            interimTranscript += (interimTranscript ? ' ' : '') + piece;
+          }
+        }
+
+        textarea.value = [originalValue, finalTranscript, interimTranscript].filter(Boolean).join(' ');
+
+        if (silenceTimer) clearTimeout(silenceTimer);
+        silenceTimer = setTimeout(() => {
+          try {
+            recognition.stop();
+          } catch (e) {
+            console.error(e);
+          }
+        }, 1800);
+      };
+
+      recognition.onerror = function (event) {
+        if (silenceTimer) clearTimeout(silenceTimer);
+        let message = '음성 입력에 문제가 생겼습니다.';
+        if (event.error === 'not-allowed') message = '마이크 권한을 허용해주세요.';
+        if (event.error === 'no-speech') message = '말씀이 들리지 않았습니다. 다시 눌러주세요.';
+        if (event.error === 'audio-capture') message = '마이크를 찾을 수 없습니다.';
+        statusEl.textContent = message;
+      };
+
+      recognition.onend = function () {
+        if (silenceTimer) clearTimeout(silenceTimer);
+        textarea.value = textarea.value.trim();
+        saveData();
+        updateCompletionState(targetId);
+        if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
+        if (activeMicButton === micButton) {
+          micButton.classList.remove('recording');
+          micButton.textContent = '🎤 말하기';
+          micButton.setAttribute('aria-label', '음성 입력');
+        }
+        activeRecognition = null;
+        activeMicButton = null;
+      };
+
+      try {
+        recognition.start();
+      } catch (error) {
+        console.error('음성 인식 시작 실패:', error);
+        statusEl.textContent = '음성 입력을 시작할 수 없습니다.';
+      }
+    }
+
+    function clearAnswer(targetId) {
+      const input = document.getElementById(targetId);
+      if (!input) return;
+
+      if (activeMicButton && activeMicButton.dataset.target === targetId) {
+        stopCurrentRecognition();
+      }
+
+      input.value = '';
+
+      document.querySelectorAll(`.example-btn[data-target="${targetId}"]`).forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      saveData();
+      updateCompletionState(targetId);
+    }
+
+    function setStyleValue(group, value, buttonEl) {
+      const hiddenInput = document.getElementById(group);
+      if (!hiddenInput) return;
+
+      hiddenInput.value = value;
+
+      document.querySelectorAll(`.style-btn[data-group="${group}"]`).forEach(btn => {
+        btn.classList.remove('selected');
+      });
+
+      if (buttonEl) {
+        buttonEl.classList.add('selected');
+      }
+
+      saveData();
+    }
+
+    function setupInteractions() {
+      document.addEventListener('click', function (e) {
+        const micButton = e.target.closest('.mic-btn');
+        if (micButton) {
+          startVoiceInput(micButton.dataset.target, micButton.dataset.status, micButton);
+          return;
+        }
+
+        const clearBtn = e.target.closest('.clear-btn');
+        if (clearBtn) {
+          clearAnswer(clearBtn.dataset.target);
+          return;
+        }
+
+        const exampleBtn = e.target.closest('.example-btn');
+        if (exampleBtn) {
+          const targetId = exampleBtn.dataset.target;
+          const example = exampleBtn.dataset.example.replace('예: ', '');
+          const textarea = document.getElementById(targetId);
+          if (textarea) {
+            textarea.value = example;
+            exampleBtn.classList.add('active');
+            saveData();
+            updateCompletionState(targetId);
+          }
+          return;
+        }
+
+        const styleBtn = e.target.closest('.style-btn');
+        if (styleBtn) {
+          const group = styleBtn.dataset.group;
+          const value = styleBtn.dataset.value;
+          setStyleValue(group, value, styleBtn);
+          return;
+        }
+      });
+    }
+
+    function compilePrompt() {
+      try {
+        const output = document.getElementById('compiledOutput');
+        output.textContent = '프롬프트를 만드는 중입니다...';
+
+        const get = (n) => {
+          const el = document.getElementById(`q${n}`);
+          return el ? el.value.trim() : '';
+        };
+
+        const storyMood = document.getElementById('storyMood')?.value || '밝고 따뜻한 이야기';
+        const imageStyle = document.getElementById('imageStyle')?.value || '따뜻한 동화 그림';
+
+        const prompt = `당신은 한 사람의 추억을 따뜻한 그림책으로 만들어주는 작가입니다.
+
+다음 내용을 바탕으로
+“나의 추억 여행”을 주제로 한 그림책을 만들어 주세요.
+
+[목표]
+- 여행의 시작부터 과정, 가장 기억에 남는 순간, 그리고 지금의 마음까지 자연스럽게 이어지도록 써 주세요.
+- 읽는 사람이 함께 여행하는 느낌이 들도록 써 주세요.
+- 따뜻하고 감동적인 이야기로 완성해 주세요.
+- 전체 분위기는 반드시 "${storyMood}" 느낌으로 써 주세요.
+- 그림은 반드시 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 표현해 주세요.
+
+[구성]
+- 표지를 포함한 총 5페이지
+- 각 페이지 2~3문장
+- 문장은 짧고 쉽고 따뜻하게
+- 한 페이지마다 하나의 장면이 떠오르도록 써 주세요
+
+[이야기 흐름]
+1페이지: 어디로 누구와 가게 되었는지 + 떠날 때 마음
+2페이지: 가는 길과 도착 후 느낌, 여행 중 했던 일
+3페이지: 가장 기억에 남는 순간 (핵심 장면)
+4페이지: 특별했던 일과 그때의 감정, 분위기
+5페이지: 왜 좋았는지 + 지금의 마음 + 따뜻한 마무리
+
+[스타일]
+- 실제 있었던 일처럼 자연스럽게 써 주세요.
+- 억지로 꾸미지 말고 담백하지만 감동 있게 써 주세요.
+- 존중과 따뜻함이 느껴지게 써 주세요.
+
+[이미지 프롬프트]
+- 각 페이지마다 영어로 작성
+- 반드시 다음 요소를 자연스럽게 포함:
+  장소 + 계절/날씨 느낌 + 행동 + 감정 + 인물 + 옷
+- 같은 인물은 계속 유지
+- soft watercolor illustration, warm light, gentle children's book style
+- 이미지에 글씨는 넣지 않기
+
+[핵심]
+- “가장 기억에 남는 순간”을 중심으로 이야기 구성
+- “과정”이 자연스럽게 느껴지게 작성
+- “그 여행이 왜 좋았는지”가 자연스럽게 드러나게 작성
+- 마지막은 따뜻한 여운이 남게 마무리
+
+[입력 정보]
+어디를 다녀오셨어요: ${get(1) || '미입력'}
+누구와 함께였어요: ${get(2) || '미입력'}
+떠날 때 기분은 어땠어요: ${get(3) || '미입력'}
+어떻게 가셨어요: ${get(4) || '미입력'}
+거기서 무엇을 하셨어요: ${get(5) || '미입력'}
+기억나는 일 하나: ${get(6) || '미입력'}
+가장 기억에 남는 순간: ${get(7) || '미입력'}
+그날은 어떤 날이었어요: ${get(8) || '미입력'}
+그때 무엇을 하고 있었어요: ${get(9) || '미입력'}
+그날 나는 어떤 모습이었어요: ${get(10) || '미입력'}
+어떤 옷을 입고 있었어요: ${get(11) || '미입력'}
+그 여행이 왜 좋았고 지금 생각하면 어떤 마음이에요: ${get(12) || '미입력'}`;
+
+        output.textContent = prompt;
+        saveData();
+      } catch (error) {
+        console.error('프롬프트 생성 실패:', error);
+        document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
+      }
+    }
+
+    async function copyAndOpenGem() {
+      const text = document.getElementById('compiledOutput').textContent.trim();
+      if (!text || text === '프롬프트를 만드는 중입니다...') {
+        alert('먼저 프롬프트 생성하기 버튼을 눌러주세요.');
+        return;
+      }
+
+      saveData();
+
+      let copied = false;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (error) {
+        console.error('복사 실패:', error);
+      }
+
+      const newWindow = window.open(GEM_URL, '_blank');
+
+      if (!newWindow) {
+        if (copied) {
+          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        } else {
+          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
+        }
+        return;
+      }
+
+      if (copied) {
+        alert('프롬프트를 복사했어요. 제미나이에서 길게 눌러 붙여넣기 해주세요.');
+      } else {
+        alert('제미나이는 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+      }
+    }
+
+    function resetAll() {
+      if (!confirm('모든 내용을 지울까요?')) return;
+
+      document.querySelectorAll('.answer-box').forEach(box => {
+        box.value = '';
+      });
+
+      document.querySelectorAll('.example-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById('compiledOutput').textContent = '';
+
+      const storyMoodInput = document.getElementById('storyMood');
+      const imageStyleInput = document.getElementById('imageStyle');
+      if (storyMoodInput) storyMoodInput.value = '밝고 따뜻한 이야기';
+      if (imageStyleInput) imageStyleInput.value = '따뜻한 동화 그림';
+
+      document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === '밝고 따뜻한 이야기');
+      });
+
+      document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === '따뜻한 동화 그림');
+      });
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        console.error('저장 삭제 실패:', error);
+      }
+
+      stopCurrentRecognition();
+      updateAllCompletionStates();
+      showSaveIndicator('모두 지워졌어요');
+    }
+
+    function setupInputs() {
+      document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('answer-box')) {
+          document.querySelectorAll(`.example-btn[data-target="${e.target.id}"]`).forEach(btn => {
+            btn.classList.remove('active');
+          });
+
+          saveDataDebounced();
+          updateCompletionState(e.target.id);
+        }
+      });
+    }
+
+    createQuestionCards();
+    setupInteractions();
+    setupInputs();
+    loadData();
+
+    document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
+    document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenGem);
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+  </script>
+</body>
+  </html>
