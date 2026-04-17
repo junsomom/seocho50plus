@@ -26,6 +26,8 @@
       --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
       --done-bg: #e8f5e9;
       --done-text: #2e7d32;
+      --male-bg: #bbdefb;
+      --female-bg: #f8bbd0;
     }
 
     * {
@@ -91,9 +93,9 @@
     .question-card {
       background: var(--soft-card);
       border: 1px solid #e1e5f5;
-      border-radius: 18px;
-      padding: 14px;
-      margin-bottom: 14px;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
 
     .question-title {
@@ -101,8 +103,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      font-size: 19px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       margin-bottom: 10px;
     }
 
@@ -113,8 +115,8 @@
 
     .question-sub {
       margin-top: -2px;
-      margin-bottom: 10px;
-      font-size: 14px;
+      margin-bottom: 12px;
+      font-size: 15px;
       color: var(--text-sub);
     }
 
@@ -143,11 +145,11 @@
 
     .answer-box {
       width: 100%;
-      min-height: 72px;
+      min-height: 82px;
       border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 18px;
+      border-radius: 18px;
+      padding: 15px;
+      font-size: 19px;
       resize: vertical;
       outline: none;
       background: #fff;
@@ -178,17 +180,17 @@
     .answer-actions {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .mini-btn {
       flex: 1;
       border: none;
-      border-radius: 14px;
-      min-height: 52px;
+      border-radius: 16px;
+      min-height: 56px;
       padding: 12px 8px;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
       transition: 0.2s ease;
@@ -217,6 +219,45 @@
     .mini-btn.example-btn.active {
       background: var(--example-active);
       color: #1b5e20;
+    }
+
+    .gender-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .gender-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .gender-btn {
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      min-height: 54px;
+      padding: 12px 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      transition: 0.2s ease;
+    }
+
+    .gender-btn.male {
+      background: var(--male-bg);
+      color: #0d47a1;
+    }
+
+    .gender-btn.female {
+      background: var(--female-bg);
+      color: #880e4f;
+    }
+
+    .gender-btn.selected {
+      outline: 3px solid var(--primary);
+      transform: translateY(-1px);
     }
 
     .status {
@@ -248,27 +289,39 @@
 
     .style-options {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
 
     .style-btn {
-      border: none;
-      border-radius: 14px;
-      min-height: 52px;
-      padding: 12px 10px;
+      border: 2px solid #d7dcf3;
+      border-radius: 18px;
+      min-height: 68px;
+      padding: 14px 10px;
       font-size: 17px;
       font-weight: 700;
       text-align: center;
-      background: #eceff1;
+      background: #f4f6fb;
       color: #37474f;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      line-height: 1.35;
+      transition: 0.18s ease;
+      white-space: normal;
+      word-break: keep-all;
     }
 
     .style-btn.selected {
       background: var(--primary);
       color: white;
+      border: 3px solid #3949ab;
+      transform: scale(1.02);
+      box-shadow: 0 6px 14px rgba(63, 81, 181, 0.22);
+    }
+
+    .style-btn.selected::after {
+      content: " ✓";
+      font-weight: 800;
     }
 
     .tool-section {
@@ -280,11 +333,11 @@
 
     .tool-btn {
       border: none;
-      border-radius: 16px;
-      min-height: 56px;
+      border-radius: 18px;
+      min-height: 60px;
       padding: 14px 16px;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 800;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     }
@@ -340,31 +393,36 @@
 
     @media (min-width: 720px) {
       .style-options {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 640px) {
       header {
-        font-size: 20px;
-        padding: 14px 10px;
+        font-size: 21px;
+        padding: 15px 10px;
       }
 
       .panel h2 {
-        font-size: 23px;
+        font-size: 24px;
       }
 
       .panel p.desc {
-        font-size: 15px;
+        font-size: 16px;
         margin-bottom: 10px;
       }
 
       .guide-box {
-        font-size: 14px;
+        font-size: 15px;
+        padding: 14px;
       }
 
       .question-title {
-        font-size: 17px;
+        font-size: 18px;
+      }
+
+      .question-sub {
+        font-size: 14px;
       }
 
       .completion-badge {
@@ -373,35 +431,36 @@
       }
 
       .answer-box {
-        font-size: 17px;
-        min-height: 68px;
-        padding: 13px;
+        font-size: 18px;
+        min-height: 78px;
+        padding: 14px;
       }
 
       .answer-actions {
         gap: 6px;
-        margin-top: 8px;
+        margin-top: 10px;
       }
 
       .mini-btn {
-        min-height: 48px;
-        font-size: 15px;
+        min-height: 54px;
+        font-size: 16px;
         padding: 10px 6px;
       }
 
-      .style-title {
-        font-size: 17px;
+      .style-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
       }
 
       .style-btn {
-        min-height: 48px;
+        min-height: 66px;
         font-size: 15px;
         padding: 10px 8px;
       }
 
       .tool-btn {
-        min-height: 52px;
-        font-size: 17px;
+        min-height: 56px;
+        font-size: 18px;
         padding: 12px 14px;
       }
 
@@ -419,29 +478,31 @@
     <section class="panel">
       <h2>내 이야기 꺼내기</h2>
       <p class="desc">질문을 보고, 떠오르는 대로 짧게 적거나 말해보세요.</p>
-      <div class="guide-box">잘 쓰려고 하지 않아도 됩니다. 떠오르는 대로 한 줄이면 충분합니다 😊</div>
+      <div class="guide-box">지난주처럼 편하게 해보세요 😊 길게 쓰지 않아도 됩니다. 한 줄이면 충분합니다.</div>
 
       <div id="questions-wrap"></div>
 
       <div class="style-section">
         <div class="style-card">
-          <div class="style-title">어떤 느낌의 그림책으로 만들까요?</div>
+          <div class="style-title">이야기 느낌 고르기</div>
           <div class="style-options" id="storyMoodOptions">
-            <button type="button" class="style-btn selected" data-group="storyMood" data-value="밝고 따뜻한 이야기">😊 밝고 따뜻한 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="따뜻하고 감동적인 이야기">🌷 따뜻하고 감동적인 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="희망이 느껴지는 이야기">🌈 희망이 느껴지는 이야기</button>
+            <button type="button" class="style-btn selected" data-group="storyMood" data-value="adventurous and exciting story">✈️ 모험 가득한 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="romantic and sentimental story">💕 로맨틱한 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="imaginative and whimsical story">🌈 상상 풍부한 이야기</button>
           </div>
-          <input type="hidden" id="storyMood" value="밝고 따뜻한 이야기" />
+          <input type="hidden" id="storyMood" value="adventurous and exciting story" />
         </div>
 
         <div class="style-card">
-          <div class="style-title">그림은 어떤 느낌이 좋으세요?</div>
+          <div class="style-title">그림 느낌 고르기</div>
           <div class="style-options" id="imageStyleOptions">
-            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="따뜻한 동화 그림">🌿 따뜻한 동화 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="색연필 손그림">🎨 색연필 손그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="밝고 귀여운 그림">🌸 밝고 귀여운 그림</button>
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="pixel art illustration, retro game style">🧱 픽셀 아트</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="comic style illustration, bold lines, expressive characters">🖍 코믹스</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="claymation style, 3D clay characters, soft lighting">🧸 클레이 애니메이션</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="crochet style, yarn texture, handmade soft feeling">🧶 크로셰</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="coloring book style, clean line art, black and white">🎨 색칠하기북</button>
           </div>
-          <input type="hidden" id="imageStyle" value="따뜻한 동화 그림" />
+          <input type="hidden" id="imageStyle" value="pixel art illustration, retro game style" />
         </div>
       </div>
 
@@ -461,7 +522,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week3DrawingPocket_v2_fixed';
+    const STORAGE_KEY = 'week3DrawingPocket_final_keepall';
 
     const questions = [
       {
@@ -591,6 +652,17 @@
       }
     }
 
+    function refreshGenderSelections() {
+      document.querySelectorAll('.gender-btn').forEach(btn => {
+        const targetId = btn.dataset.target;
+        const value = btn.dataset.value;
+        const input = document.getElementById(targetId);
+        const selected = !!(input && input.value === value);
+        btn.classList.toggle('selected', selected);
+        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
+    }
+
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -633,6 +705,7 @@
           }
         }
 
+        refreshGenderSelections();
         updateAllCompletionStates();
       } catch (error) {
         console.error('불러오기 실패:', error);
@@ -650,22 +723,39 @@
         const card = document.createElement('div');
         card.className = 'question-card';
 
-        card.innerHTML = `
-          <label class="question-label" for="${answerId}">
+        if (question.type === 'gender') {
+          card.innerHTML = `
             <div class="question-title">
               <span class="question-title-text">${qNum}. ${question.title}</span>
               <span class="completion-badge" id="complete-${qNum}">완료</span>
             </div>
-          </label>
-          ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
-          <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
-          <div class="answer-actions">
-            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
-            <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
-            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
-          </div>
-          <div class="status" id="${statusId}" aria-live="polite"></div>
-        `;
+            <div class="gender-wrap">
+              <div class="gender-buttons" role="radiogroup" aria-label="성별 선택">
+                <button class="gender-btn male" type="button" data-target="${answerId}" data-value="남자" aria-label="남자 선택" aria-pressed="false">👨 남자</button>
+                <button class="gender-btn female" type="button" data-target="${answerId}" data-value="여자" aria-label="여자 선택" aria-pressed="false">👩 여자</button>
+              </div>
+              <input type="hidden" id="${answerId}" class="answer-box" />
+            </div>
+            <div class="status" id="${statusId}" aria-live="polite"></div>
+          `;
+        } else {
+          card.innerHTML = `
+            <label class="question-label" for="${answerId}">
+              <div class="question-title">
+                <span class="question-title-text">${qNum}. ${question.title}</span>
+                <span class="completion-badge" id="complete-${qNum}">완료</span>
+              </div>
+            </label>
+            ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
+            <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
+            <div class="answer-actions">
+              <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
+              <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
+              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
+            </div>
+            <div class="status" id="${statusId}" aria-live="polite"></div>
+          `;
+        }
 
         wrap.appendChild(card);
       });
@@ -797,6 +887,15 @@
       updateCompletionState(targetId);
     }
 
+    function setGenderValue(targetId, value) {
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      input.value = value;
+      saveData();
+      refreshGenderSelections();
+      updateCompletionState(targetId);
+    }
+
     function setStyleValue(group, value, buttonEl) {
       const hiddenInput = document.getElementById(group);
       if (!hiddenInput) return;
@@ -842,6 +941,12 @@
           return;
         }
 
+        const genderBtn = e.target.closest('.gender-btn');
+        if (genderBtn) {
+          setGenderValue(genderBtn.dataset.target, genderBtn.dataset.value);
+          return;
+        }
+
         const styleBtn = e.target.closest('.style-btn');
         if (styleBtn) {
           const group = styleBtn.dataset.group;
@@ -862,66 +967,90 @@
           return el ? el.value.trim() : '';
         };
 
-        const storyMood = document.getElementById('storyMood')?.value || '밝고 따뜻한 이야기';
-        const imageStyle = document.getElementById('imageStyle')?.value || '따뜻한 동화 그림';
+        const storyMood = document.getElementById('storyMood')?.value || 'adventurous and exciting story';
+        const imageStyle = document.getElementById('imageStyle')?.value || 'pixel art illustration, retro game style';
 
-        const prompt = `당신은 한 사람의 추억을 따뜻한 그림책으로 만들어주는 작가입니다.
+        const prompt = `You are a warm and skillful picture-book writer who turns a person's travel memory into a beautiful storybook.
 
-다음 내용을 바탕으로
-“나의 추억 여행”을 주제로 한 그림책을 만들어 주세요.
+Please create a picture book based on the following memory travel story.
 
-[목표]
-- 여행의 시작부터 과정, 가장 기억에 남는 순간, 그리고 지금의 마음까지 자연스럽게 이어지도록 써 주세요.
-- 읽는 사람이 함께 여행하는 느낌이 들도록 써 주세요.
-- 따뜻하고 감동적인 이야기로 완성해 주세요.
-- 전체 분위기는 반드시 "${storyMood}" 느낌으로 써 주세요.
-- 그림은 반드시 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 표현해 주세요.
+[Main Goal]
+- Make the story flow naturally from the beginning of the trip, to the journey, to the most memorable moment, and finally to the feeling the person has now.
+- Make the reader feel as if they are traveling together.
+- Keep the tone warm, vivid, and touching.
 
-[구성]
-- 표지를 포함한 총 5페이지
-- 각 페이지는 2~3문장
-- 문장은 짧고 쉽고 따뜻하게
-- 한 페이지마다 하나의 장면이 떠오르도록 써 주세요.
+[Story Mood]
+The story mood should be: ${storyMood}
 
-[이야기 흐름]
-1페이지: 어디로 누구와 가게 되었는지 + 떠날 때 마음
-2페이지: 가는 길과 도착 후 느낌, 여행 중 했던 일
-3페이지: 가장 기억에 남는 순간 (핵심 장면)
-4페이지: 특별했던 일과 그때의 감정, 분위기
-5페이지: 왜 좋았는지 + 지금의 마음 + 따뜻한 마무리
+[Illustration Style]
+The illustration style should be: ${imageStyle}
 
-[스타일]
-- 실제 있었던 일처럼 자연스럽게 써 주세요.
-- 억지로 꾸미지 말고 담백하지만 감동 있게 써 주세요.
-- 존중과 따뜻함이 느껴지게 써 주세요.
+[Important Style Rules]
+- Apply the illustration style strongly and consistently.
+- Do not mix multiple visual styles.
+- Keep the same main character across all pages.
+- No text in the image.
+- Show expressive emotion, clear action, and memorable scenery.
 
-[이미지 프롬프트]
-- 각 페이지마다 영어로 작성
-- 반드시 다음 요소를 자연스럽게 포함해 주세요:
-  장소 + 계절/날씨 느낌 + 행동 + 감정 + 인물 + 옷
-- 같은 인물은 계속 유지해 주세요.
-- soft watercolor illustration, warm light, gentle children's book style
-- 이미지에 글씨는 넣지 마세요.
+[Book Structure]
+- Include a cover and total 5 pages.
+- Each page should have 2 to 3 short and easy sentences.
+- Each page should feel like one clear scene from a picture book.
 
-[핵심]
-- “가장 기억에 남는 순간”을 중심으로 이야기 구성
-- “과정”이 자연스럽게 느껴지게 작성
-- “그 여행이 왜 좋았는지”가 자연스럽게 드러나게 작성
-- 마지막은 따뜻한 여운이 남게 마무리
+[Story Flow]
+Page 1: where they went, who they went with, and how they felt before leaving
+Page 2: how they got there, what they did, and the early part of the trip
+Page 3: the most memorable moment, shown as the main scene
+Page 4: a special event, the feeling of that time, and the atmosphere
+Page 5: why the trip was meaningful, and how they feel when they remember it now
 
-[입력 정보]
-어디를 다녀오셨어요: ${get(1) || '미입력'}
-누구와 함께였어요: ${get(2) || '미입력'}
-떠날 때 기분은 어땠어요: ${get(3) || '미입력'}
-어떻게 가셨어요: ${get(4) || '미입력'}
-거기서 무엇을 하셨어요: ${get(5) || '미입력'}
-기억나는 일 하나: ${get(6) || '미입력'}
-가장 기억에 남는 순간: ${get(7) || '미입력'}
-그날은 어떤 날이었어요: ${get(8) || '미입력'}
-그때 무엇을 하고 있었어요: ${get(9) || '미입력'}
-그날 나는 어떤 모습이었어요: ${get(10) || '미입력'}
-어떤 옷을 입고 있었어요: ${get(11) || '미입력'}
-그 여행이 왜 좋았고 지금 생각하면 어떤 마음이에요: ${get(12) || '미입력'}`;
+[Writing Style]
+- Write naturally, as if it really happened.
+- Do not make it sound exaggerated.
+- Make it gentle, warm, and respectful.
+- Let the emotional meaning appear naturally in the story.
+
+[Image Prompt Rules]
+For each page, also write an English image prompt.
+Each image prompt should naturally include:
+location + season/weather feeling + action + emotion + character + outfit + lighting
+
+[Input Information]
+Where they went: ${get(1) || 'not provided'}
+Who they went with: ${get(2) || 'not provided'}
+How they felt before leaving: ${get(3) || 'not provided'}
+How they got there: ${get(4) || 'not provided'}
+What they did there: ${get(5) || 'not provided'}
+One memorable event: ${get(6) || 'not provided'}
+Most memorable moment: ${get(7) || 'not provided'}
+What kind of day it was: ${get(8) || 'not provided'}
+What they were doing then: ${get(9) || 'not provided'}
+How they looked that day: ${get(10) || 'not provided'}
+What they were wearing: ${get(11) || 'not provided'}
+Why the trip was good and how they feel now: ${get(12) || 'not provided'}
+
+[Output Format]
+Title:
+
+Cover
+내용:
+이미지프롬프트:
+
+1페이지
+내용:
+이미지프롬프트:
+
+2페이지
+내용:
+이미지프롬프트:
+
+3페이지
+내용:
+이미지프롬프트:
+
+4페이지
+내용:
+이미지프롬프트:`;
 
         output.textContent = prompt;
         saveData();
@@ -982,15 +1111,15 @@
 
       const storyMoodInput = document.getElementById('storyMood');
       const imageStyleInput = document.getElementById('imageStyle');
-      if (storyMoodInput) storyMoodInput.value = '밝고 따뜻한 이야기';
-      if (imageStyleInput) imageStyleInput.value = '따뜻한 동화 그림';
+      if (storyMoodInput) storyMoodInput.value = 'adventurous and exciting story';
+      if (imageStyleInput) imageStyleInput.value = 'pixel art illustration, retro game style';
 
       document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '밝고 따뜻한 이야기');
+        btn.classList.toggle('selected', btn.dataset.value === 'adventurous and exciting story');
       });
 
       document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '따뜻한 동화 그림');
+        btn.classList.toggle('selected', btn.dataset.value === 'pixel art illustration, retro game style');
       });
 
       try {
