@@ -1,848 +1,232 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>오늘 기분 30초 노래 만들기</title>
-  <style>
-    :root {
-      --primary: #7986cb;
-      --primary-dark: #5c6bc0;
-      --light-bg: #f7f8fb;
-      --card-bg: #ffffff;
-      --soft-card: #f9fafe;
-      --border-color: #d7dcf3;
-      --text-main: #222;
-      --text-sub: #666;
-      --example-bg: #dcedc8;
-      --example-active: #aed581;
-      --mic-bg: #ffe0b2;
-      --mic-recording: #ef9a9a;
-      --clear-bg: #eceff1;
-      --clear-text: #37474f;
-      --prompt-btn: #c5cae9;
-      --gemcopy-btn: #b2dfdb;
-      --reset-btn: #f8bbd0;
-      --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
-      --done-bg: #e8f5e9;
-      --done-text: #2e7d32;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘 기분으로 30초 음악 만들기</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
+body {margin:0;font-family:sans-serif;background:#f5f6fa;}
+.wrap {max-width:600px;margin:auto;padding:20px;}
 
-    body {
-      margin: 0;
-      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      background: var(--light-bg);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
+.top {
+  background:linear-gradient(135deg,#4a7cff,#7f9cff);
+  color:#fff;padding:20px;border-radius:20px;
+}
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      padding: 16px 12px;
-      font-size: 22px;
-      font-weight: 700;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-    }
+.block {
+  background:#fff;margin-top:15px;padding:15px;border-radius:16px;
+}
 
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 14px;
-    }
+button {
+  width:100%;padding:18px;margin:6px 0;
+  font-size:18px;border-radius:14px;border:2px solid #ddd;
+  background:#fff;
+}
 
-    .panel {
-      background: var(--card-bg);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    }
+button.active {
+  border-color:#4a7cff;background:#eef4ff;
+}
 
-    .panel h2 {
-      margin: 0 0 8px;
-      font-size: 26px;
-      color: var(--primary-dark);
-    }
+textarea {
+  width:100%;padding:12px;border-radius:12px;margin-top:10px;
+}
 
-    .panel p.desc {
-      margin: 0 0 8px;
-      font-size: 16px;
-      color: var(--text-sub);
-    }
+.tools button {width:32%;font-size:14px;}
 
-    .guide-box {
-      margin: 0 0 18px;
-      background: #eef3ff;
-      color: #3949ab;
-      border-radius: 18px;
-      padding: 14px 16px;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .question-card {
-      background: var(--soft-card);
-      border: 1px solid #e1e5f5;
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .question-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .question-title-text {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .question-sub {
-      margin-top: -2px;
-      margin-bottom: 12px;
-      font-size: 15px;
-      color: var(--text-sub);
-    }
-
-    .completion-badge {
-      display: none;
-      flex-shrink: 0;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--done-bg);
-      color: var(--done-text);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .completion-badge.show {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .question-label {
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .answer-box {
-      width: 100%;
-      min-height: 82px;
-      border: 2px solid var(--border-color);
-      border-radius: 18px;
-      padding: 15px;
-      font-size: 19px;
-      resize: vertical;
-      outline: none;
-      background: #fff;
-      color: #111111;
-    }
-
-    .answer-box:focus {
-      border-color: var(--primary);
-      box-shadow: var(--focus-ring);
-    }
-
-    .answer-box::placeholder {
-      color: #b8b8b8;
-      opacity: 1;
-    }
-
-    .answer-box:not(:placeholder-shown) {
-      border-color: #5c6bc0;
-    }
-
-    button:focus-visible,
-    textarea:focus-visible,
-    input:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-    }
-
-    .answer-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .mini-btn {
-      flex: 1;
-      border: none;
-      border-radius: 16px;
-      min-height: 56px;
-      padding: 12px 8px;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-      transition: 0.2s ease;
-    }
-
-    .mini-btn.mic-btn {
-      background: var(--mic-bg);
-    }
-
-    .mini-btn.mic-btn.recording {
-      background: var(--mic-recording);
-      color: #fff;
-      animation: pulse 1s infinite;
-    }
-
-    .mini-btn.clear-btn {
-      background: var(--clear-bg);
-      color: var(--clear-text);
-    }
-
-    .mini-btn.example-btn {
-      background: var(--example-bg);
-      color: #33691e;
-    }
-
-    .mini-btn.example-btn.active {
-      background: var(--example-active);
-      color: #1b5e20;
-    }
-
-    .status {
-      margin-top: 6px;
-      font-size: 14px;
-      color: var(--text-sub);
-      min-height: 20px;
-    }
-
-    .tool-section {
-      margin-top: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .tool-btn {
-      border: none;
-      border-radius: 18px;
-      min-height: 60px;
-      padding: 14px 16px;
-      font-size: 19px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .tool-btn.prompt {
-      background: var(--prompt-btn);
-      color: #283593;
-    }
-
-    .tool-btn.gemcopy {
-      background: var(--gemcopy-btn);
-      color: #004d40;
-    }
-
-    .tool-btn.reset {
-      background: var(--reset-btn);
-      color: #880e4f;
-    }
-
-    .output-title {
-      margin-top: 14px;
-      margin-bottom: 8px;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--primary-dark);
-    }
-
-    .output-box {
-      width: 100%;
-      min-height: 340px;
-      border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 17px;
-      background: #fff;
-      white-space: pre-wrap;
-      overflow-wrap: break-word;
-    }
-
-    .save-indicator {
-      font-size: 13px;
-      color: var(--primary-dark);
-      min-height: 18px;
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-      100% { transform: scale(1); }
-    }
-
-    @media (max-width: 640px) {
-      header {
-        font-size: 21px;
-        padding: 15px 10px;
-      }
-
-      .panel h2 {
-        font-size: 24px;
-      }
-
-      .panel p.desc {
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-
-      .guide-box {
-        font-size: 15px;
-        padding: 14px;
-      }
-
-      .question-title {
-        font-size: 18px;
-      }
-
-      .question-sub {
-        font-size: 14px;
-      }
-
-      .completion-badge {
-        font-size: 12px;
-        padding: 4px 7px;
-      }
-
-      .answer-box {
-        font-size: 18px;
-        min-height: 78px;
-        padding: 14px;
-      }
-
-      .answer-actions {
-        gap: 6px;
-        margin-top: 10px;
-      }
-
-      .mini-btn {
-        min-height: 54px;
-        font-size: 16px;
-        padding: 10px 6px;
-      }
-
-      .tool-btn {
-        min-height: 56px;
-        font-size: 18px;
-        padding: 12px 14px;
-      }
-
-      .output-box {
-        font-size: 16px;
-        min-height: 280px;
-      }
-    }
-  </style>
+.main-btn {
+  background:#4a7cff;color:#fff;font-size:20px;margin-top:15px;
+}
+</style>
 </head>
+
 <body>
-  <header>2주차 생각주머니</header>
-
-  <div class="container">
-    <section class="panel">
-      <h2>오늘 기분 30초 노래 만들기</h2>
-      <p class="desc">오늘 내 마음에 어울리는 짧은 노래를 만들어 보세요 🎵</p>
-      <div class="guide-box">짧게 적거나 말해도 됩니다 😊<br>30초 노래 한 곡이면 충분합니다.</div>
-
-      <div id="questions-wrap"></div>
-      <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
-    </section>
-
-    <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="30초 노래 글 만들기">✨ 30초 노래 글 만들기</button>
-
-      <div class="output-title">노래 프롬프트</div>
-      <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
-
-      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 노래 만들기 열기">📋✨ 복사하고 노래 만들기 열기</button>
-      <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
-    </div>
-  </div>
-
-  <script>
-    const MUSIC_URL = 'https://gemini.google.com/';
-    const STORAGE_KEY = 'song_html_final_v1';
-
-    const questions = [
-      {
-        title: '오늘 마음은 어떤가요?',
-        sub: '지금 마음 느낌',
-        placeholder: '예: 기쁘고 편안해요, 조금 외롭지만 괜찮아요'
-      },
-      {
-        title: '무슨 일로 그런 마음이 드셨나요?',
-        sub: '짧게 이유 한 가지',
-        placeholder: '예: 손주를 만나서 기분이 좋아요'
-      },
-      {
-        title: '이 마음은 어떤 느낌인가요?',
-        sub: '',
-        placeholder: '예: 따뜻한 느낌, 조용한 느낌'
-      },
-      {
-        title: '어떤 노래 느낌이 좋으세요?',
-        sub: '동요, 찬양, 트로트 등',
-        placeholder: '예: 동요, 찬양, 트로트, K-POP, 옛날 팝, 국악'
-      },
-      {
-        title: '빠른 노래가 좋으세요, 느린 노래가 좋으세요?',
-        sub: '',
-        placeholder: '예: 느린 노래'
-      },
-      {
-        title: '어떤 악기 느낌이 좋으세요?',
-        sub: '',
-        placeholder: '예: 피아노, 기타, 국악 악기'
-      },
-      {
-        title: '노래 분위기는 어떤가요?',
-        sub: '',
-        placeholder: '예: 따뜻하고 희망적, 밝고 즐거운'
-      },
-      {
-        title: '노래에 어떤 말이 들어가면 좋을까요?',
-        sub: '',
-        placeholder: '예: 가족 이야기, 오늘 하루'
-      },
-      {
-        title: '한 줄로 말해볼까요?',
-        sub: '노래의 핵심 문장',
-        placeholder: '예: 오늘은 참 따뜻한 하루였어요'
-      }
-    ];
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let activeRecognition = null;
-    let activeMicButton = null;
-    let saveIndicatorTimer = null;
-
-    function showSaveIndicator(message = '자동 저장됨') {
-      const el = document.getElementById('saveIndicator');
-      el.textContent = message;
-      if (saveIndicatorTimer) clearTimeout(saveIndicatorTimer);
-      saveIndicatorTimer = setTimeout(() => {
-        el.textContent = '';
-      }, 1500);
-    }
-
-    function saveData() {
-      try {
-        const data = {};
-        document.querySelectorAll('.answer-box').forEach(box => {
-          data[box.id] = box.value;
-        });
-
-        const compiledOutput = document.getElementById('compiledOutput');
-        if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        showSaveIndicator();
-      } catch (error) {
-        console.error('저장 실패:', error);
-        showSaveIndicator('저장되지 않았어요');
-      }
-    }
-
-    function debounce(fn, delay) {
-      let timer = null;
-      return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn.apply(this, args), delay);
-      };
-    }
-
-    const saveDataDebounced = debounce(saveData, 500);
-
-    function updateCompletionState(targetId) {
-      const input = document.getElementById(targetId);
-      if (!input) return;
-      const num = targetId.replace('q', '');
-      const badge = document.getElementById(`complete-${num}`);
-      if (!badge) return;
-      badge.classList.toggle('show', !!input.value.trim());
-    }
-
-    function updateAllCompletionStates() {
-      for (let i = 1; i <= questions.length; i++) {
-        updateCompletionState(`q${i}`);
-      }
-    }
-
-    function loadData() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-          updateAllCompletionStates();
-          return;
-        }
-
-        const data = JSON.parse(raw);
-
-        Object.keys(data).forEach(id => {
-          const el = document.getElementById(id);
-          if (el && el.classList.contains('answer-box')) {
-            el.value = data[id];
-          }
-        });
-
-        if (data.compiledOutput) {
-          const compiledOutput = document.getElementById('compiledOutput');
-          if (compiledOutput) compiledOutput.textContent = data.compiledOutput;
-        }
-
-        updateAllCompletionStates();
-      } catch (error) {
-        console.error('불러오기 실패:', error);
-      }
-    }
-
-    function createQuestionCards() {
-      const wrap = document.getElementById('questions-wrap');
-
-      questions.forEach((question, index) => {
-        const qNum = index + 1;
-        const answerId = `q${qNum}`;
-        const statusId = `status${qNum}`;
-
-        const card = document.createElement('div');
-        card.className = 'question-card';
-
-        card.innerHTML = `
-          <label class="question-label" for="${answerId}">
-            <div class="question-title">
-              <span class="question-title-text">${qNum}. ${question.title}</span>
-              <span class="completion-badge" id="complete-${qNum}">완료</span>
-            </div>
-          </label>
-          ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
-          <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
-          <div class="answer-actions">
-            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
-            <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
-            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
-          </div>
-          <div class="status" id="${statusId}" aria-live="polite"></div>
-        `;
-
-        wrap.appendChild(card);
-      });
-    }
-
-    function stopCurrentRecognition() {
-      if (activeRecognition) {
-        try {
-          activeRecognition.stop();
-        } catch (e) {
-          console.error(e);
-        }
-      }
-      if (activeMicButton) {
-        activeMicButton.classList.remove('recording');
-        activeMicButton.textContent = '🎤 말하기';
-        activeMicButton.setAttribute('aria-label', '음성 입력');
-      }
-      activeRecognition = null;
-      activeMicButton = null;
-    }
-
-    function startVoiceInput(targetId, statusId, micButton) {
-      const textarea = document.getElementById(targetId);
-      const statusEl = document.getElementById(statusId);
-
-      if (!textarea || !statusEl) return;
-
-      if (!SpeechRecognition) {
-        statusEl.textContent = '이 기기에서는 음성 입력이 지원되지 않습니다.';
-        return;
-      }
-
-      if (activeMicButton === micButton && activeRecognition) {
-        stopCurrentRecognition();
-        return;
-      }
-
-      stopCurrentRecognition();
-
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'ko-KR';
-      recognition.interimResults = true;
-      recognition.maxAlternatives = 1;
-      recognition.continuous = false;
-
-      let finalTranscript = '';
-      let silenceTimer = null;
-      const originalValue = textarea.value.trim();
-
-      activeRecognition = recognition;
-      activeMicButton = micButton;
-
-      micButton.classList.add('recording');
-      micButton.textContent = '⏹ 녹음중';
-      micButton.setAttribute('aria-label', '녹음 중');
-      statusEl.textContent = '녹음 중입니다.';
-
-      recognition.onresult = function (event) {
-        let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const piece = event.results[i][0].transcript.trim();
-          if (event.results[i].isFinal) {
-            finalTranscript += (finalTranscript ? ' ' : '') + piece;
-          } else {
-            interimTranscript += (interimTranscript ? ' ' : '') + piece;
-          }
-        }
-
-        textarea.value = [originalValue, finalTranscript, interimTranscript].filter(Boolean).join(' ');
-        if (silenceTimer) clearTimeout(silenceTimer);
-        silenceTimer = setTimeout(() => {
-          try {
-            recognition.stop();
-          } catch (e) {
-            console.error(e);
-          }
-        }, 1800);
-      };
-
-      recognition.onerror = function (event) {
-        if (silenceTimer) clearTimeout(silenceTimer);
-        let message = '음성 입력에 문제가 생겼습니다.';
-        if (event.error === 'not-allowed') message = '마이크 권한을 허용해주세요.';
-        if (event.error === 'no-speech') message = '말씀이 들리지 않았습니다. 다시 눌러주세요.';
-        if (event.error === 'audio-capture') message = '마이크를 찾을 수 없습니다.';
-        statusEl.textContent = message;
-      };
-
-      recognition.onend = function () {
-        if (silenceTimer) clearTimeout(silenceTimer);
-        textarea.value = textarea.value.trim();
-        saveData();
-        updateCompletionState(targetId);
-        if (textarea.value) statusEl.textContent = '입력이 완료되었습니다.';
-        if (activeMicButton === micButton) {
-          micButton.classList.remove('recording');
-          micButton.textContent = '🎤 말하기';
-          micButton.setAttribute('aria-label', '음성 입력');
-        }
-        activeRecognition = null;
-        activeMicButton = null;
-      };
-
-      try {
-        recognition.start();
-      } catch (error) {
-        console.error('음성 인식 시작 실패:', error);
-        statusEl.textContent = '음성 입력을 시작할 수 없습니다.';
-      }
-    }
-
-    function clearAnswer(targetId) {
-      const input = document.getElementById(targetId);
-      if (!input) return;
-
-      if (activeMicButton && activeMicButton.dataset.target === targetId) {
-        stopCurrentRecognition();
-      }
-
-      input.value = '';
-
-      document.querySelectorAll(`.example-btn[data-target="${targetId}"]`).forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      saveData();
-      updateCompletionState(targetId);
-    }
-
-    function setupInteractions() {
-      document.addEventListener('click', function (e) {
-        const micButton = e.target.closest('.mic-btn');
-        if (micButton) {
-          startVoiceInput(micButton.dataset.target, micButton.dataset.status, micButton);
-          return;
-        }
-
-        const clearBtn = e.target.closest('.clear-btn');
-        if (clearBtn) {
-          clearAnswer(clearBtn.dataset.target);
-          return;
-        }
-
-        const exampleBtn = e.target.closest('.example-btn');
-        if (exampleBtn) {
-          const targetId = exampleBtn.dataset.target;
-          const example = exampleBtn.dataset.example.replace('예: ', '');
-          const textarea = document.getElementById(targetId);
-          if (textarea) {
-            textarea.value = example;
-            exampleBtn.classList.add('active');
-            saveData();
-            updateCompletionState(targetId);
-          }
-          return;
-        }
-      });
-    }
-
-    function compilePrompt() {
-      try {
-        const output = document.getElementById('compiledOutput');
-        output.textContent = '프롬프트를 만드는 중입니다...';
-
-        const get = (n) => {
-          const el = document.getElementById(`q${n}`);
-          return el ? el.value.trim() : '';
-        };
-
-        const genre = get(4);
-        let genreDetail = genre || '동요';
-
-        if (genre.includes('국악')) {
-          genreDetail = '국악, 판소리 느낌, 한국 전통 악기';
-        } else if (genre.includes('찬양') || genre.includes('성가')) {
-          genreDetail = '찬양 또는 성가 느낌, 부드럽고 은혜로운 스타일';
-        } else if (genre.includes('트로트')) {
-          genreDetail = '트로트 스타일, 익숙하고 정겨운 느낌';
-        } else if (genre.includes('K-POP')) {
-          genreDetail = 'K-POP 스타일, 세련되고 밝은 느낌';
-        } else if (genre.includes('옛날 팝')) {
-          genreDetail = '올드팝 스타일, 추억이 느껴지는 부드러운 느낌';
-        } else if (genre.includes('동요')) {
-          genreDetail = '동요 스타일, 쉽고 따뜻한 느낌';
-        }
-
-        const prompt = `짧은 30초 노래를 만들어 주세요.
-
-오늘 마음은 ${get(1) || '따뜻하고 편안한 느낌'}입니다.
-이 마음은 ${get(2) || '소중한 기억'} 때문에 생겼습니다.
-이 느낌은 ${get(3) || '조용하고 따뜻한 느낌'}입니다.
-
-노래 스타일은 ${genreDetail}입니다.
-속도는 ${get(5) || '보통'}입니다.
-주요 악기는 ${get(6) || '피아노'} 느낌으로 해 주세요.
-노래 분위기는 ${get(7) || '따뜻하고 희망적인 느낌'}입니다.
-
-가사에는 ${get(8) || '오늘 하루의 이야기'}가 담기고,
-핵심 문장은 "${get(9) || '오늘도 괜찮은 하루입니다'}" 입니다.
-
-현재 감정이 슬프거나 외로운 마음이어도 괜찮습니다.
-그 감정은 자연스럽게 담아 주세요.
-하지만 노래 전체는 너무 어둡거나 절망적으로 만들지 말고,
-마지막에는 따뜻함, 위로, 평안, 희망이 느껴지도록 만들어 주세요.
-짧은 30초 안에서 마음이 조금 밝아지는 느낌으로 마무리해 주세요.
-
-듣기 편하고 부드러운 30초 노래로 만들어 주세요.`;
-
-        output.textContent = prompt;
-        saveData();
-      } catch (error) {
-        console.error('프롬프트 생성 실패:', error);
-        document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
-      }
-    }
-
-    async function copyAndOpenMusic() {
-      const text = document.getElementById('compiledOutput').textContent.trim();
-      if (!text || text === '프롬프트를 만드는 중입니다...') {
-        alert('먼저 30초 노래 글 만들기 버튼을 눌러주세요.');
-        return;
-      }
-
-      saveData();
-
-      let copied = false;
-
-      try {
-        await navigator.clipboard.writeText(text);
-        copied = true;
-      } catch (error) {
-        console.error('복사 실패:', error);
-      }
-
-      const newWindow = window.open(MUSIC_URL, '_blank');
-
-      if (!newWindow) {
-        if (copied) {
-          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
-        } else {
-          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
-        }
-        return;
-      }
-
-      if (copied) {
-        alert('프롬프트를 복사했어요. 음악 만들기 화면에서 길게 눌러 붙여넣기 해주세요.');
-      } else {
-        alert('노래 만들기 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
-      }
-    }
-
-    function resetAll() {
-      if (!confirm('모든 내용을 지울까요?')) return;
-
-      document.querySelectorAll('.answer-box').forEach(box => {
-        box.value = '';
-      });
-
-      document.querySelectorAll('.example-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      document.getElementById('compiledOutput').textContent = '';
-
-      try {
-        localStorage.removeItem(STORAGE_KEY);
-      } catch (error) {
-        console.error('저장 삭제 실패:', error);
-      }
-
-      stopCurrentRecognition();
-      updateAllCompletionStates();
-      showSaveIndicator('모두 지워졌어요');
-    }
-
-    function setupInputs() {
-      document.addEventListener('input', function (e) {
-        if (e.target.classList.contains('answer-box')) {
-          document.querySelectorAll(`.example-btn[data-target="${e.target.id}"]`).forEach(btn => {
-            btn.classList.remove('active');
-          });
-
-          saveDataDebounced();
-          updateCompletionState(e.target.id);
-        }
-      });
-    }
-
-    createQuestionCards();
-    setupInteractions();
-    setupInputs();
-    loadData();
-
-    document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
-    document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenMusic);
-    document.getElementById('resetBtn').addEventListener('click', resetAll);
-  </script>
+<div class="wrap">
+
+<div class="top">
+<h1>오늘 기분으로 30초 음악 만들기</h1>
+<p>지금 내 마음을 고르고, 나만의 노래를 만들어보세요 😊</p>
+</div>
+
+<!-- 1 -->
+<div class="block">
+<h3>지금 기분을 골라보세요</h3>
+
+<div id="moodButtons">
+<button onclick="selectMood('기뻐요',this)">😊 기뻐요</button>
+<button onclick="selectMood('슬퍼요',this)">😢 슬퍼요</button>
+<button onclick="selectMood('속상해요',this)">😡 속상해요</button>
+<button onclick="selectMood('편안해요',this)">😌 편안해요</button>
+</div>
+
+<textarea id="moodEtc" placeholder="직접 입력"></textarea>
+
+<div class="tools">
+<button onclick="voice('moodEtc')">🎤 말로 입력</button>
+<button onclick="clearTxt('moodEtc')">지우기</button>
+<button onclick="example('moodEtc','설레고 행복해요')">예시 넣기</button>
+</div>
+
+<p id="moodText"></p>
+</div>
+
+<!-- 2 -->
+<div class="block">
+<h3>왜 그런 마음이 드셨나요?</h3>
+
+<textarea id="reason" placeholder="한 줄로 적어보세요"></textarea>
+
+<div class="tools">
+<button onclick="voice('reason')">🎤 말로 입력</button>
+<button onclick="clearTxt('reason')">지우기</button>
+<button onclick="example('reason','손주를 만나서 행복했어요')">예시 넣기</button>
+</div>
+
+<p id="reasonText"></p>
+</div>
+
+<!-- 3 -->
+<div class="block">
+<h3>노래 느낌</h3>
+<p id="recommend">기분을 고르면 자동 추천됩니다</p>
+
+<div id="styleButtons">
+<button onclick="setStyle('밝고 신나요',this)">😊 밝음</button>
+<button onclick="setStyle('따뜻함',this)">🌷 따뜻</button>
+<button onclick="setStyle('감성적',this)">🌙 감성</button>
+<button onclick="setStyle('힘나는',this)">💪 힘</button>
+</div>
+
+<p id="styleText"></p>
+</div>
+
+<!-- 4 -->
+<div class="block">
+<h3>노래 / 연주곡</h3>
+
+<div id="typeButtons">
+<button onclick="typeSel('노래',this)">🎤 노래</button>
+<button onclick="typeSel('연주곡',this)">🎹 연주곡</button>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="block">
+<h3>음악 스타일</h3>
+
+<div id="genreButtons">
+<button onclick="genreSel('트로트',this)">트로트</button>
+<button onclick="genreSel('가요',this)">가요</button>
+<button onclick="genreSel('동요',this)">동요</button>
+</div>
+</div>
+
+<!-- 결과 -->
+<div class="block">
+<h3>완성</h3>
+
+<textarea id="out"></textarea>
+
+<button class="main-btn" onclick="make()">노래 만들기 준비하기</button>
+<button onclick="copy()">복사하기</button>
+
+</div>
+
+</div>
+
+<script>
+
+let mood="",style="",type="노래",genre="가요";
+
+function selectMood(m,b){
+  mood=m;
+  document.querySelectorAll("#moodButtons button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+
+  document.getElementById("moodText").innerText="기분: "+m;
+
+  let rec="따뜻함";
+  if(m=="기뻐요") rec="밝고 신나요";
+  if(m=="슬퍼요") rec="따뜻함";
+  if(m=="속상해요") rec="힘나는";
+  if(m=="편안해요") rec="따뜻함";
+
+  document.getElementById("recommend").innerText="추천: "+rec;
+  applyRecommendedStyle(rec);
+}
+
+function applyRecommendedStyle(rec){
+  style=rec;
+  document.querySelectorAll("#styleButtons button").forEach(btn=>{
+    btn.classList.remove("active");
+    if(btn.innerText.includes("밝음") && rec==="밝고 신나요") btn.classList.add("active");
+    if(btn.innerText.includes("따뜻") && rec==="따뜻함") btn.classList.add("active");
+    if(btn.innerText.includes("감성") && rec==="감성적") btn.classList.add("active");
+    if(btn.innerText.includes("힘") && rec==="힘나는") btn.classList.add("active");
+  });
+  document.getElementById("styleText").innerText="느낌: "+rec;
+}
+
+function setStyle(s,b){
+  style=s;
+  document.querySelectorAll("#styleButtons button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.getElementById("styleText").innerText="느낌: "+s;
+}
+
+function typeSel(t,b){
+  type=t;
+  document.querySelectorAll("#typeButtons button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+}
+
+function genreSel(g,b){
+  genre=g;
+  document.querySelectorAll("#genreButtons button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+}
+
+function make(){
+  let m=document.getElementById("moodEtc").value || mood;
+  let r=document.getElementById("reason").value;
+
+  let txt=`30초 ${style} ${genre} ${type}.
+${m} 감정으로 시작하고 ${r} 내용을 담아
+마지막은 따뜻하고 희망적으로 마무리.
+자연스럽고 완성도 있게 만들어줘`;
+
+  document.getElementById("out").value=txt;
+}
+
+function copy(){
+  navigator.clipboard.writeText(document.getElementById("out").value);
+  alert("복사했어요! 이제 붙여넣어 주세요 😊");
+}
+
+function clearTxt(id){
+  document.getElementById(id).value="";
+}
+
+function example(id,txt){
+  document.getElementById(id).value=txt;
+}
+
+function voice(id){
+  alert("이제 말씀해 주세요 🎤");
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return;
+
+  const recognition = new SpeechRecognition();
+  recognition.lang="ko-KR";
+
+  recognition.onresult=function(e){
+    document.getElementById(id).value=e.results[0][0].transcript;
+  };
+
+  recognition.start();
+}
+
+</script>
+
 </body>
 </html>
