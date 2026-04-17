@@ -81,13 +81,14 @@
     }
 
     .guide-box {
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       background: #eef3ff;
       color: #3949ab;
-      border-radius: 16px;
-      padding: 12px 14px;
-      font-size: 15px;
-      font-weight: 600;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
     .question-card {
@@ -486,23 +487,25 @@
         <div class="style-card">
           <div class="style-title">이야기 느낌 고르기</div>
           <div class="style-options" id="storyMoodOptions">
-            <button type="button" class="style-btn selected" data-group="storyMood" data-value="adventurous and exciting story">✈️ 모험 가득한 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="romantic and sentimental story">💕 로맨틱한 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="imaginative and whimsical story">🌈 상상 풍부한 이야기</button>
+            <button type="button" class="style-btn selected" data-group="storyMood" data-value="adventurous and exciting story. Emphasize movement, discovery, travel moments, changing scenery, and a lively journey. The story should feel active and full of experience.">✈️ 모험 가득한 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="romantic and sentimental story. Focus on relationships, affection, emotional warmth, and meaningful connection between people. The story should feel gentle, touching, and heartfelt.">💕 로맨틱한 이야기</button>
+            <button type="button" class="style-btn" data-group="storyMood" data-value="playful and imaginative story. Add cheerful energy, light humor, and a touch of imagination while keeping the story warm and respectful. The story should feel lively and fun.">🎭 유쾌하고 상상력 가득한 이야기</button>
           </div>
-          <input type="hidden" id="storyMood" value="adventurous and exciting story" />
+          <input type="hidden" id="storyMood" value="adventurous and exciting story. Emphasize movement, discovery, travel moments, changing scenery, and a lively journey. The story should feel active and full of experience." />
         </div>
 
         <div class="style-card">
           <div class="style-title">그림 느낌 고르기</div>
           <div class="style-options" id="imageStyleOptions">
-            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="pixel art illustration, retro game style">🧱 픽셀 아트</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="comic style illustration, bold lines, expressive characters">🖍 코믹스</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="claymation style, 3D clay characters, soft lighting">🧸 클레이 애니메이션</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="crochet style, yarn texture, handmade soft feeling">🧶 크로셰</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="coloring book style, clean line art, black and white">🎨 색칠하기북</button>
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="ghibli inspired illustration, soft watercolor, warm light, gentle emotional atmosphere, beautiful background, consistent character design, cinematic composition">🌿 지브리 스타일</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="cinematic illustration, dramatic lighting, wide composition, film still framing, realistic atmosphere, emotional storytelling, strong contrast">🎬 시네마틱 스타일</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="claymation style, 3D clay characters, soft lighting, rounded shapes, handmade texture, stop-motion animation feel">🧸 클레이 애니메이션</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="crochet style, yarn texture, knitted fabric look, soft handmade feeling, warm and cozy atmosphere">🧶 크로셰 스타일</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="pixel art style, retro game graphics, blocky shapes, limited color palette, 8-bit or 16-bit style, simple and nostalgic">🧱 픽셀 아트</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="comic style illustration, bold outlines, expressive characters, dynamic poses, vivid colors, cartoon storytelling">🖍 코믹스 스타일</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-value="coloring book style, clean line art, black and white illustration, simple outlines, no shading, printable coloring page">🎨 색칠하기 그림</button>
           </div>
-          <input type="hidden" id="imageStyle" value="pixel art illustration, retro game style" />
+          <input type="hidden" id="imageStyle" value="ghibli inspired illustration, soft watercolor, warm light, gentle emotional atmosphere, beautiful background, consistent character design, cinematic composition" />
         </div>
       </div>
 
@@ -522,7 +525,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week3DrawingPocket_final_keepall';
+    const STORAGE_KEY = 'week3DrawingPocket_final_complete';
 
     const questions = [
       {
@@ -967,30 +970,23 @@
           return el ? el.value.trim() : '';
         };
 
-        const storyMood = document.getElementById('storyMood')?.value || 'adventurous and exciting story';
-        const imageStyle = document.getElementById('imageStyle')?.value || 'pixel art illustration, retro game style';
+        const storyMood = document.getElementById('storyMood')?.value || 'adventurous and exciting story. Emphasize movement, discovery, travel moments, changing scenery, and a lively journey. The story should feel active and full of experience.';
+        const imageStyle = document.getElementById('imageStyle')?.value || 'ghibli inspired illustration, soft watercolor, warm light, gentle emotional atmosphere, beautiful background, consistent character design, cinematic composition';
 
         const prompt = `You are a warm and skillful picture-book writer who turns a person's travel memory into a beautiful storybook.
 
 Please create a picture book based on the following memory travel story.
 
+[Story Direction]
+${storyMood}
+
+[Illustration Style]
+${imageStyle}
+
 [Main Goal]
 - Make the story flow naturally from the beginning of the trip, to the journey, to the most memorable moment, and finally to the feeling the person has now.
 - Make the reader feel as if they are traveling together.
 - Keep the tone warm, vivid, and touching.
-
-[Story Mood]
-The story mood should be: ${storyMood}
-
-[Illustration Style]
-The illustration style should be: ${imageStyle}
-
-[Important Style Rules]
-- Apply the illustration style strongly and consistently.
-- Do not mix multiple visual styles.
-- Keep the same main character across all pages.
-- No text in the image.
-- Show expressive emotion, clear action, and memorable scenery.
 
 [Book Structure]
 - Include a cover and total 5 pages.
@@ -1004,30 +1000,43 @@ Page 3: the most memorable moment, shown as the main scene
 Page 4: a special event, the feeling of that time, and the atmosphere
 Page 5: why the trip was meaningful, and how they feel when they remember it now
 
-[Writing Style]
-- Write naturally, as if it really happened.
-- Do not make it sound exaggerated.
-- Make it gentle, warm, and respectful.
-- Let the emotional meaning appear naturally in the story.
+[Writing Style Rules]
+- Use short, simple, warm sentences.
+- Do NOT list information.
+- Blend all details naturally into storytelling.
+- Keep the tone gentle, respectful, and emotional.
+- Make the character slightly younger, brighter, and lively.
 
 [Image Prompt Rules]
-For each page, also write an English image prompt.
-Each image prompt should naturally include:
-location + season/weather feeling + action + emotion + character + outfit + lighting
+For EACH page, write an English image prompt.
 
-[Input Information]
-Where they went: ${get(1) || 'not provided'}
-Who they went with: ${get(2) || 'not provided'}
-How they felt before leaving: ${get(3) || 'not provided'}
-How they got there: ${get(4) || 'not provided'}
-What they did there: ${get(5) || 'not provided'}
-One memorable event: ${get(6) || 'not provided'}
+Each prompt MUST include:
+- location
+- atmosphere
+- lighting
+- character
+- outfit
+- action
+- emotion
+
+IMPORTANT:
+- Keep the same character across all pages.
+- Do NOT include any text inside the image.
+- Apply the selected illustration style strongly.
+
+[User Input]
+Where: ${get(1) || 'not provided'}
+With who: ${get(2) || 'not provided'}
+Feeling before leaving: ${get(3) || 'not provided'}
+Transportation: ${get(4) || 'not provided'}
+What they did: ${get(5) || 'not provided'}
+One event: ${get(6) || 'not provided'}
 Most memorable moment: ${get(7) || 'not provided'}
-What kind of day it was: ${get(8) || 'not provided'}
-What they were doing then: ${get(9) || 'not provided'}
-How they looked that day: ${get(10) || 'not provided'}
-What they were wearing: ${get(11) || 'not provided'}
-Why the trip was good and how they feel now: ${get(12) || 'not provided'}
+Day/Weather: ${get(8) || 'not provided'}
+Action: ${get(9) || 'not provided'}
+Appearance: ${get(10) || 'not provided'}
+Outfit: ${get(11) || 'not provided'}
+Meaning & feeling now: ${get(12) || 'not provided'}
 
 [Output Format]
 Title:
@@ -1050,7 +1059,12 @@ Cover
 
 4페이지
 내용:
-이미지프롬프트:`;
+이미지프롬프트:
+
+5페이지
+내용:
+이미지프롬프트:
+`;
 
         output.textContent = prompt;
         saveData();
@@ -1111,15 +1125,15 @@ Cover
 
       const storyMoodInput = document.getElementById('storyMood');
       const imageStyleInput = document.getElementById('imageStyle');
-      if (storyMoodInput) storyMoodInput.value = 'adventurous and exciting story';
-      if (imageStyleInput) imageStyleInput.value = 'pixel art illustration, retro game style';
+      if (storyMoodInput) storyMoodInput.value = 'adventurous and exciting story. Emphasize movement, discovery, travel moments, changing scenery, and a lively journey. The story should feel active and full of experience.';
+      if (imageStyleInput) imageStyleInput.value = 'ghibli inspired illustration, soft watercolor, warm light, gentle emotional atmosphere, beautiful background, consistent character design, cinematic composition';
 
       document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === 'adventurous and exciting story');
+        btn.classList.toggle('selected', btn.dataset.value === 'adventurous and exciting story. Emphasize movement, discovery, travel moments, changing scenery, and a lively journey. The story should feel active and full of experience.');
       });
 
       document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === 'pixel art illustration, retro game style');
+        btn.classList.toggle('selected', btn.dataset.value === 'ghibli inspired illustration, soft watercolor, warm light, gentle emotional atmosphere, beautiful background, consistent character design, cinematic composition');
       });
 
       try {
