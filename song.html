@@ -72,12 +72,6 @@
     h2 { font-size: 18px; }
     h3 { font-size: 17px; }
 
-    .guide {
-      margin: -2px 0 10px;
-      font-size: 14px;
-      color: #666;
-    }
-
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -595,45 +589,45 @@
       if (musicType === "연주곡") {
         prompt = `당신은 전문 작곡가이자 편곡가입니다.
 
-한 곡의 ${musicStyle} ${genre} 스타일의 연주곡을 만들어 주세요.
+완성도 높은 한 곡의 ${musicStyle} ${genre} 스타일 연주곡을 만들어 주세요.
 
 이 음악은 ${refinedMood} 시작하며,
 ${refinedReason} 자연스럽게 표현해 주세요.
 
-다음 조건을 꼭 지켜 주세요:
+다음 조건을 꼭 지켜 주세요.
 
-- 도입 → 전개 → 클라이맥스 → 마무리 구조로 구성
-- 감정 흐름이 자연스럽게 이어지도록
-- 처음 30초만 들어도 분위기가 잘 느껴지도록
-- 과하지 않고 듣기 편안한 구성
+- 도입 → 전개 → 클라이맥스 → 마무리 구조로 완성도 있게 구성
+- 감정 흐름이 자연스럽게 이어지도록 만들기
+- 처음 부분만 들어도 분위기와 감정이 잘 전달되도록 만들기
+- 전문 연주자가 연주하는 것처럼 자연스럽고 세련되게 구성
+- 과하지 않고 오래 들어도 편안한 음악으로 만들기
 ${genreStyle}
 
-${extra} 중심으로 연주해 주세요.
+중심 악기는 ${extra}로 해 주세요.
 
-전체적으로 전문 연주자가 연주하는 느낌으로 완성도 높게 만들어 주세요.
-
-마지막은 안정감 있게 마무리해 주세요.`;
+전체적으로 깊이 있고 품질 높은 음악이 되도록 만들어 주세요.
+마지막은 안정감 있고 여운이 남도록 마무리해 주세요.`;
       } else {
         prompt = `당신은 전문 작곡가이자 편곡가입니다.
 
-한 곡의 ${musicStyle} ${genre} 스타일의 노래를 만들어 주세요.
+완성도 높은 한 곡의 ${musicStyle} ${genre} 스타일 노래를 만들어 주세요.
 
 이 노래는 ${refinedMood} 시작하며,
 ${refinedReason} 자연스럽게 표현해 주세요.
 
-다음 조건을 꼭 지켜 주세요:
+다음 조건을 꼭 지켜 주세요.
 
 - 도입 → 전개 → 클라이맥스 → 마무리 구조로 완성도 있게 구성
-- 멜로디는 부드럽고 기억에 남도록
-- 가사는 쉽고 따뜻하게
-- 감정 흐름이 자연스럽게 이어지도록
-- 처음 30초만 들어도 분위기가 잘 느껴지도록
+- 멜로디는 부드럽고 기억에 남도록 만들기
+- 가사는 쉽고 따뜻하지만 유치하지 않게 만들기
+- 감정 흐름이 자연스럽게 이어지도록 만들기
+- 처음 부분만 들어도 분위기와 감정이 잘 전달되도록 만들기
+- 전문 작곡가와 편곡가가 만든 것처럼 세련되고 자연스럽게 구성
 ${genreStyle}
 
 보컬은 ${extra} 목소리 느낌으로 만들어 주세요.
 
 전체적으로 전문 가수가 부르는 것처럼 완성도 높게 만들어 주세요.
-
 마지막은 따뜻하고 희망적인 느낌으로 마무리해 주세요.`;
       }
 
@@ -643,7 +637,7 @@ ${genreStyle}
     function copyPrompt() {
       const text = document.getElementById("promptOutput").value.trim();
       if (!text) {
-        alert("먼저 30초 음악만들기 프롬프트 생성을 눌러주세요.");
+        alert("먼저 프롬프트 생성을 눌러주세요.");
         return;
       }
 
@@ -658,29 +652,28 @@ ${genreStyle}
 
     function copyAndOpenGemini() {
       const text = document.getElementById("promptOutput").value.trim();
+
       if (!text) {
-        alert("먼저 30초 음악만들기 프롬프트 생성을 눌러주세요.");
+        alert("먼저 프롬프트 생성을 눌러주세요.");
         return;
       }
 
-      const newWindow = window.open("about:blank", "_blank");
-
-      const goGemini = () => {
-        if (newWindow) {
-          newWindow.location.href = "https://gemini.google.com/";
-        } else {
-          window.open("https://gemini.google.com/", "_blank");
-        }
+      const openGemini = () => {
+        window.location.href = "https://gemini.google.com/";
       };
 
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(goGemini).catch(() => {
-          fallbackCopy(false);
-          goGemini();
-        });
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            openGemini();
+          })
+          .catch(() => {
+            fallbackCopy(false);
+            openGemini();
+          });
       } else {
         fallbackCopy(false);
-        goGemini();
+        openGemini();
       }
     }
 
