@@ -1,214 +1,218 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>오늘기분 30초 음악 만들기</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>오늘기분 30초 음악 만들기</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-* { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: #f6f7fb;
+      color: #222;
+      line-height: 1.55;
+    }
 
-body {
-  margin: 0;
-  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  background: #f6f7fb;
-  color: #222;
-  line-height: 1.55;
-}
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 12px 10px 30px;
+    }
 
-.wrap {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 12px 10px 30px;
-}
+    .top-card {
+      background: linear-gradient(135deg, #6c8cff, #8f6bff);
+      color: #fff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 10px rgba(76, 91, 170, 0.15);
+      margin-bottom: 12px;
+    }
 
-.top-card {
-  background: linear-gradient(135deg, #6c8cff, #8f6bff);
-  color: #fff;
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 4px 10px rgba(76, 91, 170, 0.15);
-  margin-bottom: 12px;
-}
+    .top-card h1 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
 
-.top-card h1 {
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.3;
-  font-weight: 700;
-}
+    .top-card p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      opacity: 0.92;
+    }
 
-.top-card p {
-  margin: 4px 0 0;
-  font-size: 13px;
-  opacity: 0.92;
-}
+    .question-block {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
 
-.question-block {
-  background: #fff;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
+    .question-number,
+    .sub-number {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef3ff;
+      color: #3e5fd1;
+      font-weight: 700;
+      font-size: 13px;
+    }
 
-.question-number,
-.sub-number {
-  display: inline-block;
-  margin-bottom: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: #eef3ff;
-  color: #3e5fd1;
-  font-weight: 700;
-  font-size: 13px;
-}
+    h2, h3 {
+      margin: 0 0 10px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
 
-h2, h3 {
-  margin: 0 0 10px;
-  line-height: 1.35;
-  font-weight: 700;
-}
+    h2 { font-size: 18px; }
+    h3 { font-size: 17px; }
 
-h2 { font-size: 18px; }
-h3 { font-size: 17px; }
+    .guide {
+      margin: -2px 0 10px;
+      font-size: 14px;
+      color: #666;
+    }
 
-.guide {
-  margin: -2px 0 10px;
-  font-size: 14px;
-  color: #666;
-}
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 10px;
-}
+    .stack {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
 
-.stack {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 10px;
-}
+    button {
+      width: 100%;
+      padding: 14px 12px;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+      background: #fff;
+      color: #222;
+      font-size: 16px;
+      line-height: 1.35;
+      text-align: left;
+      word-break: keep-all;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
 
-button {
-  width: 100%;
-  padding: 14px 12px;
-  border-radius: 12px;
-  border: 2px solid #ddd;
-  background: #fff;
-  color: #222;
-  font-size: 16px;
-  line-height: 1.35;
-  text-align: left;
-  word-break: keep-all;
-  cursor: pointer;
-}
+    button:active {
+      transform: scale(0.99);
+    }
 
-button.active {
-  border-color: #4a7cff;
-  background: #eef4ff;
-  font-weight: 700;
-}
+    button.active {
+      border-color: #4a7cff;
+      background: #eef4ff;
+      font-weight: 700;
+    }
 
-textarea {
-  width: 100%;
-  min-height: 86px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 2px solid #ddd;
-  font-size: 16px;
-  line-height: 1.5;
-  resize: none;
-  background: #fff;
-}
+    textarea {
+      width: 100%;
+      min-height: 86px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+      font-size: 16px;
+      line-height: 1.5;
+      resize: none;
+      background: #fff;
+    }
 
-.tool-row {
-  display: grid;
-  grid-template-columns: repeat(3, 56px);
-  gap: 10px;
-  justify-content: start;
-  margin-top: 8px;
-}
+    .tool-row {
+      display: grid;
+      grid-template-columns: repeat(3, 56px);
+      gap: 10px;
+      justify-content: start;
+      margin-top: 8px;
+    }
 
-.tool-row button {
-  text-align: center;
-  padding: 12px 0;
-  font-size: 22px;
-}
+    .tool-row button {
+      text-align: center;
+      padding: 12px 0;
+      font-size: 22px;
+    }
 
-.recording {
-  background: #ffe9e9 !important;
-  border-color: #f3b3b3 !important;
-  color: #c62828 !important;
-  font-weight: 700;
-}
+    .recording {
+      background: #ffe9e9 !important;
+      border-color: #f3b3b3 !important;
+      color: #c62828 !important;
+      font-weight: 700;
+    }
 
-.sub-card {
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  background: #f8f9fd;
-  border: 1px solid #e2e7f3;
-}
+    .sub-card {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #f8f9fd;
+      border: 1px solid #e2e7f3;
+    }
 
-.hidden {
-  display: none;
-}
+    .hidden {
+      display: none;
+    }
 
-.result-box {
-  min-height: 260px;
-  margin-top: 10px;
-  line-height: 1.65;
-}
+    .result-box {
+      min-height: 260px;
+      margin-top: 10px;
+      line-height: 1.65;
+    }
 
-.main-buttons {
-  display: grid;
-  gap: 10px;
-  margin-top: 10px;
-}
+    .main-buttons {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
-.main-buttons button {
-  text-align: center;
-  font-weight: 700;
-}
+    .main-buttons button {
+      text-align: center;
+      font-weight: 700;
+    }
 
-.primary {
-  background: #4a7cff;
-  color: #fff;
-  border: none;
-  font-size: 17px;
-  padding: 15px 12px;
-}
+    .primary {
+      background: #4a7cff;
+      color: #fff;
+      border: none;
+      font-size: 17px;
+      padding: 15px 12px;
+    }
 
-.secondary {
-  background: #eef4ff;
-  color: #2344b6;
-}
+    .secondary {
+      background: #eef4ff;
+      color: #2344b6;
+    }
 
-.danger {
-  background: #f7ecec;
-  color: #b64040;
-}
+    .danger {
+      background: #f7ecec;
+      color: #b64040;
+    }
 
-.genre-dongyo { background:#fff6c7; }
-.genre-gayo { background:#e3f2fd; }
-.genre-7080 { background:#f5e6d3; }
-.genre-trot { background:#ffe0b2; }
-.genre-oldpop { background:#e6d3c3; }
-.genre-kpop { background:#e1bee7; }
-.genre-hymn { background:#e3f2fd; }
-.genre-buddhist { background:#eeeeee; }
-.genre-gagok { background:#f8bbd0; }
-.genre-gayageum { background:#e8f5e9; }
+    .genre-dongyo { background:#fff6c7; }
+    .genre-gayo { background:#e3f2fd; }
+    .genre-7080 { background:#f5e6d3; }
+    .genre-trot { background:#ffe0b2; }
+    .genre-oldpop { background:#e6d3c3; }
+    .genre-kpop { background:#e1bee7; }
+    .genre-hymn { background:#e3f2fd; }
+    .genre-buddhist { background:#eeeeee; }
+    .genre-gagok { background:#f8bbd0; }
+    .genre-gayageum { background:#e8f5e9; }
 
-@media (max-width: 380px) {
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+    @media (max-width: 380px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -334,7 +338,7 @@ textarea {
 
     <!-- 마지막 -->
     <section class="question-block">
-      <button type="button" class="primary" onclick="buildPrompt()">🎵 음악 만들기 명령어 만들기</button>
+      <button type="button" class="primary" onclick="buildPrompt()">30초 음악만들기 프롬프트 생성</button>
 
       <textarea id="promptOutput" class="result-box" placeholder="여기에 음악 만드는 글이 나옵니다"></textarea>
 
@@ -517,17 +521,60 @@ textarea {
 
     function getGenreStyle(genre) {
       switch (genre) {
-        case "동요": return "밝고 단순하며 따라 부르기 쉬운 멜로디로 만들어 주세요.";
-        case "가요": return "자연스럽고 대중적인 멜로디로 편안하게 들리도록 만들어 주세요.";
-        case "7080가요": return "익숙하고 정겨운 멜로디로 옛 감성이 느껴지도록 만들어 주세요.";
-        case "트로트": return "리듬감이 살아 있고 흥이 느껴지도록 구성해 주세요.";
-        case "올드팝": return "부드럽고 클래식한 팝 느낌으로 분위기 있게 만들어 주세요.";
-        case "K-POP": return "세련되고 리듬감 있는 현대적인 느낌으로 만들어 주세요.";
-        case "찬송가": return "따뜻하고 은혜로운 분위기로 편안하고 경건하게 만들어 주세요.";
-        case "불교음악": return "고요하고 차분하며 마음이 편안해지는 분위기로 만들어 주세요.";
-        case "가곡": return "서정적이고 부드러운 멜로디로 감정이 깊이 전달되도록 만들어 주세요.";
-        case "가야금": return "가야금 중심의 전통적인 느낌으로 부드럽고 여유롭게 흐르도록 만들어 주세요.";
-        default: return "자연스럽고 듣기 편한 분위기로 만들어 주세요.";
+        case "동요":
+          return `
+- 멜로디는 단순하고 따라 부르기 쉽게
+- 리듬은 밝고 경쾌하게
+- 어린아이도 이해할 수 있는 쉬운 가사
+- 반복 구간이 있어 기억에 남도록`;
+        case "가요":
+          return `
+- 자연스럽고 대중적인 멜로디
+- 감정 전달이 잘 되도록 구성
+- 듣기 편하고 익숙한 흐름`;
+        case "7080가요":
+          return `
+- 옛 감성이 느껴지는 따뜻한 멜로디
+- 서정적이고 부드러운 진행
+- 약간의 향수를 자극하는 느낌`;
+        case "트로트":
+          return `
+- 리듬감 있고 흥이 나도록
+- 꺾기 창법 느낌 살리기
+- 반복되는 후렴으로 기억에 남게`;
+        case "올드팝":
+          return `
+- 클래식한 팝 스타일
+- 부드러운 코드 진행
+- 감성적이고 세련된 분위기`;
+        case "K-POP":
+          return `
+- 세련되고 현대적인 사운드
+- 리듬감 있고 중독성 있는 멜로디
+- 후렴이 강하게 기억되도록 구성`;
+        case "찬송가":
+          return `
+- 경건하고 차분한 분위기
+- 안정적인 화성 진행
+- 마음이 편안해지는 흐름`;
+        case "불교음악":
+          return `
+- 매우 고요하고 차분하게
+- 반복적이고 명상적인 흐름
+- 마음이 안정되는 느낌`;
+        case "가곡":
+          return `
+- 서정적이고 감정이 깊게 전달되도록
+- 클래식한 성악 스타일
+- 호흡과 흐름을 길게 가져가기`;
+        case "가야금":
+          return `
+- 전통적인 한국 음악 느낌
+- 여백과 여운을 살린 연주
+- 느리고 부드러운 흐름`;
+        default:
+          return `
+- 자연스럽고 듣기 편한 음악`;
       }
     }
 
@@ -546,34 +593,46 @@ textarea {
       let prompt = "";
 
       if (musicType === "연주곡") {
-        prompt = `30초 분량의 ${musicStyle} ${genre} 스타일의 연주곡을 만들어 주세요.
+        prompt = `당신은 전문 작곡가이자 편곡가입니다.
 
-이 음악은 ${refinedMood} 시작하여,
-${refinedReason} 구성해 주세요.
+한 곡의 ${musicStyle} ${genre} 스타일의 연주곡을 만들어 주세요.
 
-전체적으로 ${musicStyle} 느낌을 유지하면서,
-짧지만 하나의 완성된 음악처럼 자연스럽게 흐르도록 만들어 주세요.
+이 음악은 ${refinedMood} 시작하며,
+${refinedReason} 자연스럽게 표현해 주세요.
 
+다음 조건을 꼭 지켜 주세요:
+
+- 도입 → 전개 → 클라이맥스 → 마무리 구조로 구성
+- 감정 흐름이 자연스럽게 이어지도록
+- 처음 30초만 들어도 분위기가 잘 느껴지도록
+- 과하지 않고 듣기 편안한 구성
 ${genreStyle}
 
-${extra} 소리가 중심이 되어 감정이 잘 전달되도록 연주해 주세요.
+${extra} 중심으로 연주해 주세요.
 
-마지막은 따뜻하고 안정감 있는 느낌으로 마무리해 주세요.`;
+전체적으로 전문 연주자가 연주하는 느낌으로 완성도 높게 만들어 주세요.
+
+마지막은 안정감 있게 마무리해 주세요.`;
       } else {
-        prompt = `30초 분량의 ${musicStyle} ${genre} 스타일의 노래를 만들어 주세요.
+        prompt = `당신은 전문 작곡가이자 편곡가입니다.
 
-이 노래는 ${refinedMood} 시작합니다.
-${refinedReason} 표현해 주세요.
+한 곡의 ${musicStyle} ${genre} 스타일의 노래를 만들어 주세요.
 
-전체적으로 ${musicStyle} 분위기를 유지하면서,
-짧지만 하나의 완성된 곡처럼 자연스럽게 흐르도록 만들어 주세요.
+이 노래는 ${refinedMood} 시작하며,
+${refinedReason} 자연스럽게 표현해 주세요.
 
+다음 조건을 꼭 지켜 주세요:
+
+- 도입 → 전개 → 클라이맥스 → 마무리 구조로 완성도 있게 구성
+- 멜로디는 부드럽고 기억에 남도록
+- 가사는 쉽고 따뜻하게
+- 감정 흐름이 자연스럽게 이어지도록
+- 처음 30초만 들어도 분위기가 잘 느껴지도록
 ${genreStyle}
 
-멜로디는 부드럽고 기억에 남게 구성하고,
-가사는 따뜻하고 자연스럽게 들리도록 만들어 주세요.
+보컬은 ${extra} 목소리 느낌으로 만들어 주세요.
 
-보컬은 ${extra} 목소리 느낌으로 편안하고 안정감 있게 들리도록 해 주세요.
+전체적으로 전문 가수가 부르는 것처럼 완성도 높게 만들어 주세요.
 
 마지막은 따뜻하고 희망적인 느낌으로 마무리해 주세요.`;
       }
@@ -584,7 +643,7 @@ ${genreStyle}
     function copyPrompt() {
       const text = document.getElementById("promptOutput").value.trim();
       if (!text) {
-        alert("먼저 음악 만들기 명령어 만들기를 눌러주세요.");
+        alert("먼저 30초 음악만들기 프롬프트 생성을 눌러주세요.");
         return;
       }
 
@@ -600,7 +659,7 @@ ${genreStyle}
     function copyAndOpenGemini() {
       const text = document.getElementById("promptOutput").value.trim();
       if (!text) {
-        alert("먼저 음악 만들기 명령어 만들기를 눌러주세요.");
+        alert("먼저 30초 음악만들기 프롬프트 생성을 눌러주세요.");
         return;
       }
 
