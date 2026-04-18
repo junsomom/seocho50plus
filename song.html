@@ -285,16 +285,6 @@
         <button type="button" onclick="typeSel('연주곡', this)">🎹 연주곡</button>
       </div>
 
-      <div class="sub-card hidden" id="voiceBlock">
-        <div class="sub-number">3-1</div>
-        <h3>어떤 목소리가 좋으세요?</h3>
-        <div class="grid-2" id="voiceButtons">
-          <button type="button" onclick="setExtraOption('여성', this, 'voiceButtons')">👩 여성</button>
-          <button type="button" onclick="setExtraOption('남성', this, 'voiceButtons')">👨 남성</button>
-          <button type="button" onclick="setExtraOption('어르신', this, 'voiceButtons')">👵 어르신</button>
-        </div>
-      </div>
-
       <div class="sub-card hidden" id="instrumentBlock">
         <div class="sub-number">3-1</div>
         <h3>어떤 악기가 좋으세요?</h3>
@@ -464,26 +454,15 @@
       clearActive("#typeButtons button");
       btn.classList.add("active");
 
-      clearActive("#voiceButtons button");
       clearActive("#instrumentButtons button");
 
-      const voiceBlock = document.getElementById("voiceBlock");
       const instrumentBlock = document.getElementById("instrumentBlock");
 
       if (type === "노래") {
-        voiceBlock.classList.remove("hidden");
         instrumentBlock.classList.add("hidden");
-        state.extraOption = "어르신";
-
-        const defaultVoice = document.querySelector("#voiceButtons button:nth-child(3)");
-        if (defaultVoice) defaultVoice.classList.add("active");
-
-        setTimeout(() => {
-          voiceBlock.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 120);
+        state.extraOption = "";
       } else {
         instrumentBlock.classList.remove("hidden");
-        voiceBlock.classList.add("hidden");
         state.extraOption = "피아노";
 
         const defaultInst = document.querySelector("#instrumentButtons button:nth-child(1)");
@@ -706,7 +685,7 @@
       const musicStyle = inferMusicStyle(mood);
       const musicType = state.musicType || "노래";
       const genre = state.genre || "추억의 7080 가요";
-      const extra = state.extraOption || (musicType === "노래" ? "어르신" : "피아노");
+      const extra = state.extraOption || "피아노";
 
       const refinedMood = refineMood(mood);
       const refinedReason = refineReason(reason);
@@ -767,7 +746,6 @@ ${moodStyle}
 멜로디는 자연스럽고 기억에 남도록,
 후렴은 반복되며 쉽게 따라 부를 수 있도록 만들어 주세요.
 
-보컬은 ${extra} 느낌으로 해 주세요.
 전체 곡이 하나의 이야기처럼 부드럽게 이어지게 해 주세요.
 마지막은 따뜻한 느낌으로 마무리해 주세요.
 
@@ -909,12 +887,10 @@ ${moodStyle}
       clearActive("#moodButtons button");
       clearActive("#reasonExampleButtons button");
       clearActive("#typeButtons button");
-      clearActive("#voiceButtons button");
       clearActive("#instrumentButtons button");
       clearActive("#genreButtons button");
       clearActive("#atmosphereButtons button");
 
-      document.getElementById("voiceBlock").classList.add("hidden");
       document.getElementById("instrumentBlock").classList.add("hidden");
 
       state.mood = "";
