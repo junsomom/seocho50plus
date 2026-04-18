@@ -1,232 +1,1053 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오늘 기분으로 30초 음악 만들기</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>오늘 기분으로 30초 음악 만들기</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-body {margin:0;font-family:sans-serif;background:#f5f6fa;}
-.wrap {max-width:600px;margin:auto;padding:20px;}
+    body {
+      margin: 0;
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: #f6f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
 
-.top {
-  background:linear-gradient(135deg,#4a7cff,#7f9cff);
-  color:#fff;padding:20px;border-radius:20px;
-}
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 20px 14px 40px;
+    }
 
-.block {
-  background:#fff;margin-top:15px;padding:15px;border-radius:16px;
-}
+    .top-card {
+      background: linear-gradient(135deg, #6c8cff, #8f6bff);
+      color: #fff;
+      border-radius: 22px;
+      padding: 24px 18px;
+      box-shadow: 0 10px 24px rgba(76, 91, 170, 0.22);
+      margin-bottom: 18px;
+    }
 
-button {
-  width:100%;padding:18px;margin:6px 0;
-  font-size:18px;border-radius:14px;border:2px solid #ddd;
-  background:#fff;
-}
+    .top-card h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.3;
+    }
 
-button.active {
-  border-color:#4a7cff;background:#eef4ff;
-}
+    .top-card p {
+      margin: 0;
+      font-size: 16px;
+      opacity: 0.96;
+    }
 
-textarea {
-  width:100%;padding:12px;border-radius:12px;margin-top:10px;
-}
+    .question-block {
+      margin: 18px 0;
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
 
-.tools button {width:32%;font-size:14px;}
+    .question-number {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef3ff;
+      color: #3e5fd1;
+      font-weight: 700;
+      font-size: 14px;
+    }
 
-.main-btn {
-  background:#4a7cff;color:#fff;font-size:20px;margin-top:15px;
-}
-</style>
+    .sub-card {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #f8f9fd;
+      border: 1px solid #e2e7f3;
+      animation: fadeSlide 0.3s ease;
+    }
+
+    .sub-number {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef3ff;
+      color: #3e5fd1;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .guide {
+      margin: 0 0 14px;
+      color: #555;
+      font-size: 15px;
+    }
+
+    .vertical-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mood-grid,
+    .genre-grid,
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    button,
+    .link-button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      background: #fff;
+      color: #222;
+      padding: 15px 16px;
+      font-size: 17px;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.15s ease;
+      border: 2px solid #d7dce7;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    button.active {
+      border-color: #4a7cff;
+      background: #eef4ff;
+      font-weight: 700;
+    }
+
+    button:active,
+    .link-button:active {
+      transform: scale(0.99);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 88px;
+      padding: 14px;
+      font-size: 17px;
+      border-radius: 14px;
+      border: 2px solid #d7dce7;
+      resize: vertical;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    textarea.input-gray { color: #999; }
+    textarea.input-black { color: #000; }
+
+    .input-tools,
+    .main-buttons {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .input-tools {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-buttons {
+      grid-template-columns: 1fr;
+    }
+
+    .main-buttons .primary {
+      background: #4a7cff;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .main-buttons .secondary {
+      background: #eef4ff;
+      color: #2344b6;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .main-buttons .danger {
+      background: #f7ecec;
+      color: #b64040;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .link-button {
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      background: #eef7ef;
+      color: #1f6b33;
+      font-weight: 700;
+    }
+
+    .status-text {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .selected-text {
+      color: #333;
+    }
+
+    .subtle-box {
+      padding: 14px;
+      background: #f8f9fd;
+      border-radius: 14px;
+      border: 1px solid #e2e7f3;
+      font-size: 15px;
+      color: #555;
+      margin-top: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .show {
+      display: block;
+      animation: fadeSlide 0.35s ease;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    button.recording {
+      background: #ffe9e9;
+      color: #c62828;
+      border: 2px solid #f3b3b3;
+      font-weight: 700;
+    }
+
+    .genre-dongyo { background: #fff6c7; }
+    .genre-gayo { background: #e3f2fd; }
+    .genre-7080 { background: #f5e6d3; }
+    .genre-trot { background: #ffe0b2; }
+    .genre-oldpop { background: #e6d3c3; }
+    .genre-kpop { background: #e1bee7; }
+    .genre-hymn { background: #e3f2fd; }
+    .genre-buddhist { background: #eeeeee; }
+    .genre-gagok { background: #f8bbd0; }
+    .genre-gayageum { background: #e8f5e9; }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .wrap {
+        padding: 14px 10px 32px;
+      }
+
+      .top-card {
+        padding: 18px 14px;
+        border-radius: 18px;
+      }
+
+      .top-card h1 {
+        font-size: 23px;
+        line-height: 1.35;
+      }
+
+      .top-card p {
+        font-size: 14px;
+      }
+
+      .question-block {
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      h2 {
+        font-size: 20px;
+        line-height: 1.4;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      button,
+      .link-button {
+        font-size: 16px;
+        padding: 14px 12px;
+        border-radius: 12px;
+      }
+
+      textarea {
+        font-size: 16px;
+        padding: 12px;
+        min-height: 84px;
+      }
+
+      .mood-grid,
+      .genre-grid,
+      .example-grid {
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .genre-grid,
+      .example-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <section class="top-card">
+      <h1>오늘 기분으로 30초 음악 만들기</h1>
+      <p>지금 내 마음을 고르고, 나만의 음악을 만들어보세요 😊</p>
+    </section>
 
-<div class="top">
-<h1>오늘 기분으로 30초 음악 만들기</h1>
-<p>지금 내 마음을 고르고, 나만의 노래를 만들어보세요 😊</p>
-</div>
+    <section class="question-block">
+      <div class="question-number">1단계</div>
+      <h2>지금 기분을 골라보세요</h2>
+      <p class="guide">아래 버튼을 누르거나, 다른 기분이 있으면 직접 적어보세요</p>
 
-<!-- 1 -->
-<div class="block">
-<h3>지금 기분을 골라보세요</h3>
+      <div class="mood-grid" id="moodButtons">
+        <button type="button" onclick="selectMood('기뻐요', this)">😊 기뻐요</button>
+        <button type="button" onclick="selectMood('눈물나요', this)">😢 눈물나요</button>
 
-<div id="moodButtons">
-<button onclick="selectMood('기뻐요',this)">😊 기뻐요</button>
-<button onclick="selectMood('슬퍼요',this)">😢 슬퍼요</button>
-<button onclick="selectMood('속상해요',this)">😡 속상해요</button>
-<button onclick="selectMood('편안해요',this)">😌 편안해요</button>
-</div>
+        <button type="button" onclick="selectMood('행복해요', this)">🌷 행복해요</button>
+        <button type="button" onclick="selectMood('속상해요', this)">😔 속상해요</button>
 
-<textarea id="moodEtc" placeholder="직접 입력"></textarea>
+        <button type="button" onclick="selectMood('따뜻해요', this)">☀️ 따뜻해요</button>
+        <button type="button" onclick="selectMood('시원해요', this)">🌬 시원해요</button>
 
-<div class="tools">
-<button onclick="voice('moodEtc')">🎤 말로 입력</button>
-<button onclick="clearTxt('moodEtc')">지우기</button>
-<button onclick="example('moodEtc','설레고 행복해요')">예시 넣기</button>
-</div>
+        <button type="button" onclick="selectMood('편안해요', this)">😌 편안해요</button>
+        <button type="button" onclick="selectMood('마음이 불편해요', this)">😟 마음이 불편해요</button>
 
-<p id="moodText"></p>
-</div>
+        <button type="button" onclick="selectMood('힘이 나요', this)">💪 힘이 나요</button>
+        <button type="button" onclick="selectMood('피곤해요', this)">😴 피곤해요</button>
 
-<!-- 2 -->
-<div class="block">
-<h3>왜 그런 마음이 드셨나요?</h3>
+        <button type="button" onclick="selectMood('그리워요', this)">🍂 그리워요</button>
+        <button type="button" onclick="selectMood('마음이 복잡해요', this)">🤔 마음이 복잡해요</button>
+      </div>
 
-<textarea id="reason" placeholder="한 줄로 적어보세요"></textarea>
+      <textarea
+        id="moodEtc"
+        class="input-gray"
+        onfocus="clearDefaultText(this, DEFAULT_MOOD_TEXT)"
+        oninput="updateMoodFromEtc()"
+      >다른 기분이 있으면 적어보세요</textarea>
 
-<div class="tools">
-<button onclick="voice('reason')">🎤 말로 입력</button>
-<button onclick="clearTxt('reason')">지우기</button>
-<button onclick="example('reason','손주를 만나서 행복했어요')">예시 넣기</button>
-</div>
+      <div class="input-tools">
+        <button type="button" onclick="toggleVoiceInput('moodEtc', this)">🎤 말로 입력</button>
+        <button type="button" onclick="clearMoodField()">지우기</button>
+      </div>
 
-<p id="reasonText"></p>
-</div>
+      <p class="status-text selected-text" id="moodSelectedText">선택한 기분: 없음</p>
+    </section>
 
-<!-- 3 -->
-<div class="block">
-<h3>노래 느낌</h3>
-<p id="recommend">기분을 고르면 자동 추천됩니다</p>
+    <section class="question-block">
+      <div class="question-number">2단계</div>
+      <h2>왜 그런 마음이 드셨나요?</h2>
+      <p class="guide">예시를 누르거나, 기타에 직접 적거나 말해보세요</p>
 
-<div id="styleButtons">
-<button onclick="setStyle('밝고 신나요',this)">😊 밝음</button>
-<button onclick="setStyle('따뜻함',this)">🌷 따뜻</button>
-<button onclick="setStyle('감성적',this)">🌙 감성</button>
-<button onclick="setStyle('힘나는',this)">💪 힘</button>
-</div>
+      <div class="example-grid" id="reasonExampleButtons">
+        <button type="button" onclick="selectReasonExample('손주를 만나서', this)">손주를 만나서</button>
+        <button type="button" onclick="selectReasonExample('가족 생각이 나서', this)">가족 생각이 나서</button>
 
-<p id="styleText"></p>
-</div>
+        <button type="button" onclick="selectReasonExample('옛날 생각이 나서', this)">옛날 생각이 나서</button>
+        <button type="button" onclick="selectReasonExample('몸이 조금 피곤해서', this)">몸이 조금 피곤해서</button>
 
-<!-- 4 -->
-<div class="block">
-<h3>노래 / 연주곡</h3>
+        <button type="button" onclick="selectReasonExample('좋은 일이 있어서', this)">좋은 일이 있어서</button>
+        <button type="button" onclick="selectReasonExample('보고 싶은 사람이 떠올라서', this)">보고 싶은 사람이 떠올라서</button>
+      </div>
 
-<div id="typeButtons">
-<button onclick="typeSel('노래',this)">🎤 노래</button>
-<button onclick="typeSel('연주곡',this)">🎹 연주곡</button>
-</div>
-</div>
+      <label for="reasonInput"><strong>기타</strong></label>
+      <textarea
+        id="reasonInput"
+        class="input-gray"
+        onfocus="clearDefaultText(this, DEFAULT_REASON_TEXT)"
+        oninput="handleReasonTyping(event)"
+      >내 말로 적어보세요</textarea>
 
-<!-- 5 -->
-<div class="block">
-<h3>음악 스타일</h3>
+      <div class="input-tools">
+        <button type="button" onclick="toggleVoiceInput('reasonInput', this)">🎤 말로 입력</button>
+        <button type="button" onclick="clearReasonField()">지우기</button>
+      </div>
 
-<div id="genreButtons">
-<button onclick="genreSel('트로트',this)">트로트</button>
-<button onclick="genreSel('가요',this)">가요</button>
-<button onclick="genreSel('동요',this)">동요</button>
-</div>
-</div>
+      <p class="status-text selected-text" id="reasonStatus">선택한 내용: 없음</p>
+    </section>
 
-<!-- 결과 -->
-<div class="block">
-<h3>완성</h3>
+    <section class="question-block">
+      <div class="question-number">4단계</div>
+      <h2>어떤 음악을 만들고 싶으세요?</h2>
+      <p class="guide">원하는 음악 형태를 골라보세요</p>
 
-<textarea id="out"></textarea>
+      <div id="typeButtons" class="vertical-buttons">
+        <button type="button" onclick="typeSel('노래', this)">
+          👤 가사가 있는 노래로 할래요
+        </button>
+        <button type="button" onclick="typeSel('연주곡', this)">
+          🎹 악기만 나오는 연주곡으로 할래요
+        </button>
+      </div>
 
-<button class="main-btn" onclick="make()">노래 만들기 준비하기</button>
-<button onclick="copy()">복사하기</button>
+      <div class="sub-card hidden" id="voiceOptionsBlock">
+        <div class="sub-number">4-1</div>
+        <h3>어떤 목소리가 좋으세요?</h3>
+        <div class="vertical-buttons" id="voiceButtons">
+          <button type="button" onclick="setExtraOption('여성 목소리', this, 'voiceButtons')">👩 여성 목소리</button>
+          <button type="button" onclick="setExtraOption('남성 목소리', this, 'voiceButtons')">👨 남성 목소리</button>
+          <button type="button" onclick="setExtraOption('중년/어르신 목소리', this, 'voiceButtons')">👵 중년/어르신 목소리</button>
+        </div>
+      </div>
 
-</div>
+      <div class="sub-card hidden" id="instrumentOptionsBlock">
+        <div class="sub-number">4-1</div>
+        <h3>어떤 악기 소리가 좋으세요?</h3>
+        <div class="vertical-buttons" id="instrumentButtons">
+          <button type="button" onclick="setExtraOption('피아노', this, 'instrumentButtons')">🎹 피아노</button>
+          <button type="button" onclick="setExtraOption('기타', this, 'instrumentButtons')">🎸 기타</button>
+          <button type="button" onclick="setExtraOption('바이올린', this, 'instrumentButtons')">🎻 바이올린</button>
+          <button type="button" onclick="setExtraOption('가야금', this, 'instrumentButtons')">🎼 가야금</button>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <section class="question-block">
+      <div class="question-number">5단계</div>
+      <h2>어떤 음악 스타일이 좋으세요?</h2>
+      <p class="guide">좋아하는 음악을 골라보세요</p>
 
-<script>
+      <div class="genre-grid" id="genreButtons">
+        <button class="genre-dongyo" type="button" onclick="setGenre('동요', this)">🎵 동요</button>
+        <button class="genre-gayo" type="button" onclick="setGenre('가요', this)">🎤 가요</button>
 
-let mood="",style="",type="노래",genre="가요";
+        <button class="genre-7080" type="button" onclick="setGenre('7080가요', this)">📻 7080 가요</button>
+        <button class="genre-trot" type="button" onclick="setGenre('트로트', this)">💃 트로트</button>
 
-function selectMood(m,b){
-  mood=m;
-  document.querySelectorAll("#moodButtons button").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
+        <button class="genre-oldpop" type="button" onclick="setGenre('올드팝', this)">🇬🇧 올드팝 (옛날 팝송)</button>
+        <button class="genre-kpop" type="button" onclick="setGenre('K-POP', this)">👥 K-POP (아이돌 노래)</button>
 
-  document.getElementById("moodText").innerText="기분: "+m;
+        <button class="genre-hymn" type="button" onclick="setGenre('찬송가', this)">⛪ 찬송가</button>
+        <button class="genre-buddhist" type="button" onclick="setGenre('불교음악', this)">🪷 불교음악</button>
 
-  let rec="따뜻함";
-  if(m=="기뻐요") rec="밝고 신나요";
-  if(m=="슬퍼요") rec="따뜻함";
-  if(m=="속상해요") rec="힘나는";
-  if(m=="편안해요") rec="따뜻함";
+        <button class="genre-gagok" type="button" onclick="setGenre('가곡', this)">🎹 가곡</button>
+        <button class="genre-gayageum" type="button" onclick="setGenre('가야금', this)">🎼 가야금 (우리나라 전통음악)</button>
+      </div>
+    </section>
 
-  document.getElementById("recommend").innerText="추천: "+rec;
-  applyRecommendedStyle(rec);
-}
+    <section class="question-block">
+      <div class="question-number">마지막</div>
+      <h2>이제 음악을 만들어볼까요?</h2>
+      <p class="guide">버튼을 누르면 아래에 음악 만드는 글이 나옵니다</p>
 
-function applyRecommendedStyle(rec){
-  style=rec;
-  document.querySelectorAll("#styleButtons button").forEach(btn=>{
-    btn.classList.remove("active");
-    if(btn.innerText.includes("밝음") && rec==="밝고 신나요") btn.classList.add("active");
-    if(btn.innerText.includes("따뜻") && rec==="따뜻함") btn.classList.add("active");
-    if(btn.innerText.includes("감성") && rec==="감성적") btn.classList.add("active");
-    if(btn.innerText.includes("힘") && rec==="힘나는") btn.classList.add("active");
-  });
-  document.getElementById("styleText").innerText="느낌: "+rec;
-}
+      <textarea id="promptOutput" class="input-black" placeholder="여기에 음악 만드는 글이 나옵니다"></textarea>
 
-function setStyle(s,b){
-  style=s;
-  document.querySelectorAll("#styleButtons button").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  document.getElementById("styleText").innerText="느낌: "+s;
-}
+      <div class="main-buttons">
+        <button type="button" class="primary" onclick="buildPrompt()">
+          🎵 음악 만들기 글 만들기
+        </button>
 
-function typeSel(t,b){
-  type=t;
-  document.querySelectorAll("#typeButtons button").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-}
+        <button type="button" class="secondary" onclick="copyPrompt()">
+          📋 복사하기
+        </button>
 
-function genreSel(g,b){
-  genre=g;
-  document.querySelectorAll("#genreButtons button").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-}
+        <button type="button" class="secondary" onclick="copyAndOpenGemini()">
+          👉 복사하고 재미나이 연결하기
+        </button>
 
-function make(){
-  let m=document.getElementById("moodEtc").value || mood;
-  let r=document.getElementById("reason").value;
+        <button type="button" class="danger" onclick="clearAll()">
+          🧹 모든 내용 지우고 다시하기
+        </button>
+      </div>
 
-  let txt=`30초 ${style} ${genre} ${type}.
-${m} 감정으로 시작하고 ${r} 내용을 담아
-마지막은 따뜻하고 희망적으로 마무리.
-자연스럽고 완성도 있게 만들어줘`;
+      <div class="subtle-box">
+        버튼을 누르면 음악을 만들 준비가 됩니다. 복사한 뒤 재미나이에서 붙여넣기 해보세요.
+      </div>
+    </section>
 
-  document.getElementById("out").value=txt;
-}
+    <p class="footer-note">모바일에서는 브라우저에 따라 음성입력이 다르게 동작할 수 있습니다.</p>
+  </div>
 
-function copy(){
-  navigator.clipboard.writeText(document.getElementById("out").value);
-  alert("복사했어요! 이제 붙여넣어 주세요 😊");
-}
+  <script>
+    const DEFAULT_MOOD_TEXT = "다른 기분이 있으면 적어보세요";
+    const DEFAULT_REASON_TEXT = "내 말로 적어보세요";
 
-function clearTxt(id){
-  document.getElementById(id).value="";
-}
+    let selectedValues = {
+      mood: "",
+      songType: "",
+      musicGenre: "",
+      extraOption: ""
+    };
 
-function example(id,txt){
-  document.getElementById(id).value=txt;
-}
+    const moodToStyleMap = {
+      "기뻐요": "밝고 신나는",
+      "눈물나요": "잔잔하고 감성적인",
+      "행복해요": "따뜻하고 포근한",
+      "속상해요": "위로가 되는 따뜻한",
+      "따뜻해요": "따뜻하고 포근한",
+      "시원해요": "편안하고 차분한",
+      "편안해요": "편안하고 차분한",
+      "마음이 불편해요": "잔잔하고 감성적인",
+      "힘이 나요": "힘이 나는",
+      "피곤해요": "편안하고 차분한",
+      "그리워요": "잔잔하고 감성적인",
+      "마음이 복잡해요": "잔잔하고 감성적인"
+    };
 
-function voice(id){
-  alert("이제 말씀해 주세요 🎤");
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) return;
+    function isDefaultMoodText(value) {
+      return !value || value.trim() === "" || value.trim() === DEFAULT_MOOD_TEXT;
+    }
 
-  const recognition = new SpeechRecognition();
-  recognition.lang="ko-KR";
+    function isDefaultReasonText(value) {
+      return !value || value.trim() === "" || value.trim() === DEFAULT_REASON_TEXT;
+    }
 
-  recognition.onresult=function(e){
-    document.getElementById(id).value=e.results[0][0].transcript;
-  };
+    function clearDefaultText(field, defaultText) {
+      if (field.value.trim() === defaultText) {
+        field.value = "";
+        field.classList.remove("input-gray");
+        field.classList.add("input-black");
+      }
+    }
 
-  recognition.start();
-}
+    function selectMood(mood, btn) {
+      selectedValues.mood = mood;
 
-</script>
+      document.querySelectorAll("#moodButtons button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
+      const moodField = document.getElementById("moodEtc");
+      moodField.value = DEFAULT_MOOD_TEXT;
+      moodField.classList.remove("input-black");
+      moodField.classList.add("input-gray");
+
+      document.getElementById("moodSelectedText").innerText = `선택한 기분: ${mood}`;
+    }
+
+    function updateMoodFromEtc() {
+      const field = document.getElementById("moodEtc");
+      const text = field.value.trim();
+
+      if (text) {
+        field.classList.remove("input-gray");
+        field.classList.add("input-black");
+      }
+
+      if (!isDefaultMoodText(text)) {
+        document.getElementById("moodSelectedText").innerText = `선택한 기분: ${text}`;
+        document.querySelectorAll("#moodButtons button").forEach(b => b.classList.remove("active"));
+      } else {
+        document.getElementById("moodSelectedText").innerText = selectedValues.mood
+          ? `선택한 기분: ${selectedValues.mood}`
+          : "선택한 기분: 없음";
+      }
+    }
+
+    function clearMoodField() {
+      const field = document.getElementById("moodEtc");
+      field.value = DEFAULT_MOOD_TEXT;
+      field.classList.remove("input-black");
+      field.classList.add("input-gray");
+
+      document.getElementById("moodSelectedText").innerText = selectedValues.mood
+        ? `선택한 기분: ${selectedValues.mood}`
+        : "선택한 기분: 없음";
+    }
+
+    function selectReasonExample(text, btn) {
+      const field = document.getElementById("reasonInput");
+
+      document.querySelectorAll("#reasonExampleButtons button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      field.value = text;
+      field.classList.remove("input-gray");
+      field.classList.add("input-black");
+
+      document.getElementById("reasonStatus").innerText = `선택한 내용: ${text}`;
+    }
+
+    function handleReasonTyping(e) {
+      const field = e.target;
+      const text = field.value.trim();
+
+      if (text) {
+        field.classList.remove("input-gray");
+        field.classList.add("input-black");
+      }
+
+      document.querySelectorAll("#reasonExampleButtons button").forEach(b => b.classList.remove("active"));
+
+      document.getElementById("reasonStatus").innerText =
+        !isDefaultReasonText(text) ? `선택한 내용: ${text}` : "선택한 내용: 없음";
+    }
+
+    function clearReasonField() {
+      const field = document.getElementById("reasonInput");
+
+      field.value = DEFAULT_REASON_TEXT;
+      field.classList.remove("input-black");
+      field.classList.add("input-gray");
+
+      document.querySelectorAll("#reasonExampleButtons button").forEach(b => b.classList.remove("active"));
+      document.getElementById("reasonStatus").innerText = "선택한 내용: 없음";
+    }
+
+    let recognition = null;
+    let isRecording = false;
+    let currentButton = null;
+    let currentField = null;
+
+    function toggleVoiceInput(fieldId, btn) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        alert("이 기기에서는 음성입력이 지원되지 않아요.");
+        return;
+      }
+
+      if (isRecording) {
+        if (currentField && currentField.id === fieldId) {
+          recognition.stop();
+          return;
+        } else {
+          recognition.stop();
+          setTimeout(() => toggleVoiceInput(fieldId, btn), 220);
+          return;
+        }
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = "ko-KR";
+      recognition.interimResults = true;
+      recognition.continuous = true;
+
+      currentButton = btn;
+      currentField = document.getElementById(fieldId);
+
+      let finalText = "";
+      const currentValue = currentField.value.trim();
+      if (
+        currentValue &&
+        currentValue !== DEFAULT_REASON_TEXT &&
+        currentValue !== DEFAULT_MOOD_TEXT
+      ) {
+        finalText = currentValue + " ";
+      }
+
+      isRecording = true;
+      btn.textContent = "🔴 녹음중... (누르면 종료)";
+      btn.classList.add("recording");
+
+      recognition.onresult = function(event) {
+        let transcript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+
+        currentField.value = (finalText + transcript).trim();
+        currentField.classList.remove("input-gray");
+        currentField.classList.add("input-black");
+
+        if (fieldId === "reasonInput") {
+          document.querySelectorAll("#reasonExampleButtons button").forEach(b => b.classList.remove("active"));
+          document.getElementById("reasonStatus").innerText = `선택한 내용: ${currentField.value}`;
+        }
+
+        if (fieldId === "moodEtc") {
+          document.querySelectorAll("#moodButtons button").forEach(b => b.classList.remove("active"));
+          document.getElementById("moodSelectedText").innerText = `선택한 기분: ${currentField.value}`;
+        }
+      };
+
+      recognition.onend = function() {
+        resetRecording();
+      };
+
+      recognition.onerror = function() {
+        resetRecording();
+      };
+
+      recognition.start();
+    }
+
+    function resetRecording() {
+      if (currentButton) {
+        currentButton.textContent = "🎤 말로 입력";
+        currentButton.classList.remove("recording");
+      }
+      isRecording = false;
+      recognition = null;
+      currentButton = null;
+      currentField = null;
+    }
+
+    function typeSel(type, btn) {
+      selectedValues.songType = type;
+
+      document.querySelectorAll("#typeButtons button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const voice = document.getElementById("voiceOptionsBlock");
+      const instrument = document.getElementById("instrumentOptionsBlock");
+
+      document.querySelectorAll("#voiceButtons button").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll("#instrumentButtons button").forEach(b => b.classList.remove("active"));
+
+      if (type === "노래") {
+        voice.classList.remove("hidden");
+        voice.classList.add("show");
+        instrument.classList.remove("show");
+        instrument.classList.add("hidden");
+
+        selectedValues.extraOption = "중년/어르신 목소리";
+
+        const defaultVoice = document.querySelector("#voiceButtons button:nth-child(3)");
+        if (defaultVoice) defaultVoice.classList.add("active");
+
+        setTimeout(() => {
+          voice.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 200);
+      } else {
+        instrument.classList.remove("hidden");
+        instrument.classList.add("show");
+        voice.classList.remove("show");
+        voice.classList.add("hidden");
+
+        selectedValues.extraOption = "피아노";
+
+        const defaultInstrument = document.querySelector("#instrumentButtons button:nth-child(1)");
+        if (defaultInstrument) defaultInstrument.classList.add("active");
+
+        setTimeout(() => {
+          instrument.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 200);
+      }
+    }
+
+    function setExtraOption(value, btn, groupId) {
+      selectedValues.extraOption = value;
+
+      document.querySelectorAll(`#${groupId} button`).forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    }
+
+    function setGenre(genre, btn) {
+      selectedValues.musicGenre = genre;
+
+      document.querySelectorAll("#genreButtons button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    }
+
+    function refineMood(mood) {
+      const map = {
+        "기뻐요": "밝고 기쁜 마음에서",
+        "눈물나요": "마음이 촉촉해지는 느낌에서",
+        "행복해요": "마음이 환하고 행복한 느낌에서",
+        "속상해요": "마음 한편이 살짝 무겁고 속상한 느낌에서",
+        "따뜻해요": "따뜻하고 부드러운 마음에서",
+        "시원해요": "맑고 시원한 기분에서",
+        "편안해요": "편안하고 안정된 마음에서",
+        "마음이 불편해요": "마음이 조금 불편하고 조심스러운 느낌에서",
+        "힘이 나요": "활기차고 에너지가 느껴지는 마음에서",
+        "피곤해요": "조용히 쉬고 싶은 마음에서",
+        "그리워요": "그리운 마음이 조용히 번지는 느낌에서",
+        "마음이 복잡해요": "복잡한 마음을 천천히 풀어가는 느낌에서"
+      };
+      return map[mood] || `${mood} 마음에서`;
+    }
+
+    function refineReason(reason) {
+      if (isDefaultReasonText(reason)) {
+        return "마음속 이야기가 자연스럽게 이어지도록";
+      }
+
+      const text = reason.trim();
+
+      if (text.includes("손주")) return "손주를 떠올리며 느끼는 따뜻한 감정이 자연스럽게 이어지도록";
+      if (text.includes("가족")) return "가족을 생각하며 느끼는 마음이 자연스럽게 이어지도록";
+      if (text.includes("추억") || text.includes("옛날") || text.includes("예전") || text.includes("그때")) {
+        return "지나간 추억이 조용히 떠오르는 느낌이 자연스럽게 이어지도록";
+      }
+      if (text.includes("그리워") || text.includes("그립") || text.includes("보고 싶")) {
+        return "그리운 사람과 시간들을 떠올리는 감정이 자연스럽게 이어지도록";
+      }
+      if (text.includes("건강") || text.includes("아프")) {
+        return "몸과 마음을 돌보고 싶은 감정이 자연스럽게 이어지도록";
+      }
+
+      return `${text}의 감정과 이야기가 자연스럽게 이어지도록`;
+    }
+
+    function inferStyleFromFreeMood(text) {
+      if (!text || isDefaultMoodText(text)) return "";
+      if (text.includes("설레")) return "밝고 신나는";
+      if (text.includes("감사")) return "따뜻하고 포근한";
+      if (text.includes("외로")) return "잔잔하고 감성적인";
+      if (text.includes("편안")) return "편안하고 차분한";
+      if (text.includes("그리")) return "잔잔하고 감성적인";
+      if (text.includes("기쁘")) return "밝고 신나는";
+      if (text.includes("행복")) return "따뜻하고 포근한";
+      if (text.includes("피곤")) return "편안하고 차분한";
+      return "";
+    }
+
+    function getExtraDirection(mood) {
+      if (mood === "속상해요") {
+        return "전체적으로 위로와 다정함이 느껴지도록 표현해 주세요.";
+      }
+      if (mood === "그리워요") {
+        return "추억과 그리움이 자연스럽게 번지면서도, 마지막은 따뜻하게 남도록 표현해 주세요.";
+      }
+      if (mood === "피곤해요") {
+        return "전체적으로 긴장을 풀어주고 편안하게 쉬어갈 수 있는 느낌을 강조해 주세요.";
+      }
+      if (mood === "힘이 나요") {
+        return "전체적으로 에너지와 생기가 살아나도록 표현해 주세요.";
+      }
+      return "";
+    }
+
+    function getGenreStyle(genre) {
+      switch (genre) {
+        case "동요":
+          return "밝고 단순하며 따라 부르기 쉬운 멜로디로 만들어 주세요.";
+        case "가요":
+          return "자연스럽고 대중적인 멜로디로 편안하게 들리도록 만들어 주세요.";
+        case "7080가요":
+          return "편안하고 익숙한 멜로디로 옛 감성이 느껴지도록 만들어 주세요.";
+        case "트로트":
+          return "리듬감이 살아 있고 흥이 느껴지도록 구성해 주세요.";
+        case "올드팝":
+          return "부드럽고 클래식한 팝 느낌으로 분위기 있게 만들어 주세요.";
+        case "K-POP":
+          return "세련되고 리듬감 있는 현대적인 느낌으로 만들어 주세요.";
+        case "찬송가":
+          return "따뜻하고 은혜로운 분위기로, 편안하고 경건한 느낌이 나도록 만들어 주세요.";
+        case "불교음악":
+          return "전체적으로 고요하고 차분하며 마음이 편안해지는 명상적인 분위기로 만들어 주세요.";
+        case "가곡":
+          return "서정적이고 부드러운 멜로디로 감정이 깊이 전달되도록 만들어 주세요.";
+        case "가야금":
+          return "가야금 중심의 우리나라 전통 음악 느낌으로 부드럽고 여유롭게 흐르도록 만들어 주세요.";
+        default:
+          return "";
+      }
+    }
+
+    function getNormalizedState() {
+      const moodEtc = document.getElementById("moodEtc").value.trim();
+      const reasonInput = document.getElementById("reasonInput").value.trim();
+
+      const mood = !isDefaultMoodText(moodEtc) ? moodEtc : (selectedValues.mood || "따뜻해요");
+      const reason = !isDefaultReasonText(reasonInput) ? reasonInput : "";
+      const inferredStyle = inferStyleFromFreeMood(!isDefaultMoodText(moodEtc) ? moodEtc : "");
+      const musicStyle = inferredStyle || moodToStyleMap[selectedValues.mood] || "따뜻하고 포근한";
+
+      const songType = selectedValues.songType || "노래";
+      const musicGenre = selectedValues.musicGenre || "가요";
+      const extraOption =
+        selectedValues.extraOption || (songType === "연주곡" ? "피아노" : "중년/어르신 목소리");
+
+      return { mood, reason, musicStyle, songType, musicGenre, extraOption };
+    }
+
+    function buildSongPrompt(data) {
+      const refinedMood = refineMood(data.mood);
+      const refinedReason = refineReason(data.reason);
+      const genreStyle = getGenreStyle(data.musicGenre);
+      const extraDirection = getExtraDirection(data.mood);
+
+      return `30초 분량의 ${data.musicStyle} ${data.musicGenre} 스타일의 노래를 만들어 주세요.
+
+이 노래는 ${refinedMood} 시작합니다.
+${refinedReason} 표현해 주세요.
+
+전체적으로 ${data.musicStyle} 분위기를 유지하면서,
+짧지만 하나의 완성된 곡처럼 자연스럽게 흐르도록 만들어 주세요.
+
+${genreStyle}
+${extraDirection}
+
+멜로디는 부드럽고 기억에 남게 구성하고,
+가사는 따뜻하고 자연스럽게 들리도록 만들어 주세요.
+
+보컬은 ${data.extraOption} 느낌으로 편안하고 안정감 있게 들리도록 해 주세요.
+
+마지막은 반드시 따뜻하고 희망적인 느낌으로 마무리해 주세요.`;
+    }
+
+    function buildInstrumentalPrompt(data) {
+      const refinedMood = refineMood(data.mood);
+      const refinedReason = refineReason(data.reason);
+      const genreStyle = getGenreStyle(data.musicGenre);
+      const extraDirection = getExtraDirection(data.mood);
+
+      return `30초 분량의 ${data.musicStyle} ${data.musicGenre} 스타일의 연주곡을 만들어 주세요.
+
+이 음악은 ${refinedMood} 시작하여,
+${refinedReason} 구성해 주세요.
+
+전체적으로 ${data.musicStyle} 느낌을 유지하면서,
+짧지만 하나의 완성된 음악처럼 자연스럽게 흐르도록 만들어 주세요.
+
+${genreStyle}
+${extraDirection}
+
+${data.extraOption} 소리가 중심이 되어 감정이 잘 전달되도록 연주해 주세요.
+
+마지막은 따뜻하고 안정감 있는 느낌으로 마무리해 주세요.`;
+    }
+
+    function buildPrompt() {
+      const state = getNormalizedState();
+
+      let prompt = "";
+      if (state.songType === "연주곡") {
+        prompt = buildInstrumentalPrompt(state);
+      } else {
+        prompt = buildSongPrompt(state);
+      }
+
+      const output = document.getElementById("promptOutput");
+      output.value = prompt;
+      output.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById("promptOutput").value.trim();
+
+      if (!text) {
+        alert("먼저 음악 만들기 글 만들기를 눌러주세요.");
+        return;
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+          .then(() => alert("복사했어요 😊"))
+          .catch(() => fallbackCopy());
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    function copyAndOpenGemini() {
+      const text = document.getElementById("promptOutput").value.trim();
+
+      if (!text) {
+        alert("먼저 음악 만들기 글 만들기를 눌러주세요.");
+        return;
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          window.open("https://gemini.google.com/", "_blank");
+        }).catch(() => {
+          fallbackCopy(false);
+          window.open("https://gemini.google.com/", "_blank");
+        });
+      } else {
+        fallbackCopy(false);
+        window.open("https://gemini.google.com/", "_blank");
+      }
+    }
+
+    function fallbackCopy(showSuccessAlert = true) {
+      const output = document.getElementById("promptOutput");
+      output.focus();
+      output.select();
+      output.setSelectionRange(0, 99999);
+
+      try {
+        document.execCommand("copy");
+        if (showSuccessAlert) {
+          alert("복사했어요 😊");
+        }
+      } catch (e) {
+        alert("복사가 잘 안 되면 길게 눌러 복사해 주세요.");
+      }
+    }
+
+    function clearAll() {
+      if (recognition && isRecording) {
+        recognition.stop();
+      }
+
+      const moodField = document.getElementById("moodEtc");
+      moodField.value = DEFAULT_MOOD_TEXT;
+      moodField.classList.remove("input-black");
+      moodField.classList.add("input-gray");
+
+      const reasonField = document.getElementById("reasonInput");
+      reasonField.value = DEFAULT_REASON_TEXT;
+      reasonField.classList.remove("input-black");
+      reasonField.classList.add("input-gray");
+
+      document.getElementById("promptOutput").value = "";
+
+      [
+        "#moodButtons button",
+        "#reasonExampleButtons button",
+        "#typeButtons button",
+        "#voiceButtons button",
+        "#instrumentButtons button",
+        "#genreButtons button"
+      ].forEach(selector => {
+        document.querySelectorAll(selector).forEach(b => b.classList.remove("active"));
+      });
+
+      document.getElementById("voiceOptionsBlock").classList.add("hidden");
+      document.getElementById("voiceOptionsBlock").classList.remove("show");
+      document.getElementById("instrumentOptionsBlock").classList.add("hidden");
+      document.getElementById("instrumentOptionsBlock").classList.remove("show");
+
+      selectedValues = {
+        mood: "",
+        songType: "",
+        musicGenre: "",
+        extraOption: ""
+      };
+
+      document.getElementById("moodSelectedText").innerText = "선택한 기분: 없음";
+      document.getElementById("reasonStatus").innerText = "선택한 내용: 없음";
+
+      resetRecording();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
 </body>
 </html>
