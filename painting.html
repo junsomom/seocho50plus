@@ -435,15 +435,15 @@
   <div class="container">
     <section class="panel">
       <h2>내 멋진 인생의 한 컷</h2>
-      <p class="desc">내 인생에서 가장 기억에 남는 순간을 떠올려 보세요 ✨</p>
-      <div class="guide-box">딱 한 장면이면 충분합니다 😊<br>사진 한 장을 떠올리듯 생각해 보세요. 말로 해도 괜찮아요 🎤</div>
+      <p class="desc">가장 기억에 남는 장면 하나만 떠올려 보세요 ✨</p>
+      <div class="guide-box">짧게 말해도 괜찮아요 😊<br>한 장면만 떠올리면 그림은 멋지게 만들어집니다 🎨</div>
 
       <div id="questions-wrap"></div>
       <div id="saveIndicator" class="save-indicator" aria-live="polite"></div>
     </section>
 
     <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="그림 프롬프트 만들기">🎨 그림 주문서 만들기</button>
+      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="그림 주문서 만들기">🎨 그림 주문서 만들기</button>
 
       <div class="output-title">화가의 그림 주문서</div>
       <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
@@ -457,73 +457,33 @@
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
     const CHATGPT_URL = 'https://chat.openai.com/';
-    const STORAGE_KEY = 'painting_html_final_v2';
+    const STORAGE_KEY = 'painting_html_simple_v1';
 
     const questions = [
       {
-        title: '나는 언제의 모습인가요?',
+        title: '언제 모습인가요?',
         sub: '어린 시절 / 젊은 시절 / 지금',
         placeholder: '예: 젊은 시절'
       },
       {
-        title: '나는 어떤 모습이었나요?',
-        sub: '얼굴이나 느낌',
-        placeholder: '예: 밝게 웃는 얼굴, 따뜻한 인상'
-      },
-      {
-        title: '나는 어떤 옷을 입고 있었나요?',
-        sub: '기억나는 옷',
-        placeholder: '예: 밝은 색 원피스, 단정한 정장'
-      },
-      {
-        title: '누구와 함께 있었나요?',
-        sub: '사람이나 동물',
-        placeholder: '예: 남편과 함께'
-      },
-      {
-        title: '그 사람은 어떤 느낌이었나요?',
-        sub: '표정이나 분위기',
-        placeholder: '예: 따뜻하고 웃는 모습'
-      },
-      {
-        title: '어디였나요?',
-        sub: '장소 이름',
+        title: '어디에 있었나요?',
+        sub: '장소를 짧게 적어보세요',
         placeholder: '예: 제주도 바닷가'
       },
       {
-        title: '그곳은 어떤 곳이었나요?',
-        sub: '자연 / 도시 / 여행지 등',
-        placeholder: '예: 자연이 많은 바닷가'
+        title: '누구와 있었나요?',
+        sub: '혼자여도 괜찮아요',
+        placeholder: '예: 남편과 함께'
       },
       {
-        title: '나는 무엇을 하고 있었나요?',
-        sub: '짧게 말해도 됩니다 😊',
-        placeholder: '예: 손을 잡고 걷고 있었다'
+        title: '무엇을 하고 있었나요?',
+        sub: '짧게 말해도 됩니다',
+        placeholder: '예: 손을 잡고 걷고 있었어요'
       },
       {
-        title: '가장 기억에 남는 순간은?',
-        sub: '한 장면처럼 떠올려 보세요',
-        placeholder: '예: 노을 보며 웃던 순간'
-      },
-      {
-        title: '그때 기분은 어땠나요?',
-        sub: '',
-        placeholder: '예: 행복하고 따뜻했다'
-      },
-      {
-        title: '왜 좋았나요?',
-        sub: '이유 한 가지',
-        placeholder: '예: 사랑받는 느낌이어서'
-      },
-      {
-        title: '빛이나 시간은 어땠나요?',
-        sub: '낮 / 노을 / 밤',
-        placeholder: '예: 따뜻한 노을빛'
-      },
-      {
-        title: '주변에 무엇이 있었나요?',
-        sub: '바람, 꽃, 사람 등',
-        placeholder: '예: 바람, 파도, 붉은 하늘'
+        title: '기분은 어땠나요?',
+        sub: '한두 마디면 충분해요',
+        placeholder: '예: 행복하고 따뜻했어요'
       }
     ];
 
@@ -809,28 +769,32 @@
           return el ? el.value.trim() : '';
         };
 
-        const prompt = `A cinematic nostalgic scene in ${get(6) || 'a memorable place'}, ${get(7) || 'a meaningful setting'}.
+        const whenText = get(1) || 'young adulthood';
+        const placeText = get(2) || 'a meaningful place';
+        const withWhoText = get(3) || 'a loved one';
+        const actionText = get(4) || 'sharing a beautiful moment together';
+        const feelingText = get(5) || 'warm, peaceful, and happy';
 
-The main character is a ${get(1) || 'young adult'} Asian person,
-with ${get(2) || 'a gentle smile'},
-wearing ${get(3) || 'a neat outfit'}.
+        const prompt = `A cinematic nostalgic scene of a precious life memory.
 
-With ${get(4) || 'a loved one'},
-who looks ${get(5) || 'warm and kind'}.
+The illustration shows a Korean person in ${whenText}, at ${placeText}, with ${withWhoText}.
+They are ${actionText}, captured naturally in a heartfelt and beautiful moment.
+The emotional tone feels ${feelingText}, peaceful, loving, and full of memory.
 
-They are ${get(8) || 'standing together'},
-capturing the moment of ${get(9) || 'a memorable emotional moment'}.
+Create a warm and gentle facial expression, graceful posture, and emotionally rich storytelling.
+Make the person look dignified, kind, natural, and deeply human.
+Show a harmonious composition with strong visual focus, soft depth, and natural movement.
 
-The atmosphere feels ${get(10) || 'warm and emotional'},
-because ${get(11) || 'it was a meaningful moment'}.
-
-During ${get(12) || 'sunset'},
-with ${get(13) || 'soft wind and beautiful surroundings'}.
+Build a beautiful background that matches ${placeText} naturally,
+with atmospheric details, soft wind, subtle light, rich layers, and an elegant sense of place.
+Add cinematic storytelling, visual balance, and a touching life-memory feeling.
 
 Ghibli-inspired, soft watercolor illustration,
-warm light, emotional atmosphere,
-cinematic composition,
-main character focus, consistent character, detailed background`;
+warm golden light, emotional atmosphere,
+cinematic composition, detailed background,
+main character focus, consistent character design,
+gentle children's book illustration style,
+high quality, elegant, heartfelt, no text`;
 
         output.textContent = prompt;
         saveData();
