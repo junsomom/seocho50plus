@@ -82,16 +82,24 @@
 
     .question-block {
       position: relative;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.72);
       border-radius: 24px;
       padding: 16px;
       margin-bottom: 14px;
+      border: 1px solid rgba(255,255,255,0.78);
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(106, 109, 168, 0.00) 0px,
+          rgba(106, 109, 168, 0.00) 23px,
+          rgba(106, 109, 168, 0.065) 23px,
+          rgba(106, 109, 168, 0.065) 24px
+        ),
+        linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.84));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       box-shadow:
         0 10px 30px rgba(102, 95, 140, 0.08),
-        inset 0 1px 0 rgba(255,255,255,0.75);
+        inset 0 1px 0 rgba(255,255,255,0.78);
     }
 
     .question-number,
@@ -186,6 +194,10 @@
       background: linear-gradient(180deg, #fffefe, #fcfbff);
       box-shadow: inset 0 1px 2px rgba(80, 70, 120, 0.04);
       color: #2f2c36;
+    }
+
+    textarea::placeholder {
+      color: #9a96a8;
     }
 
     textarea:focus {
@@ -326,20 +338,14 @@
 
       <div class="grid-2" id="moodButtons">
         <button type="button" onclick="selectMood('기뻐요', this)">😊 기뻐요</button>
-        <button type="button" onclick="selectMood('눈물나요', this)">😢 눈물나요</button>
         <button type="button" onclick="selectMood('행복해요', this)">🌷 행복해요</button>
-        <button type="button" onclick="selectMood('속상해요', this)">😔 속상해요</button>
-        <button type="button" onclick="selectMood('따뜻해요', this)">☀️ 따뜻해요</button>
-        <button type="button" onclick="selectMood('시원해요', this)">🌬 시원해요</button>
         <button type="button" onclick="selectMood('편안해요', this)">😌 편안해요</button>
-        <button type="button" onclick="selectMood('마음이 불편해요', this)">😟 마음이 불편해요</button>
-        <button type="button" onclick="selectMood('힘이 나요', this)">💪 힘이 나요</button>
-        <button type="button" onclick="selectMood('피곤해요', this)">😴 피곤해요</button>
+        <button type="button" onclick="selectMood('속상해요', this)">😔 속상해요</button>
         <button type="button" onclick="selectMood('그리워요', this)">🍂 그리워요</button>
-        <button type="button" onclick="selectMood('마음이 복잡해요', this)">🤔 마음이 복잡해요</button>
+        <button type="button" onclick="selectMood('힘이 나요', this)">💪 힘이 나요</button>
       </div>
 
-      <textarea id="moodEtc" placeholder="기타"></textarea>
+      <textarea id="moodEtc" placeholder="예: 설레요 / 감사해요 / 외로워요"></textarea>
 
       <div class="tool-row">
         <button type="button" onclick="toggleVoiceInput('moodEtc', this)">🎤</button>
@@ -357,12 +363,10 @@
         <button type="button" onclick="selectReasonExample('손주를 만나서', this)">손주를 만나서</button>
         <button type="button" onclick="selectReasonExample('가족 생각이 나서', this)">가족 생각이 나서</button>
         <button type="button" onclick="selectReasonExample('옛날 생각이 나서', this)">옛날 생각이 나서</button>
-        <button type="button" onclick="selectReasonExample('몸이 조금 피곤해서', this)">몸이 조금 피곤해서</button>
         <button type="button" onclick="selectReasonExample('좋은 일이 있어서', this)">좋은 일이 있어서</button>
-        <button type="button" onclick="selectReasonExample('보고 싶은 사람이 떠올라서', this)">보고 싶은 사람이 떠올라서</button>
       </div>
 
-      <textarea id="reasonInput" placeholder="기타"></textarea>
+      <textarea id="reasonInput" placeholder="예: 오늘 마음에 남는 일이 있었어요"></textarea>
 
       <div class="tool-row">
         <button type="button" onclick="toggleVoiceInput('reasonInput', this)">🎤</button>
@@ -415,7 +419,7 @@
       <div class="question-number">4-1</div>
       <h2>좋아하는 가수가 있으면 적어보세요</h2>
 
-      <textarea id="artistInput" placeholder="예: 임영웅, 나훈아, 이미자, 조용필, 아이유"></textarea>
+      <textarea id="artistInput" placeholder="예: 임영웅 / 나훈아 / 조용필 / 아이유"></textarea>
 
       <div class="tool-row">
         <button type="button" onclick="toggleVoiceInput('artistInput', this)">🎤</button>
@@ -483,7 +487,7 @@
     }
 
     function fillMoodExample() {
-      const examples = ["설레요", "감사해요", "외로워요", "마음이 놓여요"];
+      const examples = ["설레요", "감사해요", "외로워요"];
       const text = examples[Math.floor(Math.random() * examples.length)];
       document.getElementById("moodEtc").value = text;
       state.mood = text;
@@ -492,10 +496,10 @@
 
     function fillReasonExample() {
       const examples = [
-        "손주를 만나서 마음이 따뜻해졌어요",
+        "오늘 마음에 남는 일이 있었어요",
         "가족 생각이 많이 났어요",
-        "옛날 생각이 나서 마음이 뭉클했어요",
-        "몸이 조금 피곤해서 쉬고 싶었어요"
+        "좋은 일이 있어서 기분이 좋았어요",
+        "옛날 생각이 많이 났어요"
       ];
       const text = examples[Math.floor(Math.random() * examples.length)];
       document.getElementById("reasonInput").value = text;
@@ -517,7 +521,7 @@
     }
 
     function fillArtistExample() {
-      const examples = ["임영웅", "나훈아", "이미자", "조용필", "아이유"];
+      const examples = ["임영웅", "나훈아", "조용필", "아이유"];
       const pick = examples[Math.floor(Math.random() * examples.length)];
       document.getElementById("artistInput").value = pick;
     }
@@ -567,7 +571,7 @@
 
     function inferMood() {
       const customMood = document.getElementById("moodEtc").value.trim();
-      return customMood || state.mood || "따뜻해요";
+      return customMood || state.mood || "편안해요";
     }
 
     function inferReason() {
@@ -578,17 +582,11 @@
     function refineMood(mood) {
       const map = {
         "기뻐요": "밝고 기쁜 마음에서",
-        "눈물나요": "마음이 촉촉해지는 느낌에서",
         "행복해요": "마음이 환하고 행복한 느낌에서",
-        "속상해요": "마음 한편이 살짝 무겁고 속상한 느낌에서",
-        "따뜻해요": "따뜻하고 부드러운 마음에서",
-        "시원해요": "맑고 시원한 기분에서",
         "편안해요": "편안하고 안정된 마음에서",
-        "마음이 불편해요": "마음이 조금 불편하고 조심스러운 느낌에서",
-        "힘이 나요": "활기차고 에너지가 느껴지는 마음에서",
-        "피곤해요": "조용히 쉬고 싶은 마음에서",
+        "속상해요": "마음 한편이 살짝 무겁고 속상한 느낌에서",
         "그리워요": "그리운 마음이 조용히 번지는 느낌에서",
-        "마음이 복잡해요": "복잡한 마음을 천천히 풀어가는 느낌에서"
+        "힘이 나요": "활기차고 에너지가 느껴지는 마음에서"
       };
       return map[mood] || `${mood} 마음에서`;
     }
@@ -900,8 +898,8 @@ ${moodStyle}
 
       try {
         const ok = document.execCommand("copy");
-        if (!ok) throw new Error("copy failed");
         if (showAlert) alert("복사했어요 😊");
+        if (!ok) throw new Error("copy failed");
       } catch (e) {
         alert("복사가 잘 안 되면 글을 길게 눌러 복사해 주세요.");
       }
