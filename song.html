@@ -11,13 +11,13 @@
     body {
       margin: 0;
       font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      color: #2c2a34;
+      color: #342b22;
       line-height: 1.6;
       background:
-        radial-gradient(circle at 10% 10%, rgba(255, 214, 220, 0.55) 0, rgba(255, 214, 220, 0) 28%),
-        radial-gradient(circle at 90% 15%, rgba(203, 224, 255, 0.55) 0, rgba(203, 224, 255, 0) 28%),
-        radial-gradient(circle at 80% 80%, rgba(255, 236, 195, 0.45) 0, rgba(255, 236, 195, 0) 24%),
-        linear-gradient(180deg, #fffaf7 0%, #f7f8ff 55%, #fdfafc 100%);
+        radial-gradient(circle at 12% 10%, rgba(255, 225, 180, 0.22) 0, rgba(255, 225, 180, 0) 26%),
+        radial-gradient(circle at 88% 14%, rgba(212, 224, 255, 0.20) 0, rgba(212, 224, 255, 0) 24%),
+        radial-gradient(circle at 80% 82%, rgba(255, 210, 190, 0.20) 0, rgba(255, 210, 190, 0) 22%),
+        linear-gradient(180deg, #f7efde 0%, #f3ead8 55%, #efe3cf 100%);
       min-height: 100vh;
     }
 
@@ -30,15 +30,15 @@
     .top-card {
       position: relative;
       overflow: hidden;
-      color: #fff;
-      border-radius: 28px;
+      color: #fffaf5;
+      border-radius: 22px;
       padding: 22px 20px 18px;
       margin-bottom: 16px;
       background:
-        linear-gradient(135deg, rgba(122, 143, 255, 0.96), rgba(164, 114, 255, 0.92) 52%, rgba(255, 153, 191, 0.88));
+        linear-gradient(135deg, rgba(82, 66, 132, 0.96), rgba(126, 88, 171, 0.93) 52%, rgba(192, 121, 121, 0.88));
       box-shadow:
-        0 18px 40px rgba(110, 110, 180, 0.20),
-        inset 0 1px 0 rgba(255,255,255,0.25);
+        0 16px 34px rgba(96, 71, 50, 0.20),
+        inset 0 1px 0 rgba(255,255,255,0.18);
     }
 
     .top-card::before,
@@ -46,22 +46,23 @@
       content: "";
       position: absolute;
       border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-      filter: blur(2px);
+      background: rgba(255,255,255,0.11);
     }
 
     .top-card::before {
       width: 180px;
       height: 180px;
-      top: -60px;
-      right: -20px;
+      right: -30px;
+      top: -55px;
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,0.06);
     }
 
     .top-card::after {
       width: 110px;
       height: 110px;
-      bottom: -25px;
-      left: -10px;
+      left: -18px;
+      bottom: -24px;
+      box-shadow: inset 0 0 0 8px rgba(255,255,255,0.05);
     }
 
     .top-card h1 {
@@ -73,33 +74,48 @@
       letter-spacing: -0.02em;
     }
 
+    .top-card h1::before {
+      content: "♪ ";
+      opacity: 0.95;
+    }
+
     .top-card p {
       position: relative;
       margin: 8px 0 0;
       font-size: 14px;
-      opacity: 0.96;
+      opacity: 0.95;
     }
 
     .question-block {
       position: relative;
-      border-radius: 24px;
+      border-radius: 14px;
       padding: 16px;
       margin-bottom: 14px;
-      border: 1px solid rgba(255,255,255,0.78);
+      border: 1px solid rgba(168, 137, 91, 0.32);
       background:
         repeating-linear-gradient(
           to bottom,
-          rgba(106, 109, 168, 0.00) 0px,
-          rgba(106, 109, 168, 0.00) 23px,
-          rgba(106, 109, 168, 0.065) 23px,
-          rgba(106, 109, 168, 0.065) 24px
+          rgba(0, 0, 0, 0) 0px,
+          rgba(0, 0, 0, 0) 23px,
+          rgba(124, 101, 67, 0.14) 23px,
+          rgba(124, 101, 67, 0.14) 24px
         ),
-        linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.84));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+        linear-gradient(180deg, #fff8e8 0%, #f7edd7 100%);
       box-shadow:
-        0 10px 30px rgba(102, 95, 140, 0.08),
-        inset 0 1px 0 rgba(255,255,255,0.78);
+        0 8px 20px rgba(120, 90, 50, 0.15),
+        inset 0 0 20px rgba(150,120,80,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .question-block::after {
+      content: "♪ ♫";
+      position: absolute;
+      right: 14px;
+      bottom: 10px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: rgba(120, 90, 50, 0.20);
+      pointer-events: none;
     }
 
     .question-number,
@@ -111,17 +127,18 @@
       padding: 5px 12px;
       margin-bottom: 8px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #f3ebff, #e9f1ff);
-      color: #5b5fc7;
+      background: linear-gradient(180deg, #f4ead2, #eadbb7);
+      color: #7b5c2f;
       font-weight: 800;
       font-size: 13px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+      border: 1px solid rgba(156, 121, 67, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
     }
 
     h2, h3 {
       margin: 0 0 12px;
       line-height: 1.35;
-      color: #312f3a;
+      color: #3d3126;
       font-weight: 800;
       letter-spacing: -0.01em;
     }
@@ -146,25 +163,26 @@
       width: 100%;
       padding: 15px 14px;
       border-radius: 18px;
-      border: 1.5px solid #e5e1ef;
-      background: linear-gradient(180deg, #ffffff, #fcfbff);
-      color: #2c2a34;
+      border: 1.5px solid #dcc9a2;
+      background:
+        linear-gradient(180deg, #fffdf7 0%, #f6ecd6 100%);
+      color: #3b2f24;
       font-size: 16px;
       line-height: 1.35;
       text-align: left;
       word-break: keep-all;
       cursor: pointer;
       box-shadow:
-        0 4px 12px rgba(120, 110, 150, 0.05),
-        inset 0 1px 0 rgba(255,255,255,0.92);
+        0 4px 10px rgba(124, 96, 54, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.75);
       transition: transform 0.15s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
     button:hover {
       transform: translateY(-1px);
       box-shadow:
-        0 8px 18px rgba(120, 110, 150, 0.10),
-        inset 0 1px 0 rgba(255,255,255,0.96);
+        0 8px 16px rgba(124, 96, 54, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.85);
     }
 
     button:active {
@@ -172,40 +190,41 @@
     }
 
     button.active {
-      border-color: #8e91ff;
+      border-color: #c89233;
       background:
-        linear-gradient(180deg, #f7f4ff, #eef3ff);
-      box-shadow:
-        0 8px 18px rgba(112, 105, 200, 0.12),
-        inset 0 1px 0 rgba(255,255,255,0.95);
+        linear-gradient(180deg, #ffe7b3 0%, #ffd98a 100%);
+      color: #6f4512;
       font-weight: 800;
-      color: #3d409c;
+      box-shadow:
+        0 8px 18px rgba(188, 138, 48, 0.24),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+      transform: scale(1.02);
     }
 
     textarea {
       width: 100%;
       min-height: 92px;
       padding: 14px;
-      border-radius: 18px;
-      border: 1.5px solid #e3dfeb;
+      border-radius: 14px;
+      border: 1.5px solid #dcc9a2;
       font-size: 16px;
       line-height: 1.6;
       resize: none;
-      background: linear-gradient(180deg, #fffefe, #fcfbff);
-      box-shadow: inset 0 1px 2px rgba(80, 70, 120, 0.04);
-      color: #2f2c36;
+      background: linear-gradient(180deg, #fffdf8, #f8eedc);
+      box-shadow: inset 0 1px 2px rgba(110, 84, 48, 0.05);
+      color: #352c25;
     }
 
     textarea::placeholder {
-      color: #9a96a8;
+      color: #9c907d;
     }
 
     textarea:focus {
       outline: none;
-      border-color: #9ca3ff;
+      border-color: #c89233;
       box-shadow:
-        0 0 0 4px rgba(140, 145, 255, 0.12),
-        inset 0 1px 2px rgba(80, 70, 120, 0.04);
+        0 0 0 4px rgba(200, 146, 51, 0.12),
+        inset 0 1px 2px rgba(110, 84, 48, 0.05);
     }
 
     .tool-row {
@@ -221,22 +240,31 @@
       padding: 12px 0;
       font-size: 22px;
       border-radius: 16px;
+      background: linear-gradient(180deg, #fff8e8, #f0dfbf);
     }
 
     .recording {
-      background: linear-gradient(180deg, #fff0f0, #ffe4e4) !important;
-      border-color: #f0b5b5 !important;
-      color: #c62828 !important;
+      background: linear-gradient(180deg, #fff0f0, #ffdede) !important;
+      border-color: #d89a9a !important;
+      color: #b33d3d !important;
       font-weight: 800;
     }
 
     .sub-card {
       margin-top: 12px;
       padding: 14px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(247, 248, 255, 0.95), rgba(252, 250, 255, 0.98));
-      border: 1px solid #ebe7f3;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+      border-radius: 14px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0px,
+          rgba(0, 0, 0, 0) 23px,
+          rgba(124, 101, 67, 0.10) 23px,
+          rgba(124, 101, 67, 0.10) 24px
+        ),
+        linear-gradient(180deg, #fff8e8 0%, #f4ead2 100%);
+      border: 1px solid rgba(168, 137, 91, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
     }
 
     .hidden {
@@ -248,11 +276,18 @@
       margin-top: 12px;
       line-height: 1.72;
       background:
-        linear-gradient(180deg, #fffefc, #fffdf9);
-      border: 1.5px solid #eadfcd;
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0px,
+          rgba(0, 0, 0, 0) 23px,
+          rgba(124, 101, 67, 0.13) 23px,
+          rgba(124, 101, 67, 0.13) 24px
+        ),
+        linear-gradient(180deg, #fff8e8 0%, #f5ecd7 100%);
+      border: 1.5px solid #d8c29a;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.92),
-        0 6px 18px rgba(170, 140, 90, 0.06);
+        inset 0 1px 0 rgba(255,255,255,0.72),
+        0 6px 18px rgba(170, 140, 90, 0.10);
     }
 
     .main-buttons {
@@ -267,39 +302,39 @@
     }
 
     .primary {
-      background: linear-gradient(135deg, #6f7cff, #9b79ff);
+      background: linear-gradient(135deg, #7e5cc6, #b77dd1);
       color: #fff;
       border: none;
       font-size: 17px;
       padding: 16px 14px;
       border-radius: 20px;
-      box-shadow: 0 12px 24px rgba(113, 112, 226, 0.22);
+      box-shadow: 0 12px 24px rgba(113, 82, 169, 0.26);
     }
 
     .primary:hover {
-      box-shadow: 0 16px 28px rgba(113, 112, 226, 0.28);
+      box-shadow: 0 16px 28px rgba(113, 82, 169, 0.30);
     }
 
     .secondary {
-      background: linear-gradient(180deg, #f2f5ff, #edf2ff);
-      color: #2b4bba;
-      border-color: #dbe4ff;
+      background: linear-gradient(180deg, #fff8e8, #f1e3c4);
+      color: #7a5724;
+      border-color: #d9c193;
     }
 
     .danger {
-      background: linear-gradient(180deg, #fff3f3, #fdecec);
-      color: #b64040;
-      border-color: #f4d4d4;
+      background: linear-gradient(180deg, #fff1ef, #f8dede);
+      color: #a74b4b;
+      border-color: #e0b5b5;
     }
 
-    .genre-dongyo { background: linear-gradient(180deg, #fff8d6, #fff2b8); }
-    .genre-7080 { background: linear-gradient(180deg, #f8ead8, #f2dcc2); }
-    .genre-trot { background: linear-gradient(180deg, #ffe8c8, #ffd9a4); }
-    .genre-oldpop { background: linear-gradient(180deg, #ece0d7, #dfc8ba); }
-    .genre-kpop { background: linear-gradient(180deg, #f0d8f5, #e2c2eb); }
-    .genre-bandpop { background: linear-gradient(180deg, #ebf3ff, #dce8ff); }
-    .genre-gagok { background: linear-gradient(180deg, #ffdce8, #f6bfd2); }
-    .genre-gayageum { background: linear-gradient(180deg, #e7f7ea, #d4efd9); }
+    .genre-dongyo { background: linear-gradient(180deg, #fff3bf, #ffe692); }
+    .genre-7080 { background: linear-gradient(180deg, #f3e0c7, #e8cfae); }
+    .genre-trot { background: linear-gradient(180deg, #ffd9aa, #ffc578); }
+    .genre-oldpop { background: linear-gradient(180deg, #ead8cc, #d9bfaf); }
+    .genre-kpop { background: linear-gradient(180deg, #edd4f2, #ddb4e6); }
+    .genre-bandpop { background: linear-gradient(180deg, #e5efff, #cfdfff); }
+    .genre-gagok { background: linear-gradient(180deg, #ffdce7, #f4bacd); }
+    .genre-gayageum { background: linear-gradient(180deg, #e2f2de, #cbe6c3); }
 
     @media (max-width: 520px) {
       .top-card h1 {
@@ -328,21 +363,21 @@
 
     <section class="top-card">
       <h1>마음이 만드는 나의 노래</h1>
-      <p>기분과 이야기를 고르면 제미나이에 넣을 노래 프롬프트가 나와요</p>
+      <p>기분과 이야기를 고르면, 나만의 노래를 만드는 음악 프롬프트가 나와요</p>
     </section>
 
     <!-- 1 -->
     <section class="question-block">
       <div class="question-number">1</div>
-      <h2>오늘 기분은 어떠세요?</h2>
+      <h2>🎵 오늘 기분은 어떠세요?</h2>
 
       <div class="grid-2" id="moodButtons">
-        <button type="button" onclick="selectMood('기뻐요', this)">😊 기뻐요</button>
-        <button type="button" onclick="selectMood('행복해요', this)">🌷 행복해요</button>
-        <button type="button" onclick="selectMood('편안해요', this)">😌 편안해요</button>
-        <button type="button" onclick="selectMood('속상해요', this)">😔 속상해요</button>
-        <button type="button" onclick="selectMood('그리워요', this)">🍂 그리워요</button>
-        <button type="button" onclick="selectMood('힘이 나요', this)">💪 힘이 나요</button>
+        <button type="button" onclick="selectMood('기뻐요', this)">🎵 😊 기뻐요</button>
+        <button type="button" onclick="selectMood('행복해요', this)">🎶 🌷 행복해요</button>
+        <button type="button" onclick="selectMood('편안해요', this)">🎼 😌 편안해요</button>
+        <button type="button" onclick="selectMood('속상해요', this)">♪ 😔 속상해요</button>
+        <button type="button" onclick="selectMood('그리워요', this)">♫ 🍂 그리워요</button>
+        <button type="button" onclick="selectMood('힘이 나요', this)">🎵 💪 힘이 나요</button>
       </div>
 
       <textarea id="moodEtc" placeholder="예: 설레요 / 감사해요 / 외로워요"></textarea>
@@ -357,13 +392,13 @@
     <!-- 2 -->
     <section class="question-block">
       <div class="question-number">2</div>
-      <h2>오늘은 무슨 일이 있으셨나요?</h2>
+      <h2>✍️ 오늘은 무슨 일이 있으셨나요?</h2>
 
       <div class="grid-2" id="reasonExampleButtons">
-        <button type="button" onclick="selectReasonExample('손주를 만나서', this)">손주를 만나서</button>
-        <button type="button" onclick="selectReasonExample('가족 생각이 나서', this)">가족 생각이 나서</button>
-        <button type="button" onclick="selectReasonExample('옛날 생각이 나서', this)">옛날 생각이 나서</button>
-        <button type="button" onclick="selectReasonExample('좋은 일이 있어서', this)">좋은 일이 있어서</button>
+        <button type="button" onclick="selectReasonExample('손주를 만나서', this)">🎵 손주를 만나서</button>
+        <button type="button" onclick="selectReasonExample('가족 생각이 나서', this)">🎶 가족 생각이 나서</button>
+        <button type="button" onclick="selectReasonExample('옛날 생각이 나서', this)">🎼 옛날 생각이 나서</button>
+        <button type="button" onclick="selectReasonExample('좋은 일이 있어서', this)">♪ 좋은 일이 있어서</button>
       </div>
 
       <textarea id="reasonInput" placeholder="예: 오늘 마음에 남는 일이 있었어요"></textarea>
@@ -378,21 +413,21 @@
     <!-- 3 -->
     <section class="question-block">
       <div class="question-number">3</div>
-      <h2>어떤 음악으로 만들까요?</h2>
+      <h2>🎹 어떤 음악으로 만들까요?</h2>
 
       <div class="stack" id="typeButtons">
-        <button type="button" onclick="typeSel('노래', this)">👤 노래</button>
+        <button type="button" onclick="typeSel('노래', this)">🎤 노래</button>
         <button type="button" onclick="typeSel('연주곡', this)">🎹 연주곡</button>
       </div>
 
       <div class="sub-card hidden" id="instrumentBlock">
         <div class="sub-number">3-1</div>
-        <h3>어떤 악기가 좋으세요?</h3>
+        <h3>🎼 어떤 악기가 좋으세요?</h3>
         <div class="grid-2" id="instrumentButtons">
           <button type="button" onclick="setExtraOption('피아노', this, 'instrumentButtons')">🎹 피아노</button>
           <button type="button" onclick="setExtraOption('기타', this, 'instrumentButtons')">🎸 기타</button>
           <button type="button" onclick="setExtraOption('바이올린', this, 'instrumentButtons')">🎻 바이올린</button>
-          <button type="button" onclick="setExtraOption('가야금', this, 'instrumentButtons')">🎼 가야금</button>
+          <button type="button" onclick="setExtraOption('가야금', this, 'instrumentButtons')">🪕 가야금</button>
         </div>
       </div>
     </section>
@@ -400,7 +435,7 @@
     <!-- 4 -->
     <section class="question-block">
       <div class="question-number">4</div>
-      <h2>어떤 음악 종류가 좋으세요?</h2>
+      <h2>💿 어떤 음악 종류가 좋으세요?</h2>
 
       <div class="grid-2" id="genreButtons">
         <button class="genre-dongyo" type="button" onclick="setGenre('어린이 동요', this)">🎵 어린이 동요</button>
@@ -409,15 +444,15 @@
         <button class="genre-oldpop" type="button" onclick="setGenre('비틀즈풍 영국 팝', this)">🇬🇧 비틀즈풍 영국 팝</button>
         <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">👥 아이돌 K-POP</button>
         <button class="genre-bandpop" type="button" onclick="setGenre('맑고 감성적인 밴드팝', this)">🎸 감성 밴드팝</button>
-        <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎹 감성 클래식 가곡</button>
-        <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🎼 전통 가야금 연주</button>
+        <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎼 감성 클래식 가곡</button>
+        <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🪕 전통 가야금 연주</button>
       </div>
     </section>
 
     <!-- 4-1 -->
     <section class="question-block">
       <div class="question-number">4-1</div>
-      <h2>좋아하는 가수가 있으면 적어보세요</h2>
+      <h2>⭐ 좋아하는 가수가 있으면 적어보세요</h2>
 
       <textarea id="artistInput" placeholder="예: 임영웅 / 나훈아 / 조용필 / 아이유"></textarea>
 
@@ -431,28 +466,28 @@
     <!-- 5 -->
     <section class="question-block">
       <div class="question-number">5</div>
-      <h2>어떤 느낌의 노래가 좋으세요?</h2>
+      <h2>🎶 어떤 느낌의 노래가 좋으세요?</h2>
 
       <div class="grid-2" id="atmosphereButtons">
-        <button type="button" onclick="setAtmosphere('신나고 즐거운', this)">😊 신나고 즐거운</button>
-        <button type="button" onclick="setAtmosphere('조용하고 차분한', this)">😌 조용하고 차분한</button>
-        <button type="button" onclick="setAtmosphere('따뜻하고 포근한', this)">🌷 따뜻하고 포근한</button>
-        <button type="button" onclick="setAtmosphere('힘차고 희망찬', this)">💪 힘차고 희망찬</button>
-        <button type="button" onclick="setAtmosphere('감성적이고 그리운', this)">🌙 감성적이고 그리운</button>
-        <button type="button" onclick="setAtmosphere('웅장하고 감동적인', this)">👑 웅장하고 감동적인</button>
+        <button type="button" onclick="setAtmosphere('신나고 즐거운', this)">🎵 신나고 즐거운</button>
+        <button type="button" onclick="setAtmosphere('조용하고 차분한', this)">🎼 조용하고 차분한</button>
+        <button type="button" onclick="setAtmosphere('따뜻하고 포근한', this)">🎶 따뜻하고 포근한</button>
+        <button type="button" onclick="setAtmosphere('힘차고 희망찬', this)">♪ 힘차고 희망찬</button>
+        <button type="button" onclick="setAtmosphere('감성적이고 그리운', this)">♫ 감성적이고 그리운</button>
+        <button type="button" onclick="setAtmosphere('웅장하고 감동적인', this)">🎼 웅장하고 감동적인</button>
       </div>
     </section>
 
     <!-- 마지막 -->
     <section class="question-block">
-      <button type="button" class="primary" onclick="buildPrompt()">노래 프롬프트 만들기</button>
+      <button type="button" class="primary" onclick="buildPrompt()">🎼 나의 노래 프롬프트 만들기</button>
 
-      <textarea id="promptOutput" class="result-box" placeholder="여기에 제미나이에 넣을 노래 프롬프트가 나옵니다"></textarea>
+      <textarea id="promptOutput" class="result-box" placeholder="여기에 제미나이에 넣을 나의 노래 프롬프트가 나옵니다"></textarea>
 
       <div class="main-buttons">
-        <button type="button" class="secondary" onclick="copyPrompt()">📋 복사하기</button>
-        <button type="button" class="secondary" onclick="copyAndOpenGemini()">👉 복사하고 재미나이 열기</button>
-        <button type="button" class="danger" onclick="clearAll()">🧹 모든 내용 지우고 새로 시작하기</button>
+        <button type="button" class="secondary" onclick="copyPrompt()">📋 프롬프트 복사하기</button>
+        <button type="button" class="secondary" onclick="copyAndOpenGemini()">🎵 복사하고 재미나이 열기</button>
+        <button type="button" class="danger" onclick="clearAll()">🧹 처음부터 다시 만들기</button>
       </div>
     </section>
 
@@ -995,4 +1030,4 @@ ${moodStyle}
     }
   </script>
 </body>
-</html>
+  </html>
