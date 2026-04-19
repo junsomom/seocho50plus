@@ -286,8 +286,6 @@
     .genre-oldpop { background: linear-gradient(180deg, #ece0d7, #dfc8ba); }
     .genre-kpop { background: linear-gradient(180deg, #f0d8f5, #e2c2eb); }
     .genre-bandpop { background: linear-gradient(180deg, #ebf3ff, #dce8ff); }
-    .genre-hymn { background: linear-gradient(180deg, #e8f3ff, #d9ebff); }
-    .genre-buddhist { background: linear-gradient(180deg, #f4f4f4, #e7e7e7); }
     .genre-gagok { background: linear-gradient(180deg, #ffdce8, #f6bfd2); }
     .genre-gayageum { background: linear-gradient(180deg, #e7f7ea, #d4efd9); }
 
@@ -407,8 +405,6 @@
         <button class="genre-oldpop" type="button" onclick="setGenre('비틀즈풍 영국 팝', this)">🇬🇧 비틀즈풍 영국 팝</button>
         <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">👥 아이돌 K-POP</button>
         <button class="genre-bandpop" type="button" onclick="setGenre('맑고 감성적인 밴드팝', this)">🎸 감성 밴드팝</button>
-        <button class="genre-hymn" type="button" onclick="setGenre('찬송가·CCM 음악', this)">⛪ 찬송가·CCM</button>
-        <button class="genre-buddhist" type="button" onclick="setGenre('마음이 편안한 불교음악', this)">🪷 불교음악</button>
         <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎹 감성 클래식 가곡</button>
         <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🎼 전통 가야금 연주</button>
       </div>
@@ -650,20 +646,6 @@
 - 밝으면서도 감성적인 멜로디
 - 너무 과하지 않고 세련된 흐름`;
 
-        case "찬송가·CCM 음악":
-          return `
-- 경건함과 따뜻함이 함께 느껴지도록
-- 찬송가의 안정감과 CCM의 현대적인 흐름을 함께 살리기
-- 따라 부르기 쉽고 은혜로운 멜로디
-- 마음에 위로와 소망이 느껴지도록 구성`;
-
-        case "마음이 편안한 불교음악":
-          return `
-- 매우 고요하고 차분하게
-- 반복적이고 명상적인 흐름
-- 변화는 적고 안정적인 구조
-- 마음이 안정되는 느낌`;
-
         case "감성 클래식 가곡":
           return `
 - 서정적이고 감정이 깊게 전달되도록
@@ -703,7 +685,7 @@
       }
     }
 
-    function getArtistStyle(artist) {
+    function getArtistStyleForSong(artist) {
       if (artist.includes("임영웅")) {
         return `
 - 부드럽고 따뜻한 보컬 흐름
@@ -744,6 +726,46 @@
       return "";
     }
 
+    function getArtistStyleForInstrumental(artist) {
+      if (artist.includes("임영웅")) {
+        return `
+- 따뜻하고 진심 어린 감정선이 느껴지도록 구성
+- 부드럽고 서정적인 멜로디 흐름
+- 감정이 점점 깊어지도록 전개`;
+      } else if (artist.includes("나훈아")) {
+        return `
+- 강한 에너지와 무게감이 느껴지도록 구성
+- 힘 있는 멜로디 진행
+- 후반으로 갈수록 감정이 크게 살아나도록 구성`;
+      } else if (artist.includes("이미자")) {
+        return `
+- 애잔하고 깊은 정서가 느껴지도록 구성
+- 느리고 서정적인 멜로디
+- 절제된 감정 표현`;
+      } else if (artist.includes("조용필")) {
+        return `
+- 대중적이고 완성도 높은 멜로디
+- 넓은 감정선이 자연스럽게 흐르도록 구성
+- 인상적인 중심 멜로디가 살아나도록 구성`;
+      } else if (artist.includes("장윤정")) {
+        return `
+- 밝고 경쾌한 리듬감
+- 쉽고 귀에 들어오는 멜로디
+- 흥이 자연스럽게 살아나도록 구성`;
+      } else if (artist.includes("아이유")) {
+        return `
+- 섬세하고 감성적인 분위기
+- 잔잔하지만 깊이 있는 멜로디
+- 부드럽고 맑은 느낌의 편곡`;
+      } else if (artist.includes("악뮤") || artist.includes("AKMU")) {
+        return `
+- 담백하면서도 개성 있는 멜로디
+- 맑고 산뜻한 밴드 감성
+- 과하지 않고 세련된 편곡`;
+      }
+      return "";
+    }
+
     function buildPrompt() {
       const mood = inferMood();
       const reason = inferReason();
@@ -756,7 +778,9 @@
       const refinedReason = refineReason(reason);
       const genreStyle = getGenreStyle(genre);
       const moodStyle = getMoodStyle(state.atmosphere);
-      const artistStyle = getArtistStyle(artist);
+      const artistStyle = musicType === "연주곡"
+        ? getArtistStyleForInstrumental(artist)
+        : getArtistStyleForSong(artist);
 
       let prompt = "";
 
@@ -785,6 +809,10 @@ ${moodStyle}
 멜로디와 반주가 함께 풍부하게 들리도록 구성해 주세요.
 전체 곡이 하나의 이야기처럼 부드럽게 이어지게 해 주세요.
 중심 악기는 ${extra}로 해 주세요.
+
+반드시 가사 없이 순수 연주곡으로 만들어 주세요.
+사람 목소리, 허밍, 코러스 없이 악기 연주만 나오게 해 주세요.
+
 마지막은 따뜻한 느낌으로 마무리해 주세요.`;
       } else {
         prompt = `당신은 사람의 마음을 음악으로 표현하는 작곡가입니다.
@@ -969,4 +997,4 @@ ${moodStyle}
     }
   </script>
 </body>
-  </html>
+</html>
