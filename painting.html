@@ -6,26 +6,32 @@
   <title>내 멋진 인생의 한 컷</title>
   <style>
     :root {
-      --primary: #7986cb;
-      --primary-dark: #5c6bc0;
-      --light-bg: #f7f8fb;
-      --card-bg: #ffffff;
-      --soft-card: #f9fafe;
-      --border-color: #d7dcf3;
-      --text-main: #222;
-      --text-sub: #666;
-      --example-bg: #dcedc8;
-      --example-active: #aed581;
-      --mic-bg: #ffe0b2;
-      --mic-recording: #ef9a9a;
-      --clear-bg: #eceff1;
-      --clear-text: #37474f;
-      --prompt-btn: #c5cae9;
-      --gemcopy-btn: #b2dfdb;
-      --reset-btn: #f8bbd0;
-      --focus-ring: 0 0 0 4px rgba(121, 134, 203, 0.18);
-      --done-bg: #e8f5e9;
-      --done-text: #2e7d32;
+      --primary: #8d6e63;
+      --primary-dark: #5d4037;
+      --light-bg: #f4efe6;
+      --card-bg: #f8f1df;
+      --soft-card: #f6edd8;
+      --border-color: #d7c3a3;
+      --text-main: #3e2f26;
+      --text-sub: #7b6658;
+
+      --example-bg: #dce8b2;
+      --example-active: #b8d68f;
+
+      --mic-bg: #ffd7b5;
+      --mic-recording: #e98f8f;
+
+      --clear-bg: #d7d1cb;
+      --clear-text: #4e443d;
+
+      --prompt-btn: #c8c3e6;
+      --gemcopy-btn: #b7dfd3;
+      --chatgpt-btn: #cfe7c8;
+      --reset-btn: #efbfd0;
+
+      --focus-ring: 0 0 0 4px rgba(141, 110, 99, 0.18);
+      --done-bg: #e8f0d8;
+      --done-text: #4d6b2f;
     }
 
     * {
@@ -35,7 +41,11 @@
     body {
       margin: 0;
       font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      background: var(--light-bg);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 204, 128, 0.18) 0, transparent 18%),
+        radial-gradient(circle at 88% 14%, rgba(129, 199, 132, 0.14) 0, transparent 18%),
+        radial-gradient(circle at 82% 82%, rgba(121, 134, 203, 0.10) 0, transparent 20%),
+        #f4efe6;
       color: var(--text-main);
       line-height: 1.6;
     }
@@ -44,13 +54,14 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--primary);
-      color: white;
+      background: linear-gradient(180deg, #a98274 0%, #8d6e63 100%);
+      color: #fffdf8;
       text-align: center;
       padding: 16px 12px;
       font-size: 22px;
-      font-weight: 700;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      font-weight: 800;
+      box-shadow: 0 3px 10px rgba(79, 55, 44, 0.18);
+      letter-spacing: -0.2px;
     }
 
     .container {
@@ -60,10 +71,21 @@
     }
 
     .panel {
-      background: var(--card-bg);
-      border-radius: 22px;
+      background: linear-gradient(180deg, #fbf4e5 0%, #f6eddc 100%);
+      border-radius: 24px;
       padding: 18px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 20px rgba(93, 64, 55, 0.10);
+      border: 1.5px solid #dcc7a8;
+      position: relative;
+    }
+
+    .panel::before {
+      content: "🎨";
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 22px;
+      opacity: 0.75;
     }
 
     .panel h2 {
@@ -80,21 +102,50 @@
 
     .guide-box {
       margin: 0 0 18px;
-      background: #eef3ff;
-      color: #3949ab;
+      background: linear-gradient(180deg, #fff8e8 0%, #f8edd2 100%);
+      color: #6d4c41;
       border-radius: 18px;
       padding: 14px 16px;
       font-size: 16px;
       font-weight: 700;
       line-height: 1.5;
+      border: 1.5px solid #dec9a5;
+      box-shadow: 0 4px 10px rgba(93, 64, 55, 0.06);
+      position: relative;
+    }
+
+    .guide-box::before {
+      content: "🖌";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 18px;
+      opacity: 0.7;
     }
 
     .question-card {
-      background: var(--soft-card);
-      border: 1px solid #e1e5f5;
-      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.22), rgba(0,0,0,0.02)),
+        #f5ead2;
+      border: 1.5px solid #d5bc97;
+      border-radius: 18px;
       padding: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 14px rgba(90, 62, 45, 0.08);
+      position: relative;
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      width: 78px;
+      height: 18px;
+      background: rgba(255, 248, 196, 0.72);
+      border-radius: 4px;
+      transform: rotate(-4deg);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
     }
 
     .question-title {
@@ -105,6 +156,7 @@
       font-size: 20px;
       font-weight: 800;
       margin-bottom: 10px;
+      color: #4e342e;
     }
 
     .question-title-text {
@@ -129,6 +181,7 @@
       font-size: 13px;
       font-weight: 700;
       line-height: 1;
+      border: 1px solid rgba(77, 107, 47, 0.18);
     }
 
     .completion-badge.show {
@@ -145,14 +198,14 @@
     .answer-box {
       width: 100%;
       min-height: 82px;
-      border: 2px solid var(--border-color);
-      border-radius: 18px;
+      border: 2px solid #cfb58e;
+      border-radius: 16px;
       padding: 15px;
       font-size: 19px;
       resize: vertical;
       outline: none;
-      background: #fff;
-      color: #111111;
+      background: #fffaf0;
+      color: #3b2f2a;
     }
 
     .answer-box:focus {
@@ -161,12 +214,12 @@
     }
 
     .answer-box::placeholder {
-      color: #b8b8b8;
+      color: #b8aa96;
       opacity: 1;
     }
 
     .answer-box:not(:placeholder-shown) {
-      border-color: #5c6bc0;
+      border-color: #a1887f;
     }
 
     button:focus-visible,
@@ -185,39 +238,47 @@
     .mini-btn {
       flex: 1;
       border: none;
-      border-radius: 16px;
+      border-radius: 18px;
       min-height: 56px;
       padding: 12px 8px;
       font-size: 17px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-      transition: 0.2s ease;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .mini-btn:active,
+    .tool-btn:active {
+      transform: scale(0.98);
     }
 
     .mini-btn.mic-btn {
-      background: var(--mic-bg);
+      background: linear-gradient(180deg, #ffdcbf 0%, #ffc999 100%);
+      color: #6d4c41;
     }
 
     .mini-btn.mic-btn.recording {
-      background: var(--mic-recording);
+      background: linear-gradient(180deg, #efb0b0 0%, #e98f8f 100%);
       color: #fff;
       animation: pulse 1s infinite;
     }
 
     .mini-btn.clear-btn {
-      background: var(--clear-bg);
-      color: var(--clear-text);
+      background: linear-gradient(180deg, #e4ddd7 0%, #d6cec7 100%);
+      color: #4e443d;
     }
 
     .mini-btn.example-btn {
-      background: var(--example-bg);
-      color: #33691e;
+      background: linear-gradient(180deg, #e4efbf 0%, #d2e39a 100%);
+      color: #48611f;
     }
 
     .mini-btn.example-btn.active {
-      background: var(--example-active);
-      color: #1b5e20;
+      background: linear-gradient(180deg, #cfe29a 0%, #b8d68f 100%);
+      color: #2f4e12;
     }
 
     .status {
@@ -242,42 +303,52 @@
       font-size: 19px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .tool-btn.prompt {
-      background: var(--prompt-btn);
-      color: #283593;
+      background: linear-gradient(180deg, #d7d2ef 0%, #c3bde6 100%);
+      color: #4b3f72;
     }
 
     .tool-btn.gemcopy {
-      background: var(--gemcopy-btn);
-      color: #004d40;
+      background: linear-gradient(180deg, #ccece3 0%, #b7dfd3 100%);
+      color: #1f5c52;
+    }
+
+    .tool-btn.chatgpt {
+      background: linear-gradient(180deg, #dcefd7 0%, #cfe7c8 100%);
+      color: #2d5b2f;
     }
 
     .tool-btn.reset {
-      background: var(--reset-btn);
-      color: #880e4f;
+      background: linear-gradient(180deg, #f5d1dd 0%, #efbfd0 100%);
+      color: #7a294d;
     }
 
     .output-title {
       margin-top: 14px;
       margin-bottom: 8px;
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary-dark);
     }
 
     .output-box {
       width: 100%;
       min-height: 340px;
-      border: 2px solid var(--border-color);
+      border: 2px solid #cfb58e;
       border-radius: 16px;
       padding: 14px;
       font-size: 17px;
-      background: #fff;
+      background: #fffaf0;
       white-space: pre-wrap;
       overflow-wrap: break-word;
+      color: #3b2f2a;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
     }
 
     .save-indicator {
@@ -286,6 +357,7 @@
       min-height: 18px;
       text-align: right;
       margin-top: 4px;
+      font-weight: 700;
     }
 
     @keyframes pulse {
@@ -358,7 +430,7 @@
   </style>
 </head>
 <body>
-  <header>3주차 생각주머니</header>
+  <header>🎨 3주차 생각주머니</header>
 
   <div class="container">
     <section class="panel">
@@ -371,19 +443,21 @@
     </section>
 
     <div class="tool-section">
-      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="그림 프롬프트 만들기">✨ 그림 프롬프트 만들기</button>
+      <button class="tool-btn prompt" id="makePromptBtn" type="button" aria-label="그림 프롬프트 만들기">🎨 그림 주문서 만들기</button>
 
-      <div class="output-title">그림 프롬프트</div>
+      <div class="output-title">화가의 그림 주문서</div>
       <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
 
-      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 그림 그리기 열기">📋✨ 복사하고 그림 그리기 열기</button>
+      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 그림 그리기 열기">🖌 복사하고 Flow 열기</button>
+      <button class="tool-btn chatgpt" id="copyAndOpenChatGPTBtn" type="button" aria-label="복사하고 ChatGPT 열기">📋✨ 복사하고 ChatGPT 열기</button>
       <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
     </div>
   </div>
 
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
-    const STORAGE_KEY = 'painting_html_final_v1';
+    const CHATGPT_URL = 'https://chat.openai.com/';
+    const STORAGE_KEY = 'painting_html_final_v2';
 
     const questions = [
       {
@@ -769,7 +843,7 @@ main character focus, consistent character, detailed background`;
     async function copyAndOpenFlow() {
       const text = document.getElementById('compiledOutput').textContent.trim();
       if (!text || text === '프롬프트를 만드는 중입니다...') {
-        alert('먼저 그림 프롬프트 만들기 버튼을 눌러주세요.');
+        alert('먼저 그림 주문서 만들기 버튼을 눌러주세요.');
         return;
       }
 
@@ -799,6 +873,42 @@ main character focus, consistent character, detailed background`;
         alert('프롬프트를 복사했어요. Flow에서 길게 눌러 붙여넣기 해주세요.');
       } else {
         alert('그림 그리기 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+      }
+    }
+
+    async function copyAndOpenChatGPT() {
+      const text = document.getElementById('compiledOutput').textContent.trim();
+      if (!text || text === '프롬프트를 만드는 중입니다...') {
+        alert('먼저 그림 주문서 만들기 버튼을 눌러주세요.');
+        return;
+      }
+
+      saveData();
+
+      let copied = false;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (error) {
+        console.error('복사 실패:', error);
+      }
+
+      const newWindow = window.open(CHATGPT_URL, '_blank');
+
+      if (!newWindow) {
+        if (copied) {
+          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        } else {
+          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
+        }
+        return;
+      }
+
+      if (copied) {
+        alert('프롬프트를 복사했어요. ChatGPT에서 길게 눌러 붙여넣기 해주세요.');
+      } else {
+        alert('ChatGPT 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
       }
     }
 
@@ -846,6 +956,7 @@ main character focus, consistent character, detailed background`;
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
     document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenFlow);
+    document.getElementById('copyAndOpenChatGPTBtn').addEventListener('click', copyAndOpenChatGPT);
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 </body>
