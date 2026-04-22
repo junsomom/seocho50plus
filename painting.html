@@ -365,6 +365,11 @@
       gap: 10px;
     }
 
+    .open-row {
+      display: flex;
+      gap: 10px;
+    }
+
     .tool-btn {
       border: none;
       border-radius: 18px;
@@ -377,6 +382,10 @@
         inset 0 1px 0 rgba(255,255,255,0.45),
         0 4px 8px rgba(0,0,0,0.08);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .tool-btn.half {
+      flex: 1;
     }
 
     .tool-btn.prompt {
@@ -506,6 +515,10 @@
         padding: 12px 14px;
       }
 
+      .open-row {
+        flex-direction: row;
+      }
+
       .output-box {
         font-size: 16px;
         min-height: 280px;
@@ -532,8 +545,13 @@
       <div class="output-title">화가의 그림 주문서</div>
       <div id="compiledOutput" class="output-box" aria-label="프롬프트 결과" aria-live="polite"></div>
 
-      <button class="tool-btn gemcopy" id="copyAndOpenBtn" type="button" aria-label="복사하고 그림 그리기 열기">🖌 복사하고 Flow 열기</button>
-      <button class="tool-btn chatgpt" id="copyAndOpenChatGPTBtn" type="button" aria-label="복사하고 ChatGPT 열기">📋✨ 복사하고 ChatGPT 열기</button>
+      <button class="tool-btn prompt" id="copyPromptBtn" type="button" aria-label="프롬프트 복사하기">📋 프롬프트 복사하기</button>
+
+      <div class="open-row">
+        <button class="tool-btn chatgpt half" id="openChatGPTBtn" type="button" aria-label="ChatGPT 열기">🤖 ChatGPT 열기</button>
+        <button class="tool-btn gemcopy half" id="openFlowBtn" type="button" aria-label="Google Flow 열기">🌈 Google Flow 열기</button>
+      </div>
+
       <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
     </div>
   </div>
@@ -541,7 +559,7 @@
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
     const CHATGPT_URL = 'https://chat.openai.com/';
-    const STORAGE_KEY = 'painting_html_simple_v3';
+    const STORAGE_KEY = 'painting_html_simple_v5';
 
     const questions = [
       {
@@ -577,6 +595,19 @@
         options: [
           { label: '여성', icon: '👩' },
           { label: '남성', icon: '👨' }
+        ]
+      },
+      {
+        type: 'buttons',
+        title: '그림을 어떤 느낌으로 그리고 싶나요?',
+        sub: '하나만 눌러주세요',
+        className: 'two',
+        options: [
+          { label: '따뜻한 동화', icon: '🎨' },
+          { label: '색연필 손그림', icon: '✏️' },
+          { label: '밝고 귀여운 그림', icon: '🐥' },
+          { label: '지브리 감성', icon: '🌿' },
+          { label: '사진 느낌 그림', icon: '📷' }
         ]
       },
       {
@@ -962,6 +993,26 @@
       });
     }
 
+    function getStylePrompt(styleRaw) {
+      if (styleRaw.includes('색연필 손그림')) {
+        return `colored pencil drawing, hand-drawn illustration, visible pencil texture, sketch-like lines, soft paper texture, warm children's book style, not realistic, no text`;
+      }
+
+      if (styleRaw.includes('밝고 귀여운 그림')) {
+        return `cute illustration, very simple shapes, bright pastel colors, playful children's book style, cheerful and friendly feeling, adorable character design, not realistic, no text`;
+      }
+
+      if (styleRaw.includes('지브리 감성')) {
+        return `Ghibli-inspired illustration, cinematic background, soft watercolor texture, rich atmosphere, emotional lighting, beautifully detailed environment, warm and nostalgic mood, no text`;
+      }
+
+      if (styleRaw.includes('사진 느낌 그림')) {
+        return `soft realistic illustration, natural skin texture, realistic lighting, elegant portrait feeling, detailed background, warm emotional atmosphere, no text`;
+      }
+
+      return `soft watercolor illustration, simple children's book illustration, pastel colors, gentle storybook style, soft edges, warm and dreamy mood, clearly not realistic, no text`;
+    }
+
     function compilePrompt() {
       try {
         const output = document.getElementById('compiledOutput');
@@ -975,14 +1026,16 @@
         const whenText = get(1) || 'young adulthood';
         const timeText = get(2) || 'daytime';
         const genderRaw = get(3) || '여성';
-        const placeText = get(4) || 'a meaningful place';
-        const withWhoText = get(5) || 'a loved one';
-        const actionText = get(6) || 'sharing a beautiful moment together';
-        const clothesText = get(7) || 'simple elegant clothing';
-        const weatherText = get(8) || 'a gentle clear day';
-        const feelingText = get(9) || 'warm, peaceful, and happy';
+        const styleRaw = get(4) || '따뜻한 동화';
+        const placeText = get(5) || 'a meaningful place';
+        const withWhoText = get(6) || 'a loved one';
+        const actionText = get(7) || 'sharing a beautiful moment together';
+        const clothesText = get(8) || 'simple elegant clothing';
+        const weatherText = get(9) || 'a gentle clear day';
+        const feelingText = get(10) || 'warm, peaceful, and happy';
 
         const genderText = genderRaw.includes('남성') ? 'a Korean man' : 'a Korean woman';
+        const stylePrompt = getStylePrompt(styleRaw);
 
         const prompt = `A cinematic nostalgic scene of a precious life memory.
 
@@ -993,19 +1046,15 @@ The weather is ${weatherText}.
 The emotional tone feels ${feelingText}, peaceful, loving, and full of memory.
 
 Create a warm and gentle facial expression, graceful posture, and emotionally rich storytelling.
-Make the person look dignified, kind, natural, and deeply human.
+Make the character look simple, warm, and friendly, with soft and gentle features.
 Show a harmonious composition with strong visual focus, soft depth, and natural movement.
 
 Build a beautiful background that matches ${placeText} naturally,
 with atmospheric details based on ${timeText} and ${weatherText}, soft wind, subtle light, rich layers, and an elegant sense of place.
 Add cinematic storytelling, visual balance, and a touching life-memory feeling.
 
-Ghibli-inspired, soft watercolor illustration,
-warm golden light, emotional atmosphere,
-cinematic composition, detailed background,
-main character focus, consistent character design,
-gentle children's book illustration style,
-high quality, elegant, heartfelt, no text`;
+Style: ${styleRaw}
+${stylePrompt}`;
 
         output.textContent = prompt;
         saveData();
@@ -1015,7 +1064,7 @@ high quality, elegant, heartfelt, no text`;
       }
     }
 
-    async function copyAndOpenFlow() {
+    async function copyPromptOnly() {
       const text = document.getElementById('compiledOutput').textContent.trim();
       if (!text || text === '프롬프트를 만드는 중입니다...') {
         alert('먼저 그림 주문서 만들기 버튼을 눌러주세요.');
@@ -1024,67 +1073,57 @@ high quality, elegant, heartfelt, no text`;
 
       saveData();
 
-      let copied = false;
-
       try {
         await navigator.clipboard.writeText(text);
-        copied = true;
+        alert('프롬프트를 복사했어요. 아래에서 원하는 곳을 눌러 붙여넣기 해주세요.');
       } catch (error) {
         console.error('복사 실패:', error);
-      }
-
-      const newWindow = window.open(FLOW_URL, '_blank');
-
-      if (!newWindow) {
-        if (copied) {
-          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
-        } else {
-          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
-        }
-        return;
-      }
-
-      if (copied) {
-        alert('프롬프트를 복사했어요. Flow에서 길게 눌러 붙여넣기 해주세요.');
-      } else {
-        alert('그림 그리기 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+        alert('복사가 잘 되지 않았어요. 다시 눌러주세요.');
       }
     }
 
-    async function copyAndOpenChatGPT() {
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      toast.textContent = message;
+      toast.style.opacity = '1';
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+      }, 3000);
+    }
+
+    function openChatGPTOnly() {
       const text = document.getElementById('compiledOutput').textContent.trim();
       if (!text || text === '프롬프트를 만드는 중입니다...') {
-        alert('먼저 그림 주문서 만들기 버튼을 눌러주세요.');
+        alert('먼저 그림 주문서 만들기를 눌러주세요.');
         return;
-      }
-
-      saveData();
-
-      let copied = false;
-
-      try {
-        await navigator.clipboard.writeText(text);
-        copied = true;
-      } catch (error) {
-        console.error('복사 실패:', error);
       }
 
       const newWindow = window.open(CHATGPT_URL, '_blank');
-
       if (!newWindow) {
-        if (copied) {
-          alert('복사는 되었지만 새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
-        } else {
-          alert('복사도 안 되고 새 창도 차단되었어요. 다시 눌러주세요.');
-        }
+        alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
         return;
       }
 
-      if (copied) {
-        alert('프롬프트를 복사했어요. ChatGPT에서 길게 눌러 붙여넣기 해주세요.');
-      } else {
-        alert('ChatGPT 화면은 열렸지만 복사는 안 되었어요. 이 화면으로 돌아와 프롬프트를 직접 복사해주세요.');
+      alert('ChatGPT 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
+      showToast('입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
+    }
+
+    function openFlowOnly() {
+      const text = document.getElementById('compiledOutput').textContent.trim();
+      if (!text || text === '프롬프트를 만드는 중입니다...') {
+        alert('먼저 그림 주문서 만들기를 눌러주세요.');
+        return;
       }
+
+      const newWindow = window.open(FLOW_URL, '_blank');
+      if (!newWindow) {
+        alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        return;
+      }
+
+      alert('Flow 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
+      showToast('입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
     }
 
     function resetAll() {
@@ -1138,9 +1177,26 @@ high quality, elegant, heartfelt, no text`;
     loadData();
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
-    document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenFlow);
-    document.getElementById('copyAndOpenChatGPTBtn').addEventListener('click', copyAndOpenChatGPT);
+    document.getElementById('copyPromptBtn').addEventListener('click', copyPromptOnly);
+    document.getElementById('openChatGPTBtn').addEventListener('click', openChatGPTOnly);
+    document.getElementById('openFlowBtn').addEventListener('click', openFlowOnly);
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
+
+  <div id="toastMessage" style="
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(60, 40, 30, 0.9);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
+  "></div>
 </body>
 </html>
