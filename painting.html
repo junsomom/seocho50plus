@@ -281,6 +281,38 @@
       color: #2f4e12;
     }
 
+    .option-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .option-btn {
+      border: none;
+      border-radius: 16px;
+      min-height: 52px;
+      padding: 12px 16px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      background: linear-gradient(180deg, #f7efdf 0%, #ead9bc 100%);
+      color: #5d4037;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .option-btn.selected {
+      background: linear-gradient(180deg, #d7e9b4 0%, #bddb8f 100%);
+      color: #365218;
+    }
+
+    .option-btn:active {
+      transform: scale(0.98);
+    }
+
     .status {
       margin-top: 6px;
       font-size: 14px;
@@ -416,6 +448,12 @@
         padding: 10px 6px;
       }
 
+      .option-btn {
+        min-height: 50px;
+        font-size: 16px;
+        padding: 10px 14px;
+      }
+
       .tool-btn {
         min-height: 56px;
         font-size: 18px;
@@ -457,30 +495,53 @@
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
     const CHATGPT_URL = 'https://chat.openai.com/';
-    const STORAGE_KEY = 'painting_html_simple_v1';
+    const STORAGE_KEY = 'painting_html_simple_v2';
 
     const questions = [
       {
+        type: 'buttons',
         title: '언제 모습인가요?',
-        sub: '어린 시절 / 젊은 시절 / 지금',
-        placeholder: '예: 젊은 시절'
+        sub: '하나만 눌러주세요',
+        options: ['어린 시절', '젊은 시절', '중년', '노년']
       },
       {
+        type: 'buttons',
+        title: '언제 시간인가요?',
+        sub: '하나만 눌러주세요',
+        options: ['새벽', '아침', '낮', '노을', '저녁']
+      },
+      {
+        type: 'text',
         title: '어디에 있었나요?',
         sub: '장소를 짧게 적어보세요',
         placeholder: '예: 제주도 바닷가'
       },
       {
+        type: 'text',
         title: '누구와 있었나요?',
         sub: '혼자여도 괜찮아요',
         placeholder: '예: 남편과 함께'
       },
       {
+        type: 'text',
         title: '무엇을 하고 있었나요?',
         sub: '짧게 말해도 됩니다',
         placeholder: '예: 손을 잡고 걷고 있었어요'
       },
       {
+        type: 'text',
+        title: '어떤 옷을 입고 있었나요?',
+        sub: '옷차림을 짧게 적어보세요',
+        placeholder: '예: 밝은 색 원피스를 입고 있었어요'
+      },
+      {
+        type: 'text',
+        title: '어떤 날씨였나요?',
+        sub: '하늘, 바람, 계절 느낌도 좋아요',
+        placeholder: '예: 따뜻한 봄날이고 바람이 살짝 불었어요'
+      },
+      {
+        type: 'text',
         title: '기분은 어땠나요?',
         sub: '한두 마디면 충분해요',
         placeholder: '예: 행복하고 따뜻했어요'
@@ -504,8 +565,16 @@
     function saveData() {
       try {
         const data = {};
+
         document.querySelectorAll('.answer-box').forEach(box => {
           data[box.id] = box.value;
+        });
+
+        document.querySelectorAll('.option-group').forEach(group => {
+          const hiddenInput = group.parentElement.querySelector('.option-value');
+          if (hiddenInput) {
+            data[hiddenInput.id] = hiddenInput.value;
+          }
         });
 
         const compiledOutput = document.getElementById('compiledOutput');
@@ -532,9 +601,11 @@
     function updateCompletionState(targetId) {
       const input = document.getElementById(targetId);
       if (!input) return;
+
       const num = targetId.replace('q', '');
       const badge = document.getElementById(`complete-${num}`);
       if (!badge) return;
+
       badge.classList.toggle('show', !!input.value.trim());
     }
 
@@ -556,9 +627,23 @@
 
         Object.keys(data).forEach(id => {
           const el = document.getElementById(id);
-          if (el && el.classList.contains('answer-box')) {
+          if (!el) return;
+
+          if (el.classList.contains('answer-box') || el.classList.contains('option-value')) {
             el.value = data[id];
           }
+        });
+
+        document.querySelectorAll('.option-value').forEach(hiddenInput => {
+          const value = hiddenInput.value;
+          if (!value) return;
+
+          const group = hiddenInput.parentElement.querySelector('.option-group');
+          if (!group) return;
+
+          group.querySelectorAll('.option-btn').forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.value === value);
+          });
         });
 
         if (data.compiledOutput) {
@@ -583,22 +668,43 @@
         const card = document.createElement('div');
         card.className = 'question-card';
 
-        card.innerHTML = `
-          <label class="question-label" for="${answerId}">
-            <div class="question-title">
-              <span class="question-title-text">${qNum}. ${question.title}</span>
-              <span class="completion-badge" id="complete-${qNum}">완료</span>
+        if (question.type === 'buttons') {
+          card.innerHTML = `
+            <label class="question-label" for="${answerId}">
+              <div class="question-title">
+                <span class="question-title-text">${qNum}. ${question.title}</span>
+                <span class="completion-badge" id="complete-${qNum}">완료</span>
+              </div>
+            </label>
+            ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
+            <input type="hidden" id="${answerId}" class="option-value" aria-label="${question.title}">
+            <div class="option-group" data-target="${answerId}">
+              ${question.options.map(option => `
+                <button class="option-btn" type="button" data-target="${answerId}" data-value="${option}" aria-label="${option}">
+                  ${option}
+                </button>
+              `).join('')}
             </div>
-          </label>
-          ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
-          <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
-          <div class="answer-actions">
-            <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
-            <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
-            <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
-          </div>
-          <div class="status" id="${statusId}" aria-live="polite"></div>
-        `;
+            <div class="status" id="${statusId}" aria-live="polite"></div>
+          `;
+        } else {
+          card.innerHTML = `
+            <label class="question-label" for="${answerId}">
+              <div class="question-title">
+                <span class="question-title-text">${qNum}. ${question.title}</span>
+                <span class="completion-badge" id="complete-${qNum}">완료</span>
+              </div>
+            </label>
+            ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
+            <textarea id="${answerId}" class="answer-box" placeholder="${question.placeholder}" aria-label="${question.title}"></textarea>
+            <div class="answer-actions">
+              <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 음성 입력">🎤 말하기</button>
+              <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
+              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 넣기">💡 예시</button>
+            </div>
+            <div class="status" id="${statusId}" aria-live="polite"></div>
+          `;
+        }
 
         wrap.appendChild(card);
       });
@@ -725,12 +831,37 @@
         btn.classList.remove('active');
       });
 
+      const optionGroup = document.querySelector(`.option-group[data-target="${targetId}"]`);
+      if (optionGroup) {
+        optionGroup.querySelectorAll('.option-btn').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+      }
+
       saveData();
       updateCompletionState(targetId);
     }
 
     function setupInteractions() {
       document.addEventListener('click', function (e) {
+        const optionBtn = e.target.closest('.option-btn');
+        if (optionBtn) {
+          const targetId = optionBtn.dataset.target;
+          const value = optionBtn.dataset.value;
+          const hiddenInput = document.getElementById(targetId);
+          const group = optionBtn.closest('.option-group');
+
+          if (hiddenInput && group) {
+            hiddenInput.value = value;
+            group.querySelectorAll('.option-btn').forEach(btn => {
+              btn.classList.toggle('selected', btn === optionBtn);
+            });
+            saveData();
+            updateCompletionState(targetId);
+          }
+          return;
+        }
+
         const micButton = e.target.closest('.mic-btn');
         if (micButton) {
           startVoiceInput(micButton.dataset.target, micButton.dataset.status, micButton);
@@ -770,15 +901,20 @@
         };
 
         const whenText = get(1) || 'young adulthood';
-        const placeText = get(2) || 'a meaningful place';
-        const withWhoText = get(3) || 'a loved one';
-        const actionText = get(4) || 'sharing a beautiful moment together';
-        const feelingText = get(5) || 'warm, peaceful, and happy';
+        const timeText = get(2) || 'daytime';
+        const placeText = get(3) || 'a meaningful place';
+        const withWhoText = get(4) || 'a loved one';
+        const actionText = get(5) || 'sharing a beautiful moment together';
+        const clothesText = get(6) || 'simple elegant clothing';
+        const weatherText = get(7) || 'a gentle clear day';
+        const feelingText = get(8) || 'warm, peaceful, and happy';
 
         const prompt = `A cinematic nostalgic scene of a precious life memory.
 
 The illustration shows a Korean person in ${whenText}, at ${placeText}, with ${withWhoText}.
-They are ${actionText}, captured naturally in a heartfelt and beautiful moment.
+They are ${actionText}, wearing ${clothesText}, captured naturally in a heartfelt and beautiful moment.
+The scene takes place in ${timeText}.
+The weather is ${weatherText}.
 The emotional tone feels ${feelingText}, peaceful, loving, and full of memory.
 
 Create a warm and gentle facial expression, graceful posture, and emotionally rich storytelling.
@@ -786,7 +922,7 @@ Make the person look dignified, kind, natural, and deeply human.
 Show a harmonious composition with strong visual focus, soft depth, and natural movement.
 
 Build a beautiful background that matches ${placeText} naturally,
-with atmospheric details, soft wind, subtle light, rich layers, and an elegant sense of place.
+with atmospheric details based on ${timeText} and ${weatherText}, soft wind, subtle light, rich layers, and an elegant sense of place.
 Add cinematic storytelling, visual balance, and a touching life-memory feeling.
 
 Ghibli-inspired, soft watercolor illustration,
@@ -881,6 +1017,14 @@ high quality, elegant, heartfelt, no text`;
 
       document.querySelectorAll('.answer-box').forEach(box => {
         box.value = '';
+      });
+
+      document.querySelectorAll('.option-value').forEach(input => {
+        input.value = '';
+      });
+
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected');
       });
 
       document.querySelectorAll('.example-btn').forEach(btn => {
