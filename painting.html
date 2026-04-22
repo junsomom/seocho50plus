@@ -251,7 +251,8 @@
     }
 
     .mini-btn:active,
-    .tool-btn:active {
+    .tool-btn:active,
+    .option-btn:active {
       transform: scale(0.98);
     }
 
@@ -282,26 +283,61 @@
     }
 
     .option-group {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 10px;
       margin-top: 8px;
     }
 
+    .option-group.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .option-group.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .option-group.two-center {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .option-btn {
       border: none;
-      border-radius: 16px;
-      min-height: 52px;
-      padding: 12px 16px;
-      font-size: 17px;
+      border-radius: 18px;
+      min-height: 64px;
+      padding: 12px 10px;
+      font-size: 16px;
       font-weight: 800;
       cursor: pointer;
-      background: linear-gradient(180deg, #f7efdf 0%, #ead9bc 100%);
+      background: linear-gradient(180deg, #fbf2df 0%, #ecdcbc 100%);
       color: #5d4037;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.45),
         0 4px 8px rgba(0,0,0,0.08);
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    .option-btn .option-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .option-btn .icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .option-btn .label {
+      display: inline-block;
+      word-break: keep-all;
     }
 
     .option-btn.selected {
@@ -309,8 +345,10 @@
       color: #365218;
     }
 
-    .option-btn:active {
-      transform: scale(0.98);
+    .option-btn:hover {
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 6px 12px rgba(0,0,0,0.10);
     }
 
     .status {
@@ -448,10 +486,18 @@
         padding: 10px 6px;
       }
 
+      .option-group.three {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .option-btn {
-        min-height: 50px;
-        font-size: 16px;
-        padding: 10px 14px;
+        min-height: 58px;
+        font-size: 15px;
+        padding: 10px 8px;
+      }
+
+      .option-btn .icon {
+        font-size: 17px;
       }
 
       .tool-btn {
@@ -495,20 +541,43 @@
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
     const CHATGPT_URL = 'https://chat.openai.com/';
-    const STORAGE_KEY = 'painting_html_simple_v2';
+    const STORAGE_KEY = 'painting_html_simple_v3';
 
     const questions = [
       {
         type: 'buttons',
         title: '언제 모습인가요?',
         sub: '하나만 눌러주세요',
-        options: ['어린 시절', '젊은 시절', '중년', '노년']
+        className: 'two',
+        options: [
+          { label: '어린 시절', icon: '👧' },
+          { label: '젊은 시절', icon: '🌸' },
+          { label: '중년', icon: '🍂' },
+          { label: '노년', icon: '👵' }
+        ]
       },
       {
         type: 'buttons',
         title: '언제 시간인가요?',
         sub: '하나만 눌러주세요',
-        options: ['새벽', '아침', '낮', '노을', '저녁']
+        className: 'three',
+        options: [
+          { label: '새벽', icon: '🌙' },
+          { label: '아침', icon: '🌤' },
+          { label: '낮', icon: '☀️' },
+          { label: '노을', icon: '🌇' },
+          { label: '저녁', icon: '🌆' }
+        ]
+      },
+      {
+        type: 'buttons',
+        title: '주인공은 누구인가요?',
+        sub: '하나만 눌러주세요',
+        className: 'two-center',
+        options: [
+          { label: '여성', icon: '👩' },
+          { label: '남성', icon: '👨' }
+        ]
       },
       {
         type: 'text',
@@ -678,10 +747,13 @@
             </label>
             ${question.sub ? `<div class="question-sub">${question.sub}</div>` : ''}
             <input type="hidden" id="${answerId}" class="option-value" aria-label="${question.title}">
-            <div class="option-group" data-target="${answerId}">
+            <div class="option-group ${question.className || ''}" data-target="${answerId}">
               ${question.options.map(option => `
-                <button class="option-btn" type="button" data-target="${answerId}" data-value="${option}" aria-label="${option}">
-                  ${option}
+                <button class="option-btn" type="button" data-target="${answerId}" data-value="${option.label}" aria-label="${option.label}">
+                  <span class="option-inner">
+                    <span class="icon">${option.icon || ''}</span>
+                    <span class="label">${option.label}</span>
+                  </span>
                 </button>
               `).join('')}
             </div>
@@ -902,16 +974,19 @@
 
         const whenText = get(1) || 'young adulthood';
         const timeText = get(2) || 'daytime';
-        const placeText = get(3) || 'a meaningful place';
-        const withWhoText = get(4) || 'a loved one';
-        const actionText = get(5) || 'sharing a beautiful moment together';
-        const clothesText = get(6) || 'simple elegant clothing';
-        const weatherText = get(7) || 'a gentle clear day';
-        const feelingText = get(8) || 'warm, peaceful, and happy';
+        const genderRaw = get(3) || '여성';
+        const placeText = get(4) || 'a meaningful place';
+        const withWhoText = get(5) || 'a loved one';
+        const actionText = get(6) || 'sharing a beautiful moment together';
+        const clothesText = get(7) || 'simple elegant clothing';
+        const weatherText = get(8) || 'a gentle clear day';
+        const feelingText = get(9) || 'warm, peaceful, and happy';
+
+        const genderText = genderRaw.includes('남성') ? 'a Korean man' : 'a Korean woman';
 
         const prompt = `A cinematic nostalgic scene of a precious life memory.
 
-The illustration shows a Korean person in ${whenText}, at ${placeText}, with ${withWhoText}.
+The illustration shows ${genderText} in ${whenText}, at ${placeText}, with ${withWhoText}.
 They are ${actionText}, wearing ${clothesText}, captured naturally in a heartfelt and beautiful moment.
 The scene takes place in ${timeText}.
 The weather is ${weatherText}.
