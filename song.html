@@ -402,7 +402,7 @@
         <button type="button" onclick="selectReasonExample('좋은 일이 있어서', this)">♪ ✨ 좋은 일이 있었어요</button>
       </div>
 
-      <textarea id="reasonInput" placeholder="예: 오늘 마음에 남는 일이 있었어요"></textarea>
+      <textarea id="reasonInput" placeholder="예: 손주를 만나서 기뻤어요 / 옛날 생각이 났어요"></textarea>
 
       <div class="tool-row">
         <button type="button" onclick="toggleVoiceInput('reasonInput', this)">🎤</button>
@@ -436,17 +436,42 @@
     <!-- 4 -->
     <section class="question-block">
       <div class="question-number">4</div>
-      <h2>💿 어떤 스타일의 음악이 좋으세요?</h2>
+      <h2>💿 어떤 음악 장르를 원하세요?</h2>
 
       <div class="grid-2" id="genreButtons">
-        <button class="genre-dongyo" type="button" onclick="setGenre('어린이 동요', this)">🎵 어린이 동요 스타일</button>
-        <button class="genre-7080" type="button" onclick="setGenre('추억의 7080 가요', this)">📻 추억의 7080 가요 스타일</button>
-        <button class="genre-trot" type="button" onclick="setGenre('신나는 트로트', this)">💃 신나는 트로트 스타일</button>
-        <button class="genre-oldpop" type="button" onclick="setGenre('비틀즈풍 영국 팝', this)">🇬🇧 부드러운 팝 스타일</button>
-        <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">👥 아이돌 K-POP 스타일</button>
-        <button class="genre-bandpop" type="button" onclick="setGenre('맑고 감성적인 밴드팝', this)">🎸 감성 밴드팝 스타일</button>
-        <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎼 클래식 가곡 스타일</button>
-        <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🪕 전통 가야금 스타일</button>
+
+        <button class="genre-trot" type="button" onclick="setGenre('신나는 트로트', this)">
+          💃 신나는 트로트
+        </button>
+
+        <button class="genre-7080" type="button" onclick="setGenre('추억의 7080 가요', this)">
+          📻 추억의 7080 가요
+        </button>
+
+        <button class="genre-dongyo" type="button" onclick="setGenre('어린이 동요', this)">
+          🎵 따라 부르기 쉬운 동요
+        </button>
+
+        <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">
+          👥 요즘 K-POP
+        </button>
+
+        <button class="genre-bandpop" type="button" onclick="setGenre('감성 밴드팝', this)">
+          🎸 감성 밴드 음악
+        </button>
+
+        <button class="genre-oldpop" type="button" onclick="setGenre('부드러운 팝', this)">
+          🇬🇧 부드러운 팝 음악
+        </button>
+
+        <button class="genre-gagok" type="button" onclick="setGenre('클래식 가곡', this)">
+          🎼 클래식 가곡
+        </button>
+
+        <button class="genre-gayageum" type="button" onclick="setGenre('전통 국악연주', this)">
+          🪕 전통 국악연주
+        </button>
+
       </div>
     </section>
 
@@ -467,7 +492,7 @@
     <!-- 5 -->
     <section class="question-block">
       <div class="question-number">5</div>
-      <h2>🌈 전체 분위기는 어떤 느낌이 좋을까요?</h2>
+      <h2>🌈 전체 분위기는 어떤 게 좋으세요?</h2>
 
       <div class="grid-2" id="atmosphereButtons">
         <button type="button" onclick="setAtmosphere('신나고 즐거운', this)">🎵 밝고 즐거운 느낌이에요</button>
@@ -643,54 +668,54 @@
       switch (genre) {
         case "어린이 동요":
           return `
-- 멜로디는 단순하고 따라 부르기 쉽게
-- 리듬은 밝고 경쾌하게
-- 어린아이도 이해할 수 있는 쉬운 가사
-- 반복 구간이 있어 기억에 남도록`;
+- 멜로디는 너무 어린아이 노래처럼 단순하지 않게
+- 따라가기 쉽되 유치하지 않게
+- 밝고 따뜻한 흐름을 유지하되 어른도 편안하게 들을 수 있게
+- 반복은 과하지 않게, 자연스럽게 기억에 남도록`;
 
         case "추억의 7080 가요":
           return `
 - 템포는 중간 또는 느림
 - 옛 감성이 느껴지는 따뜻한 멜로디
 - 서정적이고 부드러운 진행
-- 약간의 향수를 자극하는 느낌`;
+- 약간의 향수를 자극하되 촌스럽지 않게`;
 
         case "신나는 트로트":
           return `
 - 템포는 중간~빠름 느낌
 - 리듬감 있고 흥이 나도록
-- 꺾기 창법 느낌 살리기
-- 반복되는 후렴으로 기억에 남게`;
+- 트로트 특유의 맛은 살리되 지나치게 과장되거나 촌스럽지 않게
+- 현대적이고 세련된 감성의 트로트로 구성`;
 
-        case "비틀즈풍 영국 팝":
+        case "부드러운 팝":
           return `
-- 영국 밴드 느낌의 빈티지한 팝 스타일
-- 클래식 밴드 구성 느낌
-- 부드럽고 선명한 멜로디
-- 비틀즈처럼 따뜻하고 기억에 남는 흐름`;
+- 부드럽고 익숙한 팝 스타일
+- 부담 없이 듣기 좋은 자연스러운 흐름
+- 선명하고 편안한 멜로디
+- 감정이 과하지 않게 전달되도록`;
 
         case "아이돌 K-POP":
           return `
 - 세련되고 현대적인 사운드
-- 리듬감 있고 중독성 있는 멜로디
-- 후렴이 강하게 기억되도록 구성
-- 비트 중심의 현대적인 흐름`;
+- 리듬감 있고 귀에 남는 멜로디
+- 후렴이 인상적이되 과하게 유치하거나 반복적이지 않게
+- 깔끔하고 감각적인 흐름`;
 
-        case "맑고 감성적인 밴드팝":
+        case "감성 밴드팝":
           return `
 - 맑고 담백한 보컬 느낌
 - 밴드 중심의 자연스러운 편곡
 - 밝으면서도 감성적인 멜로디
 - 너무 과하지 않고 세련된 흐름`;
 
-        case "감성 클래식 가곡":
+        case "클래식 가곡":
           return `
 - 서정적이고 감정이 깊게 전달되도록
 - 클래식한 성악 스타일
 - 호흡과 흐름을 길게 가져가기
 - 감정이 점진적으로 깊어지도록`;
 
-        case "전통 가야금 연주":
+        case "전통 국악연주":
           return `
 - 전통적인 한국 음악 느낌
 - 여백과 여운을 살린 연주
@@ -732,8 +757,8 @@
       } else if (artist.includes("나훈아")) {
         return `
 - 강한 감정 전달과 무게감 있는 보컬
-- 트로트 특유의 꺾기 창법 느낌
-- 후렴이 강하게 반복되도록 구성`;
+- 트로트 특유의 맛은 살리되 지나치게 과장되지 않게
+- 후렴이 힘 있게 살아나도록 구성`;
       } else if (artist.includes("이미자")) {
         return `
 - 전통가요 특유의 깊고 애잔한 감정
@@ -813,13 +838,13 @@
       const reason = inferReason();
       const artist = document.getElementById("artistInput").value.trim();
       const musicType = state.musicType || "노래";
-      const genre = state.genre || "추억의 7080 가요";
+      const genre = state.genre || "신나는 트로트";
       const extra = state.extraOption || "피아노";
 
       const refinedMood = refineMood(mood);
       const refinedReason = refineReason(reason);
       const genreStyle = getGenreStyle(genre);
-      const moodStyle = getMoodStyle(state.atmosphere);
+      const moodStyle = getMoodStyle(state.atmosphere || "따뜻하고 포근한");
       const artistStyle = musicType === "연주곡"
         ? getArtistStyleForInstrumental(artist)
         : getArtistStyleForSong(artist);
@@ -827,64 +852,101 @@
       let prompt = "";
 
       if (musicType === "연주곡") {
-        prompt = `당신은 감정을 음악으로 표현하는 전문 작곡가입니다.
+        prompt = `당신은 사람의 삶과 감정을 음악으로 표현하는 전문 작곡가입니다.
 
-${refinedMood} 조용히 시작되는 ${genre} 스타일의 연주곡을 만들어 주세요.
+${refinedMood} 자연스럽게 시작되는 ${genre} 스타일의 연주곡을 만들어 주세요.
 
 ${refinedReason}
 
-이 연주곡은 한 장면의 기억이 음악으로 펼쳐지는 느낌이어야 합니다.
-
-[곡의 흐름]
-- 처음에는 잔잔하고 부드럽게 시작해 주세요.
-- 중간에는 감정이 자연스럽게 깊어지도록 해 주세요.
-- 마지막은 따뜻한 여운을 남기며 마무리해 주세요.
-
-전체 분위기는 "${state.atmosphere || "따뜻하고 포근한"}" 느낌으로 유지해 주세요.
-
-${artist ? `${artist}의 감성을 참고하여 분위기를 구성해 주세요. 단, 기존 곡을 따라하지 말고 새로운 음악으로 만들어 주세요.` : ""}
+${artist ? `${artist}의 감성과 분위기를 참고하되 특정 곡을 따라하지 말고 새로운 음악으로 만들어 주세요.` : ""}
 
 ${artistStyle}
-
 ${genreStyle}
 ${moodStyle}
 
-[연주 표현]
-- 멜로디는 부드럽고 자연스럽게 흐르도록 구성해 주세요.
-- 감정이 서서히 깊어지도록 표현해 주세요.
-- 중심 악기는 ${extra}로 해 주세요.
-- 가사 없이 순수 연주곡으로 만들어 주세요.
-- 사람 목소리, 허밍, 코러스 없이 악기 연주만 나오게 해 주세요.`;
+[전체곡 기반 생성]
+이 음악은 30초짜리 곡이 아니라,
+완성된 하나의 연주곡을 먼저 만든 후 그 중 일부를 들려주는 형태로 만들어 주세요.
+이미 흐르고 있는 음악의 한 장면처럼 자연스럽게 들리게 해 주세요.
+짧은 샘플이 아니라, 구조와 흐름을 가진 작품의 일부처럼 느껴지게 해 주세요.
+
+[멜로디 표현]
+멜로디는 단순 반복이 아니라,
+작은 변화가 이어지며 자연스럽게 발전하도록 만들어 주세요.
+같은 패턴은 그대로 반복하지 말고 미묘하게 변형해 주세요.
+계단식 진행뿐 아니라 자연스러운 도약과 리듬 변화를 포함해 주세요.
+사람의 말하듯 호흡을 따라 흐르게 해 주세요.
+과장된 고음 없이 편안한 음역에서 감정을 표현해 주세요.
+전체적으로 부드럽고 세련된 흐름이 느껴지게 해 주세요.
+
+[감정 표현]
+이 음악은 한 사람의 기억과 삶이 떠오르는 연주처럼 만들어 주세요.
+감정을 직접 드러내기보다 자연스럽게 느껴지게 해 주세요.
+과거의 기억이 스쳐 지나가는 느낌과 지금의 감정이 이어지는 흐름을 담아 주세요.
+설명보다 여운이 남도록 만들어 주세요.
+
+[작품성 강화]
+이 음악은 단순한 배경음이 아니라,
+한 사람의 삶 속 한 순간이 담긴 작품처럼 들리게 만들어 주세요.
+듣는 사람이 자신의 경험을 떠올릴 수 있도록 공간과 여백을 남겨 주세요.
+마지막은 설명하지 않고 여운이 남도록 마무리해 주세요.
+
+[영화 느낌]
+이 음악은 영화 속 한 장면에서 흐르는 배경음악처럼 들리게 만들어 주세요.
+
+중심 악기는 ${extra}로 해 주세요.
+사람 목소리 없이 순수 연주곡으로 만들어 주세요.`;
       } else {
-        prompt = `당신은 사람의 마음을 음악으로 섬세하게 표현하는 전문 작곡가입니다.
+        prompt = `당신은 사람의 삶과 감정을 음악으로 표현하는 전문 작곡가입니다.
 
 ${refinedMood} 자연스럽게 시작되는 ${genre} 스타일의 노래를 만들어 주세요.
 
 ${refinedReason}
 
-이 노래는 한 사람의 이야기가 음악으로 표현되는 흐름을 가져야 합니다.
-
-[곡의 흐름]
-- 처음에는 잔잔하고 부드럽게 시작하며 감정을 천천히 전달해 주세요.
-- 중간 부분에서는 감정이 조금 더 살아나며 자연스럽게 확장되도록 해 주세요.
-- 후렴에서는 감정이 가장 잘 느껴지도록 하고, 쉽게 따라 부를 수 있게 만들어 주세요.
-- 마지막은 따뜻하고 여운이 남도록 부드럽게 마무리해 주세요.
-
-전체 분위기는 "${state.atmosphere || "따뜻하고 포근한"}" 느낌으로 유지해 주세요.
-
-${artist ? `${artist}의 감성과 분위기를 참고하되, 특정 곡을 따라하지 말고 새로운 음악으로 만들어 주세요.
-가수의 스타일은 전체 분위기와 보컬 흐름에 자연스럽게 반영해 주세요.` : ""}
+${artist ? `${artist}의 감성과 분위기를 참고하되 특정 곡을 따라하지 말고 새로운 음악으로 만들어 주세요.` : ""}
 
 ${artistStyle}
-
 ${genreStyle}
 ${moodStyle}
 
-[음악 표현]
-- 멜로디는 자연스럽고 기억에 남도록 구성해 주세요.
-- 가사는 짧고 쉽게 따라 부를 수 있게 만들어 주세요.
-- 감정이 과하지 않고 자연스럽게 전달되도록 해 주세요.
-- 전체 곡이 하나의 이야기처럼 이어지도록 구성해 주세요.`;
+[전체곡 기반 생성]
+이 음악은 30초짜리 곡이 아니라,
+완성된 하나의 노래를 먼저 만든 후 그 중 일부를 들려주는 형태로 만들어 주세요.
+이미 진행 중인 음악의 한 부분처럼 자연스럽게 들리게 해 주세요.
+짧은 샘플이 아니라, 구조와 흐름을 가진 작품의 일부처럼 느껴지게 해 주세요.
+
+[멜로디 표현]
+멜로디는 단순 반복이 아니라,
+작은 변화가 이어지며 자연스럽게 발전하도록 만들어 주세요.
+같은 패턴은 그대로 반복하지 말고 미묘하게 변형해 주세요.
+계단식 진행뿐 아니라 자연스러운 도약과 리듬 변화를 포함해 주세요.
+사람의 말하듯 호흡을 따라 흐르게 해 주세요.
+과장된 고음 없이 편안한 음역에서 감정을 표현해 주세요.
+전체적으로 부드럽고 세련된 흐름이 느껴지게 해 주세요.
+
+[가사 표현]
+가사는 쉬운 한국어로 쓰되 유치하지 않게 해 주세요.
+감정을 직접 설명하기보다,
+짧은 장면이나 일상적인 표현으로 자연스럽게 전달해 주세요.
+뻔한 표현과 과장된 감정은 피하고 담백하게 표현해 주세요.
+어른의 삶과 기억이 자연스럽게 느껴지도록 품위 있게 써 주세요.
+
+[감정 흐름]
+이 노래는 한 사람의 기억과 삶이 떠오르는 이야기처럼 만들어 주세요.
+처음은 담백하게,
+중간은 감정이 조금 깊어지게,
+마지막은 여운이 남도록 구성해 주세요.
+과거의 기억이 스쳐 지나가는 느낌과 지금의 감정이 자연스럽게 이어지게 해 주세요.
+
+[작품성 강화]
+이 음악은 단순한 감정 표현이 아니라,
+한 사람의 삶 속 한 순간이 담긴 작품처럼 들리게 만들어 주세요.
+듣는 사람이 자신의 경험을 떠올릴 수 있도록 공간과 여백을 남겨 주세요.
+감정을 크게 설명하기보다 조용히 느껴지게 해 주세요.
+전체적으로 따뜻하고 품위 있는 어른의 노래처럼 만들어 주세요.
+
+[영화 느낌]
+이 음악은 영화 속 한 장면처럼 들리게 만들어 주세요.`;
       }
 
       document.getElementById("promptOutput").value = prompt;
@@ -1036,6 +1098,14 @@ ${moodStyle}
       }
     });
 
+    window.addEventListener("load", function() {
+      const defaultBtn = document.querySelector("#genreButtons button");
+      if (defaultBtn) {
+        defaultBtn.classList.add("active");
+        state.genre = "신나는 트로트";
+      }
+    });
+
     function clearAll() {
       if (!confirm("지금까지 쓴 내용을 모두 지울까요?")) return;
 
@@ -1061,6 +1131,12 @@ ${moodStyle}
       state.extraOption = "";
       state.genre = "";
       state.atmosphere = "";
+
+      const defaultBtn = document.querySelector("#genreButtons button");
+      if (defaultBtn) {
+        defaultBtn.classList.add("active");
+        state.genre = "신나는 트로트";
+      }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
