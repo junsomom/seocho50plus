@@ -252,7 +252,8 @@
 
     .mini-btn:active,
     .tool-btn:active,
-    .option-btn:active {
+    .option-btn:active,
+    .ai-card:active {
       transform: scale(0.98);
     }
 
@@ -365,11 +366,6 @@
       gap: 10px;
     }
 
-    .open-row {
-      display: flex;
-      gap: 10px;
-    }
-
     .tool-btn {
       border: none;
       border-radius: 18px;
@@ -382,15 +378,6 @@
         inset 0 1px 0 rgba(255,255,255,0.45),
         0 4px 8px rgba(0,0,0,0.08);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .tool-btn.half {
-      flex: 1;
-    }
-
-    .tool-btn.big {
-      min-height: 72px;
-      font-size: 20px;
     }
 
     .tool-btn.prompt {
@@ -442,6 +429,89 @@
       text-align: right;
       margin-top: 4px;
       font-weight: 700;
+    }
+
+    .ai-card-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ai-section-title {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .ai-card {
+      width: 100%;
+      border: none;
+      border-radius: 22px;
+      padding: 16px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.45),
+        0 5px 12px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .ai-card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .ai-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .ai-name {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .ai-badge {
+      margin-left: auto;
+      background: #ffe9a8;
+      color: #7a5a00;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .ai-desc {
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .ai-action {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .ai-card-main {
+      background: linear-gradient(180deg, #dcefd7 0%, #cfe7c8 100%);
+      color: #2d5b2f;
+      min-height: 108px;
+    }
+
+    .ai-card-sub {
+      background: linear-gradient(180deg, #ccece3 0%, #b7dfd3 100%);
+      color: #1f5c52;
+      min-height: 96px;
+    }
+
+    .ai-card-small {
+      background: linear-gradient(180deg, #ece8f8 0%, #ddd6f1 100%);
+      color: #4b3f72;
+      min-height: 82px;
+      opacity: 0.95;
     }
 
     @keyframes pulse {
@@ -520,19 +590,43 @@
         padding: 12px 14px;
       }
 
-      .open-row {
-        flex-direction: row;
-      }
-
       .output-box {
         font-size: 16px;
         min-height: 280px;
+      }
+
+      .ai-section-title {
+        font-size: 17px;
+      }
+
+      .ai-name {
+        font-size: 20px;
+      }
+
+      .ai-desc {
+        font-size: 14px;
+      }
+
+      .ai-action {
+        font-size: 17px;
+      }
+
+      .ai-card-main {
+        min-height: 100px;
+      }
+
+      .ai-card-sub {
+        min-height: 90px;
+      }
+
+      .ai-card-small {
+        min-height: 76px;
       }
     }
   </style>
 </head>
 <body>
-  <header>🎨 3주차 그림선물상자</header>
+  <header>🎨 3주차 그림주머니</header>
 
   <div class="container">
     <section class="panel">
@@ -552,9 +646,36 @@
 
       <button class="tool-btn prompt" id="copyPromptBtn" type="button" aria-label="프롬프트 복사하기">📋 프롬프트 복사하기</button>
 
-      <div class="open-row">
-        <button class="tool-btn chatgpt half big" id="openChatGPTBtn" type="button" aria-label="ChatGPT 가서 붙여넣기">🤖 ChatGPT 가서 붙여넣기</button>
-        <button class="tool-btn gemcopy half big" id="openFlowBtn" type="button" aria-label="구글 플로우 가서 붙여넣기">🌈 구글 플로우 가서 붙여넣기</button>
+      <div class="ai-card-section">
+        <div class="ai-section-title">어디에서 그림을 만들어볼까요?</div>
+
+        <button class="ai-card ai-card-main" id="openGeminiBtn" type="button" aria-label="재미나이 가서 붙여넣기">
+          <div class="ai-card-top">
+            <span class="ai-icon">🤖</span>
+            <span class="ai-name">재미나이</span>
+            <span class="ai-badge">추천</span>
+          </div>
+          <div class="ai-desc">우리가 해봤던 AI예요. 가장 쉽고 편하게 시작할 수 있어요.</div>
+          <div class="ai-action">재미나이 가서 붙여넣기</div>
+        </button>
+
+        <button class="ai-card ai-card-sub" id="openFlowBtn" type="button" aria-label="구글 플로우 가서 붙여넣기">
+          <div class="ai-card-top">
+            <span class="ai-icon">🌈</span>
+            <span class="ai-name">구글 플로우</span>
+          </div>
+          <div class="ai-desc">다른 느낌의 그림을 보고 싶은 분께 좋아요.</div>
+          <div class="ai-action">구글 플로우 가서 붙여넣기</div>
+        </button>
+
+        <button class="ai-card ai-card-small" id="openChatGPTBtn" type="button" aria-label="ChatGPT 가서 붙여넣기">
+          <div class="ai-card-top">
+            <span class="ai-icon">💬</span>
+            <span class="ai-name">ChatGPT</span>
+          </div>
+          <div class="ai-desc">선택해서 써볼 수 있어요.</div>
+          <div class="ai-action">ChatGPT 가서 붙여넣기</div>
+        </button>
       </div>
 
       <button class="tool-btn reset" id="resetBtn" type="button" aria-label="모든 내용 지우기">🗑 모두 지우기</button>
@@ -564,7 +685,8 @@
   <script>
     const FLOW_URL = 'https://labs.google/fx/ko/tools/flow';
     const CHATGPT_URL = 'https://chat.openai.com/';
-    const STORAGE_KEY = 'painting_html_simple_v5';
+    const GEMINI_URL = 'https://gemini.google.com/';
+    const STORAGE_KEY = 'painting_html_simple_v6';
 
     const questions = [
       {
@@ -1018,54 +1140,129 @@
       return `soft watercolor illustration, simple children's book illustration, pastel colors, gentle storybook style, soft edges, warm and dreamy mood, clearly not realistic, no text`;
     }
 
+    function getCommonValues() {
+      const get = (n) => {
+        const el = document.getElementById(`q${n}`);
+        return el ? el.value.trim() : '';
+      };
+
+      const whenText = get(1) || 'young adulthood';
+      const timeText = get(2) || 'daytime';
+      const genderRaw = get(3) || '여성';
+      const styleRaw = get(4) || '따뜻한 동화';
+      const placeText = get(5) || 'a meaningful place';
+      const withWhoText = get(6) || 'a loved one';
+      const actionText = get(7) || 'sharing a beautiful moment together';
+      const clothesText = get(8) || 'simple elegant clothing';
+      const weatherText = get(9) || 'a gentle clear day';
+      const feelingText = get(10) || 'warm, peaceful, and happy';
+
+      return {
+        whenText,
+        timeText,
+        genderRaw,
+        styleRaw,
+        placeText,
+        withWhoText,
+        actionText,
+        clothesText,
+        weatherText,
+        feelingText
+      };
+    }
+
+    function getGeminiPrompt() {
+      const {
+        whenText, timeText, genderRaw, styleRaw, placeText,
+        withWhoText, actionText, clothesText, weatherText, feelingText
+      } = getCommonValues();
+
+      const genderText = genderRaw.includes('남성') ? 'a Korean man' : 'a Korean woman';
+      const stylePrompt = getStylePrompt(styleRaw);
+
+      return `A warm and emotional storybook illustration of a precious life memory.
+
+The main character is ${genderText} in ${whenText}.
+The scene takes place at ${placeText}, during ${timeText}.
+They are with ${withWhoText}, and they are ${actionText}.
+They are wearing ${clothesText}.
+
+The weather is ${weatherText}, and the feeling of this moment is ${feelingText}.
+
+This should feel like a gentle and beautiful picture book scene.
+Make it warm, nostalgic, emotional, and easy to understand.
+
+Style: ${styleRaw}
+${stylePrompt}`;
+    }
+
+    function getFlowPrompt() {
+      const {
+        whenText, timeText, genderRaw, styleRaw, placeText,
+        withWhoText, actionText, clothesText, weatherText, feelingText
+      } = getCommonValues();
+
+      const genderText = genderRaw.includes('남성') ? 'Korean man' : 'Korean woman';
+      const stylePrompt = getStylePrompt(styleRaw)
+        .replace(/\n/g, ', ')
+        .replace(/\./g, '');
+
+      return `${genderText}, ${whenText}, ${placeText}, ${timeText},
+with ${withWhoText}, ${actionText},
+wearing ${clothesText},
+${weatherText}, ${feelingText},
+beautiful background, emotional atmosphere,
+Style: ${styleRaw}, ${stylePrompt}`;
+    }
+
+    function getChatGPTPrompt() {
+      const {
+        whenText, timeText, genderRaw, styleRaw, placeText,
+        withWhoText, actionText, clothesText, weatherText, feelingText
+      } = getCommonValues();
+
+      const genderText = genderRaw.includes('남성') ? 'a Korean man' : 'a Korean woman';
+      const stylePrompt = getStylePrompt(styleRaw);
+
+      return `A warm illustration of a precious life memory.
+
+The scene shows ${genderText} in ${whenText}, at ${placeText}, during ${timeText}.
+They are with ${withWhoText}, and they are ${actionText}.
+They are wearing ${clothesText}.
+
+The weather is ${weatherText}, and the mood is ${feelingText}.
+
+Create a gentle and emotional composition with a beautiful background.
+
+Style: ${styleRaw}
+${stylePrompt}`;
+    }
+
     function compilePrompt() {
       try {
         const output = document.getElementById('compiledOutput');
         output.textContent = '프롬프트를 만드는 중입니다...';
 
-        const get = (n) => {
-          const el = document.getElementById(`q${n}`);
-          return el ? el.value.trim() : '';
-        };
-
-        const whenText = get(1) || 'young adulthood';
-        const timeText = get(2) || 'daytime';
-        const genderRaw = get(3) || '여성';
-        const styleRaw = get(4) || '따뜻한 동화';
-        const placeText = get(5) || 'a meaningful place';
-        const withWhoText = get(6) || 'a loved one';
-        const actionText = get(7) || 'sharing a beautiful moment together';
-        const clothesText = get(8) || 'simple elegant clothing';
-        const weatherText = get(9) || 'a gentle clear day';
-        const feelingText = get(10) || 'warm, peaceful, and happy';
-
-        const genderText = genderRaw.includes('남성') ? 'a Korean man' : 'a Korean woman';
-        const stylePrompt = getStylePrompt(styleRaw);
-
-        const prompt = `A cinematic nostalgic scene of a precious life memory.
-
-The illustration shows ${genderText} in ${whenText}, at ${placeText}, with ${withWhoText}.
-They are ${actionText}, wearing ${clothesText}, captured naturally in a heartfelt and beautiful moment.
-The scene takes place in ${timeText}.
-The weather is ${weatherText}.
-The emotional tone feels ${feelingText}, peaceful, loving, and full of memory.
-
-Create a warm and gentle facial expression, graceful posture, and emotionally rich storytelling.
-Make the character look simple, warm, and friendly, with soft and gentle features.
-Show a harmonious composition with strong visual focus, soft depth, and natural movement.
-
-Build a beautiful background that matches ${placeText} naturally,
-with atmospheric details based on ${timeText} and ${weatherText}, soft wind, subtle light, rich layers, and an elegant sense of place.
-Add cinematic storytelling, visual balance, and a touching life-memory feeling.
-
-Style: ${styleRaw}
-${stylePrompt}`;
-
+        const prompt = getGeminiPrompt();
         output.textContent = prompt;
         saveData();
       } catch (error) {
         console.error('프롬프트 생성 실패:', error);
         document.getElementById('compiledOutput').textContent = '프롬프트 생성 중 오류가 생겼습니다.';
+      }
+    }
+
+    async function copyTextToClipboard(text, successMessage) {
+      try {
+        await navigator.clipboard.writeText(text);
+        if (successMessage) {
+          alert(successMessage);
+        }
+        return true;
+      } catch (error) {
+        console.error('복사 실패:', error);
+        alert('복사가 잘 되지 않았어요. 다시 눌러주세요.');
+        return false;
       }
     }
 
@@ -1077,14 +1274,7 @@ ${stylePrompt}`;
       }
 
       saveData();
-
-      try {
-        await navigator.clipboard.writeText(text);
-        alert('프롬프트를 복사했어요. 아래에서 원하는 곳을 눌러 붙여넣기 해주세요.');
-      } catch (error) {
-        console.error('복사 실패:', error);
-        alert('복사가 잘 되지 않았어요. 다시 눌러주세요.');
-      }
+      await copyTextToClipboard(text, '프롬프트를 복사했어요. 아래에서 원하는 곳을 눌러 붙여넣기 해주세요.');
     }
 
     function showToast(message) {
@@ -1097,29 +1287,43 @@ ${stylePrompt}`;
       }, 3000);
     }
 
-    function openChatGPTOnly() {
-      const text = document.getElementById('compiledOutput').textContent.trim();
-      if (!text || text === '프롬프트를 만드는 중입니다...') {
+    async function openGeminiOnly() {
+      const current = document.getElementById('compiledOutput').textContent.trim();
+      if (!current || current === '프롬프트를 만드는 중입니다...') {
         alert('먼저 그림 주문서 만들기를 눌러주세요.');
         return;
       }
 
-      const newWindow = window.open(CHATGPT_URL, '_blank');
+      const geminiPrompt = getGeminiPrompt();
+      const copied = await copyTextToClipboard(
+        geminiPrompt,
+        '재미나이용 프롬프트를 복사했어요 😊'
+      );
+      if (!copied) return;
+
+      const newWindow = window.open(GEMINI_URL, '_blank');
       if (!newWindow) {
         alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
         return;
       }
 
-      alert('ChatGPT 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
-      showToast('입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
+      alert('재미나이 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
+      showToast('재미나이 입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
     }
 
-    function openFlowOnly() {
-      const text = document.getElementById('compiledOutput').textContent.trim();
-      if (!text || text === '프롬프트를 만드는 중입니다...') {
+    async function openFlowOnly() {
+      const current = document.getElementById('compiledOutput').textContent.trim();
+      if (!current || current === '프롬프트를 만드는 중입니다...') {
         alert('먼저 그림 주문서 만들기를 눌러주세요.');
         return;
       }
+
+      const flowPrompt = getFlowPrompt();
+      const copied = await copyTextToClipboard(
+        flowPrompt,
+        '구글 플로우용 프롬프트를 복사했어요 😊'
+      );
+      if (!copied) return;
 
       const newWindow = window.open(FLOW_URL, '_blank');
       if (!newWindow) {
@@ -1128,7 +1332,31 @@ ${stylePrompt}`;
       }
 
       alert('Flow 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
-      showToast('입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
+      showToast('Flow 입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
+    }
+
+    async function openChatGPTOnly() {
+      const current = document.getElementById('compiledOutput').textContent.trim();
+      if (!current || current === '프롬프트를 만드는 중입니다...') {
+        alert('먼저 그림 주문서 만들기를 눌러주세요.');
+        return;
+      }
+
+      const chatgptPrompt = getChatGPTPrompt();
+      const copied = await copyTextToClipboard(
+        chatgptPrompt,
+        'ChatGPT용 프롬프트를 복사했어요 😊'
+      );
+      if (!copied) return;
+
+      const newWindow = window.open(CHATGPT_URL, '_blank');
+      if (!newWindow) {
+        alert('새 창이 차단되었어요. 브라우저 설정을 확인해주세요.');
+        return;
+      }
+
+      alert('ChatGPT 입력칸을 1~2초 누르신 후\n\'붙여넣기\'를 눌러주세요 😊');
+      showToast('ChatGPT 입력칸을 1~2초 누르신 후 붙여넣기 하세요 😊');
     }
 
     function resetAll() {
@@ -1183,8 +1411,9 @@ ${stylePrompt}`;
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
     document.getElementById('copyPromptBtn').addEventListener('click', copyPromptOnly);
-    document.getElementById('openChatGPTBtn').addEventListener('click', openChatGPTOnly);
+    document.getElementById('openGeminiBtn').addEventListener('click', openGeminiOnly);
     document.getElementById('openFlowBtn').addEventListener('click', openFlowOnly);
+    document.getElementById('openChatGPTBtn').addEventListener('click', openChatGPTOnly);
     document.getElementById('resetBtn').addEventListener('click', resetAll);
   </script>
 
