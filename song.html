@@ -393,7 +393,7 @@
     <!-- 2 -->
     <section class="question-block">
       <div class="question-number">2</div>
-      <h2>🌿 어떤 순간이 떠오르시나요?</h2>
+      <h2>🌿 어떤 일이 떠오르세요?</h2>
 
       <div class="grid-2" id="reasonExampleButtons">
         <button type="button" onclick="selectReasonExample('손주를 만나서', this)">🎵 👶 손주를 떠올렸어요</button>
@@ -436,17 +436,17 @@
     <!-- 4 -->
     <section class="question-block">
       <div class="question-number">4</div>
-      <h2>💿 어떤 느낌의 음악이 좋으세요?</h2>
+      <h2>💿 어떤 스타일의 음악이 좋으세요?</h2>
 
       <div class="grid-2" id="genreButtons">
-        <button class="genre-dongyo" type="button" onclick="setGenre('어린이 동요', this)">🎵 밝고 쉽게 따라 부르는 느낌</button>
-        <button class="genre-7080" type="button" onclick="setGenre('추억의 7080 가요', this)">📻 추억이 떠오르는 느낌</button>
-        <button class="genre-trot" type="button" onclick="setGenre('신나는 트로트', this)">💃 신나고 흥겨운 느낌</button>
-        <button class="genre-oldpop" type="button" onclick="setGenre('비틀즈풍 영국 팝', this)">🇬🇧 부드러운 팝 느낌</button>
-        <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">👥 요즘 감성의 음악</button>
-        <button class="genre-bandpop" type="button" onclick="setGenre('맑고 감성적인 밴드팝', this)">🎸 맑고 감성적인 밴드 느낌</button>
-        <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎼 깊고 감동적인 느낌</button>
-        <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🪕 잔잔한 전통 느낌</button>
+        <button class="genre-dongyo" type="button" onclick="setGenre('어린이 동요', this)">🎵 어린이 동요 스타일</button>
+        <button class="genre-7080" type="button" onclick="setGenre('추억의 7080 가요', this)">📻 추억의 7080 가요 스타일</button>
+        <button class="genre-trot" type="button" onclick="setGenre('신나는 트로트', this)">💃 신나는 트로트 스타일</button>
+        <button class="genre-oldpop" type="button" onclick="setGenre('비틀즈풍 영국 팝', this)">🇬🇧 부드러운 팝 스타일</button>
+        <button class="genre-kpop" type="button" onclick="setGenre('아이돌 K-POP', this)">👥 아이돌 K-POP 스타일</button>
+        <button class="genre-bandpop" type="button" onclick="setGenre('맑고 감성적인 밴드팝', this)">🎸 감성 밴드팝 스타일</button>
+        <button class="genre-gagok" type="button" onclick="setGenre('감성 클래식 가곡', this)">🎼 클래식 가곡 스타일</button>
+        <button class="genre-gayageum" type="button" onclick="setGenre('전통 가야금 연주', this)">🪕 전통 가야금 스타일</button>
       </div>
     </section>
 
@@ -545,10 +545,13 @@
 
     function clearMoodField() {
       document.getElementById("moodEtc").value = "";
+      state.mood = "";
+      clearActive("#moodButtons button");
     }
 
     function clearReasonField() {
       document.getElementById("reasonInput").value = "";
+      state.reason = "";
       clearActive("#reasonExampleButtons button");
     }
 
@@ -801,6 +804,11 @@
     }
 
     function buildPrompt() {
+      if (!state.musicType) {
+        alert("먼저 노래 또는 연주곡을 선택해주세요 😊");
+        return;
+      }
+
       const mood = inferMood();
       const reason = inferReason();
       const artist = document.getElementById("artistInput").value.trim();
@@ -907,7 +915,9 @@ ${moodStyle}
       }
 
       const openGemini = () => {
-        window.location.href = "https://gemini.google.com/";
+        setTimeout(() => {
+          window.location.href = "https://gemini.google.com/";
+        }, 200);
       };
 
       if (navigator.clipboard && window.isSecureContext) {
@@ -953,7 +963,7 @@ ${moodStyle}
         return;
       }
 
-      if (isRecording) {
+      if (recognition && isRecording) {
         if (currentFieldId === fieldId) {
           recognition.stop();
           return;
@@ -984,6 +994,16 @@ ${moodStyle}
           transcript += event.results[i][0].transcript;
         }
         field.value = (baseText + transcript).trim();
+
+        if (fieldId === "moodEtc") {
+          state.mood = field.value.trim();
+          clearActive("#moodButtons button");
+        }
+
+        if (fieldId === "reasonInput") {
+          state.reason = field.value.trim();
+          clearActive("#reasonExampleButtons button");
+        }
       };
 
       recognition.onend = resetRecording;
@@ -1002,7 +1022,23 @@ ${moodStyle}
       currentFieldId = null;
     }
 
+    document.getElementById("moodEtc").addEventListener("input", function() {
+      state.mood = this.value.trim();
+      if (this.value.trim()) {
+        clearActive("#moodButtons button");
+      }
+    });
+
+    document.getElementById("reasonInput").addEventListener("input", function() {
+      state.reason = this.value.trim();
+      if (this.value.trim()) {
+        clearActive("#reasonExampleButtons button");
+      }
+    });
+
     function clearAll() {
+      if (!confirm("지금까지 쓴 내용을 모두 지울까요?")) return;
+
       if (recognition && isRecording) recognition.stop();
 
       document.getElementById("moodEtc").value = "";
