@@ -303,6 +303,11 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
+      margin-top: 10px;
+    }
+
+    .style-options.hidden {
+      display: none;
     }
 
     .style-btn {
@@ -322,6 +327,25 @@
     .style-btn.selected {
       background: var(--primary);
       color: white;
+    }
+
+    .selected-style-box {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background: #fff8e1;
+      color: #5d4037;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .style-help {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.5;
     }
 
     .tool-section {
@@ -488,23 +512,31 @@
 
       <div class="style-section">
         <div class="style-card">
-          <div class="style-title">어떤 느낌의 자서전 그림책으로 만들까요?</div>
-          <div class="style-options" id="storyMoodOptions">
-            <button type="button" class="style-btn selected" data-group="storyMood" data-value="밝고 생기 있는 이야기">😊 밝고 생기 있는 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="따뜻하고 감동적인 이야기">🌷 따뜻하고 감동적인 이야기</button>
-            <button type="button" class="style-btn" data-group="storyMood" data-value="희망이 느껴지는 이야기">🌈 희망이 느껴지는 이야기</button>
-          </div>
-          <input type="hidden" id="storyMood" value="밝고 생기 있는 이야기" />
-        </div>
-
-        <div class="style-card">
           <div class="style-title">그림은 어떤 느낌이 좋으세요?</div>
-          <div class="style-options" id="imageStyleOptions">
-            <button type="button" class="style-btn selected" data-group="imageStyle" data-value="따뜻한 동화 그림">🌿 따뜻한 동화 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="색연필 손그림">🎨 색연필 손그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-value="밝고 귀여운 그림">🌸 밝고 귀여운 그림</button>
+
+          <button type="button" class="tool-btn prompt" id="toggleImageStyleBtn">
+            🎨 그림 느낌 고르기
+          </button>
+
+          <div id="selectedImageStyleText" class="selected-style-box" aria-live="polite">
+            선택된 그림: 🌿 수채화 그림
           </div>
-          <input type="hidden" id="imageStyle" value="따뜻한 동화 그림" />
+
+          <div class="style-help">
+            픽셀 그림은 게임처럼 네모네모한 그림, 점토 인형 그림은 찰흙 느낌, 뜨개질 느낌 그림은 실로 만든 느낌입니다.
+          </div>
+
+          <div class="style-options hidden" id="imageStyleOptions">
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-label="🌿 수채화 그림" data-value="soft watercolor children's book illustration">🌿 수채화 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="🟩 픽셀 그림" data-value="pixel art style illustration">🟩 픽셀 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="💬 만화 그림" data-value="comic book style illustration, expressive characters">💬 만화 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="🧸 점토 인형 그림" data-value="claymation style, soft handmade texture">🧸 점토 인형 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="🧶 뜨개질 느낌 그림" data-value="crochet style, knitted handmade texture">🧶 뜨개질 느낌 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="🖍 색칠공부 그림" data-value="coloring book style, black outline, no color">🖍 색칠공부 그림</button>
+          </div>
+
+          <input type="hidden" id="imageStyle" value="soft watercolor children's book illustration" />
+          <input type="hidden" id="imageStyleLabel" value="🌿 수채화 그림" />
         </div>
       </div>
 
@@ -524,7 +556,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final';
+    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final_style_only';
 
     const questions = [
       {
@@ -625,12 +657,12 @@
           data[box.id] = box.value;
         });
 
-        const storyMood = document.getElementById('storyMood');
         const imageStyle = document.getElementById('imageStyle');
+        const imageStyleLabel = document.getElementById('imageStyleLabel');
         const compiledOutput = document.getElementById('compiledOutput');
 
-        if (storyMood) data.storyMood = storyMood.value;
         if (imageStyle) data.imageStyle = imageStyle.value;
+        if (imageStyleLabel) data.imageStyleLabel = imageStyleLabel.value;
         if (compiledOutput) data.compiledOutput = compiledOutput.textContent;
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -680,11 +712,31 @@
       });
     }
 
+    function updateSelectedImageStyleText() {
+      const label = document.getElementById('imageStyleLabel')?.value || '🌿 수채화 그림';
+      const selectedText = document.getElementById('selectedImageStyleText');
+      if (selectedText) {
+        selectedText.textContent = `선택된 그림: ${label}`;
+      }
+    }
+
+    function setupImageStyleToggle() {
+      const toggleBtn = document.getElementById('toggleImageStyleBtn');
+      const list = document.getElementById('imageStyleOptions');
+
+      if (!toggleBtn || !list) return;
+
+      toggleBtn.addEventListener('click', function () {
+        list.classList.toggle('hidden');
+      });
+    }
+
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
           updateAllCompletionStates();
+          updateSelectedImageStyleText();
           return;
         }
 
@@ -697,15 +749,6 @@
           }
         });
 
-        if (data.storyMood) {
-          const storyMoodInput = document.getElementById('storyMood');
-          if (storyMoodInput) storyMoodInput.value = data.storyMood;
-
-          document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
-            btn.classList.toggle('selected', btn.dataset.value === data.storyMood);
-          });
-        }
-
         if (data.imageStyle) {
           const imageStyleInput = document.getElementById('imageStyle');
           if (imageStyleInput) imageStyleInput.value = data.imageStyle;
@@ -713,6 +756,11 @@
           document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
             btn.classList.toggle('selected', btn.dataset.value === data.imageStyle);
           });
+        }
+
+        if (data.imageStyleLabel) {
+          const imageStyleLabelInput = document.getElementById('imageStyleLabel');
+          if (imageStyleLabelInput) imageStyleLabelInput.value = data.imageStyleLabel;
         }
 
         if (data.compiledOutput) {
@@ -724,6 +772,7 @@
 
         refreshGenderSelections();
         updateAllCompletionStates();
+        updateSelectedImageStyleText();
       } catch (error) {
         console.error('불러오기 실패:', error);
       }
@@ -933,6 +982,17 @@
 
       if (buttonEl) {
         buttonEl.classList.add('selected');
+
+        if (group === 'imageStyle') {
+          const label = buttonEl.dataset.label || buttonEl.textContent.trim();
+          const labelInput = document.getElementById('imageStyleLabel');
+          if (labelInput) labelInput.value = label;
+
+          updateSelectedImageStyleText();
+
+          const list = document.getElementById('imageStyleOptions');
+          if (list) list.classList.add('hidden');
+        }
       }
 
       saveData();
@@ -992,22 +1052,28 @@
           return el ? el.value.trim() : '';
         };
 
-        const storyMood = document.getElementById('storyMood')?.value || '따뜻하고 감동적인 이야기';
-        const imageStyle = document.getElementById('imageStyle')?.value || '따뜻한 동화 그림';
+        const imageStyle = document.getElementById('imageStyle')?.value || "soft watercolor children's book illustration";
 
         const prompt = `어르신 그림책 만들기 수업입니다.
 
 “나의 인생을 담은 자서전 그림책”을 만들어 주세요.
 
-당신은 어르신의 실제 삶을 따뜻하고 생생하게 담아내는 전문 그림책 작가입니다.
+You are a professional picture book writer who turns an older adult's real life memories into a warm autobiographical storybook.
+
+Write the story in a bright, lively, hopeful, and future-oriented tone.
+Use short, simple, easy sentences like a children's picture book.
+Make the story warm, respectful, and easy to read aloud.
+End the story with a hopeful and positive message.
+
+Use this visual style: "${imageStyle}".
+
+Keep the same main character design across all pages.
+Do not include any text inside the images.
 
 [핵심 목표]
 이 이야기는 단순한 자기소개가 아니라, 한 사람의 삶이 담긴 따뜻한 자서전 그림책입니다.
 각 페이지는 하나의 그림 장면처럼 보이도록 구체적으로 작성해 주세요.
 비슷한 표현을 반복하지 말고, 각 장면마다 다른 분위기와 감정을 담아 주세요.
-
-이야기는 반드시 "${storyMood}" 느낌으로 작성해 주세요.
-그림은 반드시 "${imageStyle}" 느낌이 자연스럽게 떠오르도록 표현해 주세요.
 
 [전체 구성]
 표지를 포함하여 총 6페이지로 작성해 주세요.
@@ -1112,9 +1178,6 @@
 6페이지 그림 설명:
 ...
 
-[그림 스타일]
-soft watercolor illustration, warm light, gentle children’s book style, consistent character design, hopeful mood, not overly realistic, no text
-
 [어르신 답변]
 이름: ${get(1) || '미입력'}
 성별: ${get(2) || '미입력'}
@@ -1189,18 +1252,20 @@ soft watercolor illustration, warm light, gentle children’s book style, consis
 
       document.getElementById('compiledOutput').textContent = '';
 
-      const storyMoodInput = document.getElementById('storyMood');
       const imageStyleInput = document.getElementById('imageStyle');
-      if (storyMoodInput) storyMoodInput.value = '밝고 생기 있는 이야기';
-      if (imageStyleInput) imageStyleInput.value = '따뜻한 동화 그림';
+      const imageStyleLabelInput = document.getElementById('imageStyleLabel');
 
-      document.querySelectorAll('.style-btn[data-group="storyMood"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '밝고 생기 있는 이야기');
-      });
+      if (imageStyleInput) imageStyleInput.value = "soft watercolor children's book illustration";
+      if (imageStyleLabelInput) imageStyleLabelInput.value = '🌿 수채화 그림';
 
       document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === '따뜻한 동화 그림');
+        btn.classList.toggle('selected', btn.dataset.value === "soft watercolor children's book illustration");
       });
+
+      const imageStyleOptions = document.getElementById('imageStyleOptions');
+      if (imageStyleOptions) imageStyleOptions.classList.add('hidden');
+
+      updateSelectedImageStyleText();
 
       const genderInput = document.getElementById('q2');
       if (genderInput) genderInput.value = '';
@@ -1233,7 +1298,9 @@ soft watercolor illustration, warm light, gentle children’s book style, consis
     createQuestionCards();
     setupInteractions();
     setupInputs();
+    setupImageStyleToggle();
     loadData();
+    updateSelectedImageStyleText();
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
     document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenGem);
