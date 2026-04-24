@@ -294,29 +294,26 @@
     }
 
     .style-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--primary-dark);
     }
 
     .style-options {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      margin-top: 10px;
-    }
-
-    .style-options.hidden {
-      display: none;
     }
 
     .style-btn {
       border: none;
       border-radius: 14px;
-      min-height: 52px;
-      padding: 12px 10px;
-      font-size: 17px;
-      font-weight: 700;
+      min-height: 62px;
+      padding: 12px 8px;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 800;
       text-align: center;
       background: #eceff1;
       color: #37474f;
@@ -327,25 +324,8 @@
     .style-btn.selected {
       background: var(--primary);
       color: white;
-    }
-
-    .selected-style-box {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      background: #fff8e1;
-      color: #5d4037;
-      border-radius: 16px;
-      padding: 12px 14px;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .style-help {
-      margin-top: 8px;
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.5;
+      outline: 3px solid #3f51b5;
+      transform: translateY(-1px);
     }
 
     .tool-section {
@@ -477,13 +457,13 @@
       }
 
       .style-title {
-        font-size: 17px;
+        font-size: 18px;
       }
 
       .style-btn {
-        min-height: 48px;
-        font-size: 15px;
-        padding: 10px 8px;
+        min-height: 58px;
+        font-size: 17px;
+        padding: 10px 6px;
       }
 
       .tool-btn {
@@ -512,31 +492,19 @@
 
       <div class="style-section">
         <div class="style-card">
-          <div class="style-title">그림은 어떤 느낌이 좋으세요?</div>
+          <div class="style-title">그림 모양을 골라주세요</div>
 
-          <button type="button" class="tool-btn prompt" id="toggleImageStyleBtn">
-            🎨 그림 느낌 고르기
-          </button>
-
-          <div id="selectedImageStyleText" class="selected-style-box" aria-live="polite">
-            선택된 그림: 🌿 수채화 그림
-          </div>
-
-          <div class="style-help">
-            픽셀 그림은 게임처럼 네모네모한 그림, 점토 인형 그림은 찰흙 느낌, 뜨개질 느낌 그림은 실로 만든 느낌입니다.
-          </div>
-
-          <div class="style-options hidden" id="imageStyleOptions">
-            <button type="button" class="style-btn selected" data-group="imageStyle" data-label="🌿 수채화 그림" data-value="soft watercolor children's book illustration">🌿 수채화 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="🟩 픽셀 그림" data-value="pixel art style illustration">🟩 픽셀 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="💬 만화 그림" data-value="comic book style illustration, expressive characters">💬 만화 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="🧸 점토 인형 그림" data-value="claymation style, soft handmade texture">🧸 점토 인형 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="🧶 뜨개질 느낌 그림" data-value="crochet style, knitted handmade texture">🧶 뜨개질 느낌 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="🖍 색칠공부 그림" data-value="coloring book style, black outline, no color">🖍 색칠공부 그림</button>
+          <div class="style-options" id="imageStyleOptions">
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-label="수채화" data-value="soft watercolor children's book illustration">🌿 수채화</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="픽셀 그림" data-value="pixel art style illustration">🟩 픽셀 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="만화" data-value="comic book style illustration, expressive characters">💬 만화</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="점토 인형" data-value="claymation style, soft handmade texture">🧸 점토 인형</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="뜨개질" data-value="crochet style, knitted handmade texture">🧶 뜨개질</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="색칠공부" data-value="coloring book style, black outline, no color">🖍 색칠공부</button>
           </div>
 
           <input type="hidden" id="imageStyle" value="soft watercolor children's book illustration" />
-          <input type="hidden" id="imageStyleLabel" value="🌿 수채화 그림" />
+          <input type="hidden" id="imageStyleLabel" value="수채화" />
         </div>
       </div>
 
@@ -556,7 +524,7 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final_style_only';
+    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final_direct_style';
 
     const questions = [
       {
@@ -712,31 +680,11 @@
       });
     }
 
-    function updateSelectedImageStyleText() {
-      const label = document.getElementById('imageStyleLabel')?.value || '🌿 수채화 그림';
-      const selectedText = document.getElementById('selectedImageStyleText');
-      if (selectedText) {
-        selectedText.textContent = `선택된 그림: ${label}`;
-      }
-    }
-
-    function setupImageStyleToggle() {
-      const toggleBtn = document.getElementById('toggleImageStyleBtn');
-      const list = document.getElementById('imageStyleOptions');
-
-      if (!toggleBtn || !list) return;
-
-      toggleBtn.addEventListener('click', function () {
-        list.classList.toggle('hidden');
-      });
-    }
-
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
           updateAllCompletionStates();
-          updateSelectedImageStyleText();
           return;
         }
 
@@ -772,7 +720,6 @@
 
         refreshGenderSelections();
         updateAllCompletionStates();
-        updateSelectedImageStyleText();
       } catch (error) {
         console.error('불러오기 실패:', error);
       }
@@ -987,11 +934,6 @@
           const label = buttonEl.dataset.label || buttonEl.textContent.trim();
           const labelInput = document.getElementById('imageStyleLabel');
           if (labelInput) labelInput.value = label;
-
-          updateSelectedImageStyleText();
-
-          const list = document.getElementById('imageStyleOptions');
-          if (list) list.classList.add('hidden');
         }
       }
 
@@ -1256,16 +1198,11 @@ Do not include any text inside the images.
       const imageStyleLabelInput = document.getElementById('imageStyleLabel');
 
       if (imageStyleInput) imageStyleInput.value = "soft watercolor children's book illustration";
-      if (imageStyleLabelInput) imageStyleLabelInput.value = '🌿 수채화 그림';
+      if (imageStyleLabelInput) imageStyleLabelInput.value = '수채화';
 
       document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.value === "soft watercolor children's book illustration");
       });
-
-      const imageStyleOptions = document.getElementById('imageStyleOptions');
-      if (imageStyleOptions) imageStyleOptions.classList.add('hidden');
-
-      updateSelectedImageStyleText();
 
       const genderInput = document.getElementById('q2');
       if (genderInput) genderInput.value = '';
@@ -1298,9 +1235,7 @@ Do not include any text inside the images.
     createQuestionCards();
     setupInteractions();
     setupInputs();
-    setupImageStyleToggle();
     loadData();
-    updateSelectedImageStyleText();
 
     document.getElementById('makePromptBtn').addEventListener('click', compilePrompt);
     document.getElementById('copyAndOpenBtn').addEventListener('click', copyAndOpenGem);
