@@ -524,13 +524,14 @@
 
   <script>
     const GEM_URL = 'https://gemini.google.com/gem/storybook';
-    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final_direct_style';
+    const STORAGE_KEY = 'week4LifeBookThoughtPocket_v_final_random_examples';
 
     const questions = [
       {
         title: '내 이름은 무엇인가요?',
         sub: '',
-        placeholder: '예: 김영자'
+        placeholder: '예: 김영자',
+        examples: ['김영자', '박춘자', '이순례', '정복순']
       },
       {
         title: '남자세요, 여자세요?',
@@ -540,67 +541,145 @@
       {
         title: '나는 어디에서 태어났나요?',
         sub: '고향이나 태어난 동네를 떠올려 보세요',
-        placeholder: '예: 충청도 작은 시골 마을에서 태어났어요'
+        placeholder: '예: 충청도 작은 시골 마을에서 태어났어요',
+        examples: [
+          '충청도 작은 시골 마을에서 태어났어요',
+          '서울에서 태어나 도시에서 자랐어요',
+          '바닷가가 있는 부산에서 태어났어요',
+          '산이 많은 강원도에서 태어났어요'
+        ]
       },
       {
         title: '그곳은 어떤 느낌의 동네였나요?',
         sub: '따뜻한, 조용한, 활기찬, 정겨운 느낌처럼 말해보세요',
-        placeholder: '예: 논밭이 많고 이웃들이 정겨운 곳이었어요'
+        placeholder: '예: 논밭이 많고 이웃들이 정겨운 곳이었어요',
+        examples: [
+          '이웃들이 서로 도와주던 따뜻한 동네였어요',
+          '아이들이 골목에서 많이 놀던 활기찬 곳이었어요',
+          '조용하고 자연이 많은 평화로운 마을이었어요',
+          '사람 냄새가 나는 정겨운 동네였어요'
+        ]
       },
       {
         title: '어머니나 아버지를 떠올리면 어떤 장면이 생각나나요?',
         sub: '부모님의 말투, 행동, 모습 중 하나만 떠올려도 좋아요',
-        placeholder: '예: 어머니가 부엌에서 밥을 짓던 모습이 생각나요'
+        placeholder: '예: 어머니가 부엌에서 밥을 짓던 모습이 생각나요',
+        examples: [
+          '어머니가 부엌에서 밥을 짓던 모습이 생각나요',
+          '아버지가 일을 마치고 돌아오시던 모습이 떠올라요',
+          '부모님이 나를 꼭 안아주시던 기억이 있어요',
+          '함께 밥을 먹던 따뜻한 시간이 기억나요'
+        ]
       },
       {
         title: '어린 시절 가장 즐거웠던 순간은 언제인가요?',
         sub: '언제, 어디서, 무엇을 했는지 말해보세요',
-        placeholder: '예: 여름날 골목에서 친구들과 뛰어놀던 때가 즐거웠어요'
+        placeholder: '예: 여름날 골목에서 친구들과 뛰어놀던 때가 즐거웠어요',
+        examples: [
+          '여름날 친구들과 뛰어놀던 시간이 가장 즐거웠어요',
+          '눈 오는 날 눈싸움을 하던 기억이 있어요',
+          '학교 운동장에서 마음껏 뛰놀던 순간이 기억나요',
+          '동네 친구들과 웃으며 놀던 날들이 행복했어요'
+        ]
       },
       {
         title: '그때 나는 어떤 옷을 입고 있었나요?',
         sub: '색깔이나 느낌을 말하면 그림이 더 살아나요',
-        placeholder: '예: 하얀 셔츠와 반바지를 입고 있었어요'
+        placeholder: '예: 하얀 셔츠와 반바지를 입고 있었어요',
+        examples: [
+          '하얀 셔츠와 반바지를 입고 있었어요',
+          '단정한 옷을 입고 다녔어요',
+          '편안한 옷을 입고 자유롭게 뛰어다녔어요',
+          '색깔 있는 옷을 입고 밝게 웃고 있었어요'
+        ]
       },
       {
         title: '젊은 시절 내가 가장 빛났던 순간은 언제인가요?',
         sub: '열심히 살았던 순간, 자랑스러운 순간을 떠올려 보세요',
-        placeholder: '예: 처음 일을 시작하고 부지런히 살던 때가 기억나요'
+        placeholder: '예: 처음 일을 시작하고 부지런히 살던 때가 기억나요',
+        examples: [
+          '처음 일을 시작하며 열심히 살던 때가 기억나요',
+          '가족을 위해 열심히 일하던 시절이 떠올라요',
+          '꿈을 가지고 도전하던 시절이 있었어요',
+          '하루하루 성실하게 살아가던 모습이 생각나요'
+        ]
       },
       {
         title: '그 시절 나는 어떤 사람이었나요?',
         sub: '성격이나 모습, 습관을 말해보세요',
-        placeholder: '예: 책임감이 강하고 늘 웃으려고 노력했어요'
+        placeholder: '예: 책임감이 강하고 늘 웃으려고 노력했어요',
+        examples: [
+          '책임감이 강하고 성실한 사람이었어요',
+          '밝고 긍정적인 성격이었어요',
+          '주변 사람들을 잘 챙기던 사람이었어요',
+          '조용하지만 따뜻한 사람이었어요'
+        ]
       },
       {
         title: '중년 시절 가장 소중했던 장면은 무엇인가요?',
         sub: '가족, 일, 책임, 사랑 중 기억나는 장면을 떠올려 보세요',
-        placeholder: '예: 가족들과 함께 저녁을 먹던 시간이 가장 소중했어요'
+        placeholder: '예: 가족들과 함께 저녁을 먹던 시간이 가장 소중했어요',
+        examples: [
+          '가족들과 함께 저녁을 먹던 시간이 가장 소중했어요',
+          '아이들을 키우며 바쁘게 살았던 시절이 기억나요',
+          '가족을 위해 애쓰던 시간이 떠올라요',
+          '함께 웃으며 지내던 시간이 행복했어요'
+        ]
       },
       {
         title: '그 시절 나를 떠올리게 하는 물건이 있나요?',
         sub: '가방, 앞치마, 모자, 손수건, 카메라 같은 것도 좋아요',
-        placeholder: '예: 늘 들고 다니던 작은 가방이 생각나요'
+        placeholder: '예: 늘 들고 다니던 작은 가방이 생각나요',
+        examples: [
+          '늘 들고 다니던 작은 가방이 생각나요',
+          '앞치마를 자주 입고 있었어요',
+          '일할 때 쓰던 모자가 떠올라요',
+          '오래된 시계가 기억나요'
+        ]
       },
       {
         title: '요즘 나는 언제 가장 행복한가요?',
         sub: '작은 행복도 아주 좋아요',
-        placeholder: '예: 산책하고 따뜻한 차를 마실 때 행복해요'
+        placeholder: '예: 산책하고 따뜻한 차를 마실 때 행복해요',
+        examples: [
+          '산책하고 따뜻한 차를 마실 때 행복해요',
+          '가족과 이야기 나눌 때 기분이 좋아요',
+          '조용히 쉬는 시간이 편안해요',
+          '좋아하는 음악을 들을 때 행복해요'
+        ]
       },
       {
         title: '앞으로 나는 어떤 마음으로 살고 싶나요?',
         sub: '건강, 여행, 감사, 웃음, 평안 같은 마음을 떠올려 보세요',
-        placeholder: '예: 감사하는 마음으로 건강하게 살고 싶어요'
+        placeholder: '예: 감사하는 마음으로 건강하게 살고 싶어요',
+        examples: [
+          '감사하는 마음으로 살고 싶어요',
+          '건강하게 지내고 싶어요',
+          '여유롭게 즐겁게 살고 싶어요',
+          '주변 사람들과 따뜻하게 지내고 싶어요'
+        ]
       },
       {
         title: '사랑하는 사람들에게 꼭 전하고 싶은 말은 무엇인가요?',
         sub: '가족이나 소중한 사람에게 남기고 싶은 한마디입니다',
-        placeholder: '예: 서로 아끼며 웃고 살았으면 좋겠어요'
+        placeholder: '예: 서로 아끼며 웃고 살았으면 좋겠어요',
+        examples: [
+          '서로 사랑하며 살았으면 좋겠어요',
+          '건강하고 행복하게 지내세요',
+          '항상 웃으며 살아요',
+          '서로 도우며 따뜻하게 살았으면 합니다'
+        ]
       },
       {
         title: '내 인생을 색깔이나 계절로 표현하면 무엇인가요?',
         sub: '그림책 전체 분위기를 정하는 데 도움이 됩니다',
-        placeholder: '예: 따뜻한 봄날 같은 인생이라고 생각해요'
+        placeholder: '예: 따뜻한 봄날 같은 인생이라고 생각해요',
+        examples: [
+          '따뜻한 봄 같은 인생이에요',
+          '가을처럼 깊은 인생이에요',
+          '햇살이 따뜻한 여름 같은 인생이에요',
+          '눈처럼 조용한 겨울 같은 인생이에요'
+        ]
       }
     ];
 
@@ -732,6 +811,7 @@
         const qNum = index + 1;
         const answerId = `q${qNum}`;
         const statusId = `status${qNum}`;
+        const safeExamples = question.examples ? JSON.stringify(question.examples).replace(/'/g, '&#39;') : '[]';
 
         const card = document.createElement('div');
         card.className = 'question-card';
@@ -764,7 +844,7 @@
             <div class="answer-actions">
               <button class="mini-btn mic-btn" type="button" data-target="${answerId}" data-status="${statusId}" aria-label="${question.title} 말로 입력">🎤 말로 입력</button>
               <button class="mini-btn clear-btn" type="button" data-target="${answerId}" aria-label="${question.title} 지우기">🗑 지우기</button>
-              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-example="${question.placeholder}" aria-label="${question.title} 예시 보기">💡 예시 보기</button>
+              <button class="mini-btn example-btn" type="button" data-target="${answerId}" data-status="${statusId}" data-examples='${safeExamples}' aria-label="${question.title} 예시 보기">💡 예시 보기</button>
             </div>
             <div class="status" id="${statusId}" aria-live="polite"></div>
           `;
@@ -957,11 +1037,26 @@
         const exampleBtn = e.target.closest('.example-btn');
         if (exampleBtn) {
           const targetId = exampleBtn.dataset.target;
-          const example = exampleBtn.dataset.example.replace('예: ', '');
+          const statusId = exampleBtn.dataset.status;
           const textarea = document.getElementById(targetId);
+          const statusEl = document.getElementById(statusId);
+
           if (textarea) {
-            textarea.value = example;
+            let examples = [];
+
+            try {
+              examples = JSON.parse(exampleBtn.dataset.examples || '[]');
+            } catch (error) {
+              console.error('예시 불러오기 실패:', error);
+            }
+
+            if (examples.length > 0) {
+              const randomExample = examples[Math.floor(Math.random() * examples.length)];
+              textarea.value = randomExample;
+            }
+
             exampleBtn.classList.add('active');
+            if (statusEl) statusEl.textContent = '예시가 들어갔어요 😊';
             saveData();
             updateCompletionState(targetId);
           }
