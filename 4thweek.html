@@ -495,15 +495,15 @@
           <div class="style-title">그림 모양을 골라주세요</div>
 
           <div class="style-options" id="imageStyleOptions">
-            <button type="button" class="style-btn selected" data-group="imageStyle" data-label="수채화" data-value="soft watercolor children's book illustration">🌿 수채화</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="픽셀 그림" data-value="pixel art style illustration">🟩 픽셀 그림</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="만화" data-value="comic book style illustration, expressive characters">💬 만화</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="점토 인형" data-value="claymation style, soft handmade texture">🧸 점토 인형</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="뜨개질" data-value="crochet style, knitted handmade texture">🧶 뜨개질</button>
-            <button type="button" class="style-btn" data-group="imageStyle" data-label="색칠공부" data-value="coloring book style, black outline, no color">🖍 색칠공부</button>
+            <button type="button" class="style-btn selected" data-group="imageStyle" data-label="수채화" data-value="warm storybook watercolor illustration, soft light, gentle background">🌿 수채화</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="픽셀 그림" data-value="cute pixel storybook illustration, colorful simple background">🟩 픽셀 그림</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="만화" data-value="cute comic storybook illustration, expressive faces, lively scene">💬 만화</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="점토 인형" data-value="cute clay character storybook illustration, soft handmade texture">🧸 점토 인형</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="뜨개질" data-value="cute knitted storybook illustration, warm yarn texture">🧶 뜨개질</button>
+            <button type="button" class="style-btn" data-group="imageStyle" data-label="색칠공부" data-value="clean coloring book story page, bold black outline, simple shapes, no color">🖍 색칠공부</button>
           </div>
 
-          <input type="hidden" id="imageStyle" value="soft watercolor children's book illustration" />
+          <input type="hidden" id="imageStyle" value="warm storybook watercolor illustration, soft light, gentle background" />
           <input type="hidden" id="imageStyleLabel" value="수채화" />
         </div>
       </div>
@@ -531,7 +531,13 @@
         title: '내 이름은 무엇인가요?',
         sub: '',
         placeholder: '예: 김영자',
-        examples: ['김영자', '박춘자', '이순례', '정복순']
+        examples: [
+          '김영자',
+          '박순자',
+          '이철수',
+          '최미자',
+          '정영호'
+        ]
       },
       {
         title: '남자세요, 여자세요?',
@@ -539,150 +545,126 @@
         type: 'gender'
       },
       {
-        title: '나는 어디에서 태어났나요?',
-        sub: '고향이나 태어난 동네를 떠올려 보세요',
-        placeholder: '예: 충청도 작은 시골 마을에서 태어났어요',
+        title: '어린 시절 가장 기억나는 장면은 무엇인가요?',
+        sub: '어디에서, 누구와, 무엇을 했는지 떠올려 보세요',
+        placeholder: '예: 시골 마당에서 친구들과 뛰놀던 날이 기억나요',
         examples: [
-          '충청도 작은 시골 마을에서 태어났어요',
-          '서울에서 태어나 도시에서 자랐어요',
-          '바닷가가 있는 부산에서 태어났어요',
-          '산이 많은 강원도에서 태어났어요'
-        ]
-      },
-      {
-        title: '그곳은 어떤 느낌의 동네였나요?',
-        sub: '따뜻한, 조용한, 활기찬, 정겨운 느낌처럼 말해보세요',
-        placeholder: '예: 논밭이 많고 이웃들이 정겨운 곳이었어요',
-        examples: [
-          '이웃들이 서로 도와주던 따뜻한 동네였어요',
-          '아이들이 골목에서 많이 놀던 활기찬 곳이었어요',
-          '조용하고 자연이 많은 평화로운 마을이었어요',
-          '사람 냄새가 나는 정겨운 동네였어요'
+          '시골 마당에서 친구들과 뛰놀던 날이 기억나요',
+          '학교 운동장에서 공놀이하던 날이 생각나요',
+          '냇가에서 물장구치며 놀던 여름날이 떠올라요',
+          '동네 골목에서 숨바꼭질하던 날이 기억나요',
+          '눈 오던 날 군고구마 먹던 기억이 나요'
         ]
       },
       {
         title: '어머니나 아버지를 떠올리면 어떤 장면이 생각나나요?',
-        sub: '부모님의 말투, 행동, 모습 중 하나만 떠올려도 좋아요',
-        placeholder: '예: 어머니가 부엌에서 밥을 짓던 모습이 생각나요',
+        sub: '부모님의 모습, 말투, 행동 중 하나만 떠올려도 좋아요',
+        placeholder: '예: 어머니가 따뜻한 밥을 차려주시던 모습이 생각나요',
         examples: [
-          '어머니가 부엌에서 밥을 짓던 모습이 생각나요',
-          '아버지가 일을 마치고 돌아오시던 모습이 떠올라요',
-          '부모님이 나를 꼭 안아주시던 기억이 있어요',
-          '함께 밥을 먹던 따뜻한 시간이 기억나요'
+          '어머니가 따뜻한 밥을 차려주시던 모습이 생각나요',
+          '아버지가 손을 잡고 시장에 데려가 주셨어요',
+          '부모님이 웃으며 이야기하시던 모습이 떠올라요',
+          '어머니가 새벽부터 일하시던 모습이 기억나요',
+          '아버지가 자전거를 태워주시던 날이 생각나요'
         ]
       },
       {
-        title: '어린 시절 가장 즐거웠던 순간은 언제인가요?',
-        sub: '언제, 어디서, 무엇을 했는지 말해보세요',
-        placeholder: '예: 여름날 골목에서 친구들과 뛰어놀던 때가 즐거웠어요',
+        title: '젊은 시절 나는 어떤 모습이었나요?',
+        sub: '일하던 모습, 성격, 분위기, 꿈을 떠올려 보세요',
+        placeholder: '예: 가족을 위해 열심히 일하던 모습이 생각나요',
         examples: [
-          '여름날 친구들과 뛰어놀던 시간이 가장 즐거웠어요',
-          '눈 오는 날 눈싸움을 하던 기억이 있어요',
-          '학교 운동장에서 마음껏 뛰놀던 순간이 기억나요',
-          '동네 친구들과 웃으며 놀던 날들이 행복했어요'
+          '가족을 위해 열심히 일하던 모습이 생각나요',
+          '꿈을 품고 바쁘게 살던 청춘이었어요',
+          '친구들과 웃음이 많고 활기찼어요',
+          '무엇이든 도전하던 씩씩한 사람이었어요',
+          '하루하루 성실하게 살아가던 때였어요'
         ]
       },
       {
-        title: '그때 나는 어떤 옷을 입고 있었나요?',
-        sub: '색깔이나 느낌을 말하면 그림이 더 살아나요',
-        placeholder: '예: 하얀 셔츠와 반바지를 입고 있었어요',
+        title: '배우자를 언제, 어디서 처음 만나셨나요?',
+        sub: '기억나는 장소나 첫인상을 말해도 좋아요',
+        placeholder: '예: 젊은 시절 시장에서 처음 만났어요',
         examples: [
-          '하얀 셔츠와 반바지를 입고 있었어요',
-          '단정한 옷을 입고 다녔어요',
-          '편안한 옷을 입고 자유롭게 뛰어다녔어요',
-          '색깔 있는 옷을 입고 밝게 웃고 있었어요'
+          '시장에 갔다가 처음 만났어요',
+          '친구 소개로 만나게 되었어요',
+          '동네 잔치에서 처음 봤어요',
+          '직장에서 함께 일하다 만났어요',
+          '버스정류장에서 자주 보다가 인사했어요'
         ]
       },
       {
-        title: '젊은 시절 내가 가장 빛났던 순간은 언제인가요?',
-        sub: '열심히 살았던 순간, 자랑스러운 순간을 떠올려 보세요',
-        placeholder: '예: 처음 일을 시작하고 부지런히 살던 때가 기억나요',
+        title: '가족과 함께했던 가장 소중한 순간은 언제인가요?',
+        sub: '여행, 졸업식, 명절, 가족사진 같은 장면도 좋아요',
+        placeholder: '예: 가족들과 함께 여행 갔던 날이 기억나요',
         examples: [
-          '처음 일을 시작하며 열심히 살던 때가 기억나요',
-          '가족을 위해 열심히 일하던 시절이 떠올라요',
-          '꿈을 가지고 도전하던 시절이 있었어요',
-          '하루하루 성실하게 살아가던 모습이 생각나요'
+          '가족들과 함께 여행 갔던 날이 기억나요',
+          '자녀가 졸업하던 날이 가장 기뻤어요',
+          '손주가 태어나던 날이 소중해요',
+          '명절에 온 가족이 모였던 날이 생각나요',
+          '함께 웃으며 사진 찍던 날이 기억나요'
         ]
       },
       {
-        title: '그 시절 나는 어떤 사람이었나요?',
-        sub: '성격이나 모습, 습관을 말해보세요',
-        placeholder: '예: 책임감이 강하고 늘 웃으려고 노력했어요',
+        title: '지금 우리 가족을 소개해 주세요.',
+        sub: '함께 살지 않아도 괜찮아요. 자녀와 손주도 떠올려 보세요',
+        placeholder: '예: 딸과 아들, 손녀와 손주가 있어요',
         examples: [
-          '책임감이 강하고 성실한 사람이었어요',
-          '밝고 긍정적인 성격이었어요',
-          '주변 사람들을 잘 챙기던 사람이었어요',
-          '조용하지만 따뜻한 사람이었어요'
-        ]
-      },
-      {
-        title: '중년 시절 가장 소중했던 장면은 무엇인가요?',
-        sub: '가족, 일, 책임, 사랑 중 기억나는 장면을 떠올려 보세요',
-        placeholder: '예: 가족들과 함께 저녁을 먹던 시간이 가장 소중했어요',
-        examples: [
-          '가족들과 함께 저녁을 먹던 시간이 가장 소중했어요',
-          '아이들을 키우며 바쁘게 살았던 시절이 기억나요',
-          '가족을 위해 애쓰던 시간이 떠올라요',
-          '함께 웃으며 지내던 시간이 행복했어요'
-        ]
-      },
-      {
-        title: '그 시절 나를 떠올리게 하는 물건이 있나요?',
-        sub: '가방, 앞치마, 모자, 손수건, 카메라 같은 것도 좋아요',
-        placeholder: '예: 늘 들고 다니던 작은 가방이 생각나요',
-        examples: [
-          '늘 들고 다니던 작은 가방이 생각나요',
-          '앞치마를 자주 입고 있었어요',
-          '일할 때 쓰던 모자가 떠올라요',
-          '오래된 시계가 기억나요'
+          '딸과 아들, 손녀와 손주가 있어요',
+          '아들과 며느리, 손주들이 있어요',
+          '딸 둘과 손주들이 자주 찾아와요',
+          '남편과 함께 지내고 자녀들은 따로 살아요',
+          '강아지까지 우리 가족이에요'
         ]
       },
       {
         title: '요즘 나는 언제 가장 행복한가요?',
-        sub: '작은 행복도 아주 좋아요',
+        sub: '작은 행복도 좋아요',
         placeholder: '예: 산책하고 따뜻한 차를 마실 때 행복해요',
         examples: [
-          '산책하고 따뜻한 차를 마실 때 행복해요',
-          '가족과 이야기 나눌 때 기분이 좋아요',
-          '조용히 쉬는 시간이 편안해요',
-          '좋아하는 음악을 들을 때 행복해요'
+          '산책하며 바람 쐴 때 행복해요',
+          '손주와 이야기할 때 가장 기뻐요',
+          '따뜻한 차 한잔 마실 때 좋습니다',
+          '가족 연락이 오면 행복해요',
+          '교회 가서 예배드릴 때 마음이 편해요'
         ]
       },
       {
-        title: '앞으로 나는 어떤 마음으로 살고 싶나요?',
-        sub: '건강, 여행, 감사, 웃음, 평안 같은 마음을 떠올려 보세요',
-        placeholder: '예: 감사하는 마음으로 건강하게 살고 싶어요',
+        title: '앞으로 나는 어떻게 살고 싶나요?',
+        sub: '건강, 여행, 감사, 웃음, 배움 같은 마음을 떠올려 보세요',
+        placeholder: '예: 건강하게 웃으며 지내고 싶어요',
         examples: [
-          '감사하는 마음으로 살고 싶어요',
-          '건강하게 지내고 싶어요',
-          '여유롭게 즐겁게 살고 싶어요',
-          '주변 사람들과 따뜻하게 지내고 싶어요'
+          '건강하게 웃으며 지내고 싶어요',
+          '여행도 다니며 즐겁게 살고 싶어요',
+          '가족들과 오래 행복하고 싶어요',
+          '마음 편하게 감사하며 살고 싶어요',
+          '배우며 활기차게 지내고 싶어요'
         ]
       },
       {
-        title: '사랑하는 사람들에게 꼭 전하고 싶은 말은 무엇인가요?',
+        title: '사랑하는 사람들에게 전하고 싶은 말은 무엇인가요?',
         sub: '가족이나 소중한 사람에게 남기고 싶은 한마디입니다',
-        placeholder: '예: 서로 아끼며 웃고 살았으면 좋겠어요',
+        placeholder: '예: 서로 아끼며 행복하게 살았으면 좋겠어요',
         examples: [
-          '서로 사랑하며 살았으면 좋겠어요',
-          '건강하고 행복하게 지내세요',
-          '항상 웃으며 살아요',
-          '서로 도우며 따뜻하게 살았으면 합니다'
+          '서로 아끼며 행복하게 지냈으면 좋겠어요',
+          '건강이 제일 중요하니 늘 건강하세요',
+          '사랑하고 고맙다는 말을 전하고 싶어요',
+          '웃으며 사이좋게 지내길 바랍니다',
+          '늘 응원하고 사랑합니다'
         ]
       },
       {
-        title: '내 인생을 색깔이나 계절로 표현하면 무엇인가요?',
-        sub: '그림책 전체 분위기를 정하는 데 도움이 됩니다',
-        placeholder: '예: 따뜻한 봄날 같은 인생이라고 생각해요',
+        title: '그림 속 나는 어떤 옷을 입고 있으면 좋을까요?',
+        sub: '그림 속 모습이 더 자연스러워집니다',
+        placeholder: '예: 밝은 색 옷을 입고 환하게 웃고 있으면 좋겠어요',
         examples: [
-          '따뜻한 봄 같은 인생이에요',
-          '가을처럼 깊은 인생이에요',
-          '햇살이 따뜻한 여름 같은 인생이에요',
-          '눈처럼 조용한 겨울 같은 인생이에요'
+          '밝은 색 옷을 입고 웃고 있으면 좋겠어요',
+          '단정한 한복 차림이면 좋겠어요',
+          '예쁜 원피스를 입고 있으면 좋겠어요',
+          '깔끔한 정장을 입고 있으면 좋겠어요',
+          '편안한 옷차림으로 환하게 웃고 싶어요'
         ]
       }
     ];
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let activeRecognition = null;
     let activeMicButton = null;
@@ -1089,148 +1071,41 @@
           return el ? el.value.trim() : '';
         };
 
-        const imageStyle = document.getElementById('imageStyle')?.value || "soft watercolor children's book illustration";
+        const imageStyle = document.getElementById('imageStyle')?.value || "warm storybook watercolor illustration, soft light, gentle background";
 
-        const prompt = `어르신 그림책 만들기 수업입니다.
+        const prompt = `어르신의 삶을 담은 밝고 생동감 있고 희망적인 따뜻한 자서전 그림책을 만들어 주세요.
 
-“나의 인생을 담은 자서전 그림책”을 만들어 주세요.
+총 6페이지(표지 포함)로 구성해 주세요.
 
-You are a professional picture book writer who turns an older adult's real life memories into a warm autobiographical storybook.
+어린 시절 → 부모님과 가족 → 젊은 시절 → 배우자 만남 → 현재 가족(자녀, 손주 포함) → 현재와 미래 흐름으로 자연스럽게 이어지게 작성해 주세요.
 
-Write the story in a bright, lively, hopeful, and future-oriented tone.
-Use short, simple, easy sentences like a children's picture book.
-Make the story warm, respectful, and easy to read aloud.
-End the story with a hopeful and positive message.
+각 페이지는 하나의 장면이지만,
+사진처럼 설명하지 말고 그 장면 속 이야기를 들려주듯 자연스럽게 표현해 주세요.
 
-Use this visual style: "${imageStyle}".
+주인공은 너무 늙어 보이지 않게,
+밝고 건강하고 따뜻한 인상으로 표현해 주세요.
+주름이나 피곤한 얼굴은 과하게 강조하지 말고,
+따뜻한 미소와 생기 있는 표정으로 표현해 주세요.
 
-Keep the same main character design across all pages.
-Do not include any text inside the images.
-
-[핵심 목표]
-이 이야기는 단순한 자기소개가 아니라, 한 사람의 삶이 담긴 따뜻한 자서전 그림책입니다.
-각 페이지는 하나의 그림 장면처럼 보이도록 구체적으로 작성해 주세요.
-비슷한 표현을 반복하지 말고, 각 장면마다 다른 분위기와 감정을 담아 주세요.
-
-[전체 구성]
-표지를 포함하여 총 6페이지로 작성해 주세요.
-
-1페이지: 표지
-- 주인공의 삶을 담은 따뜻한 제목
-- 인생 전체를 상징하는 장면
-
-2페이지: 나의 시작
-- 태어난 곳
-- 고향의 분위기
-- 부모님 또는 가족의 기억
-
-3페이지: 어린 시절
-- 가장 즐거웠던 어린 시절 장면
-- 장소, 행동, 표정, 옷차림이 보이게 작성
-
-4페이지: 젊은 시절
-- 가장 열심히 살았던 순간
-- 그 시절의 성격, 습관, 분위기를 표현
-
-5페이지: 중년의 삶
-- 가족, 일, 책임, 사랑 중 가장 소중했던 장면
-- 주인공이 누군가에게 힘이 되었던 모습
-
-6페이지: 지금의 나와 남기고 싶은 말
-- 현재의 행복
-- 앞으로의 다짐
-- 사랑하는 사람들에게 전하고 싶은 삶의 지혜
-
-[문장 규칙]
-- 각 페이지는 3~5문장으로 작성해 주세요.
-- 각 문장은 짧고 쉬운 문장으로 작성해 주세요.
-- “행복했습니다”, “소중했습니다” 같은 표현만 반복하지 마세요.
-- 감정을 직접 설명하기보다 장면, 행동, 표정으로 느껴지게 써 주세요.
-- 마지막은 반드시 따뜻하고 희망적으로 마무리해 주세요.
-
-[개성 반영 규칙]
-아래 요소를 이야기 속에 자연스럽게 반영해 주세요.
-- 주인공의 성격
-- 주인공의 습관이나 모습
-- 주인공을 떠올리게 하는 물건
-- 옷 색깔과 스타일
-- 고향의 분위기
-- 현재의 행복
-- 사랑하는 사람들에게 전하고 싶은 말
-- 인생을 상징하는 색깔이나 계절
-
-[그림 장면 규칙]
-각 페이지는 한 장의 그림처럼 구체적으로 작성해 주세요.
-장소, 시간, 행동, 표정, 옷차림이 눈에 보이도록 작성해 주세요.
-주인공의 모습은 모든 페이지에서 일관되게 유지해 주세요.
+그림 스타일은 "${imageStyle}" 느낌으로 표현해 주세요.
+Storybook style로 따뜻하고 보기 좋은 그림책 느낌을 유지해 주세요.
 그림에는 글자가 들어가지 않게 해 주세요.
 
-[중요 규칙]
-- 정보 나열 금지
-- 모든 정보는 이야기 속에 자연스럽게 녹여서 표현
-- 어르신을 존중하는 따뜻한 문장 사용
-- 너무 슬프거나 무겁게 만들지 말고 밝고 품위 있게 표현
-- 실제보다 조금 더 건강하고 생기 있는 모습으로 표현
-- 주름이나 나이는 과하게 강조하지 않기
-- 각 페이지는 이전 페이지와 다른 장면과 분위기를 가지게 하기
+가족은 함께 살지 않아도 소중한 가족으로 자연스럽게 등장하게 해 주세요.
 
-[출력 형식]
-
-제목:
-○○○
-
-1페이지 내용:
-...
-
-1페이지 그림 설명:
-...
-
-2페이지 내용:
-...
-
-2페이지 그림 설명:
-...
-
-3페이지 내용:
-...
-
-3페이지 그림 설명:
-...
-
-4페이지 내용:
-...
-
-4페이지 그림 설명:
-...
-
-5페이지 내용:
-...
-
-5페이지 그림 설명:
-...
-
-6페이지 내용:
-...
-
-6페이지 그림 설명:
-...
-
-[어르신 답변]
+[입력 정보]
 이름: ${get(1) || '미입력'}
 성별: ${get(2) || '미입력'}
-태어난 곳: ${get(3) || '미입력'}
-고향의 느낌: ${get(4) || '미입력'}
-부모님 또는 가족의 기억: ${get(5) || '미입력'}
-어린 시절 즐거웠던 순간: ${get(6) || '미입력'}
-어린 시절 옷차림: ${get(7) || '미입력'}
-젊은 시절 빛났던 순간: ${get(8) || '미입력'}
-그 시절 나의 성격과 모습: ${get(9) || '미입력'}
-중년 시절 소중했던 장면: ${get(10) || '미입력'}
-나를 떠올리게 하는 물건: ${get(11) || '미입력'}
-요즘 가장 행복한 순간: ${get(12) || '미입력'}
-앞으로 살고 싶은 마음: ${get(13) || '미입력'}
-사랑하는 사람들에게 전하고 싶은 말: ${get(14) || '미입력'}
-내 인생을 표현하는 색깔이나 계절: ${get(15) || '미입력'}`;
+어린 시절 장면: ${get(3) || '미입력'}
+부모님 기억: ${get(4) || '미입력'}
+젊은 시절 모습: ${get(5) || '미입력'}
+배우자 만남: ${get(6) || '미입력'}
+가족과의 순간: ${get(7) || '미입력'}
+현재 가족: ${get(8) || '미입력'}
+요즘 행복: ${get(9) || '미입력'}
+앞으로의 바람: ${get(10) || '미입력'}
+전하고 싶은 말: ${get(11) || '미입력'}
+옷차림: ${get(12) || '미입력'}`;
 
         output.textContent = prompt;
         saveData();
@@ -1292,11 +1167,11 @@ Do not include any text inside the images.
       const imageStyleInput = document.getElementById('imageStyle');
       const imageStyleLabelInput = document.getElementById('imageStyleLabel');
 
-      if (imageStyleInput) imageStyleInput.value = "soft watercolor children's book illustration";
+      if (imageStyleInput) imageStyleInput.value = "warm storybook watercolor illustration, soft light, gentle background";
       if (imageStyleLabelInput) imageStyleLabelInput.value = '수채화';
 
       document.querySelectorAll('.style-btn[data-group="imageStyle"]').forEach(btn => {
-        btn.classList.toggle('selected', btn.dataset.value === "soft watercolor children's book illustration");
+        btn.classList.toggle('selected', btn.dataset.value === "warm storybook watercolor illustration, soft light, gentle background");
       });
 
       const genderInput = document.getElementById('q2');
