@@ -665,7 +665,6 @@
         ]
       }
     ];
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let activeRecognition = null;
     let activeMicButton = null;
@@ -868,7 +867,6 @@
       }
 
       if (activeMicButton === micButton && activeRecognition) {
-        statusEl.textContent = '말씀을 정리하고 있습니다.';
         stopCurrentRecognition();
         return;
       }
@@ -879,43 +877,52 @@
       recognition.lang = 'ko-KR';
       recognition.interimResults = true;
       recognition.maxAlternatives = 1;
-      recognition.continuous = true;
+      recognition.continuous = false;
 
+      let finalTranscript = '';
+      let silenceTimer = null;
       const originalValue = textarea.value.trim();
 
       activeRecognition = recognition;
       activeMicButton = micButton;
 
       micButton.classList.add('recording');
-      micButton.textContent = '⏹ 말 끝내기';
-      micButton.setAttribute('aria-label', '말 끝내기');
-
-      statusEl.textContent = '말씀하시고, 끝나면 다시 눌러주세요 😊';
+      micButton.textContent = '⏹ 녹음중';
+      micButton.setAttribute('aria-label', '녹음 중');
+      statusEl.textContent = '녹음 중입니다.';
 
       recognition.onresult = function (event) {
-        let finalText = '';
-        let interimText = '';
+        let interimTranscript = '';
 
-        for (let i = 0; i < event.results.length; i++) {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
           const piece = event.results[i][0].transcript.trim();
 
           if (event.results[i].isFinal) {
-            finalText += (finalText ? ' ' : '') + piece;
+            finalTranscript += (finalTranscript ? ' ' : '') + piece;
           } else {
-            interimText += (interimText ? ' ' : '') + piece;
+            interimTranscript += (interimTranscript ? ' ' : '') + piece;
           }
         }
 
-        textarea.value = [originalValue, finalText, interimText]
+        textarea.value = [originalValue, finalTranscript, interimTranscript]
           .filter(Boolean)
-          .join(' ')
-          .replace(/\s+/g, ' ')
-          .trim();
+          .join(' ');
+
+        if (silenceTimer) clearTimeout(silenceTimer);
+        silenceTimer = setTimeout(() => {
+          try {
+            recognition.stop();
+          } catch (e) {
+            console.error(e);
+          }
+        }, 1800);
 
         updateCompletionState(targetId);
       };
 
       recognition.onerror = function (event) {
+        if (silenceTimer) clearTimeout(silenceTimer);
+
         let message = '음성 입력에 문제가 생겼습니다.';
 
         if (event.error === 'not-allowed') message = '마이크 권한을 허용해주세요.';
@@ -926,13 +933,15 @@
       };
 
       recognition.onend = function () {
+        if (silenceTimer) clearTimeout(silenceTimer);
+
         textarea.value = textarea.value.trim();
 
         saveData();
         updateCompletionState(targetId);
 
         if (textarea.value) {
-          statusEl.textContent = '입력이 되었어요.';
+          statusEl.textContent = '입력이 완료되었습니다.';
         } else {
           statusEl.textContent = '입력된 내용이 없어요. 다시 눌러주세요.';
         }
