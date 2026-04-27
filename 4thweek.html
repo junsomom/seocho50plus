@@ -665,6 +665,7 @@
         ]
       }
     ];
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let activeRecognition = null;
     let activeMicButton = null;
@@ -880,7 +881,6 @@
       recognition.maxAlternatives = 1;
       recognition.continuous = true;
 
-      let finalTranscript = '';
       const originalValue = textarea.value.trim();
 
       activeRecognition = recognition;
@@ -893,21 +893,24 @@
       statusEl.textContent = '말씀하시고, 끝나면 다시 눌러주세요 😊';
 
       recognition.onresult = function (event) {
-        let interimTranscript = '';
+        let finalText = '';
+        let interimText = '';
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
+        for (let i = 0; i < event.results.length; i++) {
           const piece = event.results[i][0].transcript.trim();
 
           if (event.results[i].isFinal) {
-            finalTranscript += (finalTranscript ? ' ' : '') + piece;
+            finalText += (finalText ? ' ' : '') + piece;
           } else {
-            interimTranscript += (interimTranscript ? ' ' : '') + piece;
+            interimText += (interimText ? ' ' : '') + piece;
           }
         }
 
-        textarea.value = [originalValue, finalTranscript, interimTranscript]
+        textarea.value = [originalValue, finalText, interimText]
           .filter(Boolean)
-          .join(' ');
+          .join(' ')
+          .replace(/\s+/g, ' ')
+          .trim();
 
         updateCompletionState(targetId);
       };
