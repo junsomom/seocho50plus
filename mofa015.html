@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANICPASS MVP v0.15</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body{
+    background:#eef3f8;
+    color:#111827;
+}
+
+/* LAYOUT */
+.container{
+    max-width:520px;
+    margin:auto;
+    padding:18px;
+}
+
+/* TYPOGRAPHY */
+h1{
+    text-align:center;
+    margin-top:14px;
+    font-size:26px;
+    letter-spacing:0.5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#6b7280;
+    margin-top:6px;
+    font-size:13px;
+}
+
+/* CARDS */
+.card{
+    background:white;
+    border-radius:18px;
+    padding:16px;
+    margin-top:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* TOP GRID */
+.top-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:14px;
+}
+
+.mini-card{
+    background:white;
+    border-radius:18px;
+    padding:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+.label{
+    font-size:11px;
+    color:#6b7280;
+    margin-bottom:6px;
+}
+
+.value{
+    font-size:16px;
+    font-weight:600;
+    color:#111827;
+}
+
+.status-pill{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:11px;
+    background:#e8f5ee;
+    color:#1f7a4a;
+}
+
+/* MOFA */
+.level{
+    font-size:22px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+.advisory-text{
+    font-size:12px;
+    color:#4b5563;
+    margin-top:6px;
+    line-height:1.4;
+}
+
+/* HERO SECTION */
+.hero{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:18px;
+}
+
+/* PANICPASS BUTTON + PCI RING */
+.panic-wrapper{
+    position:relative;
+    width:260px;
+    height:260px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* SVG ring */
+.ring{
+    position:absolute;
+    width:260px;
+    height:260px;
+    transform:rotate(-90deg);
+}
+
+.ring circle{
+    fill:none;
+    stroke:#dbeafe;
+    stroke-width:10;
+}
+
+.ring .progress{
+    stroke:#22c55e;
+    stroke-linecap:round;
+    transition:stroke-dashoffset 0.6s ease, stroke 0.3s ease;
+}
+
+/* BUTTON */
+.panic-button{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(145deg,#2563eb,#1d4ed8);
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(37,99,235,0.25);
+    z-index:2;
+    position:relative;
+}
+
+.panic-button:active{
+    transform:scale(0.98);
+}
+
+.hold-text{
+    text-align:center;
+    font-size:12px;
+    color:#6b7280;
+    margin-top:10px;
+}
+
+/* PCI TEXT */
+.pci-center{
+    position:absolute;
+    text-align:center;
+    z-index:1;
+    margin-top:210px;
+}
+
+.pci-title{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.pci-score{
+    font-size:26px;
+    font-weight:700;
+}
+
+.pci-status{
+    font-size:12px;
+    color:#1f7a4a;
+}
+
+/* BUTTONS */
+.button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:16px;
+}
+
+.option{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    background:white;
+    cursor:pointer;
+    text-align:left;
+}
+
+/* RESULT */
+.result-box{
+    margin-top:14px;
+    background:#f1f6ff;
+    padding:14px;
+    border-radius:14px;
+}
+
+/* hidden */
+.hidden{display:none;}
+
+.pci-formula{
+    font-size:12px;
+    line-height:1.6;
+    color:#374151;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PANICPASS</h1>
+<p class="subtitle">You are not alone.</p>
+
+<!-- HOME -->
+<div id="homeScreen">
+
+    <!-- TOP GRID -->
+    <div class="top-grid">
+
+        <div class="mini-card">
+            <div class="label">LOCATION</div>
+            <div class="value">Bangkok</div>
+            <div class="value" style="font-size:14px;font-weight:500;margin-top:2px;color:#6b7280;">Thailand</div>
+            <span class="status-pill">Safe</span>
+        </div>
+
+        <div class="mini-card">
+            <div class="label">MOFA Travel Advisory</div>
+            <div class="level">Level 2</div>
+            <div class="advisory-text">Exercise Increased Caution</div>
+        </div>
+
+    </div>
+
+    <!-- CENTER HERO -->
+    <div class="hero">
+
+        <div class="panic-wrapper">
+
+            <svg class="ring" viewBox="0 0 260 260">
+                <circle cx="130" cy="130" r="110"></circle>
+                <circle class="progress" cx="130" cy="130" r="110"
+                    stroke-dasharray="690"
+                    stroke-dashoffset="400"></circle>
+            </svg>
+
+            <button class="panic-button" onclick="showEmergencyOptions()">
+                PANICPASS
+            </button>
+
+            <div class="pci-center">
+                <div class="pci-title">PCI</div>
+                <div class="pci-score">42</div>
+                <div class="pci-status">Stable</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hold-text">Press & Hold</div>
+
+    <!-- PCI EXPLANATION -->
+    <div class="card">
+        <h3 style="font-size:14px;">How PCI Works</h3>
+        <br>
+
+        <div class="pci-formula">
+            MOFA Travel Advisory<br>
+            +<br>
+            Embassy Accessibility<br>
+            +<br>
+            User Situation Report<br>
+            =<br>
+            <strong>PCI (Panic Confidence Index)</strong>
+        </div>
+
+        <br>
+
+        <p style="font-size:12px;color:#4b5563;">
+            PCI estimates how urgently a user may need safety assistance.
+        </p>
+    </div>
+
+</div>
+
+<!-- EMERGENCY -->
+<div id="emergencyScreen" class="hidden">
+
+    <div class="card">
+        <h2 style="font-size:16px;">Select Situation</h2>
+
+        <button class="option" onclick="showResult('Violence',82,'Move to a safe location and contact local emergency services.')">
+            Violence
+        </button>
+
+        <button class="option" onclick="showResult('Medical Emergency',76,'Seek immediate medical assistance.')">
+            Medical Emergency
+        </button>
+
+        <button class="option" onclick="showResult('Lost Passport',71,'Contact the Korean Embassy.')">
+            Lost Passport
+        </button>
+
+        <button class="option" onclick="showResult('Natural Disaster',88,'Follow local emergency instructions immediately.')">
+            Natural Disaster
+        </button>
+
+    </div>
+
+</div>
+
+<!-- RESULT -->
+<div id="resultScreen" class="hidden">
+
+    <div class="card">
+
+        <h2 style="font-size:16px;">Situation Analysis</h2>
+
+        <div class="result-box">
+
+            <p><strong>Detected Situation:</strong></p>
+            <p id="situation"></p>
+
+            <br>
+
+            <p><strong>PCI Before:</strong> 42</p>
+            <p><strong>PCI After:</strong> <span id="pciAfter"></span></p>
+
+            <br>
+
+            <p><strong>Recommended Action:</strong></p>
+            <p id="action"></p>
+
+            <br>
+
+            <p><strong>Embassy Contact:</strong></p>
+            <p>+66-2-481-6000</p>
+
+        </div>
+
+        <button class="button" onclick="goHome()">Return Home</button>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+function showEmergencyOptions(){
+    document.getElementById('homeScreen').classList.add('hidden');
+    document.getElementById('emergencyScreen').classList.remove('hidden');
+}
+
+function showResult(type,pci,action){
+    document.getElementById('emergencyScreen').classList.add('hidden');
+    document.getElementById('resultScreen').classList.remove('hidden');
+
+    document.getElementById('situation').innerText = type;
+    document.getElementById('pciAfter').innerText = pci;
+    document.getElementById('action').innerText = action;
+}
+
+function goHome(){
+    document.getElementById('resultScreen').classList.add('hidden');
+    document.getElementById('homeScreen').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
