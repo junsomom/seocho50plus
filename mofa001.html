@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANICPASS MVP v0.1</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fa;
+    color:#1f2937;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-top:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+h1{
+    text-align:center;
+    margin-top:20px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#6b7280;
+    margin-top:8px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+}
+
+.pci{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pci-score{
+    font-size:48px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:14px;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+.button:hover{
+    opacity:0.9;
+}
+
+.option{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    background:white;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none;
+}
+
+.result-box{
+    margin-top:15px;
+    background:#eef6ff;
+    padding:15px;
+    border-radius:12px;
+}
+
+.pci-formula{
+    text-align:center;
+    font-size:14px;
+    line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PANICPASS</h1>
+<p class="subtitle">You are not alone.</p>
+
+<div id="homeScreen">
+
+<div class="card">
+
+<div class="info-row">
+<span>Country</span>
+<strong>Thailand</strong>
+</div>
+
+<div class="info-row">
+<span>City</span>
+<strong>Bangkok</strong>
+</div>
+
+<div class="info-row">
+<span>MOFA Advisory</span>
+<strong>Level 2</strong>
+</div>
+
+<div class="info-row">
+<span>Nearest Embassy</span>
+<strong>3.2 km</strong>
+</div>
+
+<div class="pci">
+<p>PCI</p>
+<div class="pci-score">42</div>
+</div>
+
+<button class="button" onclick="showEmergencyOptions()">
+PANICPASS
+</button>
+
+</div>
+
+<div class="card">
+<h3>How PCI Works</h3>
+<br>
+<div class="pci-formula">
+MOFA Travel Advisory<br>
++<br>
+Embassy Accessibility<br>
++<br>
+User Situation Report<br>
+=<br>
+<strong>PCI (Panic Confidence Index)</strong>
+</div>
+<br>
+<p>
+PCI estimates how urgently a user may need safety assistance.
+</p>
+</div>
+
+</div>
+
+<div id="emergencyScreen" class="hidden">
+
+<div class="card">
+<h2>Select Situation</h2>
+
+<button class="option" onclick="showResult('Violence',82,'Move to a safe location and contact local emergency services.')">
+Violence
+</button>
+
+<button class="option" onclick="showResult('Medical Emergency',76,'Seek immediate medical assistance.')">
+Medical Emergency
+</button>
+
+<button class="option" onclick="showResult('Lost Passport',71,'Contact the Korean Embassy.')">
+Lost Passport
+</button>
+
+<button class="option" onclick="showResult('Natural Disaster',88,'Follow local emergency instructions immediately.')">
+Natural Disaster
+</button>
+
+</div>
+
+</div>
+
+<div id="resultScreen" class="hidden">
+
+<div class="card">
+
+<h2>Situation Analysis</h2>
+
+<div class="result-box">
+
+<p><strong>Detected Situation:</strong></p>
+<p id="situation"></p>
+
+<br>
+
+<p><strong>PCI Before Report:</strong> 42</p>
+<p><strong>PCI After Report:</strong> <span id="pciAfter"></span></p>
+
+<br>
+
+<p><strong>Recommended Action:</strong></p>
+<p id="action"></p>
+
+<br>
+
+<p><strong>Embassy Contact:</strong></p>
+<p>+66-2-481-6000</p>
+
+</div>
+
+<button class="button" onclick="goHome()">
+Return Home
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function showEmergencyOptions(){
+    document.getElementById('homeScreen').classList.add('hidden');
+    document.getElementById('emergencyScreen').classList.remove('hidden');
+}
+
+function showResult(type,pci,action){
+
+    document.getElementById('emergencyScreen').classList.add('hidden');
+
+    document.getElementById('resultScreen').classList.remove('hidden');
+
+    document.getElementById('situation').innerText = type;
+    document.getElementById('pciAfter').innerText = pci;
+    document.getElementById('action').innerText = action;
+}
+
+function goHome(){
+
+    document.getElementById('resultScreen').classList.add('hidden');
+
+    document.getElementById('homeScreen').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
